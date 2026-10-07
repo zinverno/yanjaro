@@ -3,7 +3,7 @@ import logging
 import threading
 import unittest
 from types import SimpleNamespace as Obj
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 from yanjaro.api import ApiError, MusicApi, Track, safe_error, track_model
 
@@ -138,6 +138,54 @@ class ApiTests(unittest.TestCase):
             self.assertNotIn("SECRET", safe_error(RuntimeError("https://cdn/SECRET")))
         finally:
             root.removeHandler(handler)
+
+    def test_transient_stream_failure_retries_only_failed_read_once(self):
+        from yandex_music.exceptions import TimedOutError
+        self.client.tracks.return_value = [track()]
+        full = Mock(preview=False, codec='mp3', bitrate_in_kbps=192)
+        full.get_direct_link.return_value = 'https://cdn.example/audio?signature=SECRET'
+        self.client.tracks_download_info.side_effect = [TimedOutError(), [full]]
+        cancel = Mock(); cancel.is_set.return_value = False; cancel.wait.return_value = False
+        with patch('yanjaro.api.Event.wait', return_value=False) as wait:
+            self.assertEqual(self.api.stream('1').track.id, '1')
+        wait.assert_called_once_with(.4)
+        self.client.tracks.assert_called_once()
+        self.assertEqual(self.client.tracks_download_info.call_count, 2)
+        full.get_direct_link.assert_called_once()
+        # One retry for the whole preparation, never one retry per phase.
+        self.client.tracks_download_info.side_effect = [TimedOutError(), [full]]
+        full.get_direct_link.side_effect = TimedOutError()
+        with self.assertRaisesRegex(ApiError, 'адрес аудио'):
+            self.api.stream('1', cancel=cancel)
+        self.assertEqual(full.get_direct_link.call_count, 2)
+
+    def test_stream_cancellation_and_http_errors_are_not_blindly_retried(self):
+        from yandex_music.exceptions import TimedOutError
+        from yanjaro.api import AccountRequest
+        from yandex_music import Client
+        cancel = Mock(); cancel.is_set.return_value = False; cancel.wait.return_value = True
+        self.client.tracks.side_effect = TimedOutError()
+        with self.assertRaisesRegex(ApiError, 'отменена'):
+            self.api.stream('1', cancel=cancel)
+        self.client.tracks.assert_called_once()
+        self.client.tracks_download_info.assert_not_called()
+        request = AccountRequest(timeout=8); client = Client(request=request)
+        for status in (400,404,429,502):
+            try: request._handle_error_response(status, b'{}')
+            except Exception as error:
+                self.assertEqual(error.http_status, status)
+                self.assertNotIn('Сеть недоступна', safe_error(error))
+                self.assertNotIn('истёк таймаут', safe_error(error))
+                if status < 500:
+                    self.client.tracks.reset_mock()
+                    self.client.tracks.side_effect = error
+                    cancel.wait.return_value = False
+                    with self.assertRaises(ApiError): self.api.stream('1', cancel=cancel)
+                    self.client.tracks.assert_called_once()
+        # Device Flow still depends on the SDK's 400/authorization_pending contract.
+        response = Mock(status_code=400, content=b'{"error":"authorization_pending"}')
+        with patch('requests.request', return_value=response):
+            self.assertIsNone(client.poll_device_token('synthetic-code'))
 
     def test_login_rejects_untrusted_url_expiry_and_clears_failed_token(self):
         self.api.authenticated = False

@@ -13,7 +13,7 @@ class NavigationTests(unittest.TestCase):
     def setUp(self):
         self.api, self.player = Mock(), StubPlayer()
         self.tracks = [Track(str(i), f'Test track {i}', 'Test artist', 180, True) for i in range(12)]
-        self.api.stream.side_effect = lambda id: Stream(self.tracks[int(id.split(':')[0])], 'https://example.test/audio')
+        self.api.stream.side_effect = lambda id, cancel=None: Stream(self.tracks[int(id.split(':')[0])], 'https://example.test/audio')
         self.api.track_rows.side_effect = lambda ids: [self.tracks[int(id)].row() for id in ids]
         self.c = PlaybackController(self.player, self.api)
         self.c._state['signedIn'] = True

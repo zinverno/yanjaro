@@ -41,6 +41,7 @@ class PlaybackController(QObject):
         self.player = player
         self.pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="music-api")
         self.cancel = Event()
+        self.play_cancel = Event()
         self.closing = False
         self.pages = {name: empty_page() for name in ("likes", "search", "stations", "history", "experiment")}
         self.search_type = 'all'
@@ -401,6 +402,7 @@ class PlaybackController(QObject):
         if self._state["authBusy"]:
             return
         self.cancel.set()
+        self.play_cancel.set()
         self.account_generation += 1
         for job in self.page_jobs.values():
             job.cancel()
@@ -645,6 +647,8 @@ class PlaybackController(QObject):
             self.play(first['id'])
 
     def _load_track(self, row):
+        self.play_cancel.set()
+        self.play_cancel = cancel = Event()
         if self.play_job:
             self.play_job.cancel()
         self.play_revision += 1
@@ -659,7 +663,7 @@ class PlaybackController(QObject):
             self.changed.emit()
             return
         self._state.update(loading=True, playerError="")
-        self.play_job = self._work("play", (self.generation, self.play_revision), lambda: self.api.stream(row["id"]))
+        self.play_job = self._work("play", (self.generation, self.play_revision), lambda: self.api.stream(row["id"], cancel=cancel))
         self.queueChanged.emit()
         self.changed.emit()
 
@@ -814,6 +818,7 @@ class PlaybackController(QObject):
         self.wave_started = False
 
     def _leave_wave(self):
+        self.play_cancel.set()
         self._finish_track("skip")
         for job in (self.wave_job, self.play_job, self.meta_job):
             if job:
@@ -972,6 +977,7 @@ class PlaybackController(QObject):
 
     @Slot()
     def stop(self):
+        self.play_cancel.set()
         self.stop_requested = True
         active = self.active_wave
         self._finish_track('skip', 'stop')
@@ -1131,6 +1137,7 @@ class PlaybackController(QObject):
             self.changed.emit()
 
     def close(self):
+        self.play_cancel.set()
         self._finish_track("skip", "closed")
         self.cancel_mix()
         self.closing = True

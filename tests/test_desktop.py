@@ -56,7 +56,7 @@ class DesktopTests(unittest.TestCase):
                 wav.writeframes(b'\0\0' * 16000 * 8)
             until(lambda: not self.player.state['paused'])  # Initial mpv observation.
             api = Mock()
-            api.stream.side_effect = lambda id: Stream(Track(id, 'Synthetic', '', 8, True), str(path))
+            api.stream.side_effect = lambda id, cancel=None: Stream(Track(id, 'Synthetic', '', 8, True), str(path))
             c = PlaybackController(self.player, api)
             engine = QQmlApplicationEngine()
             engine.setInitialProperties({'music': c})
@@ -95,7 +95,7 @@ class DesktopTests(unittest.TestCase):
                 self.assertTrue(self.player.engine.pause)
                 self.assertEqual(button.property('symbol'), 'play')
                 self.assertEqual(button.property('text'), 'Продолжить')
-                api.stream.side_effect = lambda id: Stream(Track(id, 'Synthetic', '', 8, True), str(path) + '.missing')
+                api.stream.side_effect = lambda id, cancel=None: Stream(Track(id, 'Synthetic', '', 8, True), str(path) + '.missing')
                 c.play('missing')
                 until(lambda: c.state['playbackStatus'] == 'error')
                 self.assertEqual(button.property('symbol'), 'play')

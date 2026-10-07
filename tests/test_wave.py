@@ -70,7 +70,7 @@ class WaveTests(unittest.TestCase):
         api.wave_batch.side_effect = [WaveBatch("user:onyourwave", "first", tracks[:2]),
                                       WaveBatch("user:onyourwave", "second", tracks),
                                       WaveBatch("user:onyourwave", "second", tracks)]
-        api.stream.side_effect = lambda id: Stream(tracks[int(id)], "https://example.test/private")
+        api.stream.side_effect = lambda id, cancel=None: Stream(tracks[int(id)], "https://example.test/private")
         api.history.return_value = Page([])
         c = PlaybackController(player, api)
         c._state["signedIn"] = True

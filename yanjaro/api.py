@@ -10,7 +10,8 @@ from threading import Event
 from urllib.parse import urlsplit
 
 from yandex_music import Client, StationTracksResult
-from yandex_music.exceptions import DeviceAuthError, NetworkError, UnauthorizedError
+from requests.exceptions import ConnectionError as RequestConnectionError, SSLError
+from yandex_music.exceptions import BadRequestError, DeviceAuthError, NetworkError, NotFoundError, TimedOutError, UnauthorizedError
 from yandex_music.utils.request import Request
 from .catalog import classify
 
@@ -30,7 +31,13 @@ class AccountRequest(Request):
             raise InvalidAccount('Сохранённый вход недействителен. Войдите заново.')
         if status_code == 403:
             raise ApiError('Доступ к этой функции ограничен. Сохранённый аккаунт не удалён.')
-        return super()._handle_error_response(status_code, content)
+        try:
+            return super()._handle_error_response(status_code, content)
+        except NetworkError as exc:
+            # Keep SDK exception classes (Device Flow handles BadRequestError),
+            # but do not confuse HTTP refusal with a transport timeout.
+            exc.http_status = status_code
+            raise
 
 
 def private_logging():
@@ -43,7 +50,20 @@ def safe_error(exc):
         return str(exc)
     if isinstance(exc, UnauthorizedError):
         return "Доступ отклонён. Выйдите и войдите заново."
+    if isinstance(exc, BadRequestError):
+        return "Сервис отклонил запрос. Повторите действие или выберите другой трек."
+    if isinstance(exc, NotFoundError):
+        return "Запрошенный ресурс не найден. Повторите действие или выберите другой трек."
     if isinstance(exc, NetworkError):
+        status = getattr(exc, 'http_status', None)
+        if status == 429:
+            return "Слишком много запросов к сервису. Подождите и повторите действие."
+        if isinstance(status, int) and 500 <= status < 600:
+            return "Временный сбой сервиса. Повторите действие."
+        if isinstance(status, int) and 400 <= status < 500:
+            return f"Сервис отклонил запрос (HTTP {status}). Повторите действие."
+        if isinstance(exc, TimedOutError):
+            return "Сервис не ответил за отведённое время. Повторите действие."
         return "Сеть недоступна или истёк таймаут. Повторите действие."
     if isinstance(exc, DeviceAuthError):
         return "Яндекс не подтвердил вход. Повторите вход через браузер."
@@ -286,17 +306,38 @@ class MusicApi:
                         total=total, meta={'title':'Альбомы исполнителя'})
         raise ApiError('Раздел каталога не поддерживается.')
 
-    def stream(self, track_id):
+    def stream(self, track_id, cancel=None):
         self._require_login()
-        tracks = self.client.tracks([track_id])
+        cancel = cancel or Event()
+        retried = False
+
+        def read(label, call):
+            nonlocal retried
+            while True:
+                if cancel.is_set():
+                    raise ApiError('Подготовка воспроизведения отменена.')
+                try:
+                    return call()
+                except NetworkError as exc:
+                    status = getattr(exc, 'http_status', None)
+                    transient = (isinstance(exc, TimedOutError) or status in (408,500,502,503,504)
+                                 or status is None and isinstance(exc.__cause__, RequestConnectionError)
+                                 and not isinstance(exc.__cause__, SSLError))
+                    if retried or not transient:
+                        raise ApiError(label + ': ' + safe_error(exc)) from None
+                    retried = True  # One retry total, only the failed idempotent read.
+                    if cancel.wait(.4):
+                        raise ApiError('Подготовка воспроизведения отменена.') from None
+
+        tracks = read('Не удалось получить сведения о треке', lambda: self.client.tracks([track_id]))
         if not tracks or tracks[0].available is not True:
             raise ApiError("Полный трек недоступен для этого аккаунта или региона.")
-        variants = self.client.tracks_download_info(track_id)
+        variants = read('Не удалось получить варианты аудио', lambda: self.client.tracks_download_info(track_id))
         full = [v for v in variants if v.preview is False and v.codec in {"mp3", "aac"}]
         if not full:
             raise ApiError("Полного аудио нет: сервис вернул только превью или неподдерживаемый формат.")
         variant = max(full, key=lambda v: v.bitrate_in_kbps)
-        url = variant.get_direct_link()
+        url = read('Не удалось получить адрес аудио', variant.get_direct_link)
         parsed = urlsplit(url)
         if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
             raise ApiError("Сервис вернул неподдерживаемую ссылку на аудио.")

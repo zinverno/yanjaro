@@ -80,7 +80,7 @@ class MprisTests(unittest.TestCase):
 
     def test_mpris_next_through_three_batches_emits_feedback_once(self):
         tracks = [Track(str(i),'Synthetic','',180,True) for i in range(9)]
-        self.c.api.stream.side_effect = lambda id: Stream(tracks[int(id)], 'https://example.test/audio')
+        self.c.api.stream.side_effect = lambda id, cancel=None: Stream(tracks[int(id)], 'https://example.test/audio')
         self.c.api.wave_batch.side_effect = [WaveBatch('station',str(i),tracks[i*3:(i+1)*3]) for i in range(3)]
         self.c._state['signedIn'] = True
         self.c.start_wave('station')

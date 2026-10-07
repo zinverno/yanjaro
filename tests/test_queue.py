@@ -12,7 +12,7 @@ class QueueTests(unittest.TestCase):
     def setUp(self):
         self.p, self.api = StubPlayer(), Mock()
         self.tracks = [Track(str(i), 'Synthetic', '', 180, True) for i in range(60)]
-        self.api.stream.side_effect = lambda id: Stream(self.tracks[int(id)], 'https://example.test/audio')
+        self.api.stream.side_effect = lambda id, cancel=None: Stream(self.tracks[int(id)], 'https://example.test/audio')
         self.api.track_rows.side_effect = lambda ids: [self.tracks[int(id)].row() for id in ids]
         self.c = PlaybackController(self.p, self.api)
         self.c._state['signedIn'] = True
@@ -60,7 +60,7 @@ class QueueTests(unittest.TestCase):
 
     def test_duplicate_selection_resume_and_pause_during_network_load(self):
         gate, started = threading.Event(), threading.Event()
-        def stream(id):
+        def stream(id, cancel=None):
             started.set(); gate.wait(2)
             return Stream(self.tracks[int(id)], 'https://example.test/audio')
         self.api.stream.side_effect = stream
@@ -102,3 +102,32 @@ class QueueTests(unittest.TestCase):
         self.assertTrue(self.c.state['shuffle'])
         events=[tuple(call.args[:4]) for call in self.api.feedback.call_args_list]
         self.assertEqual(events.count(('station','skip','0','one')),1)
+
+    def test_switch_cancels_old_api_retry_and_new_loading_pause_survives(self):
+        from yanjaro.api import MusicApi
+        from yandex_music.exceptions import TimedOutError
+        from test_api import track
+        client = Mock()
+        api = MusicApi(client); api.authenticated = True
+        self.c.api = api
+        self.c.pages['likes'].update(ids=('0','1'), rows=[t.row() for t in self.tracks[:2]])
+        client.tracks.side_effect = lambda ids: [track(id) for id in ids]
+        full = Mock(preview=False, codec='mp3', bitrate_in_kbps=192)
+        full.get_direct_link.return_value = 'https://example.test/audio'
+        gate, started = threading.Event(), threading.Event()
+        def variants(id):
+            if id == '0':
+                started.set(); gate.wait(2)
+                raise TimedOutError()
+            return [full]
+        client.tracks_download_info.side_effect = variants
+        try:
+            self.c.play('0'); until(started.is_set)
+            self.c.play('1'); self.c.pause()
+            gate.set(); self.playing('1')
+            self.assertEqual([call.args[0] for call in client.tracks_download_info.call_args_list], ['0','1'])
+            self.assertEqual(self.p.played, ['1'])
+            self.assertTrue(self.p.state['paused'])
+            self.assertFalse(self.c.state['playerError'])
+        finally:
+            gate.set()
