@@ -15,7 +15,7 @@ from .storage import SecretStore
 
 def main():
     parser = argparse.ArgumentParser(description="Yanjaro Music — неофициальный клиент Яндекс Музыки")
-    parser.add_argument("--capture-ui", metavar="DIRECTORY", help="сохранить три экрана после входа и запуска музыки")
+    parser.add_argument("--capture-ui", metavar="DIRECTORY", help="сохранить экраны после входа и запуска музыки, без снимков системных уведомлений")
     options = parser.parse_args()
     private_logging()
     # Unhandled third-party exceptions may contain tokens or signed URLs.

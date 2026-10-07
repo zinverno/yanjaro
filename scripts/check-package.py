@@ -16,6 +16,7 @@ for name in names:
     assert path.parts[0] in {'.PKGINFO','.BUILDINFO','.MTREE','usr'}, name
     assert not any(p in {'.venv','.runtime','.git','__pycache__','tests','node_modules'} for p in path.parts), name
     assert path.suffix not in {'.db','.sqlite','.log','.pem','.key'}, name
+    assert path.name not in {'settings.json','stations.json','experiment.json'}, name
     assert not any(p.startswith('.env') for p in path.parts), name
 required={'usr/bin/yanjaro','usr/share/applications/yanjaro.desktop',
           'usr/share/icons/hicolor/scalable/apps/yanjaro.svg',
@@ -38,7 +39,7 @@ for name in names:
         assert not re.search(rb'\by[01]_[A-Za-z0-9_-]{24,}', body), 'Possible OAuth token in ' + name
         assert not re.search(rb'https?://[^\s\x22\x27]+/(?:get-mp3|get-opus)/', body), 'Possible audio URL in ' + name
 metadata=subprocess.check_output(['bsdtar','-xOf',str(package),'.PKGINFO'],text=True)
-for dependency in ('pyside6','python-mpv','mpv','python-requests','qt6-svg'):
+for dependency in ('pyside6','python-mpv','mpv','python-requests','qt6-svg','python-secretstorage','python-jeepney'):
     assert any(line.startswith('depend = '+dependency) for line in metadata.splitlines()), dependency
 print('PASS: native layout, entry point, resources, declared dependencies and private-file exclusions')
 print('User secrets were not read; third-party SDK is a separately pinned upstream distribution.')

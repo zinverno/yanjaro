@@ -2,13 +2,13 @@
 # Generate PKGBUILD and .SRCINFO with scripts/prepare-native.py; no floating Git branch.
 # Maintainer: zinverno <https://github.com/zinverno>
 pkgname=yanjaro
-pkgver=0.2.0rc1
-pkgrel=3
+pkgver=0.2.0rc2
+pkgrel=1
 pkgdesc='Unofficial Yandex Music client / Неофициальный клиент Яндекс Музыки'
 url='https://github.com/zinverno/yanjaro'
 arch=('any')
 license=('GPL-3.0-or-later' 'LGPL-3.0-only')
-depends=('python>=3.11' 'python<3.15' 'pyside6>=6.8' 'pyside6<7' 'qt6-declarative' 'qt6-svg' 'qt6-wayland' 'xdg-utils' 'python-mpv>=1.0.8' 'mpv' 'python-requests' 'python-pysocks' 'python-typing_extensions>=4.4.0')
+depends=('python>=3.11' 'python<3.15' 'pyside6>=6.8' 'pyside6<7' 'qt6-declarative' 'qt6-svg' 'qt6-wayland' 'xdg-utils' 'python-mpv>=1.0.8' 'mpv>=0.41' 'python-secretstorage>=3.5' 'python-jeepney>=0.9' 'python-requests' 'python-pysocks' 'python-typing_extensions>=4.4.0')
 checkdepends=('desktop-file-utils')
 _sdk='yandex_music-3.2.0-py3-none-any.whl'
 source=("yanjaro-$pkgver.tar.gz" "$_sdk::@SDK_URL@")
