@@ -1,0 +1,8 @@
+#!/usr/bin/python3
+"""Native package launcher: resources and the SDK live in the same install prefix."""
+import sys
+from pathlib import Path
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'lib' / 'yanjaro'))
+from yanjaro.__main__ import main
+raise SystemExit(main())

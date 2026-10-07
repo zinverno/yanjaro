@@ -1,1 +1,4 @@
-include README.md VALIDATION.md requirements.lock run.sh
+include README.md VALIDATION.md LICENSE LICENSE-STATUS.md requirements.lock run.sh
+recursive-include docs *.md *.png
+recursive-include packaging PKGBUILD.in sdk-source.json yanjaro yanjaro.desktop
+recursive-include scripts *.py *.sh

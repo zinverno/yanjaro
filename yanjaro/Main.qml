@@ -235,6 +235,6 @@ ApplicationWindow {
         width: 470
         modal: true
         standardButtons: Dialog.Ok
-        Label { width: parent.width; text: "Неофициальный клиент Яндекс Музыки.\n\nТокен хранится только в памяти до выхода.\nИстория временно скрыта: новые прослушивания в ней не подтверждены.\n\nИконки: GNOME Project / Adwaita (LGPL-3.0)."; wrapMode: Text.WordWrap }
+        Label { width: parent.width; text: "Неофициальный клиент Яндекс Музыки.\nGPL-3.0-or-later, без гарантий.\n\nТокен хранится только в памяти до выхода.\nИстория временно скрыта: новые прослушивания в ней не подтверждены.\n\nИконки: GNOME Project / Adwaita (LGPL-3.0)."; wrapMode: Text.WordWrap }
     }
 }
