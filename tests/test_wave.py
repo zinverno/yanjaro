@@ -13,6 +13,7 @@ class StubPlayer(QObject):
     started = Signal()
     ended = Signal()
     failed = Signal(str)
+    seeked = Signal(float)
 
     def __init__(self):
         super().__init__()

@@ -10,7 +10,8 @@ from uuid import uuid4
 from PySide6.QtCore import QObject, Property, Signal, Slot, Qt, QUrl, QTimer
 from PySide6.QtGui import QDesktopServices
 
-from .api import MusicApi, safe_error
+from .api import MusicApi, safe_error, InvalidAccount
+from .storage import data_path, read_json, write_json
 
 
 def empty_page():
@@ -22,12 +23,19 @@ class PlaybackController(QObject):
     changed = Signal()
     contentChanged = Signal()
     queueChanged = Signal()
-    _result = Signal(str, object, str)
-    _code = Signal(str, str)
+    _result = Signal(int, str, object, str)
+    _code = Signal(int, str, str)
 
-    def __init__(self, player, api=None):
+    def __init__(self, player, api=None, store=None):
         super().__init__()
         self.api = api or MusicApi()
+        self.store = store
+        self.account_generation = 0
+        self.account_id = ''
+        self.auth_job = None
+        self.preferences = read_json(data_path('config', 'settings.json')) if store else {}
+        self.storage_action = 'restore'
+        self.saved = False
         self.player = player
         self.pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="music-api")
         self.cancel = Event()
@@ -48,6 +56,7 @@ class PlaybackController(QObject):
         self.repeat_mode = 'None'
         self.shuffle_enabled = False
         self.desired_paused = False
+        self.stop_requested = False
         self.wave_station = ""
         self.wave_queue = []
         self.wave_seen = []
@@ -66,11 +75,13 @@ class PlaybackController(QObject):
         self.play_session = None
         self.last_tick = time.monotonic()
         self._state = dict(signedIn=False, authBusy=False, authError="", code="", loginUrl="",
+                           remember=self.preferences.get('remember', True), accountMessage='',
+                           storageAction='restore', mprisStatus='Системное управление не подключено',
                            view="likes", currentId="", current="Ничего не выбрано", artist="",
                            cover="", source="", loading=False, playerError=player.error,
                            stationError="", waveActive=False,
                            playReport="События этого запуска ещё не отправлялись.")
-        self._result.connect(self._completed, Qt.ConnectionType.QueuedConnection)
+        self._result.connect(self._deliver, Qt.ConnectionType.QueuedConnection)
         self._code.connect(self._show_code, Qt.ConnectionType.QueuedConnection)
         player.changed.connect(self.changed)
         player.failed.connect(self._player_error)
@@ -127,13 +138,19 @@ class PlaybackController(QObject):
             stationId=self.wave_station, refilling=self.refilling)
 
     def _work(self, operation, context, call):
+        account = self.account_generation
         def run():
             try:
                 result = call()
-                self._result.emit(operation, (context, result), "")
+                self._result.emit(account, operation, (context, result), "")
             except Exception as exc:
-                self._result.emit(operation, (context, None), safe_error(exc))
+                self._result.emit(account, operation, (context, None), safe_error(exc))
         return self.pool.submit(run)
+
+    @Slot(int, str, object, str)
+    def _deliver(self, account, operation, payload, error):
+        if account == self.account_generation:
+            self._completed(operation, payload, error)
 
     @Slot(str, object, str)
     def _completed(self, operation, payload, error):
@@ -166,12 +183,29 @@ class PlaybackController(QObject):
                     for row in self.queue:
                         self.base_order.setdefault(row['id'].split(':')[0], len(self.base_order))
                 self.contentChanged.emit()
-        elif operation in ("login", "logout"):
-            self._state.update(authBusy=False, code="", loginUrl="", authError=error)
+        elif operation == 'account':
+            self._state.update(authBusy=False, code='', loginUrl='', authError=error)
             if not error:
-                self._state["signedIn"] = operation == "login"
-                if operation == "login":
-                    self.show("likes")
+                self.account_id = result.get('uid', '')
+                self.saved = result.get('saved', False)
+                self._state.update(signedIn=bool(self.account_id), accountMessage=result.get('message', ''),
+                                   authError=result.get('error', ''))
+                self.storage_action = result.get('action', 'restore')
+                self._state['storageAction'] = self.storage_action
+                if self.account_id:
+                    self.preferences['signed_out'] = False
+                    self._save_preferences()
+                    self.show('likes')
+        elif operation == 'secret':
+            self._state.update(authBusy=False, accountMessage=error or ('Вход сохранён в Secret Service.' if context == 'save' else 'Сохранённый вход удалён.'))
+            self.saved = context == 'save' and not error
+            self.storage_action = context if error else 'restore'
+            self._state['storageAction'] = self.storage_action
+        elif operation == 'logout':
+            self._state.update(authBusy=False, authError=error, accountMessage=error or 'Вы вышли из аккаунта.')
+            self.storage_action = 'delete' if error else 'restore'
+            self._state['storageAction'] = self.storage_action
+            self.saved = False
         elif operation == "play":
             if context != (self.generation, self.play_revision):
                 return
@@ -213,9 +247,9 @@ class PlaybackController(QObject):
         self.queueChanged.emit()
         self.changed.emit()
 
-    @Slot(str, str)
-    def _show_code(self, url, code):
-        if self.closing or self.cancel.is_set():
+    @Slot(int, str, str)
+    def _show_code(self, account, url, code):
+        if self.closing or self.cancel.is_set() or account != self.account_generation:
             return
         self._state.update(code=code, loginUrl=url)
         self.open_browser()
@@ -227,27 +261,110 @@ class PlaybackController(QObject):
             self._state["authError"] = "Браузер не открылся. Откройте адрес рядом с кодом."
             self.changed.emit()
 
+    def _save_preferences(self):
+        if self.store:
+            try:
+                write_json(data_path('config', 'settings.json'), self.preferences)
+            except OSError:
+                self._state['accountMessage'] = 'Не удалось записать настройки устройства.'
+
+    @Slot(bool)
+    def remember_account(self, enabled):
+        self._state['remember'] = enabled
+        self.preferences['remember'] = enabled
+        self._save_preferences()
+        if self._state['signedIn']:
+            self.storage_action = 'save' if enabled else 'delete'
+            self.retry_storage()
+        self.changed.emit()
+
+    def restore_account(self, unlock=False):
+        if not self.store or self._state['authBusy'] or not self._state['remember']:
+            return
+        if self.preferences.get('signed_out'):
+            return
+        self._state.update(authBusy=True, authError='', accountMessage='Проверяем сохранённый аккаунт…')
+        def restore():
+            try:
+                token = self.store.read(unlock=unlock)
+            except Exception as exc:
+                return dict(error=safe_error(exc), action='restore')
+            if not token:
+                return dict(message='Сохранённого аккаунта нет.')
+            try:
+                uid = self.api.restore(token)
+            except InvalidAccount as exc:
+                return dict(error=safe_error(exc), action='delete')
+            except Exception as exc:
+                return dict(error=safe_error(exc) + ' Сохранённый вход оставлен; повторите доступ.', action='restore')
+            return dict(uid=uid, saved=True, message='Вход восстановлен из Secret Service.')
+        self.auth_job = self._work('account', None, restore)
+        self.changed.emit()
+
+    @Slot()
+    def retry_storage(self):
+        if not self.store or self._state['authBusy']:
+            return
+        if self.storage_action == 'restore':
+            self.restore_account(unlock=True)
+            return
+        action = self.storage_action
+        self._state.update(authBusy=True, authError='')
+        self.auth_job = self._work('secret', action, self.store.delete if action == 'delete'
+                                  else lambda: self.store.write(self.api.client.token))
+        self.changed.emit()
+
     @Slot()
     def login(self):
-        if self._state["authBusy"] or self._state["signedIn"]:
+        if self._state['authBusy'] or self._state['signedIn']:
             return
-        self.cancel.clear()
-        self._state.update(authBusy=True, authError="")
-        self._work("login", None, lambda: self.api.login(self._code.emit, self.cancel))
+        cancel = self.cancel = Event()
+        account = self.account_generation
+        self._state.update(authBusy=True, authError='')
+        remember = self._state['remember']
+        def login():
+            uid = self.api.login(lambda url, code: self._code.emit(account, url, code), cancel)
+            if cancel.is_set():
+                self.api.logout()
+                return {}
+            result = dict(uid=uid, saved=False, message='Вход только на этот сеанс.')
+            if remember and self.store:
+                try:
+                    self.store.write(self.api.client.token)
+                    result.update(saved=True, message='Вход сохранён в Secret Service.')
+                except Exception as exc:
+                    result.update(message='Вход выполнен только на этот сеанс. ' + safe_error(exc), action='save')
+            return result
+        self.auth_job = self._work('account', None, login)
         self.changed.emit()
 
     @Slot()
     def cancel_login(self):
         self.cancel.set()
-        self._state.update(code="", loginUrl="")
+        self.account_generation += 1
+        if self.auth_job:
+            self.auth_job.cancel()
+        if self.store:
+            self.store.abort()
+        self._work('cancel-auth', None, self.api.logout)
+        self._state.update(code="", loginUrl="", authBusy=False)
         self.changed.emit()
 
     @Slot()
     def logout(self):
         if self._state["authBusy"]:
             return
+        self.cancel.set()
+        self.account_generation += 1
+        for job in self.page_jobs.values():
+            job.cancel()
+        self.preferences['signed_out'] = True
+        self._save_preferences()
+        self.account_id = ''
         self._leave_wave()
         self.queue = []
+        self.queue_history = []
+        self.history_cursor = -1
         self.queue_index = -1
         self.current_track = None
         self.selected_row = None
@@ -257,7 +374,11 @@ class PlaybackController(QObject):
             page.update(empty_page(), revision=revision)
         self._state.update(signedIn=False, authBusy=True, currentId="", current="Ничего не выбрано",
                            artist="", cover="", source="", loading=False, playerError="")
-        self._work("logout", None, self.api.logout)
+        def logout():
+            self.api.logout()
+            if self.store:
+                self.store.delete()
+        self.auth_job = self._work('logout', None, logout)
         self.contentChanged.emit()
         self.queueChanged.emit()
         self.changed.emit()
@@ -340,6 +461,7 @@ class PlaybackController(QObject):
                 self.play_resume()
                 return
         self.desired_paused = False  # Explicit row selection always requests playback.
+        self.stop_requested = False
         self._build_queue(track_id)
 
     def _build_queue(self, track_id, shuffle=None):
@@ -390,6 +512,7 @@ class PlaybackController(QObject):
             return
         self._state["view"] = "likes"
         self.desired_paused = False
+        self.stop_requested = False
         self._build_queue(page["ids"][0], shuffle)
 
     def _load_track(self, row):
@@ -399,6 +522,13 @@ class PlaybackController(QObject):
         self.player.stop()
         self.current_track = None
         self._set_current(row)
+        if self.stop_requested:
+            self._state.update(loading=False, playerError='')
+            if self.history_target is not None:
+                self.history_cursor, self.history_target = self.history_target, None
+            self.queueChanged.emit()
+            self.changed.emit()
+            return
         self._state.update(loading=True, playerError="")
         self.play_job = self._work("play", (self.generation, self.play_revision), lambda: self.api.stream(row["id"]))
         self.queueChanged.emit()
@@ -422,6 +552,7 @@ class PlaybackController(QObject):
             return
         if not preserve_pause:
             self.desired_paused = False
+            self.stop_requested = False
         if self.wave_station:
             if not 0 <= index < len(self.wave_queue):
                 return
@@ -442,6 +573,7 @@ class PlaybackController(QObject):
 
     @Slot()
     def previous_track(self):
+        self.stop_requested = self.playback_status() == 'stopped'
         cursor = self._previous_cursor()
         if not self.wave_station and cursor >= 0:
             self._history_select(cursor)
@@ -454,6 +586,7 @@ class PlaybackController(QObject):
 
     @Slot()
     def next_track(self):
+        self.stop_requested = self.playback_status() == 'stopped'
         self._advance(False)
 
     def _advance(self, natural):
@@ -563,6 +696,7 @@ class PlaybackController(QObject):
         name = next((r["title"] for r in self.pages["stations"]["rows"] if r["id"] == station),
                     "Моя волна" if station == "user:onyourwave" else "Станция")
         self.desired_paused = False
+        self.stop_requested = False
         self._state.update(waveActive=True, source=name, loading=True, currentId="", current="Подбираем музыку",
                            artist="", cover="", playerError="")
         self.waiting_wave = True
@@ -674,6 +808,7 @@ class PlaybackController(QObject):
     @Slot()
     def play_resume(self):
         self.desired_paused = False
+        self.stop_requested = False
         if self.playback_status() in ('paused', 'playing', 'buffering', 'loading'):
             self.player.set_pause(False)
         elif self.playback_status() in ('stopped', 'error'):
@@ -682,6 +817,7 @@ class PlaybackController(QObject):
 
     @Slot()
     def stop(self):
+        self.stop_requested = True
         active = self.active_wave
         self._finish_track('skip')
         self.active_wave = active  # Play can explicitly restart the selected radio track.
@@ -717,9 +853,11 @@ class PlaybackController(QObject):
         self.closing = True
         self.timer.stop()
         self.cancel.set()
-        for job in (*self.page_jobs.values(), self.play_job, self.meta_job, self.wave_job):
+        for job in (*self.page_jobs.values(), self.play_job, self.meta_job, self.wave_job, self.auth_job):
             if job:
                 job.cancel()
         self.player.close()
+        if self.store:
+            self.store.abort()
         self.pool.shutdown(wait=True)
         self.api.logout()

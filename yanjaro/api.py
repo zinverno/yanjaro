@@ -18,6 +18,20 @@ class ApiError(Exception):
     """A fixed, safe message, never a server response or a URL."""
 
 
+class InvalidAccount(ApiError):
+    pass
+
+
+class AccountRequest(Request):
+    def _handle_error_response(self, status_code, content):
+        # SDK 3.2 conflates 401 and 403. Only a confirmed 401 invalidates access.
+        if status_code == 401:
+            raise InvalidAccount('Сохранённый вход недействителен. Войдите заново.')
+        if status_code == 403:
+            raise ApiError('Доступ к этой функции ограничен. Сохранённый аккаунт не удалён.')
+        return super()._handle_error_response(status_code, content)
+
+
 def private_logging():
     # The SDK debug decorator logs whole responses, including OAuth tokens.
     logging.disable(logging.CRITICAL)
@@ -90,7 +104,7 @@ def track_model(track):
 class MusicApi:
     def __init__(self, client=None):
         private_logging()
-        self.client = client or Client(request=Request(timeout=8))
+        self.client = client or Client(request=AccountRequest(timeout=8))
         self.authenticated = False
         self._likes = []
 
@@ -126,7 +140,7 @@ class MusicApi:
                     if not self.client.me or not self.client.me.account.uid:
                         raise ApiError("Не удалось подтвердить аккаунт.")
                     self.authenticated = True
-                    return "Вход выполнен"
+                    return str(self.client.me.account.uid)
             raise ApiError("Вход отменён.")
         finally:
             if not self.authenticated:
@@ -139,6 +153,15 @@ class MusicApi:
         self.client.me = None
         self.client.account_uid = None
         self._likes = []
+
+    def restore(self, token):
+        self.client.token = token
+        self.client.request.set_authorization(token)
+        self.client.init()
+        if not self.client.me or not self.client.me.account.uid:
+            raise ApiError('Не удалось подтвердить аккаунт. Повторите доступ.')
+        self.authenticated = True
+        return str(self.client.me.account.uid)
 
     def _require_login(self):
         if not self.authenticated:

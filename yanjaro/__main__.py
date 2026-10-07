@@ -10,6 +10,7 @@ from .api import private_logging
 from .controller import PlaybackController
 from .player import Player
 from .desktop import Instance
+from .storage import SecretStore
 
 
 def main():
@@ -32,7 +33,7 @@ def main():
     except RuntimeError:
         print("Не удалось запустить единственный экземпляр Yanjaro. Проверьте доступ к каталогу сеанса.", file=sys.stderr)
         return 1
-    controller = PlaybackController(Player())
+    controller = PlaybackController(Player(), store=SecretStore())
     engine = QQmlApplicationEngine()
     engine.setInitialProperties({"music": controller})
     engine.load(Path(__file__).with_name("Main.qml"))
@@ -46,12 +47,16 @@ def main():
         window.raise_()
         window.requestActivate()
     instance.activated.connect(activate)
+    from .mpris import Mpris
+    mpris = Mpris(controller, activate, app.quit)
     if options.capture_ui:
         from .capture import Capture
         capture = Capture(controller, window, options.capture_ui)
+    controller.restore_account()
     try:
         return app.exec()
     finally:
+        mpris.close()
         controller.close()
         instance.close()
         del engine

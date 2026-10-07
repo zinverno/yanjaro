@@ -75,6 +75,7 @@ ApplicationWindow {
                     Menu {
                         id: profile
                         y: -height
+                        MenuItem { text: "Настройки аккаунта и системы"; onTriggered: settings.open() }
                         MenuItem { text: "О приложении"; onTriggered: about.open() }
                         MenuItem { text: "Выйти из аккаунта"; onTriggered: window.music.logout() }
                     }
@@ -126,6 +127,7 @@ ApplicationWindow {
                 Item { Layout.fillHeight: true }
                 Label { text: "Вся ваша музыка — после входа"; font.pixelSize: 22; font.bold: true; wrapMode: Text.WordWrap; Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter }
                 Label { text: "Подтвердите доступ в браузере на странице Яндекса."; color: Theme.secondary; wrapMode: Text.WordWrap; Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter }
+                CheckBox { text: "Запомнить аккаунт на этом устройстве"; checked: window.s.remember; enabled: !window.s.authBusy; Layout.alignment: Qt.AlignHCenter; onToggled: window.music.remember_account(checked) }
                 ActionButton { text: window.s.authBusy ? "Ожидаем подтверждения…" : "Войти через браузер"; symbol: "account"; primary: true; enabled: !window.s.authBusy; Layout.alignment: Qt.AlignHCenter; onClicked: window.music.login() }
                 Label { visible: window.s.code.length > 0; text: window.s.code; font.pixelSize: 32; font.bold: true; Layout.alignment: Qt.AlignHCenter; Accessible.name: "Код подтверждения " + window.s.code }
                 Label { visible: window.s.code.length > 0; text: window.s.loginUrl; textFormat: Text.PlainText; color: Theme.secondary; wrapMode: Text.WordWrap; Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter }
@@ -135,6 +137,8 @@ ApplicationWindow {
                     ActionButton { text: "Открыть браузер"; visible: window.s.code.length > 0; onClicked: window.music.open_browser() }
                     ActionButton { text: "Отменить"; onClicked: window.music.cancel_login() }
                 }
+                Label { text: window.s.accountMessage; visible: text.length > 0; textFormat: Text.PlainText; wrapMode: Text.WordWrap; Layout.fillWidth: true; color: Theme.secondary }
+                ActionButton { text: window.s.storageAction === "delete" ? "Удалить сохранённый вход" : "Повторить доступ"; visible: window.s.authError.length > 0; enabled: !window.s.authBusy; onClicked: window.music.retry_storage() }
                 Label { visible: window.s.authError.length > 0; text: window.s.authError; textFormat: Text.PlainText; color: Theme.error; wrapMode: Text.WordWrap; Layout.fillWidth: true }
                 Item { Layout.fillHeight: true }
             }
@@ -143,6 +147,12 @@ ApplicationWindow {
                 Layout.fillWidth: true
                 Label { text: "Не удалось загрузить раздел. " + window.s.pageError; textFormat: Text.PlainText; color: Theme.error; wrapMode: Text.WordWrap; Layout.fillWidth: true }
                 ActionButton { text: "Повторить"; symbol: "retry"; onClicked: window.music.retry_page() }
+            }
+            RowLayout {
+                visible: window.s.signedIn && window.s.storageAction === "save"
+                Layout.fillWidth: true
+                Label { text: window.s.accountMessage; textFormat: Text.PlainText; color: Theme.error; wrapMode: Text.WordWrap; Layout.fillWidth: true }
+                ActionButton { text: "Повторить сохранение"; enabled: !window.s.authBusy; onClicked: window.music.retry_storage() }
             }
             RowLayout {
                 visible: window.s.signedIn && window.s.pageStatus === "loading"
@@ -229,12 +239,27 @@ ApplicationWindow {
         }
     }
     Dialog {
+        id: settings
+        title: "Аккаунт и системное управление"
+        anchors.centerIn: parent
+        width: Math.min(520, window.width - 40)
+        modal: true
+        standardButtons: Dialog.Close
+        ColumnLayout {
+            width: parent.width
+            CheckBox { text: "Запомнить аккаунт на этом устройстве"; checked: window.s.remember; enabled: !window.s.authBusy; onToggled: window.music.remember_account(checked) }
+            Label { text: window.s.accountMessage; wrapMode: Text.WordWrap; textFormat: Text.PlainText; Layout.fillWidth: true }
+            ActionButton { text: window.s.storageAction === "save" ? "Повторить сохранение" : window.s.storageAction === "delete" ? "Удалить сохранённый вход" : "Повторить доступ"; enabled: !window.s.authBusy; onClicked: window.music.retry_storage() }
+            Label { text: window.s.mprisStatus; wrapMode: Text.WordWrap; Layout.fillWidth: true; color: Theme.secondary }
+        }
+    }
+    Dialog {
         id: about
         title: "О Yanjaro Music"
         anchors.centerIn: parent
         width: 470
         modal: true
         standardButtons: Dialog.Ok
-        Label { width: parent.width; text: "Неофициальный клиент Яндекс Музыки.\nGPL-3.0-or-later, без гарантий.\n\nТокен хранится только в памяти до выхода.\nИстория временно скрыта: новые прослушивания в ней не подтверждены.\n\nИконки: GNOME Project / Adwaita (LGPL-3.0)."; wrapMode: Text.WordWrap }
+        Label { width: parent.width; text: "Неофициальный клиент Яндекс Музыки.\nGPL-3.0-or-later, без гарантий.\n\nПри включённом запоминании токен хранится только в системном Secret Service. При отказе хранилища — только в памяти текущего сеанса.\nИстория временно скрыта: новые прослушивания в ней не подтверждены.\n\nИконки: GNOME Project / Adwaita (LGPL-3.0)."; wrapMode: Text.WordWrap }
     }
 }

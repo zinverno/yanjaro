@@ -72,6 +72,27 @@ class DesktopTests(unittest.TestCase):
                 until(lambda: c.state['currentId'] == 'b' and self.player.state['position'] > .1)
                 self.assertFalse(self.player.engine.pause)
                 self.assertEqual(button.property('symbol'), 'pause')
+                c.pages['likes'].update(rows=[Track('b', 'Synthetic', '', 8, True).row()], status='ready')
+                c._state['signedIn'] = True
+                c.contentChanged.emit(); c.changed.emit()
+                QTest.qWait(50)
+                listing = window.findChild(QObject, 'tracksList')
+                point = listing.mapToScene(QPointF(120, 30)).toPoint()
+                count = api.stream.call_count
+                QTest.mouseDClick(window, Qt.MouseButton.LeftButton, Qt.KeyboardModifier.NoModifier, point)
+                QTest.qWait(30)
+                self.assertEqual(api.stream.call_count, count)
+                self.assertGreater(self.player.state['position'], .1)
+                c.pages['likes']['rows'] = []
+                c.play('a'); c.play('c'); c.set_paused(True)
+                until(lambda: c.state['currentId'] == 'c' and self.player.state['loaded'] and self.player.state['paused'])
+                self.assertTrue(self.player.engine.pause)
+                self.assertEqual(button.property('symbol'), 'play')
+                self.assertEqual(button.property('text'), 'Продолжить')
+                api.stream.side_effect = lambda id: Stream(Track(id, 'Synthetic', '', 8, True), str(path) + '.missing')
+                c.play('missing')
+                until(lambda: c.state['playbackStatus'] == 'error')
+                self.assertEqual(button.property('symbol'), 'play')
             finally:
                 window.close()
                 c.close()
