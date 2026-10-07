@@ -21,7 +21,7 @@ for directory, suffixes in (('yanjaro', {'.py', '.qml', '.svg', '.json', '.md', 
     files += [p for p in (ROOT / directory).rglob('*') if p.is_file()
               and (p.suffix in suffixes or p.name.startswith('COPYING-')) and '__pycache__' not in p.parts]
 files += [ROOT / 'docs/screenshots' / name for name in ('login.png', 'likes.png', 'search.png', 'stations.png')]
-files += [ROOT / 'docs/screenshots/rc2' / name for name in ('likes.png', 'search.png', 'artist.png', 'album.png', 'experiment.png')]
+files += [ROOT / 'docs/screenshots/rc2' / name for name in ('likes.png', 'search.png', 'artist.png', 'album.png', 'experiment.png', 'stations.png')]
 # Only reviewed captures, never an arbitrary user Pictures directory.
 files += [ROOT / 'packaging' / name for name in ('yanjaro', 'yanjaro.desktop', 'sdk-source.json', 'PKGBUILD.in')]
 with archive.open('wb') as raw, gzip.GzipFile(filename='', mode='wb', fileobj=raw, mtime=epoch) as compressed, tarfile.open(fileobj=compressed, mode='w') as tar:
