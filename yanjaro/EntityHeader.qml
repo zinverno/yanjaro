@@ -30,7 +30,7 @@ ColumnLayout {
             spacing: Theme.small
             Repeater {
                 model: header.info.albums || []
-                ActionButton { required property var modelData; width: 190; height: 48; text: modelData.title; contentItem: Label { text: parent.text; elide: Text.ElideRight; verticalAlignment: Text.AlignVCenter; textFormat: Text.PlainText } onClicked: header.music.open_entity("album", modelData.id) }
+                ActionButton { id: release; required property var modelData; width: 190; height: 48; text: modelData.title; contentItem: Label { text: release.text; elide: Text.ElideRight; verticalAlignment: Text.AlignVCenter; textFormat: Text.PlainText } onClicked: header.music.open_entity("album", modelData.id) }
             }
         }
     }

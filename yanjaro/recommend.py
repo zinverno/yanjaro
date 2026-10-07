@@ -77,7 +77,7 @@ def mix(candidates, liked_ids, profile, seed, now=None, limit=30):
         score += rng.random() * .2
         origins = row.get('origins', ['liked'])
         if liked:
-            reason = 'Из любимого, давно не слушали' if age is not None and age >= 7 else 'Из любимого'
+            reason = 'Из любимого, давно не слушали в Yanjaro' if age is not None and age >= 7 else 'Из любимого'
         elif 'artist' in origins:
             reason = 'Другие песни знакомого исполнителя'
         elif 'album' in origins:

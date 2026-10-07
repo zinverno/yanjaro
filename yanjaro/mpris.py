@@ -57,7 +57,10 @@ class Mpris(QObject):
         if s['currentId']:
             metadata = {'mpris:trackid': ('o', track_path(s['currentId'])),
                         'xesam:title': ('s', s['current']),
-                        'xesam:artist': ('as', [s['artist']] if s['artist'] else [])}
+                        'xesam:artist': ('as', [a['title'] for a in s['currentRow'].get('artists', [])]
+                                        or ([s['artist']] if s['artist'] else []))}
+            if s['currentRow'].get('albumTitle'):
+                metadata['xesam:album'] = ('s', s['currentRow']['albumTitle'])
             if s['duration']:
                 metadata['mpris:length'] = ('x', int(s['duration'] * 1_000_000))
             if s['cover']:
@@ -186,6 +189,8 @@ class Mpris(QObject):
                     'Next': (s['canNext'], self.c.next_track), 'Previous': (s['canPrevious'], self.c.previous_track)}
         if method in commands:
             enabled, call = commands[method]
+            if not enabled and method == 'PlayPause':
+                raise ValueError('NotSupported')
             if enabled: call()
         elif method == 'Seek' and s['seekable'] and s['loaded']:
             target = s['position'] + args[0] / 1_000_000
