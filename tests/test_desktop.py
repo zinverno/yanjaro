@@ -34,6 +34,12 @@ def until(predicate, seconds=4):
     raise AssertionError("Timed out waiting for a desktop condition")
 
 
+def visual_items(item):
+    for child in item.childItems():
+        yield child
+        yield from visual_items(child)
+
+
 class DesktopTests(unittest.TestCase):
     def setUp(self):
         self.player = Player(audio_output="null")
@@ -245,7 +251,7 @@ class DesktopTests(unittest.TestCase):
             controller.play.assert_called_once_with("0")
             controller.play.reset_mock()
             controller.open_entity = Mock()
-            link = next(o for o in window.findChildren(QObject, 'artistLink') if o.isVisible() and listing.mapFromItem(o, QPointF(0,0)).y() >= 0 and listing.mapFromItem(o, QPointF(0,0)).y() < 60)
+            link = next(o for o in visual_items(listing) if o.objectName() == 'artistLink' and o.isVisible() and 0 <= listing.mapFromItem(o, QPointF(0,0)).y() < 60)
             link_point = link.mapToScene(QPointF(link.width()/2,link.height()/2)).toPoint()
             QTest.mouseClick(window, Qt.MouseButton.LeftButton, Qt.KeyboardModifier.NoModifier, link_point)
             controller.open_entity.assert_called_once_with('artist','9')
@@ -276,7 +282,8 @@ class DesktopTests(unittest.TestCase):
             self.player.changed.emit()
             APP.processEvents()
             self.assertAlmostEqual(listing.property("contentY"), 900, delta=1)
-            delegates = [o for o in window.findChildren(QObject) if o.objectName().startswith("trackRow")]
+            delegates = [o for o in visual_items(listing) if o.objectName().startswith("trackRow")]
+            self.assertGreater(len(delegates), 0)
             self.assertLess(len(delegates), 70)  # A 500-row model stays virtualized.
         finally:
             window.close()

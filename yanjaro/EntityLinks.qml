@@ -11,7 +11,7 @@ RowLayout {
         id: artist
         objectName: "artistLink"
         Layout.fillWidth: true
-        Layout.maximumWidth: links.width * (album.visible ? 0.65 : 1)
+        Layout.minimumWidth: 0
         implicitHeight: 22
         padding: 0
         flat: true
