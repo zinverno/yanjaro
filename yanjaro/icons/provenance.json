@@ -1,0 +1,69 @@
+{
+  "project": "Adwaita icon theme",
+  "version": "50.0-1 (Manjaro package)",
+  "url": "https://gitlab.gnome.org/GNOME/adwaita-icon-theme",
+  "license": "CC-BY-SA-3.0 OR LGPL-3.0-only",
+  "modifications": "None; filenames shortened",
+  "icons": {
+    "play": {
+      "source": "symbolic/actions/media-playback-start-symbolic.svg",
+      "sha256": "6fc069b21b6b14a524afe7d3892da343eb2ca3fb4ef628a15b93826652ea05c0"
+    },
+    "pause": {
+      "source": "symbolic/actions/media-playback-pause-symbolic.svg",
+      "sha256": "4756cbc2235a2f241696218f438cdc8c24b32f04a913a722c76988088d921625"
+    },
+    "previous": {
+      "source": "symbolic/actions/media-skip-backward-symbolic.svg",
+      "sha256": "44f78a3fd87a0dc478389e23c04d45c56f0656a0d84ee3809315098e9ea46d08"
+    },
+    "next": {
+      "source": "symbolic/actions/media-skip-forward-symbolic.svg",
+      "sha256": "19a3c405db1d2f6e91df3bffd7607d77bff7ef6e978d4ac5ed44c1e202cf9e7c"
+    },
+    "volume": {
+      "source": "symbolic/status/audio-volume-high-symbolic.svg",
+      "sha256": "ed111cb22410a2c6b0556678662308f4ba3aa1cbca53b12fdd4939a52c0c7f52"
+    },
+    "muted": {
+      "source": "symbolic/status/audio-volume-muted-symbolic.svg",
+      "sha256": "9df9074f7acd05ae7f36e5bd26e5ef89eb188cd382106f807b039caf409ff539"
+    },
+    "queue": {
+      "source": "symbolic/actions/view-list-symbolic.svg",
+      "sha256": "e736c7be180b6aabb34b42cfef6f2ebbe92548a51a0e75a16349a67760c1db40"
+    },
+    "favorite": {
+      "source": "symbolic/status/starred-symbolic.svg",
+      "sha256": "ff070bd852a68a8f3002c4fdf73ab659e3819228e3d441e8a46af70a2964ec20"
+    },
+    "search": {
+      "source": "symbolic/actions/system-search-symbolic.svg",
+      "sha256": "a11c462c3d3d315bcc63cd5d0bf6ac3e76c0f8b9664eebb8d9efaa11e7ca98b9"
+    },
+    "radio": {
+      "source": "symbolic/devices/audio-speakers-symbolic.svg",
+      "sha256": "b23ef5e92807e03034eaad59519ff6b521597634f7252fb3924fa2c5d46e757f"
+    },
+    "shuffle": {
+      "source": "symbolic/status/media-playlist-shuffle-symbolic.svg",
+      "sha256": "cba8731c50d637316ead272bee1958b74d33a10366727b4e919e00596f922c2a"
+    },
+    "retry": {
+      "source": "symbolic/actions/view-refresh-symbolic.svg",
+      "sha256": "43281dccb17fe4ef2d2fd459de33debf0fbd9294dac9275c0f047c9fe7d9ae5c"
+    },
+    "music": {
+      "source": "symbolic/mimetypes/audio-x-generic-symbolic.svg",
+      "sha256": "e9d6377cc778790d383eaa2941e37b6a14b12dd6bd7b3852b9857e628364617a"
+    },
+    "close": {
+      "source": "symbolic/ui/window-close-symbolic.svg",
+      "sha256": "75668d97d7466b1fafea21767c5de1ba31efd48fb319f43a6e16ddbf455d6465"
+    },
+    "account": {
+      "source": "symbolic/status/avatar-default-symbolic.svg",
+      "sha256": "017ac0ebce425c10a1a7540da3505f1eecfe0e36532607df7a610a0356394e5f"
+    }
+  }
+}

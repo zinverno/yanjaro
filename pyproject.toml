@@ -13,7 +13,7 @@ dependencies = ["PySide6-Essentials==6.11.2", "python-mpv==1.0.8", "yandex-music
 yanjaro-music = "yanjaro.__main__:main"
 
 [tool.setuptools.package-data]
-yanjaro = ["*.qml"]
+yanjaro = ["*.qml", "qmldir", "icons/*"]
 
 [tool.setuptools.packages.find]
 include = ["yanjaro*"]

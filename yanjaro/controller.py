@@ -1,9 +1,10 @@
-"""One serialized API worker; only safe projections reach the QML context."""
+"""Qt state and queues; the existing API remains confined to one worker thread."""
 
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timezone
+import random
 from threading import Event
 import time
-from datetime import datetime, timezone
 from uuid import uuid4
 
 from PySide6.QtCore import QObject, Property, Signal, Slot, Qt, QUrl, QTimer
@@ -12,8 +13,15 @@ from PySide6.QtGui import QDesktopServices
 from .api import MusicApi, safe_error
 
 
+def empty_page():
+    return dict(rows=[], more=False, total=-1, ids=(), page=0, scroll=0.0,
+                status="idle", error="", revision=0)
+
+
 class Controller(QObject):
     changed = Signal()
+    contentChanged = Signal()
+    queueChanged = Signal()
     _result = Signal(str, object, str)
     _code = Signal(str, str)
 
@@ -24,189 +32,374 @@ class Controller(QObject):
         self.pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="music-api")
         self.cancel = Event()
         self.closing = False
-        self.page = 0
+        self.pages = {name: empty_page() for name in ("likes", "search", "stations", "history")}
+        self.page_jobs = {}
+        self.play_job = self.meta_job = self.wave_job = None
         self.query = ""
+        self.search_generation = 0
+        self.queue_search_generation = -1
+        self.queue = []
+        self.queue_index = -1
+        self.queue_context = ""
         self.wave_station = ""
         self.wave_queue = []
         self.wave_seen = []
+        self.wave_batches_received = 0
+        self.wave_played_batches = set()
         self.generation = 0
+        self.play_revision = 0
         self.active_wave = None
         self.wave_started = False
+        self.refilling = False
+        self.waiting_wave = False
         self.previous = None
-        self.advance_pending = False
         self.listened = 0.0
         self.current_track = None
+        self.selected_row = None
         self.play_session = None
         self.last_tick = time.monotonic()
-        self._state = dict(busy=False, signedIn=False, message=player.error or "Войдите, чтобы открыть музыку.",
-                           code="", loginUrl="", view="likes", heading="Мне нравится",
-                           rows=[], more=False, current="Ничего не играет", waveActive=False,
+        self._state = dict(signedIn=False, authBusy=False, authError="", code="", loginUrl="",
+                           view="likes", currentId="", current="Ничего не выбрано", artist="",
+                           cover="", source="", loading=False, playerError=player.error,
+                           stationError="", waveActive=False,
                            playReport="События этого запуска ещё не отправлялись.")
         self._result.connect(self._completed, Qt.ConnectionType.QueuedConnection)
         self._code.connect(self._show_code, Qt.ConnectionType.QueuedConnection)
         player.changed.connect(self.changed)
-        player.failed.connect(self._error)
+        player.failed.connect(self._player_error)
         player.started.connect(self._started)
         player.ended.connect(self._ended)
         self.timer = QTimer(self)
         self.timer.timeout.connect(self._tick)
         self.timer.start(200)
 
+    @Property("QVariantMap", notify=contentChanged)
+    def content(self):
+        page = self.pages[self._state["view"]]
+        return dict(rows=page["rows"], view=self._state["view"], scroll=page["scroll"])
+
+    @Property("QVariantList", notify=queueChanged)
+    def queueRows(self):
+        if self.wave_station:
+            current = [dict(self.selected_row, queueIndex=-1, isCurrent=True)] if self.selected_row else []
+            return current + [dict(t.row(), queueIndex=i, isCurrent=False) for i, (t, _) in enumerate(self.wave_queue)]
+        return [dict(row, queueIndex=i, isCurrent=i == self.queue_index) for i, row in enumerate(self.queue) if i >= self.queue_index]
+
     @Property("QVariantMap", notify=changed)
     def state(self):
-        return self._state | self.player.state
+        page = self.pages[self._state["view"]]
+        headings = {"likes": "Мне нравится", "search": "Результаты поиска",
+                    "stations": "Станции", "history": "История Яндекса"}
+        return self._state | self.player.state | dict(
+            more=page["more"], total=page["total"], loadedCount=len(page["rows"]),
+            pageStatus=page["status"], pageError=page["error"], pageScroll=page["scroll"],
+            busy=page["status"] == "loading" or self._state["authBusy"],
+            heading=headings[self._state["view"]], query=self.query,
+            canPrevious=not self.wave_station and any(r["available"] for r in self.queue[:self.queue_index]),
+            canNext=bool(self.wave_station or any(r["available"] for r in self.queue[self.queue_index + 1:])),
+            stationId=self.wave_station, refilling=self.refilling)
 
-    def _submit(self, operation, call):
-        if self._state["busy"] or self.closing:
-            return False
-        self._state.update(busy=True, message="Подождите…")
-        self.changed.emit()
-
+    def _work(self, operation, context, call):
         def run():
             try:
                 result = call()
-                self._result.emit(operation, result, "")
+                self._result.emit(operation, (context, result), "")
             except Exception as exc:
-                self._result.emit(operation, None, safe_error(exc))
-
-        self.pool.submit(run)
-        return True
+                self._result.emit(operation, (context, None), safe_error(exc))
+        return self.pool.submit(run)
 
     @Slot(str, object, str)
-    def _completed(self, operation, result, error):
+    def _completed(self, operation, payload, error):
         if self.closing:
             return
-        if operation == "play-report":
-            self._state["playReport"] = error or "Событие прослушивания принято сервером. Обновление истории этим не подтверждено."
-            self.changed.emit()
-            return
-        if operation == "refill":
-            generation, batch = result
-            if generation != self.generation:
+        context, result = payload
+        if operation == "page":
+            view, revision, number = context
+            page = self.pages[view]
+            if revision != page["revision"]:
+                return
+            page["error"] = error
+            page["status"] = "error" if error else "ready"
+            if not error:
+                old = page["rows"] if number else []
+                ids = {r["id"] for r in old}
+                rows = list(old)
+                for row in result.rows:
+                    if row["id"] not in ids:
+                        rows.append(row)
+                        ids.add(row["id"])
+                page.update(rows=rows, more=result.more, total=result.total, page=number)
+                if result.ids:
+                    page["ids"] = result.ids
+                # The playing context is a snapshot. Only its own next search page can extend it.
+                if (view == "search" and number and self.queue_context == self.query
+                        and self.queue_search_generation == self.search_generation and not self.wave_station):
+                    existing = {r["id"] for r in self.queue}
+                    self.queue.extend(r.copy() for r in rows if r["id"] not in existing and r["available"])
+                self.contentChanged.emit()
+        elif operation in ("login", "logout"):
+            self._state.update(authBusy=False, code="", loginUrl="", authError=error)
+            if not error:
+                self._state["signedIn"] = operation == "login"
+                if operation == "login":
+                    self.show("likes")
+        elif operation == "play":
+            if context != (self.generation, self.play_revision):
                 return
             if error:
-                self._error(error)
-            elif batch:
-                self._append_wave(batch)
-                self._state["message"] = "Следующая партия волны получена"
-                self.changed.emit()
-            return
-        if operation == "notice":
-            if error:
-                self._error(error)
-            return
-        self._state["busy"] = False
-        if operation == "login":
-            self._state.update(code="", loginUrl="")
-        if error:
-            self._error(error)
-            self._advance_if_idle()
-            return
-        if operation == "login":
-            self._state["signedIn"] = True
-            self.show("likes")
-        elif operation == "logout":
-            self._state.update(signedIn=False, rows=[], more=False, current="Ничего не играет",
-                               playReport="События этого запуска ещё не отправлялись.",
-                               message="Вы вышли. Токен удалён из памяти клиента.")
+                self._player_error(error)
+            else:
+                self.current_track = result.track
+                self.listened = 0.0
+                self._set_current(result.track.row())
+                if not self.wave_station and self.queue_index >= 0:
+                    self.queue[self.queue_index] = result.track.row()
+                self.player.play(result)
+        elif operation == "queue-meta":
+            if context != self.generation or error:
+                return
+            by_id = {r["id"]: r for r in result}
+            self.queue = [by_id.get(r["id"].split(":")[0], r) for r in self.queue]
         elif operation == "wave":
-            self._append_wave(result)
-            self._take_wave()
-        elif operation == "play":
-            self.current_track = result.track
-            self.listened = 0.0
-            self._state.update(current=result.track.title + " · " + result.track.artist,
-                               message="Загрузка полного аудио…")
-            self.player.play(result)
-        elif operation in ("page", "more"):
-            self._state["rows"] = (self._state["rows"] if operation == "more" else []) + result.rows
-            self._state.update(more=result.more, message=result.note or
-                               ("Готово" if self._state["rows"] else "Ничего не найдено"))
-            if operation == "more":
-                self.page += 1
+            if context != self.generation:
+                return
+            self.refilling = False
+            if error:
+                self._state["stationError"] = "Не удалось продолжить станцию. " + error
+            else:
+                self.wave_batches_received += 1
+                self._append_wave(result)
+                if not self.wave_queue:
+                    self._state["stationError"] = "Не удалось продолжить станцию: нет новых доступных треков."
+            if self.waiting_wave:
+                self.waiting_wave = False
+                if self.wave_queue:
+                    self._take_wave()
+                else:
+                    self._state["loading"] = False
+        elif operation == "play-report":
+            self._state["playReport"] = error or "Событие прослушивания принято сервером. Обновление истории этим не подтверждено."
+        elif operation == "feedback" and context == self.generation and error:
+            self._state["stationError"] = error
+        self.queueChanged.emit()
         self.changed.emit()
-        self._advance_if_idle()
-
-    def _advance_if_idle(self):
-        if self.advance_pending and not self._state["busy"]:
-            self.advance_pending = False
-            self.next_wave()
 
     @Slot(str, str)
     def _show_code(self, url, code):
         if self.closing or self.cancel.is_set():
             return
-        self._state.update(code=code, loginUrl=url, message="Подтвердите вход в браузере.")
+        self._state.update(code=code, loginUrl=url)
         self.open_browser()
         self.changed.emit()
 
     @Slot()
     def open_browser(self):
         if self._state["loginUrl"] and not QDesktopServices.openUrl(QUrl(self._state["loginUrl"])):
-            self._error("Браузер не открылся. Откройте адрес, указанный рядом с кодом.")
+            self._state["authError"] = "Браузер не открылся. Откройте адрес рядом с кодом."
+            self.changed.emit()
 
     @Slot()
     def login(self):
-        if self._state["busy"] or self._state["signedIn"]:
+        if self._state["authBusy"] or self._state["signedIn"]:
             return
         self.cancel.clear()
-        self._submit("login", lambda: self.api.login(self._code.emit, self.cancel))
+        self._state.update(authBusy=True, authError="")
+        self._work("login", None, lambda: self.api.login(self._code.emit, self.cancel))
+        self.changed.emit()
 
     @Slot()
     def cancel_login(self):
         self.cancel.set()
-        self._state.update(code="", loginUrl="", message="Отменяем вход…")
+        self._state.update(code="", loginUrl="")
         self.changed.emit()
 
     @Slot()
     def logout(self):
-        if not self._state["busy"]:
-            self._leave_wave()
-            self.player.stop()
-            self._submit("logout", self.api.logout)
+        if self._state["authBusy"]:
+            return
+        self._leave_wave()
+        self.queue = []
+        self.queue_index = -1
+        self.current_track = None
+        self.selected_row = None
+        self.player.stop()
+        for page in self.pages.values():
+            revision = page["revision"] + 1
+            page.update(empty_page(), revision=revision)
+        self._state.update(signedIn=False, authBusy=True, currentId="", current="Ничего не выбрано",
+                           artist="", cover="", source="", loading=False, playerError="")
+        self._work("logout", None, self.api.logout)
+        self.contentChanged.emit()
+        self.queueChanged.emit()
+        self.changed.emit()
 
-    def _page_call(self, page):
-        if self._state["view"] == "stations":
-            return self.api.stations()
-        if self._state["view"] == "history":
-            return self.api.history()
-        return self.api.search(self.query, page) if self._state["view"] == "search" else self.api.likes(page)
+    def _load_page(self, view, number=0):
+        page = self.pages[view]
+        page["revision"] += 1
+        page.update(status="loading", error="")
+        context = view, page["revision"], number
+        query = self.query
+        if previous := self.page_jobs.get(view):
+            previous.cancel()  # Queued obsolete searches never reach the network.
+        def call():
+            if view == "stations":
+                return self.api.stations()
+            if view == "history":
+                return self.api.history()
+            return self.api.search(query, number) if view == "search" else self.api.likes(number)
+        self.page_jobs[view] = self._work("page", context, call)
+        self.changed.emit()
 
     @Slot(str)
     def show(self, view):
-        if self._state["busy"] or not self._state["signedIn"]:
+        if view not in self.pages:
             return
-        headings = {"likes": "Мне нравится", "search": "Поиск", "stations": "Станции", "history": "История Яндекса"}
-        if view not in headings:
-            return
-        self.page = 0
-        self._state.update(view=view, heading=headings[view], rows=[], more=False)
-        self._submit("page", lambda: self._page_call(0))
+        self._state["view"] = view
+        self.contentChanged.emit()
+        page = self.pages[view]
+        if self._state["signedIn"] and page["status"] == "idle" and (view != "search" or self.query):
+            self._load_page(view)
+        self.changed.emit()
+
+    @Slot(float)
+    def save_scroll(self, position):
+        self.pages[self._state["view"]]["scroll"] = max(0, position)
 
     @Slot(str)
     def search(self, query):
-        if not self._state["busy"]:
-            self.query = query
-            self.show("search")
+        self.query = query.strip()
+        self.search_generation += 1
+        if previous := self.page_jobs.get("search"):
+            previous.cancel()
+        self._state["view"] = "search"
+        page = self.pages["search"]
+        revision = page["revision"] + 1
+        page.update(empty_page(), revision=revision)
+        if self.query and self._state["signedIn"]:
+            self._load_page("search")
+        self.contentChanged.emit()
+        self.changed.emit()
+
+    @Slot()
+    def retry_page(self):
+        if not self._state["signedIn"]:
+            return
+        view = self._state["view"]
+        page = self.pages[view]
+        if page["status"] != "loading":
+            self._load_page(view, page["page"] + 1 if page["rows"] and page["more"] else 0)
 
     @Slot()
     def more(self):
-        if self._state["more"]:
-            self._submit("more", lambda: self._page_call(self.page + 1))
+        view = self._state["view"]
+        page = self.pages[view]
+        if page["more"] and page["status"] == "ready":
+            self._load_page(view, page["page"] + 1)
+
+    def _set_current(self, row):
+        self.selected_row = row.copy()
+        self._state.update(currentId=row["id"].split(":")[0], current=row["title"],
+                           artist=row.get("artist", row.get("detail", "")), cover=row.get("cover", ""))
 
     @Slot(str)
     def play(self, track_id):
-        if self._state["busy"]:
-            return
         if self._state["view"] == "stations":
             self.start_wave(track_id)
             return
+        self._build_queue(track_id)
+
+    def _build_queue(self, track_id, shuffle=False):
         if not self.player.state["ready"]:
-            self._error(self.player.error)
+            self._player_error(self.player.error)
             return
+        page = self.pages[self._state["view"]]
+        rows = page["rows"]
         self._leave_wave()
+        self.queue_context = self.query if self._state["view"] == "search" else ""
+        self.queue_search_generation = self.search_generation
+        by_id = {r["id"].split(":")[0]: r for r in rows}
+        # The full likes ID list is returned by the existing likes endpoint, not inferred from a page.
+        ids = page["ids"] if self._state["view"] == "likes" and page["ids"] else [r["id"] for r in rows]
+        self.queue = [by_id.get(id.split(":")[0], dict(id=id, title="Трек из коллекции",
+                      artist="Название загрузится перед воспроизведением", cover="", duration=0,
+                      available=True, kind="track" )).copy() for id in dict.fromkeys(ids)]
+        if not self.queue:
+            self.queue = [dict(id=track_id, title="Загрузка трека", artist="", cover="", available=True)]
+        if shuffle:
+            random.shuffle(self.queue)
+        self.queue_index = next((i for i, r in enumerate(self.queue) if r["available"]), -1) if shuffle else next((i for i, r in enumerate(self.queue) if r["id"].split(":")[0] == track_id.split(":")[0]), 0)
+        while 0 <= self.queue_index < len(self.queue) and not self.queue[self.queue_index]["available"]:
+            self.queue_index += 1
+        self._state["source"] = "Поиск: " + self.query if self.queue_context else "Мне нравится"
+        if not 0 <= self.queue_index < len(self.queue):
+            self.player.stop()
+            self.current_track = None
+            self.selected_row = None
+            self._state.update(currentId="", current="Ничего не выбрано", artist="", cover="", loading=False)
+            self._player_error("В коллекции нет доступных треков.")
+            self.queueChanged.emit()
+            return
+        self._play_queue()
+
+    @Slot(bool)
+    def play_collection(self, shuffle):
+        page = self.pages["likes"]
+        if not page["ids"]:
+            return
+        self._state["view"] = "likes"
+        self._build_queue(page["ids"][0], shuffle)
+
+    def _load_track(self, row):
+        if self.play_job:
+            self.play_job.cancel()
+        self.play_revision += 1
         self.player.stop()
-        self._submit("play", lambda: self.api.stream(track_id))
+        self.current_track = None
+        self._set_current(row)
+        self._state.update(loading=True, playerError="")
+        self.play_job = self._work("play", (self.generation, self.play_revision), lambda: self.api.stream(row["id"]))
+        self.queueChanged.emit()
+        self.changed.emit()
+
+    def _play_queue(self):
+        if not 0 <= self.queue_index < len(self.queue):
+            return
+        self._load_track(self.queue[self.queue_index])
+        upcoming = self.queue[self.queue_index + 1:self.queue_index + 11]
+        ids = [r["id"] for r in upcoming if not r.get("duration")]
+        if self.meta_job:
+            self.meta_job.cancel()
+        if ids:
+            self.meta_job = self._work("queue-meta", self.generation, lambda: self.api.track_rows(ids))
+
+    @Slot(int)
+    def jump_queue(self, index):
+        if self.wave_station:
+            if not 0 <= index < len(self.wave_queue):
+                return
+            self._finish_track("skip")
+            self.wave_queue = self.wave_queue[index:]
+            self._take_wave()
+        elif 0 <= index < len(self.queue):
+            self._finish_track("skip")
+            self.queue_index = index
+            self._play_queue()
+
+    @Slot()
+    def previous_track(self):
+        if not self.wave_station:
+            index = next((i for i in range(self.queue_index - 1, -1, -1) if self.queue[i]["available"]), -1)
+            if index >= 0:
+                self.jump_queue(index)
+
+    @Slot()
+    def next_track(self):
+        if self.wave_station:
+            self.next_wave()
+        else:
+            index = next((i for i in range(self.queue_index + 1, len(self.queue)) if self.queue[i]["available"]), -1)
+            if index >= 0:
+                self.jump_queue(index)
 
     def _tick(self):
         now = time.monotonic()
@@ -216,58 +409,56 @@ class Controller(QObject):
         self.last_tick = now
 
     def _finish_track(self, event):
-        session = self.play_session
-        self.play_session = None
+        session, self.play_session = self.play_session, None
         if session and self.listened > 0:
             track, play_id, started_at = session
             seconds, position = self.listened, self.player.state["position"]
-
-            def report():
-                try:
-                    self.api.report_play(track, play_id, started_at, seconds, position)
-                    self._result.emit("play-report", None, "")
-                except Exception as exc:
-                    self._result.emit("play-report", None, safe_error(exc))
-            self.pool.submit(report)
-        active = self.active_wave
-        self.active_wave = None
-        if not active or not self.wave_started:
-            self.wave_started = False
-            return
+            self._work("play-report", None, lambda: self.api.report_play(track, play_id, started_at, seconds, position))
+        active, self.active_wave = self.active_wave, None
+        if active and self.wave_started:
+            station, track_id, batch = active
+            seconds = self.listened
+            self.previous = track_id
+            self._work("feedback", self.generation, lambda: self.api.feedback(station, event, track_id, batch, seconds))
         self.wave_started = False
-        station, track_id, batch = active
-        seconds = self.listened
-        self.previous = track_id
-
-        def send():
-            try:
-                self.api.feedback(station, event, track_id, batch, seconds)
-            except Exception as exc:
-                self._result.emit("notice", None, safe_error(exc))
-        self.pool.submit(send)
 
     def _leave_wave(self):
         self._finish_track("skip")
+        for job in (self.wave_job, self.play_job, self.meta_job):
+            if job:
+                job.cancel()
         self.generation += 1
+        self.play_revision += 1
         self.wave_station = ""
         self.wave_queue = []
         self.wave_seen = []
+        self.wave_batches_received = 0
+        self.wave_played_batches = set()
         self.previous = None
-        self.advance_pending = False
-        self._state["waveActive"] = False
+        self.refilling = False
+        self.waiting_wave = False
+        self._state.update(waveActive=False, stationError="")
 
     @Slot(str)
     def start_wave(self, station):
-        if self._state["busy"] or not self._state["signedIn"]:
+        if not self._state["signedIn"]:
             return
         if not self.player.state["ready"]:
-            self._error(self.player.error)
+            self._player_error(self.player.error)
             return
         self._leave_wave()
         self.player.stop()
+        self.queue = []
+        self.queue_index = -1
+        self.current_track = None
         self.wave_station = station
-        self._state.update(waveActive=True)
-        self._submit("wave", lambda: self.api.wave_batch(station, start=True))
+        self.selected_row = None
+        name = next((r["title"] for r in self.pages["stations"]["rows"] if r["id"] == station),
+                    "Моя волна" if station == "user:onyourwave" else "Станция")
+        self._state.update(waveActive=True, source=name, loading=True, currentId="", current="Подбираем музыку",
+                           artist="", cover="", playerError="")
+        self.waiting_wave = True
+        self._refill(start=True)
 
     def _append_wave(self, batch):
         excluded = set(self.wave_seen) | {t.id for t, _ in self.wave_queue}
@@ -276,54 +467,59 @@ class Controller(QObject):
                 self.wave_queue.append((track, batch.batch))
                 excluded.add(track.id)
 
+    def _refill(self, start=False):
+        if self.refilling or not self.wave_station or self._state["stationError"]:
+            return
+        self.refilling = True
+        station, previous = self.wave_station, self.previous
+        self.wave_job = self._work("wave", self.generation, lambda: self.api.wave_batch(station, previous, start=start))
+        self.changed.emit()
+
+    @Slot()
+    def retry_station(self):
+        self._state["stationError"] = ""
+        self.waiting_wave = not self.player.state["loaded"]
+        self._refill(start=self.previous is None and not self.wave_seen)
+
     def _take_wave(self):
         if not self.wave_station or self.closing:
             return
         if not self.wave_queue:
-            self._error("В партии нет новых доступных треков. Нажмите «Следующая партия» для повторного запроса.")
+            self.waiting_wave = True
+            self._state["loading"] = not bool(self._state["stationError"])
+            self._refill()
             return
         track, batch = self.wave_queue.pop(0)
         self.wave_seen = (self.wave_seen + [track.id])[-100:]
         self.active_wave = (self.wave_station, track.id, batch)
         self.listened = 0.0
-        self._submit("play", lambda: self.api.stream(track.id))
+        self._load_track(track.row())
 
     @Slot()
     def next_wave(self):
-        if self._state["busy"] or not self.wave_station:
+        if not self.wave_station:
             return
         self._finish_track("skip")
         self.player.stop()
-        if self.wave_queue:
-            self._take_wave()
-        else:
-            station, previous = self.wave_station, self.previous
-            self._submit("wave", lambda: self.api.wave_batch(station, previous))
+        self._take_wave()
 
     @Slot()
     def _started(self):
-        if self.closing:
+        if self.closing or not self.current_track:
             return
-        if self.current_track and not self.play_session:
+        if not self.play_session:
             self.play_session = (self.current_track, str(uuid4()), datetime.now(timezone.utc).isoformat())
             self.last_tick = time.monotonic()
-        self._state["message"] = "Воспроизведение"
+        self._state["loading"] = False
+        if self.active_wave and not self.wave_started:
+            self.wave_started = True
+            station, track_id, batch = self.active_wave
+            self.wave_played_batches.add(batch)
+            self._work("feedback", self.generation, lambda: self.api.feedback(station, "trackStarted", track_id, batch))
+            self.previous = track_id
+            if len(self.wave_queue) <= 2:
+                self._refill()
         self.changed.emit()
-        if not self.active_wave or self.wave_started:
-            return
-        self.wave_started = True
-        station, track_id, batch = self.active_wave
-        previous, generation = self.previous, self.generation
-        self.previous = None
-
-        def refill():
-            try:
-                self.api.feedback(station, "trackStarted", track_id, batch)
-                result = self.api.wave_batch(station, previous) if previous else None
-                self._result.emit("refill", (generation, result), "")
-            except Exception as exc:
-                self._result.emit("refill", (generation, None), safe_error(exc))
-        self.pool.submit(refill)
 
     @Slot()
     def _ended(self):
@@ -331,10 +527,21 @@ class Controller(QObject):
             return
         self._finish_track("trackFinished")
         if self.wave_station:
-            if self._state["busy"]:
-                self.advance_pending = True
+            self._take_wave()
+        else:
+            self.next_track()
+        self.changed.emit()
+
+    @Slot()
+    def retry_play(self):
+        if self.wave_station and self.active_wave:
+            track = self.current_track
+            if track:
+                self._load_track(track.row())
             else:
-                self.next_wave()
+                self._load_track(dict(id=self.active_wave[1], title=self._state["current"], artist=self._state["artist"]))
+        else:
+            self._play_queue()
 
     @Slot()
     def pause(self):
@@ -344,9 +551,17 @@ class Controller(QObject):
     def seek(self, seconds):
         self.player.seek(seconds)
 
+    @Slot(float)
+    def volume(self, value):
+        self.player.set_volume(value)
+
+    @Slot()
+    def mute(self):
+        self.player.toggle_mute()
+
     @Slot(str)
-    def _error(self, message):
-        self._state["message"] = message
+    def _player_error(self, message):
+        self._state.update(playerError=message, loading=False)
         self.changed.emit()
 
     def close(self):
@@ -354,6 +569,9 @@ class Controller(QObject):
         self.closing = True
         self.timer.stop()
         self.cancel.set()
+        for job in (*self.page_jobs.values(), self.play_job, self.meta_job, self.wave_job):
+            if job:
+                job.cancel()
         self.player.close()
         self.pool.shutdown(wait=True)
         self.api.logout()

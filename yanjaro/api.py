@@ -43,9 +43,11 @@ class Track:
     duration: float
     available: bool
     album_id: str = ""
+    cover: str = ""
 
     def row(self, detail=""):
         return dict(id=self.id, title=self.title, detail=detail or self.artist,
+                    artist=self.artist, cover=self.cover,
                     duration=self.duration, available=self.available, kind="track")
 
 
@@ -54,6 +56,8 @@ class Page:
     rows: list
     more: bool = False
     note: str = ""
+    total: int = -1
+    ids: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -71,10 +75,16 @@ class WaveBatch:
 
 def track_model(track):
     albums = getattr(track, "albums", None) or []
+    cover = getattr(track, "cover_uri", None)
+    cover = "https://" + cover.replace("%%", "100x100") if isinstance(cover, str) else ""
+    # Only public artwork from the service CDN; never accept file URLs or credentials.
+    parsed = urlsplit(cover)
+    if parsed.hostname not in {"avatars.yandex.net", "avatars.mds.yandex.net"} or parsed.username or parsed.password:
+        cover = ""
     return Track(str(track.id), track.title or "Без названия",
                  ", ".join(a.name for a in track.artists or []),
                  (track.duration_ms or 0) / 1000, track.available is True,
-                 str(albums[0].id) if albums else "")
+                 str(albums[0].id) if albums else "", cover)
 
 
 class MusicApi:
@@ -146,7 +156,12 @@ class MusicApi:
         rows = [tracks[i.split(":")[0]].row() if i.split(":")[0] in tracks else
                 dict(id=i, title="Трек недоступен", detail="Метаданные не получены",
                      duration=0, available=False, kind="track") for i in ids]
-        return Page(rows, (page + 1) * 50 < len(self._likes))
+        return Page(rows, (page + 1) * 50 < len(self._likes), total=len(self._likes),
+                    ids=tuple(self._likes))
+
+    def track_rows(self, ids):
+        self._require_login()
+        return [track_model(t).row() for t in self.client.tracks(ids)]
 
     def search(self, text, page=0):
         self._require_login()
@@ -158,7 +173,8 @@ class MusicApi:
             raise ApiError("Не удалось получить результаты поиска.")
         found = result.tracks
         return Page([track_model(t).row() for t in found.results] if found else [],
-                    bool(found and (page + 1) * found.per_page < found.total))
+                    bool(found and (page + 1) * found.per_page < found.total),
+                    total=found.total if found else 0)
 
     def stream(self, track_id):
         self._require_login()

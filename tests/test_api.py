@@ -5,7 +5,7 @@ import unittest
 from types import SimpleNamespace as Obj
 from unittest.mock import Mock
 
-from yanjaro.api import ApiError, MusicApi, Track, safe_error
+from yanjaro.api import ApiError, MusicApi, Track, safe_error, track_model
 
 
 def track(id="1", **kw):
@@ -100,6 +100,13 @@ class ApiTests(unittest.TestCase):
         self.assertFalse(self.api.search("song", 1).more)
         with self.assertRaises(ApiError):
             self.api.search(" ")
+
+    def test_artwork_only_uses_public_service_hosts(self):
+        for host in ('avatars.yandex.net', 'avatars.mds.yandex.net'):
+            self.assertEqual(track_model(track(cover_uri=host + '/get-music/%%')).cover,
+                             'https://' + host + '/get-music/100x100')
+        for uri in ('file:///etc/passwd', 'evil.example/image', 'user:password@avatars.yandex.net/image'):
+            self.assertEqual(track_model(track(cover_uri=uri)).cover, '')
 
     def test_full_audio_only_and_fresh_link_on_each_play(self):
         self.client.tracks.return_value = [track()]

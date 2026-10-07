@@ -5,193 +5,236 @@ import QtQuick.Layouts
 
 ApplicationWindow {
     id: window
-    width: 1040
-    height: 730
-    minimumWidth: 760
-    minimumHeight: 570
+    required property var music
+    property var s: music.state
+    width: 1180
+    height: 760
+    minimumWidth: 680
+    minimumHeight: 440
     visible: true
     title: "Yanjaro Music"
-    color: "#16191c"
-    palette.window: "#16191c"
-    palette.windowText: "#f0f2f3"
-    palette.base: "#20252a"
-    palette.alternateBase: "#272e34"
-    palette.text: "#f0f2f3"
-    palette.button: "#303840"
-    palette.buttonText: "#f0f2f3"
-    palette.highlight: "#d9eb72"
-    palette.highlightedText: "#151916"
-    required property var music
-    property var s: window.music.state
-    font.pixelSize: 14
+    color: Theme.background
+    font.pixelSize: Theme.body
+    palette.window: Theme.background
+    palette.windowText: Theme.text
+    palette.base: Theme.surface
+    palette.text: Theme.text
+    palette.button: Theme.surface
+    palette.buttonText: Theme.text
+    palette.highlight: Theme.accent
+    palette.highlightedText: Theme.accentText
+    palette.placeholderText: Theme.secondary
 
-    function clock(seconds) {
-        let n = Math.max(0, Math.floor(seconds || 0))
-        return Math.floor(n / 60) + ":" + (n % 60).toString().padStart(2, "0")
+    function navigate(view) {
+        if (tracks.visible) music.save_scroll(tracks.contentY)
+        else if (stationPage.visible) music.save_scroll(stationPage.scrollPosition)
+        music.show(view)
+    }
+    Shortcut { sequence: "Ctrl+F"; onActivated: { search.forceActiveFocus(); search.selectAll() } }
+    Shortcut { sequence: "Ctrl+L"; onActivated: { search.forceActiveFocus(); search.selectAll() } }
+    Shortcut {
+        sequence: "Space"
+        enabled: window.s.loaded && !(window.activeFocusItem instanceof TextInput) && !(window.activeFocusItem instanceof TextEdit) && !(window.activeFocusItem instanceof AbstractButton)
+        onActivated: window.music.pause()
     }
 
-    ColumnLayout {
-        anchors.fill: parent
-        anchors.margins: 24
-        spacing: 16
-
-        RowLayout {
-            Layout.fillWidth: true
-            Label { text: "YANJARO"; font.pixelSize: 23; font.bold: true; color: "#d9eb72" }
-            Label { text: "Музыка на вашем компьютере"; color: "#aab4bc"; Layout.fillWidth: true }
-            Button {
-                objectName: "loginButton"
-                text: window.s.signedIn ? "Выйти" : "Войти через браузер"
-                enabled: !window.s.busy
-                onClicked: window.s.signedIn ? window.music.logout() : window.music.login()
-            }
-        }
-
-        Frame {
-            visible: !window.s.signedIn
-            Layout.fillWidth: true
+    RowLayout {
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: errors.top
+        spacing: 0
+        Rectangle {
+            Layout.preferredWidth: window.width < 900 ? 180 : Theme.sidebarWidth
+            Layout.fillHeight: true
+            color: Theme.sidebar
             ColumnLayout {
-                width: parent.width
-                spacing: 10
-                Label {
-                    text: "Ваша библиотека — после входа"
-                    font.pixelSize: 22
-                    font.bold: true
-                }
-                Label {
-                    text: "Подтвердите доступ на странице Яндекса. Токен хранится только до выхода из приложения."
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-                Label {
-                    visible: window.s.code.length > 0
-                    text: "Код: " + window.s.code
-                    font.pixelSize: 26
-                    font.bold: true
-                    color: "#d9eb72"
-                    Accessible.name: "Код подтверждения " + window.s.code
-                }
-                Label { visible: window.s.code.length > 0; text: window.s.loginUrl; textFormat: Text.PlainText }
+                anchors.fill: parent
+                anchors.margins: Theme.gap
+                spacing: Theme.small
                 RowLayout {
-                    visible: window.s.busy
-                    Button { text: "Открыть браузер ещё раз"; visible: window.s.code.length > 0; onClicked: window.music.open_browser() }
-                    Button { text: "Отменить вход"; onClicked: window.music.cancel_login() }
+                    Layout.topMargin: Theme.small
+                    Layout.bottomMargin: Theme.margin
+                    spacing: Theme.small
+                    Image { source: "icons/yanjaro.svg"; sourceSize.width: 32; sourceSize.height: 32 }
+                    Label { text: "Yanjaro"; font.pixelSize: 23; font.bold: true }
                 }
+                Label { text: "ВАША МУЗЫКА"; font.pixelSize: 10; font.letterSpacing: 1.5; color: Theme.secondary; Layout.leftMargin: 12; Layout.bottomMargin: Theme.small }
+                ActionButton { objectName: "navLikes"; text: "Мне нравится"; symbol: "favorite"; selected: window.s.view === "likes"; Layout.fillWidth: true; onClicked: window.navigate("likes") }
+                ActionButton { objectName: "navStations"; text: "Станции"; symbol: "radio"; selected: window.s.view === "stations"; Layout.fillWidth: true; onClicked: window.navigate("stations") }
+                ActionButton { visible: window.s.view === "search" || window.s.query.length > 0; text: "Результаты поиска"; symbol: "search"; selected: window.s.view === "search"; Layout.fillWidth: true; onClicked: window.navigate("search") }
+                Item { Layout.fillHeight: true }
+                Rectangle { Layout.fillWidth: true; implicitHeight: 1; color: Theme.line }
+                ActionButton {
+                    objectName: "loginButton"
+                    text: window.s.signedIn ? "Аккаунт" : "Войти"
+                    symbol: "account"
+                    Layout.fillWidth: true
+                    enabled: !window.s.authBusy
+                    onClicked: window.s.signedIn ? profile.open() : window.music.login()
+                    Menu {
+                        id: profile
+                        y: -height
+                        MenuItem { text: "О приложении"; onTriggered: about.open() }
+                        MenuItem { text: "Выйти из аккаунта"; onTriggered: window.music.logout() }
+                    }
+                }
+                Label { text: "Неофициальный клиент"; color: Theme.secondary; font.pixelSize: 11; Layout.leftMargin: 12 }
             }
         }
-
-        RowLayout {
-            Layout.fillWidth: true
-            enabled: window.s.signedIn && !window.s.busy
-            Button { text: "Мне нравится"; onClicked: window.music.show("likes") }
-            TextField {
-                id: searchField
-                objectName: "searchField"
-                Layout.fillWidth: true
-                placeholderText: "Название песни или исполнитель"
-                maximumLength: 300
-                Accessible.name: "Поиск песни"
-                onAccepted: window.music.search(text)
-            }
-            Button { text: "Найти"; enabled: searchField.text.trim().length > 0; onClicked: window.music.search(searchField.text) }
-        }
-
-        RowLayout {
-            Layout.fillWidth: true
-            enabled: window.s.signedIn && !window.s.busy
-            Button { text: "Станции"; onClicked: window.music.show("stations") }
-            Button { text: "Моя волна"; onClicked: window.music.start_wave("user:onyourwave") }
-            Button { text: "Следующая партия →"; enabled: window.s.waveActive; onClicked: window.music.next_wave() }
-            Button { text: "История"; onClicked: window.music.show("history") }
-            Item { Layout.fillWidth: true }
-        }
-
-        RowLayout {
-            Label { text: window.s.heading; font.pixelSize: 25; font.bold: true; Layout.fillWidth: true }
-            BusyIndicator { running: window.s.busy; visible: running; implicitWidth: 26; implicitHeight: 26 }
-        }
-
-        ListView {
-            id: tracks
-            objectName: "tracksList"
+        ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            clip: true
-            spacing: 4
-            model: window.s.rows
-            ScrollBar.vertical: ScrollBar {}
-            delegate: ItemDelegate {
-                id: row
-                required property var modelData
-                required property int index
-                width: ListView.view.width
-                height: 64
-                enabled: !window.s.busy && row.modelData.available
-                Accessible.name: row.modelData.title + ", " + row.modelData.detail
-                onClicked: window.music.play(row.modelData.id)
-                contentItem: RowLayout {
-                    Label { text: (row.index + 1).toString().padStart(2, "0"); color: "#aab4bc"; Layout.preferredWidth: 32 }
-                    ColumnLayout {
-                        Layout.fillWidth: true
-                        Label { text: row.modelData.title; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true; font.bold: true }
-                        Label { text: row.modelData.detail; textFormat: Text.PlainText; elide: Text.ElideRight; color: "#aab4bc"; Layout.fillWidth: true }
-                    }
-                    Label { text: row.modelData.kind === "station" ? "Запустить" : (row.modelData.available ? window.clock(row.modelData.duration) : "Недоступен") }
-                    Label { text: "▶"; color: "#d9eb72" }
+            Layout.margins: window.width < 900 || window.height < 600 ? Theme.gap : Theme.margin
+            spacing: window.height < 600 ? Theme.small : Theme.gap
+            RowLayout {
+                Layout.fillWidth: true
+                TextField {
+                    id: search
+                    objectName: "searchField"
+                    Layout.fillWidth: true
+                    Layout.maximumWidth: 720
+                    implicitHeight: 42
+                    placeholderText: "Поиск в Яндекс Музыке"
+                    Accessible.name: "Поиск в Яндекс Музыке"
+                    maximumLength: 300
+                    selectByMouse: true
+                    onAccepted: { if (tracks.visible) window.music.save_scroll(tracks.contentY); window.music.search(text) }
+                }
+                ActionButton { text: "Найти"; symbol: "search"; onClicked: window.music.search(search.text) }
+                Item { Layout.fillWidth: true }
+            }
+            RowLayout {
+                Layout.fillWidth: true
+                Layout.topMargin: Theme.small
+                Label { text: window.s.heading; font.pixelSize: Theme.title; font.bold: true; Layout.fillWidth: true }
+                Label { visible: window.s.view === "likes" && window.s.total >= 0; text: window.s.total + " треков"; color: Theme.secondary }
+            }
+            RowLayout {
+                visible: window.s.signedIn && window.s.view === "likes" && window.s.total > 0
+                Layout.fillWidth: true
+                ActionButton { text: "Слушать"; symbol: "play"; primary: true; enabled: window.s.ready; onClicked: window.music.play_collection(false) }
+                ActionButton { text: "Перемешать"; symbol: "shuffle"; enabled: window.s.ready; onClicked: window.music.play_collection(true) }
+                Item { Layout.fillWidth: true }
+                Label { visible: window.width >= 900; text: "Загружено " + window.s.loadedCount + " из " + window.s.total; color: Theme.secondary; font.pixelSize: Theme.caption }
+            }
+            ColumnLayout {
+                visible: !window.s.signedIn
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                spacing: Theme.gap
+                Item { Layout.fillHeight: true }
+                Label { text: "Вся ваша музыка — после входа"; font.pixelSize: 22; font.bold: true; wrapMode: Text.WordWrap; Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter }
+                Label { text: "Подтвердите доступ в браузере на странице Яндекса."; color: Theme.secondary; wrapMode: Text.WordWrap; Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter }
+                ActionButton { text: window.s.authBusy ? "Ожидаем подтверждения…" : "Войти через браузер"; symbol: "account"; primary: true; enabled: !window.s.authBusy; Layout.alignment: Qt.AlignHCenter; onClicked: window.music.login() }
+                Label { visible: window.s.code.length > 0; text: window.s.code; font.pixelSize: 32; font.bold: true; Layout.alignment: Qt.AlignHCenter; Accessible.name: "Код подтверждения " + window.s.code }
+                Label { visible: window.s.code.length > 0; text: window.s.loginUrl; textFormat: Text.PlainText; color: Theme.secondary; wrapMode: Text.WordWrap; Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter }
+                RowLayout {
+                    visible: window.s.authBusy
+                    Layout.alignment: Qt.AlignHCenter
+                    ActionButton { text: "Открыть браузер"; visible: window.s.code.length > 0; onClicked: window.music.open_browser() }
+                    ActionButton { text: "Отменить"; onClicked: window.music.cancel_login() }
+                }
+                Label { visible: window.s.authError.length > 0; text: window.s.authError; textFormat: Text.PlainText; color: Theme.error; wrapMode: Text.WordWrap; Layout.fillWidth: true }
+                Item { Layout.fillHeight: true }
+            }
+            RowLayout {
+                visible: window.s.signedIn && window.s.pageError.length > 0
+                Layout.fillWidth: true
+                Label { text: "Не удалось загрузить раздел. " + window.s.pageError; textFormat: Text.PlainText; color: Theme.error; wrapMode: Text.WordWrap; Layout.fillWidth: true }
+                ActionButton { text: "Повторить"; symbol: "retry"; onClicked: window.music.retry_page() }
+            }
+            RowLayout {
+                visible: window.s.signedIn && window.s.pageStatus === "loading"
+                BusyIndicator { running: parent.visible; implicitWidth: 24; implicitHeight: 24 }
+                Label { text: window.s.view === "search" ? "Ищем…" : "Загружаем…"; color: Theme.secondary }
+            }
+            TrackList {
+                id: tracks
+                music: window.music
+                viewState: window.s
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                visible: window.s.signedIn && window.s.view !== "stations"
+                Label {
+                    anchors.centerIn: parent
+                    visible: tracks.count === 0 && window.s.pageStatus !== "loading" && !window.s.pageError
+                    text: window.s.view === "search" ? (window.s.query ? "Ничего не найдено" : "Введите название песни или исполнителя") : "Здесь пока нет треков"
+                    color: Theme.secondary
                 }
             }
-            Label {
-                anchors.centerIn: parent
-                visible: !window.s.busy && window.s.rows.length === 0
-                text: window.s.signedIn ? "Здесь пока нет треков" : "Войдите в аккаунт, чтобы начать"
-                color: "#aab4bc"
-            }
+            Stations { id: stationPage; music: window.music; viewState: window.s; Layout.fillWidth: true; Layout.fillHeight: true; visible: window.s.signedIn && window.s.view === "stations" }
         }
-
-        Button { text: "Показать ещё"; visible: window.s.more; enabled: !window.s.busy; Layout.alignment: Qt.AlignHCenter; onClicked: window.music.more() }
-        Label {
-            text: window.s.message
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            Layout.fillWidth: true
-            color: "#d1d9df"
-            Accessible.role: Accessible.StaticText
-        }
-        Label {
-            visible: window.s.signedIn && window.s.view === "history"
-            text: window.s.playReport
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            Layout.fillWidth: true
-            color: "#aab4bc"
-        }
-
-        Rectangle { color: "#394149"; Layout.fillWidth: true; implicitHeight: 1 }
-        Label { text: window.s.current; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true; font.bold: true }
+    }
+    ColumnLayout {
+        id: errors
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: player.top
+        spacing: 0
         RowLayout {
+            visible: window.s.playerError.length > 0
             Layout.fillWidth: true
-            Button {
-                objectName: "pauseButton"
-                text: window.s.paused ? "Продолжить" : "Пауза"
-                enabled: window.s.loaded
-                onClicked: window.music.pause()
-            }
-            Label { text: window.clock(window.s.position); Layout.preferredWidth: 42 }
-            Slider {
-                id: seek
-                objectName: "seekSlider"
-                Layout.fillWidth: true
-                from: 0
-                to: Math.max(1, window.s.duration)
-                enabled: window.s.loaded && window.s.seekable
-                Accessible.name: "Позиция воспроизведения"
-                Binding { target: seek; property: "value"; value: window.s.position; when: !seek.pressed }
-                onPressedChanged: if (!pressed) window.music.seek(value)
-                Keys.onLeftPressed: window.music.seek(Math.max(0, window.s.position - 5))
-                Keys.onRightPressed: window.music.seek(Math.min(window.s.duration, window.s.position + 5))
-            }
-            Label { text: window.clock(window.s.duration); Layout.preferredWidth: 42 }
-            Label { text: window.s.buffering ? "Буферизация…" : ""; color: "#aab4bc" }
+            Layout.margins: Theme.small
+            Label { text: "Ошибка воспроизведения: " + window.s.playerError; textFormat: Text.PlainText; color: Theme.error; wrapMode: Text.WordWrap; Layout.fillWidth: true }
+            ActionButton { text: "Повторить"; symbol: "retry"; enabled: window.s.currentId.length > 0 && window.s.ready; onClicked: window.music.retry_play() }
         }
+        RowLayout {
+            visible: window.s.stationError.length > 0
+            Layout.fillWidth: true
+            Layout.margins: Theme.small
+            Label { text: window.s.stationError; textFormat: Text.PlainText; color: Theme.error; wrapMode: Text.WordWrap; Layout.fillWidth: true }
+            ActionButton { text: "Повторить"; symbol: "retry"; enabled: !window.s.refilling; onClicked: window.music.retry_station() }
+        }
+    }
+    PlayerBar { id: player; music: window.music; viewState: window.s; anchors.left: parent.left; anchors.right: parent.right; anchors.bottom: parent.bottom; height: Theme.playerHeight; onShowQueue: queue.opened ? queue.close() : queue.open() }
+    Drawer {
+        id: queue
+        objectName: "queuePanel"
+        edge: Qt.RightEdge
+        width: 340
+        height: window.height - player.height
+        modal: false
+        dim: false
+        background: Rectangle { color: Theme.sidebar; border.color: Theme.line }
+        ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: Theme.gap
+            RowLayout {
+                Label { text: "Очередь"; font.pixelSize: 22; font.bold: true; Layout.fillWidth: true }
+                ActionButton { text: "Закрыть очередь"; symbol: "close"; iconOnly: true; onClicked: queue.close() }
+            }
+            Label { text: window.s.source || "Музыка ещё не выбрана"; textFormat: Text.PlainText; color: Theme.secondary; elide: Text.ElideRight; Layout.fillWidth: true }
+            ListView {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                clip: true
+                reuseItems: true
+                model: window.music.queueRows
+                ScrollBar.vertical: ScrollBar {}
+                delegate: ItemDelegate {
+                    id: queued
+                    required property var modelData
+                    required property int index
+                    width: ListView.view.width
+                    height: Theme.track
+                    enabled: modelData.available && modelData.queueIndex !== -1
+                    onClicked: window.music.jump_queue(modelData.queueIndex)
+                    contentItem: ColumnLayout {
+                        Label { text: (queued.modelData.isCurrent ? (window.s.loading ? "Загрузка: " : "Сейчас: ") : "") + queued.modelData.title; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true; color: queued.modelData.isCurrent ? Theme.accent : Theme.text }
+                        Label { text: queued.modelData.artist || queued.modelData.detail || ""; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true; color: Theme.secondary; font.pixelSize: Theme.caption }
+                    }
+                }
+            }
+        }
+    }
+    Dialog {
+        id: about
+        title: "О Yanjaro Music"
+        anchors.centerIn: parent
+        width: 470
+        modal: true
+        standardButtons: Dialog.Ok
+        Label { width: parent.width; text: "Неофициальный клиент Яндекс Музыки.\n\nТокен хранится только в памяти до выхода.\nИстория временно скрыта: новые прослушивания в ней не подтверждены.\n\nИконки: GNOME Project / Adwaita (LGPL-3.0)."; wrapMode: Text.WordWrap }
     }
 }
