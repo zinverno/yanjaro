@@ -1,8 +1,9 @@
 # Local release-candidate recipe. PUBLICATION BLOCKED until a public immutable source URL is supplied.
 # Generate PKGBUILD and .SRCINFO with scripts/prepare-native.py; no floating Git branch.
+# Maintainer: zinverno <https://github.com/zinverno>
 pkgname=yanjaro
 pkgver=0.2.0rc1
-pkgrel=2
+pkgrel=3
 pkgdesc='Unofficial Yandex Music client / Неофициальный клиент Яндекс Музыки'
 url='https://github.com/zinverno/yanjaro'
 arch=('any')
@@ -37,8 +38,8 @@ package() {
     install -Dm644 LICENSE-STATUS.md "$pkgdir/usr/share/licenses/yanjaro/LICENSE-STATUS.md"
     install -Dm644 LICENSE "$pkgdir/usr/share/licenses/yanjaro/LICENSE"
     install -Dm644 "$srcdir/sdk/yandex_music-3.2.0.dist-info/licenses/LICENSE" "$pkgdir/usr/share/licenses/yanjaro/yandex-music-LICENSE"
-    install -Dm644 README.md "$pkgdir/usr/share/doc/yanjaro/README.md"
-    install -Dm644 VALIDATION.md "$pkgdir/usr/share/doc/yanjaro/VALIDATION.md"
-    install -Dm644 docs/RELEASE.md "$pkgdir/usr/share/doc/yanjaro/docs/RELEASE.md"
-    install -Dm644 docs/screenshots/login.png "$pkgdir/usr/share/doc/yanjaro/docs/screenshots/login.png"
+    install -d "$pkgdir/usr/share/doc/yanjaro/docs/screenshots"
+    install -m644 README.md VALIDATION.md LICENSE LICENSE-STATUS.md "$pkgdir/usr/share/doc/yanjaro/"
+    install -m644 docs/*.md "$pkgdir/usr/share/doc/yanjaro/docs/"
+    install -m644 docs/screenshots/*.png "$pkgdir/usr/share/doc/yanjaro/docs/screenshots/"
 }

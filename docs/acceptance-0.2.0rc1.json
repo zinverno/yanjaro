@@ -1,0 +1,11 @@
+{
+  "wave_batches_received_max": 3,
+  "wave_distinct_batches_played_max": 3,
+  "screens_saved": [
+    "likes",
+    "search",
+    "stations"
+  ],
+  "package": "0.2.0rc1-2",
+  "evidence": "Explicit capture session on installed Manjaro package; audio and continued playback also confirmed by user."
+}

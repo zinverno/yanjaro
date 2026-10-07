@@ -20,7 +20,8 @@ files = [ROOT / name for name in ('pyproject.toml', 'README.md', 'VALIDATION.md'
 for directory, suffixes in (('yanjaro', {'.py', '.qml', '.svg', '.json', '.md', ''}), ('tests', {'.py'}), ('scripts', {'.py', '.sh'}), ('docs', {'.md'})):
     files += [p for p in (ROOT / directory).rglob('*') if p.is_file()
               and (p.suffix in suffixes or p.name.startswith('COPYING-')) and '__pycache__' not in p.parts]
-files.append(ROOT / 'docs/screenshots/login.png')  # Reviewed, credential-free real login screen only.
+files += [ROOT / 'docs/screenshots' / name for name in ('login.png', 'likes.png', 'search.png', 'stations.png')]
+# Only reviewed captures, never an arbitrary user Pictures directory.
 files += [ROOT / 'packaging' / name for name in ('yanjaro', 'yanjaro.desktop', 'sdk-source.json', 'PKGBUILD.in')]
 with archive.open('wb') as raw, gzip.GzipFile(filename='', mode='wb', fileobj=raw, mtime=epoch) as compressed, tarfile.open(fileobj=compressed, mode='w') as tar:
     for path in sorted(set(files)):

@@ -26,6 +26,11 @@ required={'usr/bin/yanjaro','usr/share/applications/yanjaro.desktop',
           'usr/share/licenses/yanjaro/LICENSE',
           'usr/share/licenses/yanjaro/yandex-music-LICENSE'}
 assert required.issubset(names), required-set(names)
+source_root=Path(__file__).resolve().parents[1] / 'yanjaro'
+expected={f'usr/lib/yanjaro/yanjaro/{p.relative_to(source_root)}'
+          for p in source_root.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
+actual={n for n in names if n.startswith('usr/lib/yanjaro/yanjaro/') and not n.endswith('/')}
+assert actual==expected, 'Application resources differ from source (possible stale build files)'
 for name in names:
     if name == 'usr/bin/yanjaro' or name.startswith('usr/lib/yanjaro/yanjaro/') and Path(name).suffix in {'.py','.qml'}:
         body=subprocess.check_output(['bsdtar','-xOf',str(package),name])

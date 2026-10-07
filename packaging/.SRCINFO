@@ -1,7 +1,7 @@
 pkgbase = yanjaro
 	pkgdesc = Unofficial Yandex Music client / Неофициальный клиент Яндекс Музыки
 	pkgver = 0.2.0rc1
-	pkgrel = 2
+	pkgrel = 3
 	url = https://github.com/zinverno/yanjaro
 	arch = any
 	license = GPL-3.0-or-later
@@ -23,7 +23,7 @@ pkgbase = yanjaro
 	noextract = yandex_music-3.2.0-py3-none-any.whl
 	source = yanjaro-0.2.0rc1.tar.gz
 	source = yandex_music-3.2.0-py3-none-any.whl::https://files.pythonhosted.org/packages/67/76/fc7b9653df26f3f8255e033a302a478b4eb899beeddbd66ae48c005654bb/yandex_music-3.2.0-py3-none-any.whl
-	sha256sums = 3d80a4f58294784029a7fc88c3f299e77c1885c716be97a1c5b19fc0bc924dd5
+	sha256sums = 793ca709e8b0d488e197ba5cb8bc5779347ec415a0343c746f5162e392b2abf0
 	sha256sums = b897889882707512ece92ca5663aba879dcaa26a88a6ba1c301dec6e2c5bdc3c
 
 pkgname = yanjaro
