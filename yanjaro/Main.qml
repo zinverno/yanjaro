@@ -63,6 +63,7 @@ ApplicationWindow {
                 ActionButton { objectName: "navLikes"; text: "Мне нравится"; symbol: "favorite"; selected: window.s.view === "likes"; Layout.fillWidth: true; onClicked: window.navigate("likes") }
                 ActionButton { objectName: "navStations"; text: "Станции"; symbol: "radio"; selected: window.s.view === "stations"; Layout.fillWidth: true; onClicked: window.navigate("stations") }
                 ActionButton { visible: window.s.view === "search" || window.s.query.length > 0; text: "Результаты поиска"; symbol: "search"; selected: window.s.view === "search"; Layout.fillWidth: true; onClicked: window.navigate("search") }
+                ActionButton { visible: window.s.experimentEnabled; text: "Подбор · эксперимент"; selected: window.s.view === "experiment"; Layout.fillWidth: true; onClicked: window.navigate("experiment") }
                 Item { Layout.fillHeight: true }
                 Rectangle { Layout.fillWidth: true; implicitHeight: 1; color: Theme.line }
                 ActionButton {
@@ -120,6 +121,7 @@ ApplicationWindow {
                     ActionButton { required property var modelData; text: modelData.title; selected: window.s.searchType === modelData.kind; onClicked: window.music.search_tab(modelData.kind) }
                 }
             }
+            ExperimentControls { music: window.music; viewState: window.s; Layout.fillWidth: true; visible: window.s.signedIn && window.s.view === "experiment" }
             EntityHeader { music: window.music; viewState: window.s; Layout.fillWidth: true; visible: window.s.signedIn && (window.s.entityKind === "artist" || window.s.entityKind === "album") }
             RowLayout {
                 visible: window.s.signedIn && window.s.view === "likes" && window.s.total > 0
@@ -260,6 +262,9 @@ ApplicationWindow {
             CheckBox { text: "Запомнить аккаунт на этом устройстве"; checked: window.s.remember; enabled: !window.s.authBusy; onToggled: window.music.remember_account(checked) }
             Label { text: window.s.accountMessage; wrapMode: Text.WordWrap; textFormat: Text.PlainText; Layout.fillWidth: true }
             ActionButton { text: window.s.storageAction === "save" ? "Повторить сохранение" : window.s.storageAction === "delete" ? "Удалить сохранённый вход" : "Повторить доступ"; enabled: !window.s.authBusy; onClicked: window.music.retry_storage() }
+            CheckBox { text: "Подбор Yanjaro · эксперимент"; enabled: window.s.signedIn; checked: window.s.experimentEnabled; onToggled: window.music.enable_experiment(checked) }
+            Label { text: "После включения: локальные события и оценки, хранение до 90 дней. Каталог по запросу у Яндекса. Лайки Яндекса не меняются."; wrapMode: Text.WordWrap; Layout.fillWidth: true; color: Theme.secondary; font.pixelSize: Theme.caption }
+            ActionButton { text: "Очистить данные эксперимента"; enabled: window.s.signedIn; onClicked: window.music.clear_experiment() }
             Label { text: window.s.mprisStatus; wrapMode: Text.WordWrap; Layout.fillWidth: true; color: Theme.secondary }
         }
     }

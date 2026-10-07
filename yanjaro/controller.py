@@ -13,6 +13,7 @@ from PySide6.QtGui import QDesktopServices
 from .api import MusicApi, safe_error, InvalidAccount
 from .storage import data_path, read_json, write_json, account_path
 from .catalog import station_groups
+from .recommend import Profile, mix
 
 
 def empty_page():
@@ -41,12 +42,20 @@ class PlaybackController(QObject):
         self.pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="music-api")
         self.cancel = Event()
         self.closing = False
-        self.pages = {name: empty_page() for name in ("likes", "search", "stations", "history")}
+        self.pages = {name: empty_page() for name in ("likes", "search", "stations", "history", "experiment")}
         self.search_type = 'all'
         self.search_pages = {kind: empty_page() for kind in ('all','track','artist','album')}
         self.pages.update({'search:' + kind: page for kind, page in self.search_pages.items()})
         self.pages['search'] = self.search_pages['all']
         self.back_stack = []
+        self.profile = Profile()
+        self.mix_revision = 0
+        self.mix_job = None
+        self.mix_steps = []
+        self.mix_candidates = []
+        self.mix_warnings = []
+        self.mix_seed = 0
+        self.mix_liked = set()
         self.station_preferences = {}
         self.station_query = ''
         self.station_groups = []
@@ -80,9 +89,11 @@ class PlaybackController(QObject):
         self.waiting_wave = False
         self.previous = None
         self.listened = 0.0
+        self.experiment_seconds = 0.0
         self.current_track = None
         self.selected_row = None
         self.play_session = None
+        self.was_playing = False
         self.last_tick = time.monotonic()
         self._state = dict(signedIn=False, authBusy=False, authError="", code="", loginUrl="",
                            remember=self.preferences.get('remember', True), accountMessage='',
@@ -93,12 +104,12 @@ class PlaybackController(QObject):
                            playReport="События этого запуска ещё не отправлялись.")
         self._result.connect(self._deliver, Qt.ConnectionType.QueuedConnection)
         self._code.connect(self._show_code, Qt.ConnectionType.QueuedConnection)
-        player.changed.connect(self.changed)
+        player.changed.connect(self._player_changed)
         player.failed.connect(self._player_error)
         player.started.connect(self._started)
         player.ended.connect(self._ended)
         self.timer = QTimer(self)
-        self.timer.timeout.connect(self._tick)
+        self.timer.timeout.connect(self._timer_tick)
         self.timer.start(200)
 
     @Property("QVariantMap", notify=contentChanged)
@@ -137,12 +148,15 @@ class PlaybackController(QObject):
     def state(self):
         page = self.pages[self._state["view"]]
         headings = {"likes": "Мне нравится", "search": "Результаты поиска",
-                    "stations": "Станции", "history": "История Яндекса"}
+                    "stations": "Станции", "history": "История Яндекса", "experiment": "Подбор Yanjaro · эксперимент"}
         return self._state | self.player.state | dict(
             more=page["more"], total=page["total"], loadedCount=len(page["rows"]),
             pageStatus=page["status"], pageError=page["error"], pageScroll=page["scroll"],
             busy=page["status"] == "loading" or self._state["authBusy"],
             heading=headings.get(self._state['view'], page['meta'].get('title', 'Каталог')),
+            experimentEnabled=self.profile.data['enabled'], experimentBalance=self.profile.data['balance'],
+            experimentSeeds=len(self.profile.data['seeds']), experimentMessage=' '.join(self.mix_warnings),
+            experimentRating=self.profile.data['ratings'].get(self._state['currentId'], {}).get('value', 0),
             searchType=self.search_type, canBack=bool(self.back_stack), currentRow=self.selected_row or {},
             entityKind=self._state['view'].split(':')[0], query=self.query,
             playbackStatus=self.playback_status(), desiredPaused=self.desired_paused,
@@ -218,6 +232,7 @@ class PlaybackController(QObject):
                 self._state['storageAction'] = self.storage_action
                 if self.account_id:
                     self.station_preferences = read_json(account_path(self.account_id, 'stations.json')) if self.store else {}
+                    self.profile = Profile(self.account_id, persistent=bool(self.store))
                     self.preferences['signed_out'] = False
                     self._save_preferences()
                     self.show('likes')
@@ -239,6 +254,7 @@ class PlaybackController(QObject):
             else:
                 self.current_track = result.track
                 self.listened = 0.0
+                self.experiment_seconds = 0.0
                 self._set_current(result.track.row())
                 if not self.wave_station and self.queue_index >= 0:
                     self.queue[self.queue_index] = result.track.row()
@@ -265,6 +281,11 @@ class PlaybackController(QObject):
                     self._take_wave()
                 else:
                     self._state["loading"] = False
+        elif operation == 'experiment-step':
+            revision, step = context
+            if revision != self.mix_revision or not self.profile.data['enabled']:
+                return
+            self._mix_result(step, result, error)
         elif operation == "play-report":
             self._state["playReport"] = error or "Событие прослушивания принято сервером. Обновление истории этим не подтверждено."
         elif operation == "feedback" and context == self.generation and error:
@@ -390,6 +411,10 @@ class PlaybackController(QObject):
         self.station_groups = []
         self.back_stack = []
         self._leave_wave()
+        self.cancel_mix()
+        self.profile = Profile()
+        self.repeat_mode = 'None'
+        self.shuffle_enabled = False
         self.queue = []
         self.queue_history = []
         self.history_cursor = -1
@@ -444,7 +469,7 @@ class PlaybackController(QObject):
             self._refresh_stations()
         self.contentChanged.emit()
         page = self.pages[view]
-        if self._state["signedIn"] and page["status"] == "idle" and (view != "search" or self.query):
+        if self._state["signedIn"] and view != "experiment" and page["status"] == "idle" and (view != "search" or self.query):
             self._load_page(view)
         self.changed.emit()
 
@@ -530,7 +555,9 @@ class PlaybackController(QObject):
             return
         view = self._state["view"]
         page = self.pages[view]
-        if page["status"] != "loading":
+        if view == "experiment":
+            self.build_mix()
+        elif page["status"] != "loading":
             self._load_page(view, page["page"] + 1 if page["rows"] and page["more"] else 0)
 
     @Slot()
@@ -658,11 +685,11 @@ class PlaybackController(QObject):
         if self.wave_station:
             if not 0 <= index < len(self.wave_queue):
                 return
-            self._finish_track("skip")
+            self._finish_track("skip", "manual-skip")
             self.wave_queue = self.wave_queue[index:]
             self._take_wave()
         elif 0 <= index < len(self.queue):
-            self._finish_track("skip")
+            self._finish_track("skip", "manual-skip")
             self.queue_index = index
             self._play_queue()
 
@@ -743,15 +770,37 @@ class PlaybackController(QObject):
         modes = ('None', 'Playlist', 'Track')
         self.set_repeat(modes[(modes.index(self.repeat_mode) + 1) % 3])
 
+    def _player_changed(self):
+        self._tick()
+        self.changed.emit()
+
+    def _timer_tick(self):
+        self._tick()
+        if self.mix_steps and self.mix_job is None:
+            self._mix_next()
+
     def _tick(self):
         now = time.monotonic()
         state = self.player.state
-        if self.play_session and state["loaded"] and not state["paused"] and not state["buffering"]:
-            self.listened += min(now - self.last_tick, 1)
+        if self.play_session and self.was_playing:
+            seconds = max(0, min(now - self.last_tick, 1))
+            self.listened += seconds
+            if self.profile.data['enabled']:
+                self.experiment_seconds += seconds
         self.last_tick = now
+        self.was_playing = bool(self.play_session and state['loaded'] and not state['paused']
+                                and not state['buffering'] and not state.get('seeking', False))
 
-    def _finish_track(self, event):
+    def _finish_track(self, event, cause="source-change"):
+        self._tick()
         session, self.play_session = self.play_session, None
+        if session:
+            self.was_playing = False
+            track, play_id, _ = session
+            try:
+                self.profile.record(play_id, track.id, self._state['source'], self.experiment_seconds, cause)
+            except OSError:
+                self.mix_warnings = ['Не удалось сохранить локальные события эксперимента.']
         if session and self.listened > 0:
             track, play_id, started_at = session
             seconds, position = self.listened, self.player.state["position"]
@@ -843,7 +892,7 @@ class PlaybackController(QObject):
     def next_wave(self):
         if not self.wave_station:
             return
-        self._finish_track("skip")
+        self._finish_track("skip", "manual-skip")
         self.player.stop()
         self._take_wave()
 
@@ -881,7 +930,7 @@ class PlaybackController(QObject):
     def _ended(self):
         if self.closing:
             return
-        self._finish_track("trackFinished")
+        self._finish_track("trackFinished", "finished")
         self._advance(True)
         self.changed.emit()
 
@@ -925,7 +974,7 @@ class PlaybackController(QObject):
     def stop(self):
         self.stop_requested = True
         active = self.active_wave
-        self._finish_track('skip')
+        self._finish_track('skip', 'stop')
         self.active_wave = active  # Play can explicitly restart the selected radio track.
         for job in (self.play_job, self.wave_job, self.meta_job):
             if job:
@@ -951,15 +1000,143 @@ class PlaybackController(QObject):
 
     @Slot(str)
     def _player_error(self, message):
+        active = self.active_wave
+        self._finish_track('skip', 'error')
+        self.active_wave = active
         self._state.update(playerError=message, loading=False)
         self.changed.emit()
 
+    def _save_profile(self):
+        try:
+            self.profile.save()
+        except OSError:
+            self.mix_warnings = ['Не удалось сохранить данные эксперимента на устройстве.']
+        self.changed.emit()
+
+    def cancel_mix(self):
+        self.mix_revision += 1
+        self.mix_steps = []
+        if self.mix_job:
+            self.mix_job.cancel()
+        self.mix_job = None
+
+    @Slot(bool)
+    def enable_experiment(self, enabled):
+        self._tick()
+        self.cancel_mix()
+        self.profile.data['enabled'] = enabled
+        self._save_profile()
+        if not enabled:
+            self.pages['experiment'].update(empty_page())
+            if self._state['view'] == 'experiment':
+                self.show('likes')
+        self.contentChanged.emit()
+
+    @Slot(float)
+    def experiment_balance(self, value):
+        self.profile.data['balance'] = max(0, min(value, 1))
+        self._save_profile()
+
+    @Slot(int)
+    def rate_experiment(self, value):
+        try:
+            self.profile.rate(self._state['currentId'], value)
+            self.mix_warnings = ['Локальная оценка учтётся при следующей сборке. Лайки Яндекса не изменены.']
+        except OSError:
+            self.mix_warnings = ['Не удалось сохранить оценку эксперимента.']
+        self.changed.emit()
+
+    @Slot()
+    def seed_experiment(self):
+        if self.profile.data['enabled'] and self._state['currentId']:
+            seeds = self.profile.data['seeds']
+            if self._state['currentId'] not in seeds:
+                self.profile.data['seeds'] = (seeds + [self._state['currentId']])[-10:]
+            self._save_profile()
+
+    @Slot()
+    def clear_experiment(self):
+        self.cancel_mix()
+        self.experiment_seconds = 0.0
+        enabled = self.profile.data['enabled']
+        self.profile.data.update(enabled=enabled, events=[], ratings={}, seeds=[])
+        self.pages['experiment'].update(empty_page())
+        self.mix_warnings = ['Данные эксперимента очищены.']
+        self._save_profile()
+        self.contentChanged.emit()
+
+    @Slot()
+    def build_mix(self):
+        if not self.profile.data['enabled'] or not self._state['signedIn']:
+            return
+        self.cancel_mix()
+        self.mix_seed = random.randrange(2 ** 32)
+        self.mix_candidates = []
+        self.mix_warnings = ['Режим v0: коллекция и знакомые исполнители/альбомы. Похожие треки API ещё не включены.']
+        self.pages['experiment'].update(empty_page(), status='loading')
+        self.show('experiment')
+        if self.pages['likes']['ids'] or self.pages['likes']['status'] == 'ready':
+            self._mix_prepare(self.pages['likes']['ids'])
+        else:
+            self.mix_steps = [('likes', '')]
+        self._mix_next()
+
+    def _mix_prepare(self, ids):
+        self.mix_liked = {id.split(':')[0] for id in ids}
+        seeds = list(dict.fromkeys(list(ids) + self.profile.data['seeds']))
+        rng = random.Random(self.mix_seed)
+        seeds = rng.sample(seeds, min(60, len(seeds)))
+        self.mix_steps = [('seeds', seeds)] if seeds else []
+        if not seeds:
+            self.pages['experiment'].update(status='ready', rows=[], total=0)
+            self.mix_warnings.append('Коллекция пуста. Найдите музыку и добавьте несколько исходных треков кнопкой ниже.')
+            self.contentChanged.emit(); self.changed.emit()
+
+    def _mix_next(self):
+        if not self.profile.data['enabled'] or not self.mix_steps or self.mix_job is not None:
+            return
+        foreground = [*self.page_jobs.values(), self.play_job, self.meta_job, self.wave_job, self.auth_job]
+        if any(job and not job.done() for job in foreground):
+            return  # One bounded request at a time, after pending playback/browse work.
+        step = self.mix_steps.pop(0)
+        def call():
+            kind, source = step
+            if kind == 'likes': return self.api.likes(0)
+            if kind == 'seeds': return self.api.track_rows(source)
+            return self.api.candidates(kind, source)
+        self.mix_job = self._work('experiment-step', (self.mix_revision, step), call)
+
+    def _mix_result(self, step, result, error):
+        self.mix_job = None
+        kind, source = step
+        if error:
+            self.mix_warnings.append('Часть кандидатов недоступна. ' + error)
+        elif kind == 'likes':
+            self._mix_prepare(result.ids)
+        else:
+            rows = result[:60 if kind == 'seeds' else 40]
+            self.mix_candidates.extend(dict(r, origins=['liked' if r['id'] in self.mix_liked else 'seed' if kind == 'seeds' else kind]) for r in rows)
+            if kind == 'seeds':
+                artists = list(dict.fromkeys(a['id'] for r in rows for a in r.get('artists', [])))[:2]
+                albums = list(dict.fromkeys(r['albumId'] for r in rows if r.get('albumId')))[:1]
+                self.mix_steps.extend(('artist', id) for id in artists)
+                self.mix_steps.extend(('album', id) for id in albums)
+        if self.mix_steps:
+            self._mix_next()
+        else:
+            rows = mix(self.mix_candidates, self.mix_liked, self.profile.data, self.mix_seed)
+            self.pages['experiment'].update(rows=rows, total=len(rows), status='ready', more=False)
+            self.mix_candidates = []  # No persistent catalogue/profile cache beyond the finite mix.
+            self.contentChanged.emit()
+            self.changed.emit()
+
     def close(self):
-        self._finish_track("skip")
+        self._finish_track("skip", "closed")
+        self.cancel_mix()
         self.closing = True
         self.timer.stop()
         self.cancel.set()
-        for job in (*self.page_jobs.values(), self.play_job, self.meta_job, self.wave_job, self.auth_job):
+        for job in (*self.page_jobs.values(), self.play_job, self.meta_job, self.wave_job, self.auth_job, self.mix_job):
             if job:
                 job.cancel()
         self.player.close()

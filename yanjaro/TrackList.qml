@@ -46,7 +46,7 @@ ListView {
         objectName: "trackRow" + index
         property bool currentTrack: modelData.kind === "track" && list.viewState.currentId === String(modelData.id).split(":")[0]
         width: ListView.view.width
-        height: Theme.track
+        height: Theme.track + (modelData.reason ? 16 : 0)
         padding: Theme.small
         Accessible.name: modelData.title + ", " + modelData.detail + (currentTrack ? ", текущий трек" : "")
         onClicked: { list.currentIndex = index; list.forceActiveFocus(); list.activate(modelData) }
@@ -64,6 +64,7 @@ ListView {
                 Layout.fillWidth: true
                 spacing: 3
                 Label { text: row.modelData.title; color: row.currentTrack ? Theme.accent : Theme.text; font.bold: row.currentTrack; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true }
+                Label { visible: Boolean(row.modelData.reason); text: row.modelData.reason || ""; color: Theme.secondary; font.pixelSize: 11; elide: Text.ElideRight; Layout.fillWidth: true; textFormat: Text.PlainText }
                 EntityLinks { visible: row.modelData.kind === "track" && row.modelData.available; music: list.music; rowData: row.modelData; Layout.fillWidth: true }
                 Label { visible: row.modelData.kind !== "track" || !row.modelData.available; text: (row.modelData.available ? "" : "Недоступен · ") + row.modelData.detail; color: Theme.secondary; font.pixelSize: Theme.caption; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true }
             }

@@ -15,12 +15,13 @@ class Player(QObject):
     _event = Signal(str, object)
     FIELDS = {'time-pos': 'position', 'duration': 'duration', 'pause': 'paused',
               'seekable': 'seekable', 'paused-for-cache': 'buffering',
+              'seeking': 'seeking',
               'volume': 'volume', 'mute': 'muted'}
 
     def __init__(self, audio_output=None):
         super().__init__()
         self.state = dict(ready=False, loaded=False, paused=True, position=0.0,
-                          duration=0.0, seekable=False, buffering=False, volume=60.0, muted=False)
+                          duration=0.0, seekable=False, seeking=False, buffering=False, volume=60.0, muted=False)
         self.engine = None
         self.error = ''
         self.expected_duration = 0

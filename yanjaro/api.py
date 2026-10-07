@@ -302,6 +302,18 @@ class MusicApi:
             raise ApiError("Сервис вернул неподдерживаемую ссылку на аудио.")
         return Stream(track_model(tracks[0]), url)
 
+    def candidates(self, kind, id):
+        self._require_login()
+        if not str(id).isdigit():
+            raise ApiError('Некорректный источник подбора.')
+        if kind == 'artist':
+            result = self.client.artists_tracks(id, page=0, page_size=20)
+            return [track_model(t).row() for t in result.tracks[:20]] if result else []
+        if kind == 'album':
+            album = self.client.albums_with_tracks(id)
+            return [track_model(t).row() for volume in album.volumes or [] for t in volume][:40] if album else []
+        raise ApiError('Источник экспериментального подбора не поддерживается.')
+
     def stations(self):
         self._require_login()
         stations = self.client.rotor_stations_list()

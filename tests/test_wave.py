@@ -56,7 +56,8 @@ class WaveTests(unittest.TestCase):
             player.ended.emit()
             until(lambda: "принято сервером" in c.state["playReport"])
             self.assertEqual(api.report_play.call_args.args[0], track)
-            self.assertEqual(api.report_play.call_args.args[3:], (12.5, 150))
+            self.assertAlmostEqual(api.report_play.call_args.args[3], 12.5, delta=.05)
+            self.assertEqual(api.report_play.call_args.args[4], 150)
             player.ended.emit()
             self.assertEqual(api.report_play.call_count, 1)
             api.feedback.assert_not_called()
@@ -88,9 +89,9 @@ class WaveTests(unittest.TestCase):
             calls = [(a.args[1], a.args[2], a.args[3]) for a in api.feedback.call_args_list]
             self.assertEqual(calls, [("trackStarted", "0", "first"), ("skip", "0", "first"),
                                      ("trackStarted", "1", "first")])
-            self.assertEqual(api.feedback.call_args_list[1].args[4], 2.5)
+            self.assertAlmostEqual(api.feedback.call_args_list[1].args[4], 2.5, delta=.05)
             self.assertEqual(api.report_play.call_count, 1)
-            self.assertEqual(api.report_play.call_args.args[3], 2.5)
+            self.assertAlmostEqual(api.report_play.call_args.args[3], 2.5, delta=.05)
             c.show("history")
             until(lambda: not c.state["busy"])
             self.assertTrue(player.state["loaded"])
@@ -111,10 +112,12 @@ class WaveTests(unittest.TestCase):
             c.wave_started = True
             c.play_session = (Track("1", "Synthetic", "", 180, True), "play", "timestamp")
             player.state.update(loaded=True, paused=False, position=150)
+            player.changed.emit()
             c.last_tick = time.monotonic() - 0.2
             c._tick()
             self.assertLess(c.listened, 0.5)
             player.state["paused"] = True
+            player.changed.emit()
             before = c.listened
             c.last_tick -= 30
             c._tick()
