@@ -42,6 +42,41 @@ class DesktopTests(unittest.TestCase):
     def tearDown(self):
         self.player.close()
 
+    def test_observed_pause_matches_qml_after_stop_and_new_track(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'state.wav'
+            with wave.open(str(path), 'wb') as wav:
+                wav.setparams((1, 2, 16000, 0, 'NONE', 'none'))
+                wav.writeframes(b'\0\0' * 16000 * 8)
+            until(lambda: not self.player.state['paused'])  # Initial mpv observation.
+            api = Mock()
+            api.stream.side_effect = lambda id: Stream(Track(id, 'Synthetic', '', 8, True), str(path))
+            c = Controller(self.player, api)
+            engine = QQmlApplicationEngine()
+            engine.setInitialProperties({'music': c})
+            engine.load(Path(__file__).parents[1] / 'yanjaro/Main.qml')
+            window = engine.rootObjects()[0]
+            try:
+                c.play('a')  # Controller stops before load; mpv pause remains false.
+                until(lambda: self.player.state['position'] > .1)
+                self.assertFalse(self.player.engine.pause)
+                self.assertFalse(self.player.state['paused'])
+                button = window.findChild(QObject, 'pauseButton')
+                self.assertEqual(button.property('symbol'), 'pause')
+                self.assertEqual(button.property('text'), 'Пауза')
+                c.pause()
+                until(lambda: self.player.state['paused'])
+                self.assertEqual(button.property('symbol'), 'play')
+                self.assertEqual(button.property('text'), 'Продолжить')
+                c.play('b')
+                until(lambda: c.state['currentId'] == 'b' and self.player.state['position'] > .1)
+                self.assertFalse(self.player.engine.pause)
+                self.assertEqual(button.property('symbol'), 'pause')
+            finally:
+                window.close()
+                c.close()
+                del engine
+
     def test_real_libmpv_play_pause_seek_resume_and_eof(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "synthetic.wav"
