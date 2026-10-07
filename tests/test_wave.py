@@ -4,7 +4,7 @@ from unittest.mock import Mock
 from PySide6.QtCore import QObject, Signal, QTimer
 
 from yanjaro.api import Page, Stream, Track, WaveBatch
-from yanjaro.controller import Controller
+from yanjaro.controller import PlaybackController
 from test_desktop import until
 
 
@@ -25,10 +25,14 @@ class StubPlayer(QObject):
     def _on_ended(self):
         self.state.update(loaded=False, paused=True)
 
-    def play(self, stream):
+    def play(self, stream, paused=False):
         self.played.append(stream.track.id)
-        self.state.update(loaded=True, paused=False)
+        self.state.update(loaded=True, paused=paused)
         QTimer.singleShot(0, self.started.emit)
+
+    def set_pause(self, paused):
+        self.state["paused"] = paused
+        self.changed.emit()
 
     def stop(self):
         self.state.update(loaded=False, paused=True)
@@ -42,7 +46,7 @@ class WaveTests(unittest.TestCase):
         api, player = Mock(), StubPlayer()
         track = Track("1", "Synthetic", "", 180, True, "2")
         api.stream.return_value = Stream(track, "https://example.test/private")
-        c = Controller(player, api)
+        c = PlaybackController(player, api)
         try:
             c.play("1")
             until(lambda: c.play_session is not None)
@@ -66,7 +70,7 @@ class WaveTests(unittest.TestCase):
                                       WaveBatch("user:onyourwave", "second", tracks)]
         api.stream.side_effect = lambda id: Stream(tracks[int(id)], "https://example.test/private")
         api.history.return_value = Page([])
-        c = Controller(player, api)
+        c = PlaybackController(player, api)
         c._state["signedIn"] = True
         try:
             c.start_wave("user:onyourwave")
@@ -101,7 +105,7 @@ class WaveTests(unittest.TestCase):
     def test_listening_time_does_not_count_seek_or_pause(self):
         import time
         api, player = Mock(), StubPlayer()
-        c = Controller(player, api)
+        c = PlaybackController(player, api)
         try:
             c.wave_started = True
             c.play_session = (Track("1", "Synthetic", "", 180, True), "play", "timestamp")
@@ -121,7 +125,7 @@ class WaveTests(unittest.TestCase):
         api, player = Mock(), StubPlayer()
         track = Track("2", "Synthetic", "", 180, True)
         api.stream.return_value = Stream(track, "https://example.test/private")
-        c = Controller(player, api)
+        c = PlaybackController(player, api)
         try:
             c.wave_station = "user:onyourwave"
             c.wave_queue = [(track, "next-batch")]

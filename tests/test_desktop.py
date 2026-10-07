@@ -16,7 +16,7 @@ from PySide6.QtQuickControls2 import QQuickStyle
 from PySide6.QtTest import QTest
 
 from yanjaro.api import Page, Stream, Track
-from yanjaro.controller import Controller
+from yanjaro.controller import PlaybackController
 from yanjaro.player import Player
 
 
@@ -51,13 +51,13 @@ class DesktopTests(unittest.TestCase):
             until(lambda: not self.player.state['paused'])  # Initial mpv observation.
             api = Mock()
             api.stream.side_effect = lambda id: Stream(Track(id, 'Synthetic', '', 8, True), str(path))
-            c = Controller(self.player, api)
+            c = PlaybackController(self.player, api)
             engine = QQmlApplicationEngine()
             engine.setInitialProperties({'music': c})
             engine.load(Path(__file__).parents[1] / 'yanjaro/Main.qml')
             window = engine.rootObjects()[0]
             try:
-                c.play('a')  # Controller stops before load; mpv pause remains false.
+                c.play('a')  # PlaybackController stops before load; mpv pause remains false.
                 until(lambda: self.player.state['position'] > .1)
                 self.assertFalse(self.player.engine.pause)
                 self.assertFalse(self.player.state['paused'])
@@ -136,7 +136,7 @@ class DesktopTests(unittest.TestCase):
             return Page([])
 
         api.likes.side_effect = likes
-        controller = Controller(self.player, api)
+        controller = PlaybackController(self.player, api)
         engine = QQmlApplicationEngine()
         engine.setInitialProperties({"music": controller})
         engine.load(Path(__file__).parents[1] / "yanjaro/Main.qml")
@@ -176,7 +176,7 @@ class DesktopTests(unittest.TestCase):
             self.assertFalse(self.player.state["loaded"])
 
     def test_seek_slider_releases_user_chosen_position(self):
-        controller = Controller(self.player, Mock())
+        controller = PlaybackController(self.player, Mock())
         engine = QQmlApplicationEngine()
         engine.setInitialProperties({"music": controller})
         engine.load(Path(__file__).parents[1] / "yanjaro/Main.qml")
@@ -201,8 +201,8 @@ class DesktopTests(unittest.TestCase):
             controller.close()
             del engine
 
-    def test_selection_keyboard_and_scroll_do_not_restart_playback(self):
-        controller = Controller(self.player, Mock())
+    def test_single_click_keyboard_drag_and_scroll_contract(self):
+        controller = PlaybackController(self.player, Mock())
         controller._state["signedIn"] = True
         rows = [Track(str(i), "Длинное название " * 12, "Исполнитель", 180, True).row() for i in range(500)]
         controller.pages["likes"].update(rows=rows, total=500, status="ready")
@@ -220,10 +220,13 @@ class DesktopTests(unittest.TestCase):
             point = listing.mapToScene(QPointF(140, 30)).toPoint()
             QTest.mouseClick(window, Qt.MouseButton.LeftButton, Qt.KeyboardModifier.NoModifier, point)
             self.assertEqual(listing.property("currentIndex"), 0)
-            controller.play.assert_not_called()
-            QTest.mouseDClick(window, Qt.MouseButton.LeftButton, Qt.KeyboardModifier.NoModifier, point)
             controller.play.assert_called_once_with("0")
             controller.play.reset_mock()
+            QTest.mouseClick(window, Qt.MouseButton.RightButton, Qt.KeyboardModifier.NoModifier, point)
+            QTest.mousePress(window, Qt.MouseButton.LeftButton, Qt.KeyboardModifier.NoModifier, point)
+            QTest.mouseMove(window, point + QPointF(0, 180).toPoint(), 80)
+            QTest.mouseRelease(window, Qt.MouseButton.LeftButton, Qt.KeyboardModifier.NoModifier, point + QPointF(0, 180).toPoint())
+            controller.play.assert_not_called()
             listing.forceActiveFocus()
             QTest.keyClick(window, Qt.Key.Key_Return)
             controller.play.assert_called_once_with("0")
@@ -245,7 +248,7 @@ class DesktopTests(unittest.TestCase):
             self.player.changed.emit()
             APP.processEvents()
             self.assertAlmostEqual(listing.property("contentY"), 900, delta=1)
-            delegates = [o for o in window.findChildren(QObject) if o.objectName().startswith("rowPlay")]
+            delegates = [o for o in window.findChildren(QObject) if o.objectName().startswith("trackRow")]
             self.assertLess(len(delegates), 70)  # A 500-row model stays virtualized.
         finally:
             window.close()

@@ -18,7 +18,7 @@ def empty_page():
                 status="idle", error="", revision=0)
 
 
-class Controller(QObject):
+class PlaybackController(QObject):
     changed = Signal()
     contentChanged = Signal()
     queueChanged = Signal()
@@ -41,6 +41,13 @@ class Controller(QObject):
         self.queue = []
         self.queue_index = -1
         self.queue_context = ""
+        self.base_order = {}
+        self.queue_history = []
+        self.history_cursor = -1
+        self.history_target = None
+        self.repeat_mode = 'None'
+        self.shuffle_enabled = False
+        self.desired_paused = False
         self.wave_station = ""
         self.wave_queue = []
         self.wave_seen = []
@@ -85,6 +92,19 @@ class Controller(QObject):
             return current + [dict(t.row(), queueIndex=i, isCurrent=False) for i, (t, _) in enumerate(self.wave_queue)]
         return [dict(row, queueIndex=i, isCurrent=i == self.queue_index) for i, row in enumerate(self.queue) if i >= self.queue_index]
 
+    def playback_status(self):
+        if self._state['playerError']:
+            return 'error'
+        if self._state['loading']:
+            return 'loading'
+        if not self._state['currentId']:
+            return 'empty'
+        if not self.player.state['loaded']:
+            return 'stopped'
+        if self.player.state['paused']:
+            return 'paused'
+        return 'buffering' if self.player.state['buffering'] else 'playing'
+
     @Property("QVariantMap", notify=changed)
     def state(self):
         page = self.pages[self._state["view"]]
@@ -95,8 +115,15 @@ class Controller(QObject):
             pageStatus=page["status"], pageError=page["error"], pageScroll=page["scroll"],
             busy=page["status"] == "loading" or self._state["authBusy"],
             heading=headings[self._state["view"]], query=self.query,
-            canPrevious=not self.wave_station and any(r["available"] for r in self.queue[:self.queue_index]),
-            canNext=bool(self.wave_station or any(r["available"] for r in self.queue[self.queue_index + 1:])),
+            playbackStatus=self.playback_status(), desiredPaused=self.desired_paused,
+            canPause=bool(self._state['currentId']) and self.playback_status() not in ('error', 'empty'),
+            finiteQueue=bool(self.queue) and not self.wave_station,
+            repeatMode=self.repeat_mode if not self.wave_station else 'None',
+            shuffle=self.shuffle_enabled if not self.wave_station else False,
+            canPrevious=not self.wave_station and self._previous_cursor() >= 0,
+            canNext=bool(self.wave_station or self.history_cursor < len(self.queue_history) - 1
+                         or any(r['available'] for r in self.queue[self.queue_index + 1:])
+                         or self.repeat_mode == 'Playlist' and any(r['available'] for r in self.queue)),
             stationId=self.wave_station, refilling=self.refilling)
 
     def _work(self, operation, context, call):
@@ -136,6 +163,8 @@ class Controller(QObject):
                         and self.queue_search_generation == self.search_generation and not self.wave_station):
                     existing = {r["id"] for r in self.queue}
                     self.queue.extend(r.copy() for r in rows if r["id"] not in existing and r["available"])
+                    for row in self.queue:
+                        self.base_order.setdefault(row['id'].split(':')[0], len(self.base_order))
                 self.contentChanged.emit()
         elif operation in ("login", "logout"):
             self._state.update(authBusy=False, code="", loginUrl="", authError=error)
@@ -154,7 +183,7 @@ class Controller(QObject):
                 self._set_current(result.track.row())
                 if not self.wave_station and self.queue_index >= 0:
                     self.queue[self.queue_index] = result.track.row()
-                self.player.play(result)
+                self.player.play(result, paused=self.desired_paused)
         elif operation == "queue-meta":
             if context != self.generation or error:
                 return
@@ -306,9 +335,14 @@ class Controller(QObject):
         if self._state["view"] == "stations":
             self.start_wave(track_id)
             return
+        if str(track_id).split(':')[0] == self._state['currentId']:
+            if self.playback_status() in ('paused', 'loading', 'buffering', 'playing'):
+                self.play_resume()
+                return
+        self.desired_paused = False  # Explicit row selection always requests playback.
         self._build_queue(track_id)
 
-    def _build_queue(self, track_id, shuffle=False):
+    def _build_queue(self, track_id, shuffle=None):
         if not self.player.state["ready"]:
             self._player_error(self.player.error)
             return
@@ -325,6 +359,12 @@ class Controller(QObject):
                       available=True, kind="track" )).copy() for id in dict.fromkeys(ids)]
         if not self.queue:
             self.queue = [dict(id=track_id, title="Загрузка трека", artist="", cover="", available=True)]
+        self.base_order = {r['id'].split(':')[0]: i for i, r in enumerate(self.queue)}
+        self.queue_history = []
+        self.history_cursor = -1
+        self.history_target = None
+        if shuffle is not None:
+            self.shuffle_enabled = shuffle
         if shuffle:
             random.shuffle(self.queue)
         self.queue_index = next((i for i, r in enumerate(self.queue) if r["available"]), -1) if shuffle else next((i for i, r in enumerate(self.queue) if r["id"].split(":")[0] == track_id.split(":")[0]), 0)
@@ -339,6 +379,8 @@ class Controller(QObject):
             self._player_error("В коллекции нет доступных треков.")
             self.queueChanged.emit()
             return
+        if self.shuffle_enabled and not shuffle:
+            self._reorder_remaining()
         self._play_queue()
 
     @Slot(bool)
@@ -347,6 +389,7 @@ class Controller(QObject):
         if not page["ids"]:
             return
         self._state["view"] = "likes"
+        self.desired_paused = False
         self._build_queue(page["ids"][0], shuffle)
 
     def _load_track(self, row):
@@ -373,7 +416,12 @@ class Controller(QObject):
             self.meta_job = self._work("queue-meta", self.generation, lambda: self.api.track_rows(ids))
 
     @Slot(int)
-    def jump_queue(self, index):
+    def jump_queue(self, index, preserve_pause=False):
+        if not preserve_pause and not self.wave_station and index == self.queue_index:
+            self.play_resume()
+            return
+        if not preserve_pause:
+            self.desired_paused = False
         if self.wave_station:
             if not 0 <= index < len(self.wave_queue):
                 return
@@ -385,21 +433,80 @@ class Controller(QObject):
             self.queue_index = index
             self._play_queue()
 
+    def _history_select(self, cursor):
+        id = self.queue_history[cursor]
+        index = next((i for i, r in enumerate(self.queue) if r['id'].split(':')[0] == id), -1)
+        if index >= 0:
+            self.history_target = cursor
+            self.jump_queue(index, preserve_pause=True)
+
     @Slot()
     def previous_track(self):
-        if not self.wave_station:
-            index = next((i for i in range(self.queue_index - 1, -1, -1) if self.queue[i]["available"]), -1)
-            if index >= 0:
-                self.jump_queue(index)
+        cursor = self._previous_cursor()
+        if not self.wave_station and cursor >= 0:
+            self._history_select(cursor)
+
+    def _previous_cursor(self):
+        # A selection still loading has not entered playback history yet.
+        if self.history_cursor >= 0 and self.queue_history[self.history_cursor] != self._state['currentId']:
+            return self.history_cursor
+        return self.history_cursor - 1
 
     @Slot()
     def next_track(self):
+        self._advance(False)
+
+    def _advance(self, natural):
         if self.wave_station:
-            self.next_wave()
+            if not natural:
+                self.next_wave()
+            else:
+                self._take_wave()
+            return
+        if natural and self.repeat_mode == 'Track' and self.queue:
+            self._play_queue()
+            return
+        if not natural and self.history_cursor < len(self.queue_history) - 1:
+            self._history_select(self.history_cursor + 1)
+            return
+        index = next((i for i in range(self.queue_index + 1, len(self.queue)) if self.queue[i]['available']), -1)
+        if index < 0 and self.repeat_mode == 'Playlist' and self.queue:
+            self.queue.sort(key=lambda r: self.base_order.get(r['id'].split(':')[0], len(self.base_order)))
+            if self.shuffle_enabled:
+                random.shuffle(self.queue)
+                if len(self.queue) > 1 and self.queue[0]['id'].split(':')[0] == self._state['currentId']:
+                    self.queue.append(self.queue.pop(0))
+            index = next((i for i, row in enumerate(self.queue) if row['available']), -1)
+        if index >= 0:
+            self.jump_queue(index, preserve_pause=True)
+
+    def _reorder_remaining(self):
+        rest = self.queue[self.queue_index + 1:]
+        if self.shuffle_enabled:
+            random.shuffle(rest)
         else:
-            index = next((i for i in range(self.queue_index + 1, len(self.queue)) if self.queue[i]["available"]), -1)
-            if index >= 0:
-                self.jump_queue(index)
+            rest.sort(key=lambda r: self.base_order.get(r['id'].split(':')[0], len(self.base_order)))
+        self.queue[self.queue_index + 1:] = rest
+        self.queueChanged.emit()
+        self.changed.emit()
+
+    @Slot(bool)
+    def set_shuffle(self, enabled):
+        if self.wave_station or self.shuffle_enabled == enabled:
+            return
+        self.shuffle_enabled = enabled
+        self._reorder_remaining()
+
+    @Slot(str)
+    def set_repeat(self, mode):
+        if not self.wave_station and mode in ('None', 'Playlist', 'Track'):
+            self.repeat_mode = mode
+            self.changed.emit()
+
+    @Slot()
+    def cycle_repeat(self):
+        modes = ('None', 'Playlist', 'Track')
+        self.set_repeat(modes[(modes.index(self.repeat_mode) + 1) % 3])
 
     def _tick(self):
         now = time.monotonic()
@@ -455,6 +562,7 @@ class Controller(QObject):
         self.selected_row = None
         name = next((r["title"] for r in self.pages["stations"]["rows"] if r["id"] == station),
                     "Моя волна" if station == "user:onyourwave" else "Станция")
+        self.desired_paused = False
         self._state.update(waveActive=True, source=name, loading=True, currentId="", current="Подбираем музыку",
                            artist="", cover="", playerError="")
         self.waiting_wave = True
@@ -510,7 +618,15 @@ class Controller(QObject):
         if not self.play_session:
             self.play_session = (self.current_track, str(uuid4()), datetime.now(timezone.utc).isoformat())
             self.last_tick = time.monotonic()
+            if not self.wave_station:
+                if self.history_target is not None:
+                    self.history_cursor = self.history_target
+                    self.history_target = None
+                else:
+                    self.queue_history = self.queue_history[:self.history_cursor + 1] + [self.current_track.id]
+                    self.history_cursor = len(self.queue_history) - 1
         self._state["loading"] = False
+        self.player.set_pause(self.desired_paused)
         if self.active_wave and not self.wave_started:
             self.wave_started = True
             station, track_id, batch = self.active_wave
@@ -526,10 +642,7 @@ class Controller(QObject):
         if self.closing:
             return
         self._finish_track("trackFinished")
-        if self.wave_station:
-            self._take_wave()
-        else:
-            self.next_track()
+        self._advance(True)
         self.changed.emit()
 
     @Slot()
@@ -545,7 +658,42 @@ class Controller(QObject):
 
     @Slot()
     def pause(self):
-        self.player.toggle_pause()
+        if not self._state['currentId']:
+            return
+        if self.playback_status() in ('stopped', 'error'):
+            self.play_resume()
+        else:
+            self.set_paused(not self.desired_paused)
+
+    def set_paused(self, paused):
+        if self._state['currentId']:
+            self.desired_paused = bool(paused)
+            self.player.set_pause(self.desired_paused)
+            self.changed.emit()
+
+    @Slot()
+    def play_resume(self):
+        self.desired_paused = False
+        if self.playback_status() in ('paused', 'playing', 'buffering', 'loading'):
+            self.player.set_pause(False)
+        elif self.playback_status() in ('stopped', 'error'):
+            self.retry_play()
+        self.changed.emit()
+
+    @Slot()
+    def stop(self):
+        active = self.active_wave
+        self._finish_track('skip')
+        self.active_wave = active  # Play can explicitly restart the selected radio track.
+        for job in (self.play_job, self.wave_job, self.meta_job):
+            if job:
+                job.cancel()
+        self.generation += 1
+        self.play_revision += 1
+        self.refilling = self.waiting_wave = False
+        self.player.stop()
+        self._state.update(loading=False, playerError='')
+        self.changed.emit()
 
     @Slot(float)
     def seek(self, seconds):

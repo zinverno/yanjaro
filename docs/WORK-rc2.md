@@ -16,3 +16,9 @@
 Исправление: исходная синхронизация наблюдаемых свойств на `file-loaded`, отсутствие выдуманной паузы в `stop()`, Qt queued signals и привязка file lifecycle к `playlist_entry_id`. Сетевые поколения запроса сохранены отдельно. `loadfile` в фактическом mpv 0.41 возвращает ID до загрузки файла; подтверждено локальным probe без аккаунта/URL в выводе.
 
 Контракты: [mpv](https://mpv.io/manual/stable/), [MPRIS Player](https://specifications.freedesktop.org/mpris/latest/Player_Interface.html), [MPRIS root](https://specifications.freedesktop.org/mpris/latest/Media_Player.html), [QtDBus](https://doc.qt.io/qtforpython-6/PySide6/QtDBus/index.html), [Secret Service](https://specifications.freedesktop.org/secret-service/latest/), [keyring](https://keyring.readthedocs.io/en/stable/).
+
+## A: конечная очередь и управление
+
+Общая модель переименована в PlaybackController. Режимы repeat/shuffle применяются к полной ID-очереди любимого; история фактически запущенных треков отделена от оставшегося порядка. Пауза во время загрузки сохраняется; Stop инвалидирует позднюю подгрузку радио. В радио режимы отключены, настройки конечной очереди сохранены. Один клик/Enter запускает строку; повторный выбор текущего трека возобновляет паузу без перезапуска. Панель центрирована относительно всего окна, иконка repeat-one содержит «1».
+
+Автоматически: 34 теста PASS, в том числе реальные libmpv/QML pause/seek/EOF, виртуализация, click/drag/right click, полная коллекция 60 ID, shuffle-off/Previous, EOF vs Next, одиночная/пустая очередь, пауза загрузки и три партии станции с ошибкой/повтором. Макеты SYNTHETIC при 1024×700, 1366×768, 1920×1080 проверяют центр и границы. Реальный аккаунт и слышимое соответствие нового UI: NOT RUN на этом шаге.

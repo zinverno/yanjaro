@@ -34,7 +34,7 @@ ApplicationWindow {
     Shortcut { sequence: "Ctrl+L"; onActivated: { search.forceActiveFocus(); search.selectAll() } }
     Shortcut {
         sequence: "Space"
-        enabled: window.s.loaded && !(window.activeFocusItem instanceof TextInput) && !(window.activeFocusItem instanceof TextEdit) && !(window.activeFocusItem instanceof AbstractButton)
+        enabled: window.s.canPause && !(window.activeFocusItem instanceof TextInput) && !(window.activeFocusItem instanceof TextEdit)
         onActivated: window.music.pause()
     }
 
@@ -221,7 +221,7 @@ ApplicationWindow {
                     enabled: modelData.available && modelData.queueIndex !== -1
                     onClicked: window.music.jump_queue(modelData.queueIndex)
                     contentItem: ColumnLayout {
-                        Label { text: (queued.modelData.isCurrent ? (window.s.loading ? "Загрузка: " : "Сейчас: ") : "") + queued.modelData.title; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true; color: queued.modelData.isCurrent ? Theme.accent : Theme.text }
+                        Label { text: (queued.modelData.isCurrent ? (Theme.playbackLabel(window.s.playbackStatus) + ": ") : "") + queued.modelData.title; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true; color: queued.modelData.isCurrent ? Theme.accent : Theme.text }
                         Label { text: queued.modelData.artist || queued.modelData.detail || ""; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true; color: Theme.secondary; font.pixelSize: Theme.caption }
                     }
                 }

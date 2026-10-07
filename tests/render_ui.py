@@ -11,12 +11,12 @@ from PySide6.QtTest import QTest
 from test_desktop import APP
 from test_wave import StubPlayer
 from yanjaro.api import Track
-from yanjaro.controller import Controller
+from yanjaro.controller import PlaybackController
 
 out = Path(sys.argv[1])
 out.mkdir(parents=True, exist_ok=True)
 player = StubPlayer()
-c = Controller(player, Mock())
+c = PlaybackController(player, Mock())
 c._state.update(signedIn=True, currentId='2', current='Тестовая композиция', artist='Тестовый исполнитель', source='Мне нравится')
 player.state.update(loaded=True, paused=False, position=68, duration=213)
 rows = [Track(str(i), 'Тестовая композиция' + (' с очень длинным названием' * 6 if i == 3 else f' {i + 1}'),
@@ -55,6 +55,12 @@ try:
                 assert position.x() >= 0 and position.y() >= 0, name
                 assert position.x() + item.width() <= width + 1, (name, width)
                 assert position.y() + item.height() <= height + 1, (name, height)
+            center = window.findChild(QObject, 'playerCenter')
+            assert abs(center.x() + center.width() / 2 - width / 2) < 1
+            metadata = window.findChild(QObject, 'playerMetadata')
+            volume = window.findChild(QObject, 'volumeControls')
+            assert metadata.x() + metadata.width() <= center.x()
+            assert center.x() + center.width() <= volume.x()
             capture = window.grabWindow()
             assert not capture.isNull()
             assert capture.save(str(out / f'{view}-{width}x{height}-{scale}.png'))

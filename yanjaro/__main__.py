@@ -7,7 +7,7 @@ from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtQuickControls2 import QQuickStyle
 
 from .api import private_logging
-from .controller import Controller
+from .controller import PlaybackController
 from .player import Player
 from .desktop import Instance
 
@@ -32,7 +32,7 @@ def main():
     except RuntimeError:
         print("Не удалось запустить единственный экземпляр Yanjaro. Проверьте доступ к каталогу сеанса.", file=sys.stderr)
         return 1
-    controller = Controller(Player())
+    controller = PlaybackController(Player())
     engine = QQmlApplicationEngine()
     engine.setInitialProperties({"music": controller})
     engine.load(Path(__file__).with_name("Main.qml"))

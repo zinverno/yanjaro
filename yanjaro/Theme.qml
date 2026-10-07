@@ -23,6 +23,9 @@ QtObject {
     readonly property int body: 14
     readonly property int caption: 12
     readonly property int title: 28
+    function playbackLabel(status) {
+        return ({playing: "Играет", paused: "Пауза", loading: "Загрузка", buffering: "Буферизация", error: "Ошибка", stopped: "Остановлен"})[status] || ""
+    }
     function clock(seconds) {
         let n = Math.max(0, Math.floor(seconds || 0))
         return Math.floor(n / 60) + ":" + (n % 60).toString().padStart(2, "0")
