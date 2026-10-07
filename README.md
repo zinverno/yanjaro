@@ -50,7 +50,7 @@ uv pip install --python .venv/bin/python --require-hashes -r requirements.lock
 ./scripts/build-native.sh
 ```
 
-Кандидат: `dist/native/yanjaro-0.2.0rc2-1-any.pkg.tar.zst`, контрольная сумма рядом. `.SRCINFO` генерируется makepkg; источник — существующий локальный архив, не выдуманный тег. Установка нового кандидата на основной системе требует отдельного согласования. После установки запуск из меню **Yanjaro Music** либо:
+Кандидат: `dist/native/yanjaro-0.2.0rc2-2-any.pkg.tar.zst`, контрольная сумма рядом. `.SRCINFO` генерируется makepkg; источник — существующий локальный архив, не выдуманный тег. Установка нового кандидата на основной системе требует отдельного согласования. После установки запуск из меню **Yanjaro Music** либо:
 
 ```sh
 /usr/bin/yanjaro
@@ -64,16 +64,20 @@ uv pip install --python .venv/bin/python --require-hashes -r requirements.lock
 QT_QPA_PLATFORM=offscreen .venv/bin/python -m unittest discover -s tests -v
 .venv/bin/pyside6-qmllint yanjaro/*.qml
 desktop-file-validate packaging/yanjaro.desktop
-python3 scripts/check-package.py dist/native/yanjaro-0.2.0rc2-1-any.pkg.tar.zst
+python3 scripts/check-package.py dist/native/yanjaro-0.2.0rc2-2-any.pkg.tar.zst
 ```
 
 Тесты используют синтетические API/хранилище, настоящий Qt Quick и настоящий libmpv с локальным WAV и `ao=null`. Это не проверка слышимого звука и не аккаунт. `tests/render_ui.py` проверяет центр/границы при 1024×700, 1366×768, 1920×1080 и масштабах 1/1.25/1.5; снимки явно помечены SYNTHETIC.
 
-Ниже — **исторические реальные снимки rc1**, не доказательство нового интерфейса rc2:
+Ниже — **реальные снимки установленного rc2-1** из согласованной приёмки. В них нет кода входа, аккаунтных идентификаторов или системных уведомлений; видны выбранные владельцем песни. Звук и системная карточка подтверждались отдельно. Сетевое исправление rc2-2 не считается проверенным этими снимками.
 
-![Мне нравится, реальный rc1](docs/screenshots/likes.png)
-![Поиск, реальный rc1](docs/screenshots/search.png)
-![Станции, реальный rc1](docs/screenshots/stations.png)
+![Мне нравится, реальный rc2](docs/screenshots/rc2/likes.png)
+![Поиск с результатом исполнителя, реальный rc2](docs/screenshots/rc2/search.png)
+![Страница исполнителя, реальный rc2](docs/screenshots/rc2/artist.png)
+![Страница альбома, реальный rc2](docs/screenshots/rc2/album.png)
+![Подбор Yanjaro, реальный rc2](docs/screenshots/rc2/experiment.png)
+
+Новый снимок станций и снимок настоящей карточки ОС пока не получены. Исторические снимки rc1 сохранены в `docs/screenshots/`; синтетические кадры не выданы за живую интеграцию.
 
 Для новых живых снимков после согласованной установки:
 

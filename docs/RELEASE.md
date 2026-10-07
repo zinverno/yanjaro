@@ -1,4 +1,4 @@
-# Локальный кандидат 0.2.0rc2-1
+# Локальный кандидат 0.2.0rc2-2
 
 Публикация, видимость репозитория, merge, теги, Release и AUR не изменяются. Реальный private remote — https://github.com/zinverno/yanjaro. Текущая работа идёт от UI-ветки rc1 в `feature/player-polish-and-discovery`, Git-клон `/tmp/yanjaro-git`; защищённая `.git` основной рабочей папки не меняется. Лицензия владельца GPL-3.0-or-later сохранена.
 
@@ -16,10 +16,10 @@ Native-зависимости: Python 3.11–3.14, PySide6 6.8–6.x, Qt Quick/S
 
 ## Установка после отдельного согласования
 
-Пользователь подтверждал установку **rc1**, не нового кандидата. Следующую команду выполнять на основной системе только после согласования rc2:
+Владелец отдельно согласовал и установил rc2-1. Новый rc2-2 исправляет поведение при временном отказе подготовки аудио, не добавляет зависимостей; перед обновлением требуется отдельное согласование. Команда для rc2-2:
 
 ```sh
-sudo pacman -U /home/zinvernix/projects/yanjaro-music/dist/native/yanjaro-0.2.0rc2-1-any.pkg.tar.zst
+sudo pacman -U /home/zinvernix/projects/yanjaro-music/dist/native/yanjaro-0.2.0rc2-2-any.pkg.tar.zst
 pacman -Q yanjaro
 /usr/bin/yanjaro
 ```
