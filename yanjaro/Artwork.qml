@@ -2,6 +2,7 @@ import QtQuick
 Rectangle {
     id: art
     property string url: ""
+    property string fallback: "music"
     implicitWidth: 44
     implicitHeight: 44
     radius: Theme.radius / 2
@@ -10,7 +11,7 @@ Rectangle {
         anchors.centerIn: parent
         width: parent.width * 0.46
         height: width
-        source: "icons/music.svg"
+        source: "icons/" + art.fallback + ".svg"
         visible: cover.status !== Image.Ready
     }
     Image {

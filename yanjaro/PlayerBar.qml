@@ -24,7 +24,7 @@ Rectangle {
             Layout.fillWidth: true
             spacing: 3
             Label { text: bar.viewState.current; font.bold: true; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true; ToolTip.visible: titleHover.hovered; ToolTip.text: text; HoverHandler { id: titleHover } }
-            Label { text: bar.viewState.artist || "Выберите музыку"; color: Theme.secondary; font.pixelSize: Theme.caption; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true }
+            EntityLinks { music: bar.music; rowData: bar.viewState.currentRow; Layout.fillWidth: true }
             Label { text: bar.viewState.source; visible: text.length > 0; color: Theme.accent; font.pixelSize: Theme.caption; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true }
         }
     }

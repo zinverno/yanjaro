@@ -225,7 +225,8 @@ class DesktopTests(unittest.TestCase):
     def test_single_click_keyboard_drag_and_scroll_contract(self):
         controller = PlaybackController(self.player, Mock())
         controller._state["signedIn"] = True
-        rows = [Track(str(i), "Длинное название " * 12, "Исполнитель", 180, True).row() for i in range(500)]
+        rows = [Track(str(i), "Длинное название " * 12, "Исполнитель", 180, True,
+                      '17', '', ({'id':'9','title':'Исполнитель'},), 'Альбом').row() for i in range(500)]
         controller.pages["likes"].update(rows=rows, total=500, status="ready")
         controller.pages["stations"].update(rows=[], status="ready")
         engine = QQmlApplicationEngine()
@@ -243,6 +244,12 @@ class DesktopTests(unittest.TestCase):
             self.assertEqual(listing.property("currentIndex"), 0)
             controller.play.assert_called_once_with("0")
             controller.play.reset_mock()
+            controller.open_entity = Mock()
+            link = next(o for o in window.findChildren(QObject, 'artistLink') if o.isVisible() and listing.mapFromItem(o, QPointF(0,0)).y() >= 0 and listing.mapFromItem(o, QPointF(0,0)).y() < 60)
+            link_point = link.mapToScene(QPointF(link.width()/2,link.height()/2)).toPoint()
+            QTest.mouseClick(window, Qt.MouseButton.LeftButton, Qt.KeyboardModifier.NoModifier, link_point)
+            controller.open_entity.assert_called_once_with('artist','9')
+            controller.play.assert_not_called()
             QTest.mouseClick(window, Qt.MouseButton.RightButton, Qt.KeyboardModifier.NoModifier, point)
             QTest.mousePress(window, Qt.MouseButton.LeftButton, Qt.KeyboardModifier.NoModifier, point)
             QTest.mouseMove(window, point + QPointF(0, 180).toPoint(), 80)

@@ -9,7 +9,7 @@ from PySide6.QtQuickControls2 import QQuickStyle
 from .api import private_logging
 from .controller import PlaybackController
 from .player import Player
-from .desktop import Instance
+from .desktop import Instance, ArtworkNetwork
 from .storage import SecretStore
 
 
@@ -35,6 +35,8 @@ def main():
         return 1
     controller = PlaybackController(Player(), store=SecretStore())
     engine = QQmlApplicationEngine()
+    artwork_network = ArtworkNetwork()
+    engine.setNetworkAccessManagerFactory(artwork_network)
     engine.setInitialProperties({"music": controller})
     engine.load(Path(__file__).with_name("Main.qml"))
     if not engine.rootObjects():

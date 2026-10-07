@@ -23,7 +23,7 @@ class NavigationTests(unittest.TestCase):
 
     def test_slow_search_cannot_replace_new_results_or_block_navigation(self):
         started, release = threading.Event(), threading.Event()
-        def search(query, page):
+        def search(query, page, type_):
             if query == 'old':
                 started.set()
                 release.wait(2)

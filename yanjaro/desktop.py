@@ -1,8 +1,21 @@
-"""Desktop identity and one local player per user; no token persistence."""
+"""Desktop identity, one local player per user, and public artwork cache."""
 from pathlib import Path
 
 from PySide6.QtCore import QLockFile, QObject, QStandardPaths, Signal
 from PySide6.QtNetwork import QLocalServer, QLocalSocket
+from PySide6.QtNetwork import QNetworkAccessManager, QNetworkDiskCache
+from PySide6.QtQml import QQmlNetworkAccessManagerFactory
+from .storage import data_path
+
+
+class ArtworkNetwork(QQmlNetworkAccessManagerFactory):
+    def create(self, parent):
+        manager = QNetworkAccessManager(parent)
+        cache = QNetworkDiskCache(manager)
+        cache.setCacheDirectory(str(data_path('cache', 'artwork')))
+        cache.setMaximumCacheSize(32 * 1024 * 1024)
+        manager.setCache(cache)
+        return manager
 
 
 class Instance(QObject):

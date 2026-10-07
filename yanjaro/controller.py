@@ -11,12 +11,13 @@ from PySide6.QtCore import QObject, Property, Signal, Slot, Qt, QUrl, QTimer
 from PySide6.QtGui import QDesktopServices
 
 from .api import MusicApi, safe_error, InvalidAccount
-from .storage import data_path, read_json, write_json
+from .storage import data_path, read_json, write_json, account_path
+from .catalog import station_groups
 
 
 def empty_page():
     return dict(rows=[], more=False, total=-1, ids=(), page=0, scroll=0.0,
-                status="idle", error="", revision=0)
+                status="idle", error="", revision=0, meta={})
 
 
 class PlaybackController(QObject):
@@ -41,6 +42,14 @@ class PlaybackController(QObject):
         self.cancel = Event()
         self.closing = False
         self.pages = {name: empty_page() for name in ("likes", "search", "stations", "history")}
+        self.search_type = 'all'
+        self.search_pages = {kind: empty_page() for kind in ('all','track','artist','album')}
+        self.pages.update({'search:' + kind: page for kind, page in self.search_pages.items()})
+        self.pages['search'] = self.search_pages['all']
+        self.back_stack = []
+        self.station_preferences = {}
+        self.station_query = ''
+        self.station_groups = []
         self.page_jobs = {}
         self.play_job = self.meta_job = self.wave_job = None
         self.query = ""
@@ -49,6 +58,7 @@ class PlaybackController(QObject):
         self.queue = []
         self.queue_index = -1
         self.queue_context = ""
+        self.queue_page_key = ""
         self.base_order = {}
         self.queue_history = []
         self.history_cursor = -1
@@ -94,7 +104,14 @@ class PlaybackController(QObject):
     @Property("QVariantMap", notify=contentChanged)
     def content(self):
         page = self.pages[self._state["view"]]
-        return dict(rows=page["rows"], view=self._state["view"], scroll=page["scroll"])
+        return dict(rows=page['rows'], view=self._page_key(), scroll=page['scroll'], meta=page['meta'])
+
+    @Property('QVariantList', notify=contentChanged)
+    def stationGroups(self):
+        return self.station_groups
+
+    def _page_key(self):
+        return 'search:' + self.search_type if self._state['view'] == 'search' else self._state['view']
 
     @Property("QVariantList", notify=queueChanged)
     def queueRows(self):
@@ -125,7 +142,9 @@ class PlaybackController(QObject):
             more=page["more"], total=page["total"], loadedCount=len(page["rows"]),
             pageStatus=page["status"], pageError=page["error"], pageScroll=page["scroll"],
             busy=page["status"] == "loading" or self._state["authBusy"],
-            heading=headings[self._state["view"]], query=self.query,
+            heading=headings.get(self._state['view'], page['meta'].get('title', 'Каталог')),
+            searchType=self.search_type, canBack=bool(self.back_stack), currentRow=self.selected_row or {},
+            entityKind=self._state['view'].split(':')[0], query=self.query,
             playbackStatus=self.playback_status(), desiredPaused=self.desired_paused,
             canPause=bool(self._state['currentId']) and self.playback_status() not in ('error', 'empty'),
             finiteQueue=bool(self.queue) and not self.wave_station,
@@ -166,22 +185,27 @@ class PlaybackController(QObject):
             page["status"] = "error" if error else "ready"
             if not error:
                 old = page["rows"] if number else []
-                ids = {r["id"] for r in old}
+                ids = {r.get("key", (r["kind"], r["id"], r.get("section", ""))) for r in old}
                 rows = list(old)
                 for row in result.rows:
-                    if row["id"] not in ids:
+                    key = row.get('key', (row['kind'], row['id'], row.get('section','')))
+                    if key not in ids:
                         rows.append(row)
-                        ids.add(row["id"])
+                        ids.add(key)
                 page.update(rows=rows, more=result.more, total=result.total, page=number)
+                if result.meta:
+                    page['meta'] = result.meta
                 if result.ids:
                     page["ids"] = result.ids
                 # The playing context is a snapshot. Only its own next search page can extend it.
-                if (view == "search" and number and self.queue_context == self.query
+                if (view == self.queue_page_key and number and self.queue_context == self.query
                         and self.queue_search_generation == self.search_generation and not self.wave_station):
                     existing = {r["id"] for r in self.queue}
                     self.queue.extend(r.copy() for r in rows if r["id"] not in existing and r["available"])
                     for row in self.queue:
                         self.base_order.setdefault(row['id'].split(':')[0], len(self.base_order))
+                if view == 'stations':
+                    self._refresh_stations()
                 self.contentChanged.emit()
         elif operation == 'account':
             self._state.update(authBusy=False, code='', loginUrl='', authError=error)
@@ -193,6 +217,7 @@ class PlaybackController(QObject):
                 self.storage_action = result.get('action', 'restore')
                 self._state['storageAction'] = self.storage_action
                 if self.account_id:
+                    self.station_preferences = read_json(account_path(self.account_id, 'stations.json')) if self.store else {}
                     self.preferences['signed_out'] = False
                     self._save_preferences()
                     self.show('likes')
@@ -361,6 +386,9 @@ class PlaybackController(QObject):
         self.preferences['signed_out'] = True
         self._save_preferences()
         self.account_id = ''
+        self.station_preferences = {}
+        self.station_groups = []
+        self.back_stack = []
         self._leave_wave()
         self.queue = []
         self.queue_history = []
@@ -384,6 +412,8 @@ class PlaybackController(QObject):
         self.changed.emit()
 
     def _load_page(self, view, number=0):
+        if view == 'search':
+            view = 'search:' + self.search_type
         page = self.pages[view]
         page["revision"] += 1
         page.update(status="loading", error="")
@@ -396,7 +426,12 @@ class PlaybackController(QObject):
                 return self.api.stations()
             if view == "history":
                 return self.api.history()
-            return self.api.search(query, number) if view == "search" else self.api.likes(number)
+            if view.startswith('search:'):
+                return self.api.search(query, number, view.split(':')[1])
+            if ':' in view:
+                kind, id = view.split(':', 1)
+                return self.api.entity(kind, id, number)
+            return self.api.likes(number)
         self.page_jobs[view] = self._work("page", context, call)
         self.changed.emit()
 
@@ -404,7 +439,9 @@ class PlaybackController(QObject):
     def show(self, view):
         if view not in self.pages:
             return
-        self._state["view"] = view
+        self._state['view'] = view
+        if view == 'stations':
+            self._refresh_stations()
         self.contentChanged.emit()
         page = self.pages[view]
         if self._state["signedIn"] and page["status"] == "idle" and (view != "search" or self.query):
@@ -419,16 +456,73 @@ class PlaybackController(QObject):
     def search(self, query):
         self.query = query.strip()
         self.search_generation += 1
-        if previous := self.page_jobs.get("search"):
-            previous.cancel()
-        self._state["view"] = "search"
-        page = self.pages["search"]
-        revision = page["revision"] + 1
-        page.update(empty_page(), revision=revision)
-        if self.query and self._state["signedIn"]:
-            self._load_page("search")
+        self.back_stack = []
+        for kind, page in self.search_pages.items():
+            if previous := self.page_jobs.get('search:' + kind):
+                previous.cancel()
+            revision = page['revision'] + 1
+            page.update(empty_page(), revision=revision)
+        self._state['view'] = 'search'
+        if self.query and self._state['signedIn']:
+            self._load_page('search')
         self.contentChanged.emit()
         self.changed.emit()
+
+    @Slot(str)
+    def search_tab(self, kind):
+        if kind not in self.search_pages:
+            return
+        self.search_type = kind
+        self.pages['search'] = self.search_pages[kind]
+        self.show('search')
+
+    @Slot(str, str)
+    def open_entity(self, kind, id):
+        if kind not in ('artist','album','artist-albums') or not str(id).isdigit():
+            return
+        key = kind + ':' + str(id)
+        if key == self._state['view']:
+            return
+        self.back_stack.append((self._state['view'], self.search_type))
+        self.pages.setdefault(key, empty_page())
+        self.show(key)
+
+    @Slot()
+    def back(self):
+        if self.back_stack:
+            view, kind = self.back_stack.pop()
+            self.search_type = kind
+            self.pages['search'] = self.search_pages[kind]
+            self.show(view)
+
+    def _refresh_stations(self):
+        self.station_groups = station_groups(self.pages['stations']['rows'], self.station_preferences, self.station_query)
+        self.contentChanged.emit()
+
+    @Slot(str)
+    def filter_stations(self, query):
+        self.station_query = query
+        self._refresh_stations()
+
+    def _save_station_preferences(self):
+        if self.store and self.account_id:
+            try:
+                write_json(account_path(self.account_id, 'stations.json'), self.station_preferences)
+            except OSError:
+                self.pages['stations']['error'] = 'Не удалось сохранить порядок станций на устройстве.'
+                self.changed.emit()
+
+    @Slot(str, str)
+    def station_action(self, id, action):
+        if action not in ('pins', 'hidden'):
+            return
+        values = self.station_preferences.setdefault(action, [])
+        if id in values:
+            values.remove(id)
+        else:
+            values.append(id)
+        self._save_station_preferences()
+        self._refresh_stations()
 
     @Slot()
     def retry_page(self):
@@ -469,9 +563,10 @@ class PlaybackController(QObject):
             self._player_error(self.player.error)
             return
         page = self.pages[self._state["view"]]
-        rows = page["rows"]
+        rows = [r for r in page["rows"] if r["kind"] == "track"]
         self._leave_wave()
         self.queue_context = self.query if self._state["view"] == "search" else ""
+        self.queue_page_key = self._page_key()
         self.queue_search_generation = self.search_generation
         by_id = {r["id"].split(":")[0]: r for r in rows}
         # The full likes ID list is returned by the existing likes endpoint, not inferred from a page.
@@ -492,7 +587,7 @@ class PlaybackController(QObject):
         self.queue_index = next((i for i, r in enumerate(self.queue) if r["available"]), -1) if shuffle else next((i for i, r in enumerate(self.queue) if r["id"].split(":")[0] == track_id.split(":")[0]), 0)
         while 0 <= self.queue_index < len(self.queue) and not self.queue[self.queue_index]["available"]:
             self.queue_index += 1
-        self._state["source"] = "Поиск: " + self.query if self.queue_context else "Мне нравится"
+        self._state["source"] = "Поиск: " + self.query if self.queue_context else self.state["heading"]
         if not 0 <= self.queue_index < len(self.queue):
             self.player.stop()
             self.current_track = None
@@ -514,6 +609,13 @@ class PlaybackController(QObject):
         self.desired_paused = False
         self.stop_requested = False
         self._build_queue(page["ids"][0], shuffle)
+
+    @Slot()
+    def play_page(self):
+        rows = self.pages[self._state['view']]['rows']
+        first = next((r for r in rows if r['kind'] == 'track' and r['available']), None)
+        if first:
+            self.play(first['id'])
 
     def _load_track(self, row):
         if self.play_job:
@@ -765,6 +867,10 @@ class PlaybackController(QObject):
             self.wave_started = True
             station, track_id, batch = self.active_wave
             self.wave_played_batches.add(batch)
+            recent = self.station_preferences.setdefault('recent', {})
+            stat = recent.setdefault(station, {'count':0, 'last':0})
+            stat.update(count=stat['count'] + 1, last=time.time())
+            self._save_station_preferences()
             self._work("feedback", self.generation, lambda: self.api.feedback(station, "trackStarted", track_id, batch))
             self.previous = track_id
             if len(self.wave_queue) <= 2:

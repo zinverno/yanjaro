@@ -108,9 +108,19 @@ ApplicationWindow {
             RowLayout {
                 Layout.fillWidth: true
                 Layout.topMargin: Theme.small
-                Label { text: window.s.heading; font.pixelSize: Theme.title; font.bold: true; Layout.fillWidth: true }
+                ActionButton { visible: window.s.canBack; text: "Назад"; symbol: "previous"; onClicked: window.music.back() }
+                Label { text: window.s.heading; elide: Text.ElideRight; textFormat: Text.PlainText; font.pixelSize: Theme.title; font.bold: true; Layout.fillWidth: true }
                 Label { visible: window.s.view === "likes" && window.s.total >= 0; text: window.s.total + " треков"; color: Theme.secondary }
             }
+            RowLayout {
+                visible: window.s.signedIn && window.s.view === "search"
+                Layout.fillWidth: true
+                Repeater {
+                    model: [{kind:"all", title:"Все"}, {kind:"track", title:"Треки"}, {kind:"artist", title:"Исполнители"}, {kind:"album", title:"Альбомы"}]
+                    ActionButton { required property var modelData; text: modelData.title; selected: window.s.searchType === modelData.kind; onClicked: window.music.search_tab(modelData.kind) }
+                }
+            }
+            EntityHeader { music: window.music; viewState: window.s; Layout.fillWidth: true; visible: window.s.signedIn && (window.s.entityKind === "artist" || window.s.entityKind === "album") }
             RowLayout {
                 visible: window.s.signedIn && window.s.view === "likes" && window.s.total > 0
                 Layout.fillWidth: true
