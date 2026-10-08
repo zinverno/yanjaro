@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "data": "generated pulse-plus-tone WAVs and scripted votes; no human quality inference",
+  "python": "3.14.7",
+  "packages": {
+    "numpy": "2.5.3",
+    "librosa": "0.11.0",
+    "soundfile": "0.14.0",
+    "numba": "0.68.0",
+    "scipy": "1.18.1"
+  },
+  "generated_files": 12,
+  "generated_seconds_per_file": 12,
+  "analyzed_seconds_per_file": 10,
+  "features_per_track": 27,
+  "index": {
+    "processed": 12,
+    "attempted": 12,
+    "skipped": 0,
+    "errors": [],
+    "indexed_total": 12,
+    "audio_persisted": false
+  },
+  "cache": {
+    "processed": 0,
+    "attempted": 0,
+    "skipped": 12,
+    "errors": [],
+    "indexed_total": 12,
+    "audio_persisted": false
+  },
+  "cli_calls": 36,
+  "network_attempts": 0,
+  "indexing_seconds": 5.768,
+  "cache_seconds": 0.004,
+  "training_seconds": 0.046,
+  "training": {
+    "train_sessions": 6,
+    "holdout_sessions": 3,
+    "train_session_ids": [
+      "synthetic-0",
+      "synthetic-1",
+      "synthetic-2",
+      "synthetic-3",
+      "synthetic-4",
+      "synthetic-5"
+    ],
+    "holdout_session_ids": [
+      "synthetic-6",
+      "synthetic-7",
+      "synthetic-8"
+    ],
+    "normalization": "training session feature snapshots only",
+    "train_pairs": 6,
+    "holdout_pairs": 3,
+    "baseline_holdout_pair_accuracy": 1.0,
+    "learned_holdout_pair_accuracy": 1.0,
+    "note": "Exploratory offline result, not an unbiased proof of improvement. Sessions held out chronologically."
+  },
+  "estimated_bpms": [
+    60.484,
+    60.484,
+    60.484,
+    60.484,
+    117.188,
+    117.188,
+    117.188,
+    117.188,
+    89.286,
+    89.286,
+    89.286,
+    89.286
+  ],
+  "repeat_fit_identical": true,
+  "private_json_only": true
+}

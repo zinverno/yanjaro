@@ -11,9 +11,11 @@ cd experiments/acoustic
 python -m venv .venv
 .venv/bin/python -m pip install -e .
 .venv/bin/python -m unittest discover -s tests -v
+.venv/bin/python scripts/synthetic_smoke.py
+.venv/bin/yanjaro-acoustic --help
 ```
 
-Python 3.11–3.14 anticipated; dependencies are `librosa` + `numpy` (which can install heavier scientific dependencies transitively). The first run may spend time compiling numerical routines. Use 10–20 **local audio files you are permitted to process**. We DO NOT ship or train on live Yandex Music streams.
+Validated on Python 3.14.7/Linux; other supported Python versions remain untested. Dependencies are `librosa`, `numpy` and `soundfile` (with scientific dependencies installed transitively). The first run may spend time compiling numerical routines. If using `uv`, `uv pip install --python .venv/bin/python -e .` is equivalent for the dedicated environment. See [VALIDATION.md](VALIDATION.md) for measured results and [validation/environment.txt](validation/environment.txt) for the tested dependency versions. The synthetic smoke generates its own WAVs and deletes them afterward. Use 10–20 **local audio files you are permitted to process** only after their owner selects them and authorizes indexing. We DO NOT ship or train on live Yandex Music streams.
 
 ## Guided workflow
 
@@ -42,13 +44,17 @@ Python 3.11–3.14 anticipated; dependencies are `librosa` + `numpy` (which can 
 
 `--workspace .local` keeps path names, acoustic features, labels, and model in a local git-ignored folder. All saved files are JSON readable without pickle and written owner-only. No source audio is copied or persisted. Audio file paths do remain in the **local** library index so you can reopen files; never commit `.local` or attach it to public reports.
 
+Local data schema is now **2**: seed features are frozen when the session begins, and candidate features on their first explicit vote. Reindexing does not rewrite historical contexts or labels. Old schema-1 workspaces are rejected: keep them separately and create a new workspace. Repeat votes are idempotent; changed votes replace the label. Finish ratings before starting the next session. Training refuses feedback edited across the holdout time boundary. Run one CLI writer at a time; atomic replacement does not provide multi-process transactions.
+
+Indexing decodes only local bytes through `soundfile`/libsndfile, without an external decoder fallback. WAV is tested; other formats depend on the installed libsndfile codecs. Unsupported formats (including typical AAC/M4A) produce explicit per-file errors. `--limit` bounds new/changed decode attempts, **including failed attempts**; unchanged/oversize files are skipped. Directory enumeration is not bounded by this limit, so use a small selected folder. Any per-file error gives exit code 2 with successful progress preserved; storage errors abort. Empty libraries can be listed, but cannot train or create sessions.
+
 ## What it is (and is not)
 
 - **Acoustic analysis:** librosa estimates tempo, detected beats/regularity, onset intensity/density, spectral brightness/flatness, bass-frequency ratio, overall energy and 6 equal-duration curves for energy, rhythm and brightness. These buckets are *not* verified verse/chorus segmentation. We analyze only the first `--seconds` seconds (10–300), not the whole song; the result must not be described as full-song structure.
 - **Untrained fallback:** weighted acoustic distance, prioritizing rhythm, tempo, energy and temporal changes. A "recommended" track is one with similar descriptors, not a mood diagnosis.
 - **Actually trained model:** with >=6 sessions each having at least one explicitly positive and negative *non-seed* candidate, constrained pairwise logistic regression learns how strongly to weight acoustic distances. A model is only saved when fitting finishes. This is learned ranking, **not a from-scratch audio network, audio generator or a trained emotion classifier**.
-- **Validation:** hold out the latest ~25% *sessions*, never randomly split individual ratings. Report *pairwise ranking accuracy* for prior vs trained weights. This is an exploratory metric on sparse personal labels, not evidence of superiority over Yandex's recommendations, causal improvement, or general population accuracy.
-- **Weak laptop:** CPU-only, at most 20 new files by default, bounded audio duration and sequential indexing. No GPU, cloud, embedding API or subscription. Indexing large music folders could take minutes or longer. Cache skips unchanged files.
+- **Validation:** sort by timezone-aware session creation time and hold out the latest ~25% *sessions*, never randomly split individual ratings. Fit normalization only on training-session seed/candidate snapshots; both prior and learned weights use those scales for evaluation. Persist the split IDs. Report *pairwise ranking accuracy* (ties count as 0.5). The saved model is fitted on the training partition only. This is an exploratory metric on sparse personal labels, not evidence of superiority over Yandex's recommendations, causal improvement, or general population accuracy.
+- **Weak laptop:** CPU-only, at most 20 decode attempts by default, bounded audio duration and sequential indexing. No GPU, cloud, embedding API or subscription. Indexing large music folders could take minutes or longer. Cache skips unchanged files.
 - **Privacy/rights:** files stay local. No audio decoded from Yandex Music, no download from the service, no Yandex tokens or identifiers in training. If you use a third-party dataset, inspect the dataset's license and individual tracks. MTG-Jamendo materials are explicitly restricted to non-commercial research without separate authorization; don't ship that dataset or its trained artifacts with a commercial product without rights clearance.
 
 ## Definitions and constraints

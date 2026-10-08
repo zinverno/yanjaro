@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 import sys
 
-from .core import (index_directory,load_library,load_sessions,write_json,new_session,
+from .core import (index_directory,load_library,load_sessions,read_json,write_json,new_session,
                    rate,train_ranker,recommend)
 
 
@@ -16,7 +16,7 @@ def _build_parser():
     sub=parser.add_subparsers(dest="command",required=True)
     index=sub.add_parser("index",help="Analyze local audio files without persisting audio")
     index.add_argument("directory",type=Path)
-    index.add_argument("--limit",type=int,default=20,help="Max NEW files analyzed on this run (default 20)")
+    index.add_argument("--limit",type=int,default=20,help="Max new/changed files attempted, including errors (default 20)")
     index.add_argument("--seconds",type=int,default=180,help="Analyze up to first N seconds (10–300)")
     index.add_argument("--max-file-mb",type=int,default=150)
     sub.add_parser("list",help="List indexed IDs, names and estimated BPM")
@@ -43,8 +43,9 @@ def main(argv=None):
     model_path=root/"model.json"
     try:
         if args.command=="index":
-            print(json.dumps(index_directory(args.directory,root,args.limit,args.seconds,args.max_file_mb),ensure_ascii=False,indent=2))
-            return 0
+            report = index_directory(args.directory,root,args.limit,args.seconds,args.max_file_mb)
+            print(json.dumps(report,ensure_ascii=False,indent=2))
+            return 2 if report["errors"] else 0
         lib=load_library(library_path)
         if args.command=="list":
             if not lib["tracks"]:
@@ -73,9 +74,10 @@ def main(argv=None):
             sess=next((s for s in data["sessions"] if s["id"]==args.session_id),None)
             if not sess:
                 raise ValueError("Session not found")
-            model=json.loads(model_path.read_text(encoding="utf-8")) if model_path.exists() else None
-            print("RANKER:","learned" if model else "rhythm-first baseline, not yet trained")
-            for pos,item in enumerate(recommend(lib,sess,model,args.limit),1):
+            model=read_json(model_path, {}) if model_path.exists() else None
+            results = recommend(lib,sess,model,args.limit)
+            print("RANKER:","learned" if model is not None else "rhythm-first baseline, not yet trained")
+            for pos,item in enumerate(results,1):
                 print(f"{pos:02d}. {item['name']} ~{item['bpm_estimate']} BPM [id={item['id']}, score={item['score']:.3f}]")
             return 0
     except (ValueError,OSError,KeyError,RuntimeError) as exc:

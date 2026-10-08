@@ -96,10 +96,16 @@ def extract_file(path: Path, max_seconds: int = MAX_SECONDS) -> dict:
     if not 10 <= max_seconds <= 300:
         raise ValueError("max_seconds must be between 10 and 300")
     import librosa
+    import soundfile as sf
     p = Path(path).resolve(strict=True)
     if not p.is_file():
         raise ValueError("Expected a regular local audio file")
-    y, sr = librosa.load(str(p), sr=SAMPLE_RATE, mono=True, duration=max_seconds)
+    # Decode local bytes with libsndfile only. No external decoder/playlist fallback.
+    with sf.SoundFile(p) as audio:
+        native_sr = audio.samplerate
+        y = audio.read(frames=max_seconds * native_sr, dtype="float32", always_2d=True).mean(axis=1)
+    sr = SAMPLE_RATE
+    y = librosa.resample(y, orig_sr=native_sr, target_sr=sr)
     features = extract_signal(y, sr)
     features["analysis_seconds"] = round(len(y) / sr, 2)
     features["sample_rate"] = sr

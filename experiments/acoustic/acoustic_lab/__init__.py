@@ -1,6 +1,6 @@
 """Local-only experimental acoustic analysis and session ranking for Yanjaro."""
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2  # Session feature snapshots; v1 state must not be silently reused.
 SEGMENTS = 6
 FEATURE_NAMES = (
     "bpm", "beat_regularity", "onset_density", "onset_strength",

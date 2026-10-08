@@ -77,7 +77,10 @@ class CoreTests(unittest.TestCase):
             new_session(data,"evening",["slow"],self.lib)
 
     def test_recommend_baseline_and_exclusions(self):
-        s={"id":"x","seed_ids":["slow"],"ratings":{"slow-bad":False}}
+        data=empty_sessions()
+        new_session(data,"x",["slow"],self.lib)
+        rate(data,"x","slow-bad",False,self.lib)
+        s=data["sessions"][0]
         results=recommend(self.lib,s,limit=20)
         ids=[r['id'] for r in results]
         self.assertNotIn("slow",ids)
@@ -101,10 +104,11 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(model['training']['holdout_sessions'],3)
         self.assertGreaterEqual(min(model['weights']),0)
         self.assertEqual(len(model['weights']),len(FEATURE_NAMES))
-        ranks=recommend(self.lib,{'id':'test','seed_ids':['medium'],'ratings':{}},model)
+        new_session(data,'test',['medium'],self.lib)
+        ranks=recommend(self.lib,data['sessions'][-1],model)
         self.assertEqual(len(ranks),len(self.lib['tracks'])-1)
         with self.assertRaisesRegex(ValueError,'Model version'):
-            recommend(self.lib,{'id':'test','seed_ids':['medium'],'ratings':{}},{**model,'version':999})
+            recommend(self.lib,data['sessions'][-1],{**model,'version':999})
 
     def test_not_enough_labels_refuses_training(self):
         with self.assertRaisesRegex(ValueError,'Need 6 sessions'):
