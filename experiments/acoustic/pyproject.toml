@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "yanjaro-acoustic-lab"
+version = "0.1.0"
+description = "CPU-first standalone acoustic similarity and personal session ranker experiment for Yanjaro"
+requires-python = ">=3.11"
+license = "GPL-3.0-or-later"
+dependencies = ["numpy>=1.26,<3", "librosa>=0.10.2,<0.12", "soundfile>=0.12.1,<0.15"]
+
+[project.scripts]
+yanjaro-acoustic = "acoustic_lab.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["acoustic_lab*"]
