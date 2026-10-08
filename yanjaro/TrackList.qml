@@ -50,6 +50,15 @@ ListView {
         padding: Theme.small
         Accessible.name: modelData.title + ", " + modelData.detail + (currentTrack ? ", текущий трек" : "")
         onClicked: { list.currentIndex = index; list.forceActiveFocus(); list.activate(modelData) }
+        TapHandler {
+            acceptedButtons: Qt.RightButton
+            onTapped: { if (row.modelData.kind === "track" && row.modelData.albumId) trackMenu.popup() }
+        }
+        Menu {
+            id: trackMenu
+            objectName: "trackMenu"
+            MenuItem { text: "Перейти к альбому"; onTriggered: list.music.open_entity("album", String(row.modelData.albumId)) }
+        }
         background: Rectangle {
             color: row.currentTrack ? Theme.selected : row.hovered ? Theme.hover : "transparent"
             radius: Theme.radius / 2
@@ -62,6 +71,7 @@ ListView {
             Artwork { url: row.modelData.cover || ""; Layout.preferredWidth: 44; Layout.preferredHeight: 44 }
             ColumnLayout {
                 Layout.fillWidth: true
+                Layout.minimumWidth: 0
                 spacing: 3
                 Label { text: row.modelData.title; color: row.currentTrack ? Theme.accent : Theme.text; font.bold: row.currentTrack; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true }
                 Label { visible: Boolean(row.modelData.reason); text: row.modelData.reason || ""; color: Theme.secondary; font.pixelSize: 11; elide: Text.ElideRight; Layout.fillWidth: true; textFormat: Text.PlainText }
@@ -74,8 +84,20 @@ ListView {
                 color: Theme.secondary
                 font.pixelSize: Theme.caption
             }
+            LikeButton {
+                music: list.music
+                trackId: String(row.modelData.id || "")
+                albumId: String(row.modelData.albumId || "")
+                visible: row.modelData.kind === "track"
+                Layout.preferredWidth: 36
+                Layout.preferredHeight: 36
+            }
             Label { visible: list.width > 520 && row.modelData.kind === "track"; text: row.modelData.available ? Theme.clock(row.modelData.duration) : "Недоступен"; color: Theme.secondary }
-
+            ActionButton {
+                objectName: "trackMenuButton"; symbol: "menu"; iconOnly: true; text: "Действия с треком"
+                visible: row.modelData.kind === "track" && Boolean(row.modelData.albumId)
+                onClicked: trackMenu.popup()
+            }
         }
     }
     footer: Item {

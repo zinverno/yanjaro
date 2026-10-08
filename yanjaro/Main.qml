@@ -34,7 +34,7 @@ ApplicationWindow {
     Shortcut { sequence: "Ctrl+L"; onActivated: { search.forceActiveFocus(); search.selectAll() } }
     Shortcut {
         sequence: "Space"
-        enabled: window.s.canPause && !(window.activeFocusItem instanceof TextInput) && !(window.activeFocusItem instanceof TextEdit)
+        enabled: window.s.canPause && !(window.activeFocusItem instanceof TextInput) && !(window.activeFocusItem instanceof TextEdit) && !(window.activeFocusItem instanceof LikeButton)
         onActivated: window.music.pause()
     }
 
@@ -208,8 +208,15 @@ ApplicationWindow {
             Label { text: window.s.stationError; textFormat: Text.PlainText; color: Theme.error; wrapMode: Text.WordWrap; Layout.fillWidth: true }
             ActionButton { text: "Повторить"; symbol: "retry"; enabled: !window.s.refilling; onClicked: window.music.retry_station() }
         }
+        RowLayout {
+            visible: window.s.likeError.length > 0
+            Layout.fillWidth: true
+            Layout.margins: Theme.small
+            Label { text: window.s.likeError; textFormat: Text.PlainText; color: Theme.error; wrapMode: Text.WordWrap; Layout.fillWidth: true }
+            ActionButton { text: "Закрыть"; onClicked: window.music.clear_like_error() }
+        }
     }
-    PlayerBar { id: player; music: window.music; viewState: window.s; anchors.left: parent.left; anchors.right: parent.right; anchors.bottom: parent.bottom; height: Theme.playerHeight; onShowQueue: queue.opened ? queue.close() : queue.open() }
+    PlayerBar { id: player; music: window.music; viewState: window.s; anchors.left: parent.left; anchors.right: parent.right; anchors.bottom: parent.bottom; height: Theme.playerHeight; onShowQueue: queue.visible ? queue.close() : queue.open() }
     Drawer {
         id: queue
         objectName: "queuePanel"

@@ -242,6 +242,39 @@ class MusicApi:
         return Page(rows, (page + 1) * 50 < len(self._likes), total=len(self._likes),
                     ids=tuple(self._likes))
 
+    def set_track_liked(self, track_id, liked, album_id=''):
+        """Mutate the user's track likes. Return the updated full ID snapshot.
+
+        A collection entry may be ``track_id:album_id`` whereas catalogue rows
+        normally contain just the track ID. Preserve the stored full ID on remove.
+        The API adapter is only called from the controller's single worker.
+        """
+        self._require_login()
+        track_id = str(track_id)
+        base = track_id.split(':', 1)[0]
+        parts = track_id.split(':')
+        if (len(parts) > 2 or any(not part.isascii() or not part.isdecimal() for part in parts)
+                or (album_id and (not str(album_id).isascii() or not str(album_id).isdecimal()))):
+            raise ApiError('Некорректный идентификатор трека.')
+        existing = next((item for item in self._likes if item.split(':', 1)[0] == base), None)
+        preferred = existing or (track_id if ':' in track_id else
+                                 f'{base}:{album_id}' if album_id else base)
+        if liked:
+            if existing is not None:
+                return tuple(self._likes)
+            accepted = self.client.users_likes_tracks_add(preferred)
+            if accepted is not True:
+                raise ApiError('Яндекс не подтвердил добавление в «Мне нравится».')
+            self._likes.insert(0, preferred)
+        else:
+            if existing is None:
+                return tuple(self._likes)
+            accepted = self.client.users_likes_tracks_remove(existing)
+            if accepted is not True:
+                raise ApiError('Яндекс не подтвердил удаление из «Мне нравится».')
+            self._likes = [item for item in self._likes if item.split(':', 1)[0] != base]
+        return tuple(self._likes)
+
     def track_rows(self, ids):
         self._require_login()
         return [track_model(t).row() for t in self.client.tracks(ids)]
