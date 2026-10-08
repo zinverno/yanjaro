@@ -7,7 +7,7 @@ unset PYTHONPATH PYTHONHOME QML_IMPORT_PATH QML2_IMPORT_PATH QT_PLUGIN_PATH VIRT
 export PATH=/usr/bin:/bin
 export LANG=C.UTF-8
 target=$1
-phases=(distribution dependencies source-provenance previous-build candidate-build package-content previous-launch upgrade-launch fresh-launch removal)
+phases=(distribution dependencies test-environment source-provenance previous-build candidate-build package-content previous-launch upgrade-launch fresh-launch removal)
 declare -A results
 for item in "${phases[@]}"; do results[$item]='NOT RUN'; done
 phase=distribution
@@ -45,10 +45,19 @@ pacman -Q > /output/packages.txt
 pacman -Si "${names[@]}" > /output/dependency-repositories.txt
 sha256sum /var/lib/pacman/sync/*.db > /output/repository-SHA256SUMS
 results[$phase]=PASS
-useradd --create-home builder
+phase=test-environment
+# A headless base image has no desktop fonts. Qt still needs real glyph metrics
+# for the unmodified click/keyboard tests (including their Cyrillic labels).
+pacman -S --noconfirm --needed ttf-dejavu
+fc-match sans-serif > /output/test-font.txt
+if ! id builder >/dev/null 2>&1; then useradd --create-home builder; fi
+test "$(id -u builder)" -ne 0
+test "$(getent passwd builder | cut -d: -f6)" = /home/builder
 mkdir -p /work /home/builder/runtime
 chmod 700 /home/builder/runtime
 chown -R builder:builder /work /home/builder
+pacman -Q > /output/packages.txt
+results[$phase]=PASS
 phase=source-provenance
 for name in previous candidate; do
   mkdir "/work/$name"
