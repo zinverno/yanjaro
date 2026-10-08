@@ -120,8 +120,12 @@ class ControllerLikesTests(unittest.TestCase):
         self.controller._load_page('likes', 0)
         until(lambda: self.controller.state['total'] == 111)
         self.assertEqual(len(self.controller.liked_ids), 111)
+        self.controller._play_queue = Mock()
+        self.controller._build_queue('1')
+        original_queue = [row.copy() for row in self.controller.queue]
         self.controller.more()
         until(lambda: len(self.controller.content['rows']) == 100)
+        self.assertEqual(self.controller.queue, original_queue)
         def change(track, liked, album):
             if liked: self.ids.insert(0, f'{track}:{album}')
             else: self.ids[:] = [item for item in self.ids if item.split(':')[0] != track]
@@ -138,6 +142,7 @@ class ControllerLikesTests(unittest.TestCase):
             actual = [row['id'] for row in self.controller.content['rows']]
             self.assertEqual(actual, [item.split(':')[0] for item in self.ids])
             self.assertEqual(len(set(actual)), expected)
+            self.assertEqual(self.controller.queue, original_queue)
         self.ids.clear()
         self.controller._load_page('likes', 0)
         until(lambda: self.controller.state['pageStatus'] == 'ready')

@@ -231,7 +231,8 @@ class PlaybackController(QObject):
                     self.likes_ready = True
                     self._sync_likes(result.ids)
                 # The playing context is a snapshot. Only its own next search page can extend it.
-                if (view == self.queue_page_key and number and self.queue_context == self.query
+                # Likes already queued every ID, including metadata placeholders.
+                if (view != 'likes' and view == self.queue_page_key and number and self.queue_context == self.query
                         and self.queue_search_generation == self.search_generation and not self.wave_station):
                     existing = {r["id"] for r in self.queue}
                     self.queue.extend(r.copy() for r in rows if r["id"] not in existing and r["available"])
