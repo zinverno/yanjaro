@@ -1,9 +1,9 @@
 {
   "candidate": {
     "version": "0.2.0rc3-1",
-    "source_commit": "b8eb5957fff0347ec759394fef480e07a378b1c8",
-    "source_date_epoch": "1791444258",
-    "source_sha256": "6673976590e590f9a3469aab3ce13d6c37842900672a291a404db4eac498322a",
+    "source_commit": "1d2e248d770705decef7b35aad961cb56ba4397f",
+    "source_date_epoch": "1791445200",
+    "source_sha256": "85869f574c62af7c674b55a9393f3c505ca2380511bc5038db62d6aaf845a88f",
     "manifest": "candidate-rc3-1.json"
   },
   "previous": {
