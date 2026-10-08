@@ -13,7 +13,7 @@ from unittest.mock import patch
 assert os.environ.get('YANJARO_DISPOSABLE_CONTAINER') == '1'
 assert Path('/.dockerenv').is_file()
 assert os.getuid() != 0
-assert not any(Path(p).exists() for p in ('/work/src', '/work/candidate', '/work/previous'))
+assert not any(Path(p).exists() for p in ('/work/src', '/work/candidate', '/work/previous', '/work/aur'))
 assert not any(os.environ.get(k) for k in ('PYTHONPATH', 'PYTHONHOME', 'VIRTUAL_ENV', 'QML_IMPORT_PATH', 'QT_PLUGIN_PATH'))
 sys.path.insert(0, '/usr/lib/yanjaro')
 from PySide6.QtCore import QTimer, qVersion

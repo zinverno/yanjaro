@@ -1,0 +1,85 @@
+{
+  "run": "https://github.com/zinverno/yanjaro/actions/runs/37763987612",
+  "harness_commit": "32513d19afdb7e44467433cf470328a1adf994ce",
+  "source_commit": "e9a094a7eb978fda1aaf9966dbf7d0b596276ab7",
+  "source_sha256": "11dd959d197f44ed61581cf120646baf0c10bcd2eca025cf939e851e031e8377",
+  "version": "0.2.0rc4-1",
+  "systems": {
+    "arch": {
+      "artifact_id": 11544265278,
+      "artifact_zip_sha256": "99c8c7086359ef01030abbfe7859c153920806ac7ae2aaf4bb29b0a85579bdf3",
+      "container_digest": "archlinux@sha256:4e77cf2ea5f410e6f8be5abf93ccf17ce2436e87a138c167208356711a405dbd",
+      "runtime_versions": [
+        "yanjaro 0.2.0rc4-1",
+        "python 3.14.7-1",
+        "pyside6 6.11.2-3",
+        "mpv 1:0.41.0-6",
+        "python-mpv 1.0.8-2",
+        "python-secretstorage 3.5.0-1",
+        "python-jeepney 0.9.0-3"
+      ],
+      "status": {
+        "distribution": "PASS",
+        "dependencies": "PASS",
+        "test-environment": "PASS",
+        "source-provenance": "PASS",
+        "previous-build": "PASS",
+        "candidate-build": "PASS",
+        "package-content": "PASS",
+        "aur-build": "PASS",
+        "aur-content": "PASS",
+        "previous-launch": "PASS",
+        "upgrade-launch": "PASS",
+        "fresh-launch": "PASS",
+        "aur-launch": "PASS",
+        "removal": "PASS",
+        "desktop/audio/account": "NOT RUN"
+      },
+      "package_sha256": "e057c15f51934a085929a2f6b1c20dbab8cd0f189748b0aa7027d7c64c5a020a",
+      "regular_payload_files_matching_local": 432,
+      "aur_package_sha256": "e37b8ff559a18bbe74c77c964bd2a8d2767644eb68262f628a505e5de7f03cdc",
+      "aur_source_sha256": "492aeae53a0d27b1ba1e6305c5afdc8952e0c2ab3b432b14cfc15e63d1afbebb",
+      "qt": "6.12.0",
+      "aur_payload_check": "PASS: all 482 payload entries match the accepted candidate (bytes/type/mode/uid/gid/link)"
+    },
+    "manjaro": {
+      "artifact_id": 11544320111,
+      "artifact_zip_sha256": "39997ed2c5df25a9ede11f4ca6a0f23e11d31b00dcc3758499d293cc7c821288",
+      "container_digest": "manjarolinux/base@sha256:bbf1f1d746f28e138eea610e140d2f28cbb5b7c5da2fbff034b883527aa604e9",
+      "runtime_versions": [
+        "yanjaro 0.2.0rc4-1",
+        "python 3.14.7-1",
+        "pyside6 6.11.2-1",
+        "mpv 1:0.41.0-6",
+        "python-mpv 1.0.8-2",
+        "python-secretstorage 3.5.0-1",
+        "python-jeepney 0.9.0-3"
+      ],
+      "status": {
+        "distribution": "PASS",
+        "dependencies": "PASS",
+        "test-environment": "PASS",
+        "source-provenance": "PASS",
+        "previous-build": "PASS",
+        "candidate-build": "PASS",
+        "package-content": "PASS",
+        "aur-build": "PASS",
+        "aur-content": "PASS",
+        "previous-launch": "PASS",
+        "upgrade-launch": "PASS",
+        "fresh-launch": "PASS",
+        "aur-launch": "PASS",
+        "removal": "PASS",
+        "desktop/audio/account": "NOT RUN"
+      },
+      "package_sha256": "f95d0d98a69802954066ac43b9ec842902219bedabe30aa9fa2b214758df3d4d",
+      "regular_payload_files_matching_local": 432,
+      "aur_package_sha256": "9c42372f72519fa494b1928b51c61bc22b3373d5fe1e5b8fccbeee04767e333a",
+      "aur_source_sha256": "492aeae53a0d27b1ba1e6305c5afdc8952e0c2ab3b432b14cfc15e63d1afbebb",
+      "qt": "6.11.2",
+      "aur_payload_check": "PASS: all 482 payload entries match the accepted candidate (bytes/type/mode/uid/gid/link)"
+    }
+  },
+  "accepted_candidate_ci": "https://github.com/zinverno/yanjaro/actions/runs/37756207784",
+  "selected_release_package_sha256": "0f6ac166059c6a487606783fbec7b25e7612f3f85461dbe51f6383100965f2bf"
+}

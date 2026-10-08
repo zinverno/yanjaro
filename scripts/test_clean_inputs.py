@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import tarfile
 import tempfile
+import subprocess
 import unittest
 from unittest.mock import patch
 
@@ -15,6 +16,29 @@ MANIFEST = json.loads((prepare_clean.ROOT / 'packaging/clean-inputs.json').read_
 
 
 class CleanInputs(unittest.TestCase):
+    def test_changed_or_added_application_file_cannot_pass_frozen_ci(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            def git(*args):
+                return subprocess.check_output(['git', *args], cwd=root, text=True).strip()
+            git('init', '-q')
+            (root / 'yanjaro').mkdir()
+            source = root / 'yanjaro/player.py'
+            source.write_text('frozen\n')
+            git('add', '.')
+            git('-c', 'user.name=CI Test', '-c', 'user.email=ci@example.invalid',
+                'commit', '-qm', 'fixture')
+            commit = git('rev-parse', 'HEAD')
+            with patch.object(prepare_clean, 'ROOT', root):
+                prepare_clean.check_frozen_tree(commit)
+                source.write_text('changed\n')
+                with self.assertRaisesRegex(AssertionError, 'player.py'):
+                    prepare_clean.check_frozen_tree(commit)
+                source.write_text('frozen\n')
+                (root / 'yanjaro/new.py').write_text('new\n')
+                with self.assertRaisesRegex(AssertionError, 'new.py'):
+                    prepare_clean.check_frozen_tree(commit)
+
     def test_fresh_checkout_exports_pinned_trees_and_verifiable_inputs(self):
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp) / 'input'

@@ -2,11 +2,19 @@ name: Clean distribution checks
 
 on:
   push:
-    branches: [fix/previous-from-likes]
+    branches: [main, chore/public-release-prep]
     paths:
       - '.github/workflows/clean-distros.yml'
       - 'scripts/**'
       - 'packaging/**'
+      - 'yanjaro/**'
+      - 'tests/**'
+      - 'pyproject.toml'
+      - 'requirements.lock'
+      - 'MANIFEST.in'
+      - 'LICENSE*'
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -28,7 +36,7 @@ jobs:
           persist-credentials: false
       - name: Test pinned input preparation
         run: python3 -m unittest discover -s scripts -p 'test_clean_inputs.py' -v
-      - name: Build, check, install, upgrade and remove in disposable container
+      - name: Build frozen candidate and public AUR source, install, upgrade and remove
         run: bash scripts/check-clean.sh '${{ matrix.target }}'
       - name: Stage check summary
         if: always()

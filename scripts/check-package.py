@@ -4,11 +4,15 @@ import argparse
 from pathlib import Path
 import re
 import subprocess
+import io
+import hashlib
+import tarfile
 
 parser=argparse.ArgumentParser()
 parser.add_argument('package', type=Path)
 parser.add_argument('--source', type=Path, default=Path(__file__).resolve().parents[1] / 'yanjaro')
 parser.add_argument('--version')
+parser.add_argument('--compare', type=Path, help='Require identical installed payload, including modes and owners')
 args=parser.parse_args()
 package=args.package.resolve()
 names=subprocess.check_output(['bsdtar','-tf',str(package)],text=True).splitlines()
@@ -48,5 +52,15 @@ if args.version:
     assert 'pkgver = ' + args.version in metadata.splitlines(), 'Unexpected package version'
 for dependency in ('pyside6','python-mpv','mpv','python-requests','qt6-svg','python-secretstorage','python-jeepney'):
     assert any(line.startswith('depend = '+dependency) for line in metadata.splitlines()), dependency
+if args.compare:
+    def payload(path):
+        raw = subprocess.check_output(['zstd', '-dc', str(path)])
+        with tarfile.open(fileobj=io.BytesIO(raw)) as archive:
+            return {m.name: (m.type, m.mode, m.uid, m.gid, m.linkname,
+                            hashlib.sha256(archive.extractfile(m).read()).hexdigest() if m.isfile() else '')
+                    for m in archive if m.name.startswith('usr/')}
+    expected, actual = payload(args.compare), payload(package)
+    assert actual == expected, 'Installed payload differs from the accepted candidate'
+    print(f'PASS: all {len(actual)} payload entries match the accepted candidate (bytes/type/mode/uid/gid/link)')
 print('PASS: native layout, entry point, resources, declared dependencies and private-file exclusions')
 print('User secrets were not read; third-party SDK is a separately pinned upstream distribution.')
