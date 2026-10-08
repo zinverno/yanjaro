@@ -179,8 +179,9 @@ class PlaybackController(QObject):
             finiteQueue=bool(self.queue) and not self.wave_station,
             repeatMode=self.repeat_mode if not self.wave_station else 'None',
             shuffle=self.shuffle_enabled if not self.wave_station else False,
-            canPrevious=not self.wave_station and self._previous_cursor() >= 0,
-            canNext=bool(self.wave_station or self.history_cursor < len(self.queue_history) - 1
+            canPrevious=not self.wave_station and (
+                self._previous_cursor() >= 0 or self._queue_previous_index() >= 0),
+            canNext=bool(self.wave_station or self._history_position() < len(self.queue_history) - 1
                          or any(r['available'] for r in self.queue[self.queue_index + 1:])
                          or self.repeat_mode == 'Playlist' and any(r['available'] for r in self.queue)),
             stationId=self.wave_station, refilling=self.refilling)
@@ -512,6 +513,7 @@ class PlaybackController(QObject):
         self.queue = []
         self.queue_history = []
         self.history_cursor = -1
+        self.history_target = None
         self.queue_index = -1
         self.current_track = None
         self.selected_row = None
@@ -776,6 +778,7 @@ class PlaybackController(QObject):
             self.play_resume()
             return
         if not preserve_pause:
+            self.history_target = None
             self.desired_paused = False
             self.stop_requested = False
         if self.wave_station:
@@ -796,18 +799,48 @@ class PlaybackController(QObject):
             self.history_target = cursor
             self.jump_queue(index, preserve_pause=True)
 
+    def _queue_previous_index(self):
+        # A freshly selected track can have predecessors in the finite queue
+        # even if playback history is still empty. Never apply to radio.
+        if self.wave_station or not 0 <= self.queue_index < len(self.queue):
+            return -1
+        return next((index for index in range(self.queue_index - 1, -1, -1)
+                     if self.queue[index].get('available', False)), -1)
+
     @Slot()
     def previous_track(self):
+        if self.wave_station:
+            return
         self.stop_requested = self.playback_status() == 'stopped'
         cursor = self._previous_cursor()
-        if not self.wave_station and cursor >= 0:
+        if cursor >= 0:
+            # First honor actual backward playback navigation (including shuffle).
             self._history_select(cursor)
+            return
+        index = self._queue_previous_index()
+        if index < 0:
+            return
+        # Extend navigation history *backwards* instead of appending this visit.
+        # Otherwise two consecutive Previous presses would bounce: 45 -> 44 -> 45.
+        if self.history_cursor < 0:
+            current_id = self.queue[self.queue_index]['id'].split(':', 1)[0]
+            self.queue_history = [current_id]
+        previous_id = self.queue[index]['id'].split(':', 1)[0]
+        self.queue_history.insert(0, previous_id)
+        self.history_cursor = 0
+        self.history_target = 0
+        self.jump_queue(index, preserve_pause=True)
+
+    def _history_position(self):
+        # Navigate from the requested history entry even before its stream arrives.
+        return self.history_cursor if self.history_target is None else self.history_target
 
     def _previous_cursor(self):
-        # A selection still loading has not entered playback history yet.
-        if self.history_cursor >= 0 and self.queue_history[self.history_cursor] != self._state['currentId']:
-            return self.history_cursor
-        return self.history_cursor - 1
+        # A new selection still loading has not entered playback history yet.
+        cursor = self._history_position()
+        if cursor >= 0 and self.queue_history[cursor] != self._state['currentId']:
+            return cursor
+        return cursor - 1
 
     @Slot()
     def next_track(self):
@@ -824,8 +857,9 @@ class PlaybackController(QObject):
         if natural and self.repeat_mode == 'Track' and self.queue:
             self._play_queue()
             return
-        if not natural and self.history_cursor < len(self.queue_history) - 1:
-            self._history_select(self.history_cursor + 1)
+        cursor = self._history_position()
+        if not natural and cursor < len(self.queue_history) - 1:
+            self._history_select(cursor + 1)
             return
         index = next((i for i in range(self.queue_index + 1, len(self.queue)) if self.queue[i]['available']), -1)
         if index < 0 and self.repeat_mode == 'Playlist' and self.queue:
@@ -836,6 +870,7 @@ class PlaybackController(QObject):
                     self.queue.append(self.queue.pop(0))
             index = next((i for i, row in enumerate(self.queue) if row['available']), -1)
         if index >= 0:
+            self.history_cursor, self.history_target = cursor, None
             self.jump_queue(index, preserve_pause=True)
 
     def _reorder_remaining(self):

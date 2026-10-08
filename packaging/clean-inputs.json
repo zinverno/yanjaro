@@ -1,16 +1,16 @@
 {
   "candidate": {
+    "version": "0.2.0rc4-1",
+    "source_commit": "e9a094a7eb978fda1aaf9966dbf7d0b596276ab7",
+    "source_date_epoch": "1791450957",
+    "source_sha256": "11dd959d197f44ed61581cf120646baf0c10bcd2eca025cf939e851e031e8377",
+    "manifest": "candidate-rc4-1.json"
+  },
+  "previous": {
     "version": "0.2.0rc3-1",
     "source_commit": "1d2e248d770705decef7b35aad961cb56ba4397f",
     "source_date_epoch": "1791445200",
     "source_sha256": "85869f574c62af7c674b55a9393f3c505ca2380511bc5038db62d6aaf845a88f",
-    "manifest": "candidate-rc3-1.json"
-  },
-  "previous": {
-    "version": "0.2.0rc2-2",
-    "source_commit": "fea11e61542a04cc139a42b5749e692d637a6509",
-    "source_date_epoch": "1791360000",
-    "source_sha256": "ce12d8c223012edd994c7df4fb8c95fc76ea4fc93ddb1b3b86e2ec097e8cb183",
-    "provenance": "Rebuilt from this pinned commit, not the historical host binary. Application bytes match rc2-2; documentation includes the post-build report."
+    "provenance": "Exact frozen rc3-1 source, rebuilt inside each target distribution; original rc3-1 artifacts are retained."
   }
 }
