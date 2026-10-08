@@ -90,3 +90,15 @@ class AccountTests(unittest.TestCase):
             collection.return_value.create_item.assert_not_called()
             collection.return_value.unlock.assert_not_called()
             connect.return_value.close.assert_called_once()
+
+    def test_unavailable_store_and_refused_write_have_no_plaintext_fallback(self):
+        from pathlib import Path
+        with patch('yanjaro.storage.secretstorage.dbus_init', side_effect=OSError('synthetic')):
+            with self.assertRaisesRegex(ApiError, 'Secret Service недоступен'):
+                SecretStore().read()
+        with patch('yanjaro.storage.secretstorage.dbus_init'), patch('yanjaro.storage.secretstorage.Collection') as collection:
+            collection.return_value.is_locked.return_value = False
+            collection.return_value.create_item.side_effect = PermissionError('synthetic')
+            with self.assertRaisesRegex(ApiError, 'Secret Service недоступен'):
+                SecretStore().write('synthetic-secret')
+        self.assertFalse(any(Path(self.tmp.name).rglob('*')))
