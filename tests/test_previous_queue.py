@@ -153,6 +153,26 @@ class QueuePreviousFallbackTests(unittest.TestCase):
         finally:
             release.set()
 
+    def test_logout_during_pending_history_navigation_clears_cursor(self):
+        self.c.play('45'); self.playing(45)
+        self.c.next_track(); self.playing(46)
+        entered, release = threading.Event(), threading.Event()
+        def stream(track_id, cancel=None):
+            entered.set(); release.wait(2)
+            return Stream(self.tracks[int(track_id)], 'https://example.test/audio')
+        self.api.stream.side_effect = stream
+        try:
+            self.c.previous_track(); until(entered.is_set)
+            self.c.logout()
+            self.assertFalse(self.c.state['canPrevious'])
+            self.assertIsNone(self.c.history_target)
+            release.set(); until(lambda: not self.c.state['authBusy'])
+            self.assertFalse(self.c.state['signedIn'])
+            self.assertEqual(self.c.queue_history, [])
+            self.assertEqual(self.player.played, ['45', '46'])
+        finally:
+            release.set()
+
     def test_pending_history_at_queue_end_keeps_next_capability(self):
         self.c.play('59'); self.playing(59)
         self.c.jump_queue(45); self.playing(45)

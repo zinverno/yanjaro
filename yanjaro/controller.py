@@ -513,6 +513,7 @@ class PlaybackController(QObject):
         self.queue = []
         self.queue_history = []
         self.history_cursor = -1
+        self.history_target = None
         self.queue_index = -1
         self.current_track = None
         self.selected_row = None
