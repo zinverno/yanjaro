@@ -25,13 +25,13 @@ from yanjaro.player import Player
 
 assert Path(yanjaro.__file__).parent == Path('/usr/lib/yanjaro/yanjaro')
 assert Path(yandex_music.__file__).parent == Path('/usr/lib/yanjaro/yandex_music')
-assert not QIcon('/usr/share/icons/hicolor/scalable/apps/yanjaro.svg').isNull()
 load = QQmlApplicationEngine.load
 seen = []
 def checked_load(engine, source):
     assert str(source) == '/usr/lib/yanjaro/yanjaro/Main.qml'
     load(engine, source)
     assert engine.rootObjects()
+    assert not QIcon('/usr/share/icons/hicolor/scalable/apps/yanjaro.svg').isNull()
     window = engine.rootObjects()[0]
     controller = window.property('music')
     assert controller.player.state['ready']
