@@ -31,6 +31,7 @@ if [ "$target" = manjaro ]; then
 fi
 cat /etc/os-release > /output/distribution.txt
 pacman-conf > /output/pacman.conf.txt
+cp /etc/makepkg.conf /output/makepkg.conf.txt
 cp /etc/pacman.d/mirrorlist /output/mirrorlist.txt
 results[$phase]=PASS
 phase=dependencies
@@ -79,7 +80,12 @@ for name in previous candidate; do
   cd "/work/$name/dist/native"
   # No --nocheck, --nodeps, --skipchecksums or substituted dependency environment.
   runuser -u yanjaro-test -- makepkg --force --cleanbuild --noconfirm 2>&1 | tee "/output/$name/makepkg.log"
-  package=$(runuser -u yanjaro-test -- makepkg --packagelist)
+  # Arch's default debug option lists a possible -debug package even when
+  # this pure-Python package produces none. Select the declared main package.
+  runuser -u yanjaro-test -- makepkg --packagelist > "/output/$name/packagelist.txt"
+  version=$(python -c 'import json,sys; print(json.load(open("/input/clean-inputs.json"))[sys.argv[1]]["version"])' "$name")
+  package="$PWD/yanjaro-$version-any.pkg.tar.zst"
+  grep --fixed-strings --line-regexp --quiet "$package" "/output/$name/packagelist.txt"
   test -f "$package"
   cp "$package" "/output/$name/"
   bsdtar -xOf "$package" .BUILDINFO > "/output/$name/BUILDINFO"
@@ -95,6 +101,7 @@ for name in previous candidate; do
   package="/output/$name/yanjaro-$version-any.pkg.tar.zst"
   python /input/check-package.py "$package" --source "/work/$name/yanjaro" --version "$version" | tee "/output/$name/package-check.txt"
   (cd "/output/$name" && sha256sum ./*.pkg.tar.zst ./*.tar.gz PKGBUILD .SRCINFO > SHA256SUMS)
+  cat "/output/$name/SHA256SUMS"
 done
 results[$phase]=PASS
 # No extracted application tree remains when the installed launcher runs.
@@ -125,6 +132,7 @@ test "$(cat /home/yanjaro-test/.config/yanjaro/release-test-sentinel)" = 'synthe
 desktop-file-validate /usr/share/applications/yanjaro.desktop
 pacman -Qkk yanjaro
 pacman -Q yanjaro python pyside6 mpv python-mpv python-secretstorage python-jeepney > /output/runtime-versions.txt
+cat /output/runtime-versions.txt
 results[$phase]=PASS
 phase=fresh-launch
 pacman -R --noconfirm yanjaro
