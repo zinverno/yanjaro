@@ -1,0 +1,75 @@
+{
+  "run": "https://github.com/zinverno/yanjaro/actions/runs/37756207784",
+  "harness_commit": "006107b39ca3bc96f4c516cfd17ca6f358c65a3c",
+  "source_commit": "e9a094a7eb978fda1aaf9966dbf7d0b596276ab7",
+  "source_sha256": "11dd959d197f44ed61581cf120646baf0c10bcd2eca025cf939e851e031e8377",
+  "version": "0.2.0rc4-1",
+  "systems": {
+    "arch": {
+      "artifact_id": 11540485939,
+      "artifact_zip_sha256": "f26c8066926b0fb0882a7cd94796ec872ac778b2db4970a31bb2b7cf2ad2c397",
+      "container_digest": "archlinux@sha256:4e77cf2ea5f410e6f8be5abf93ccf17ce2436e87a138c167208356711a405dbd",
+      "runtime_versions": [
+        "yanjaro 0.2.0rc4-1",
+        "python 3.14.7-1",
+        "pyside6 6.11.2-3",
+        "mpv 1:0.41.0-6",
+        "python-mpv 1.0.8-2",
+        "python-secretstorage 3.5.0-1",
+        "python-jeepney 0.9.0-3"
+      ],
+      "status": {
+        "distribution": "PASS",
+        "dependencies": "PASS",
+        "test-environment": "PASS",
+        "source-provenance": "PASS",
+        "previous-build": "PASS",
+        "candidate-build": "PASS",
+        "package-content": "PASS",
+        "previous-launch": "PASS",
+        "upgrade-launch": "PASS",
+        "fresh-launch": "PASS",
+        "removal": "PASS",
+        "desktop/audio/account": "NOT RUN"
+      },
+      "package_sha256": "973c055d96c6a4546f7c46c9b99534ab7922778fba04236bb048cbc149439b2b",
+      "regular_payload_files_matching_local": 432,
+      "qt": "6.12.0",
+      "previous_version": "0.2.0rc3-1",
+      "previous_package_sha256": "6402d04523cfcebdc28c191a432cde1d34190ee7a9162765ad5ac11b416cde7a"
+    },
+    "manjaro": {
+      "artifact_id": 11540129297,
+      "artifact_zip_sha256": "1ac6b4ff7c338b55c625ab19208d900d94a875d5b0e67f3e72d1e589ea40f03c",
+      "container_digest": "manjarolinux/base@sha256:bbf1f1d746f28e138eea610e140d2f28cbb5b7c5da2fbff034b883527aa604e9",
+      "runtime_versions": [
+        "yanjaro 0.2.0rc4-1",
+        "python 3.14.7-1",
+        "pyside6 6.11.2-1",
+        "mpv 1:0.41.0-6",
+        "python-mpv 1.0.8-2",
+        "python-secretstorage 3.5.0-1",
+        "python-jeepney 0.9.0-3"
+      ],
+      "status": {
+        "distribution": "PASS",
+        "dependencies": "PASS",
+        "test-environment": "PASS",
+        "source-provenance": "PASS",
+        "previous-build": "PASS",
+        "candidate-build": "PASS",
+        "package-content": "PASS",
+        "previous-launch": "PASS",
+        "upgrade-launch": "PASS",
+        "fresh-launch": "PASS",
+        "removal": "PASS",
+        "desktop/audio/account": "NOT RUN"
+      },
+      "package_sha256": "0f6ac166059c6a487606783fbec7b25e7612f3f85461dbe51f6383100965f2bf",
+      "regular_payload_files_matching_local": 432,
+      "qt": "6.11.2",
+      "previous_version": "0.2.0rc3-1",
+      "previous_package_sha256": "4a273c1808925e6615a2a5d900540c027838b33204d6a3de526597334f137bdc"
+    }
+  }
+}
