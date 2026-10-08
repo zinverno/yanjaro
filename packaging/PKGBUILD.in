@@ -3,7 +3,7 @@
 # Maintainer: zinverno <https://github.com/zinverno>
 pkgname=yanjaro
 pkgver=0.2.0rc2
-pkgrel=2
+pkgrel=3
 pkgdesc='Unofficial Yandex Music client / Неофициальный клиент Яндекс Музыки'
 url='https://github.com/zinverno/yanjaro'
 arch=('any')

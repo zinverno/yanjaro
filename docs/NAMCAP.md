@@ -19,3 +19,26 @@ Namcap 3.6.0-3 и его недостающие зависимости расп�
 Namcap повторён в изолированном namespace с копией базы pacman и объявленными SecretStorage/Jeepney. Ошибка E про cryptography исчезла: теперь зависимость удовлетворяется через SecretStorage. Предупреждения SDK extras и динамических Qt/mpv зависимостей остаются. Анализатор также пишет uninstalled для SecretStorage/Jeepney: их проверенные файлы доступны в отдельном build-venv, а не в каноническом `/usr/lib/python3.14/site-packages` основной системы. Это ограничение этой накладки; объявление зависимостей, их импорт и полный check() проверены отдельно. Не устанавливались системные пакеты ради подавления предупреждений. Рецепт проверен с parsepkgbuild; чистый target chroot остаётся NOT RUN.
 
 Повтор для **rc2-2**, после согласованной установки rc2-1 и его зависимостей владельцем: **0 E / 28 W**. SecretStorage/Jeepney уже доступны в обычном системном пути, поэтому предупреждений стало меньше. Остаются необязательные SDK extras, implicit dependencies и динамические Qt/mpv/xdg-utils/PySocks. Новые зависимости для rc2-2 не добавлялись; warnings не выдаются за чистый результат анализатора.
+
+## Разбор всех 28 предупреждений — 2026-10-08
+
+Проверен сохранённый полный вывод rc2-2, METADATA включённого SDK 3.2.0, фактические импорты и зависимости pacman. Пути SDK ниже относительно `/usr/lib/yanjaro/yandex_music/`. Количество в таблице в сумме равно 28; разные имена одного необязательного модуля объединены по причине.
+
+| Причина / число W | Файл или зависимость | Влияние и проверка | Решение |
+|---|---|---|---|
+| Нет ujson / 1 | `utils/json_backend.py` | Необязательный ускоритель; SDK имеет StdlibBackend. В тестовой venv ujson отсутствует, реальный SDK работает | Не добавлять extra |
+| Нет orjson / 1 | тот же файл | То же, отдельный backend; METADATA extra `orjson` | Не добавлять extra |
+| Нет pydantic_core / 1 | тот же файл | То же, extra `pydantic-core`; проверен фактический выбор StdlibBackend без всех трёх модулей | Не добавлять extra |
+| Нет aiofiles / 1 | `track/file_download_info.py`, `utils/request_async.py` | Импорт нужен async-загрузке; Yanjaro вызывает синхронный SDK в worker и не скачивает файлы SDK | Не добавлять extra; пересмотреть при переходе на async/download |
+| Нет aiohttp / 1 | `utils/request_async.py` | Аналогично, METADATA extra `async`; все тесты работают без модуля | Не добавлять extra |
+| Нет websockets / 15 | `ynison/__init__.py`, `ynison/_transport.py` | `protocol.State`, `typing.Subprotocol`, `version.version`, exceptions ConnectionClosed/InvalidHandshake/InvalidStatus/WebSocketException, sync client/ClientConnection/connect, asyncio client/ClientConnection/connect, legacy client connect/WebSocketClientProtocol. Необязательный extra `ynison`; production-код Ynison не импортирует/не вызывает | Не добавлять 15 псевдозависимостей; extra нужен только при будущей поддержке Ynison |
+| Нет betterproto / 1 | `ynison/__init__.py`, `ynison/models/ynison_state.py`, `ynison/models/ynison_redirect.py` | Дополнение того же неиспользуемого extra Ynison | Не добавлять extra |
+| Транзитивный hicolor-icon-theme / 1 | `/usr/share/icons/hicolor` | Путь иконки корректен; `pacman -Qi mpv` подтверждает обязательную зависимость hicolor-icon-theme | Оставить транзитивным; чистая установка проверяет разрешение зависимостей отдельно |
+| Транзитивный python-cryptography / 1 | `utils/decrypt.py` | Нативный SecretStorage обязательно зависит от cryptography; проверено `pacman -Qi`. Дешифрование SDK не вызывается существующим MP3/AAC-путём | Оставить транзитивным; не объявлять lossless |
+| Предположительно лишний qt6-svg / 1 | SVG UI и installed icon | Загружается Qt динамически; проверены SVG-хеши, QML/иконки в установленном приложении | Сохранить явную runtime-зависимость |
+| Предположительно лишний qt6-wayland / 1 | Платформенный плагин Qt | Статический Python-анализ не видит плагин; offscreen не доказывает его работу, прежняя desktop-приёмка отдельно | Сохранить для заявленного desktop-окружения |
+| Предположительно лишний xdg-utils / 1 | `QDesktopServices.openUrl` при входе | Нужен штатный путь открытия браузера на поддерживаемых Linux desktop; прежний вход проверен владельцем | Сохранить; не обещать offscreen-проверку браузера |
+| Предположительно лишний mpv / 1 | `player.py` → python-mpv → libmpv | Динамическая библиотека; тесты загружают настоящий libmpv, пакет mpv предоставляет библиотеку | Сохранить прямую зависимость >=0.41 |
+| Предположительно лишний python-pysocks / 1 | requests[socks] SDK | Явная upstream-зависимость в METADATA, опциональный транспорт requests; специальный SOCKS-маршрут не проверялся | Сохранить контракт SDK, не объявлять прокси проверенным |
+
+В этой проверке не найдено пропусков обязательных runtime-зависимостей, неправильных путей/прав или отсутствующих текстов лицензий. Это не заменяет чистый Arch/Manjaro тест. Все семь необязательных модулей действительно отсутствуют в проверенной venv, а 57 тестов проходят. Автоматически исключать все будущие W по аналогии с этой таблицей нельзя.
