@@ -7,7 +7,7 @@ unset PYTHONPATH PYTHONHOME QML_IMPORT_PATH QML2_IMPORT_PATH QT_PLUGIN_PATH VIRT
 export PATH=/usr/bin:/bin
 export LANG=C.UTF-8
 target=$1
-phases=(distribution dependencies test-environment source-provenance previous-build candidate-build package-content previous-launch upgrade-launch fresh-launch removal)
+phases=(distribution dependencies test-environment source-provenance previous-build candidate-build package-content aur-build aur-content previous-launch upgrade-launch fresh-launch aur-launch removal)
 declare -A results
 for item in "${phases[@]}"; do results[$item]='NOT RUN'; done
 phase=distribution
@@ -118,9 +118,28 @@ for name in previous candidate; do
   cat "/output/$name/SHA256SUMS"
 done
 results[$phase]=PASS
+# Validate the actual public recipe without a local source cache or credentials.
+phase=aur-build
+mkdir /work/aur /output/aur
+cp /input/aur/{PKGBUILD,.SRCINFO} /work/aur/
+chown -R yanjaro-test:yanjaro-test /work/aur
+cd /work/aur
+runuser -u yanjaro-test -- makepkg --force --cleanbuild --noconfirm 2>&1 | tee /output/aur/makepkg.log
+runuser -u yanjaro-test -- makepkg --printsrcinfo > /output/aur/generated.SRCINFO
+cmp /output/aur/generated.SRCINFO /input/aur/.SRCINFO
+cp PKGBUILD .SRCINFO ./*.tar.gz ./*.whl "yanjaro-$candidate_version-any.pkg.tar.zst" /output/aur/
+results[$phase]=PASS
+phase=aur-content
+python /input/check-package.py "/output/aur/yanjaro-$candidate_version-any.pkg.tar.zst" \
+  --source /work/candidate/yanjaro --version "$candidate_version" \
+  --compare "/output/candidate/yanjaro-$candidate_version-any.pkg.tar.zst" | tee /output/aur/package-check.txt
+bsdtar -xOf "/output/aur/yanjaro-$candidate_version-any.pkg.tar.zst" .BUILDINFO > /output/aur/BUILDINFO
+bsdtar -xOf "/output/aur/yanjaro-$candidate_version-any.pkg.tar.zst" .PKGINFO > /output/aur/PKGINFO
+(cd /output/aur && sha256sum ./*.pkg.tar.zst ./*.tar.gz ./*.whl PKGBUILD .SRCINFO > SHA256SUMS)
+results[$phase]=PASS
 # No extracted application tree remains when the installed launcher runs.
 cd /tmp
-rm -rf /work/candidate /work/previous
+rm -rf /work/candidate /work/previous /work/aur
 mkdir -p /home/yanjaro-test/.config/yanjaro
 printf 'synthetic preference\n' > /home/yanjaro-test/.config/yanjaro/release-test-sentinel
 chown -R yanjaro-test:yanjaro-test /home/yanjaro-test
@@ -152,6 +171,11 @@ phase=fresh-launch
 pacman -R --noconfirm yanjaro
 pacman -U --noconfirm "/output/candidate/yanjaro-$candidate_version-any.pkg.tar.zst"
 smoke 2>&1 | tee /output/candidate/fresh-smoke.log
+results[$phase]=PASS
+phase=aur-launch
+pacman -U --noconfirm "/output/aur/yanjaro-$candidate_version-any.pkg.tar.zst"
+smoke 2>&1 | tee /output/aur/smoke.log
+pacman -Qkk yanjaro
 results[$phase]=PASS
 phase=removal
 pacman -R --noconfirm yanjaro

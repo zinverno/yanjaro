@@ -1,0 +1,40 @@
+{
+  "version": "0.2.0rc4-1",
+  "proposed_tag": "v0.2.0rc4",
+  "tag_status": "NOT CREATED",
+  "tag_target_commit": "e9a094a7eb978fda1aaf9966dbf7d0b596276ab7",
+  "source_date_epoch": 1791450957,
+  "accepted_ci": "https://github.com/zinverno/yanjaro/actions/runs/37756207784",
+  "accepted_ci_harness": "006107b39ca3bc96f4c516cfd17ca6f358c65a3c",
+  "manual_acceptance": {
+    "status": "PASS",
+    "reported_by": "owner",
+    "date": "2026-10-08",
+    "result": "5/5; Previous/Next, rapid navigation, pause preservation, desktop MPRIS"
+  },
+  "assets": {
+    "yanjaro-0.2.0rc4-1-any.pkg.tar.zst": {
+      "sha256": "0f6ac166059c6a487606783fbec7b25e7612f3f85461dbe51f6383100965f2bf",
+      "origin": "Manjaro Stable candidate, CI artifact 11540129297",
+      "build_command": "makepkg --force --cleanbuild --noconfirm"
+    },
+    "yanjaro-0.2.0rc4.tar.gz": {
+      "sha256": "11dd959d197f44ed61581cf120646baf0c10bcd2eca025cf939e851e031e8377",
+      "origin": "Deterministic whitelisted source snapshot from tag_target_commit",
+      "build_command": "SOURCE_DATE_EPOCH=1791450957 python scripts/prepare-native.py at tag_target_commit"
+    }
+  },
+  "aur_source": {
+    "url": "https://codeload.github.com/zinverno/yanjaro/tar.gz/e9a094a7eb978fda1aaf9966dbf7d0b596276ab7",
+    "sha256": "492aeae53a0d27b1ba1e6305c5afdc8952e0c2ab3b432b14cfc15e63d1afbebb",
+    "anonymous_download": "PASS",
+    "frozen_source_files_compared": 116,
+    "note": "Different archive layout and hash; not a replacement for the canonical release tar.gz. All canonical files match byte-for-byte."
+  },
+  "sdk": {
+    "filename": "yandex_music-3.2.0-py3-none-any.whl",
+    "url": "https://files.pythonhosted.org/packages/67/76/fc7b9653df26f3f8255e033a302a478b4eb899beeddbd66ae48c005654bb/yandex_music-3.2.0-py3-none-any.whl",
+    "sha256": "b897889882707512ece92ca5663aba879dcaa26a88a6ba1c301dec6e2c5bdc3c"
+  },
+  "publication": "NOT RUN; owner approval required; no public Release download URL exists yet"
+}
