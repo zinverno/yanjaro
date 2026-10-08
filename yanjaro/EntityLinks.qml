@@ -6,6 +6,7 @@ RowLayout {
     id: links
     required property var music
     required property var rowData
+    property bool showAlbum: false
     spacing: Theme.small
     Button {
         id: artist
@@ -35,7 +36,7 @@ RowLayout {
     Button {
         id: album
         objectName: "albumLink"
-        visible: Boolean(links.rowData.albumId) && links.width > 280
+        visible: links.showAlbum && Boolean(links.rowData.albumId) && links.width > 280
         Layout.fillWidth: true
         implicitHeight: 22
         padding: 0

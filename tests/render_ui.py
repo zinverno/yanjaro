@@ -8,7 +8,7 @@ from unittest.mock import Mock
 from PySide6.QtCore import QObject, QPointF, Qt
 from PySide6.QtQml import QQmlApplicationEngine, QQmlComponent
 from PySide6.QtTest import QTest
-from test_desktop import APP
+from test_desktop import APP, visual_items, until
 from test_wave import StubPlayer
 from yanjaro.api import Track
 from yanjaro.controller import PlaybackController
@@ -17,11 +17,16 @@ out = Path(sys.argv[1])
 out.mkdir(parents=True, exist_ok=True)
 player = StubPlayer()
 c = PlaybackController(player, Mock())
-c._state.update(signedIn=True, currentId='2', current='Тестовая композиция', artist='Тестовый исполнитель', source='Мне нравится')
+c._state.update(signedIn=True, currentId='2', current='Тестовая композиция с очень длинным названием' * 4, artist='Тестовый исполнитель', source='Мне нравится')
 player.state.update(loaded=True, paused=False, position=68, duration=213)
 rows = [Track(str(i), 'Тестовая композиция' + (' с очень длинным названием' * 6 if i == 3 else f' {i + 1}'),
-              'Тестовый исполнитель', 213, True).row() for i in range(70)]
+              'Тестовый исполнитель', 213, True, '123', '', ({'id': '9', 'title': 'Тестовый исполнитель'},), 'Тестовый альбом').row() for i in range(70)]
 c.pages['likes'].update(rows=rows, total=70, status='ready', ids=tuple(str(i) for i in range(70)))
+c.likes_ready = True
+c._sync_likes(tuple(str(i) for i in range(70)))
+c.queue = rows[:8]
+c.queue_index = 2
+c.selected_row = rows[2]
 c.pages['search'].update(rows=rows[:5], total=5, status='ready')
 c.query = 'Тестовая композиция'
 c.pages['stations'].update(rows=[dict(id=str(i), title=name, detail='Радиостанция', kind='station', available=True)
@@ -61,9 +66,24 @@ try:
             volume = window.findChild(QObject, 'volumeControls')
             assert metadata.x() + metadata.width() <= center.x()
             assert center.x() + center.width() <= volume.x()
+            # Hearts and row menus must stay inside their layout, including long titles.
+            for item in visual_items(window.contentItem()):
+                if item.objectName() not in ('likeButton', 'trackMenuButton') or not item.isVisible():
+                    continue
+                pos = item.mapToScene(QPointF(0, 0))
+                assert 0 <= pos.x() and pos.x() + item.width() <= width + 1
+            heart = metadata.findChild(QObject, 'likeButton')
+            assert heart.mapToScene(QPointF(heart.width(), 0)).x() <= center.x()
             capture = window.grabWindow()
             assert not capture.isNull()
             assert capture.save(str(out / f'{view}-{width}x{height}-{scale}.png'))
+        queue_button = window.findChild(QObject, 'queueButton')
+        QTest.mouseClick(window, Qt.LeftButton, Qt.NoModifier, queue_button.mapToScene(QPointF(18, 18)).toPoint())
+        until(lambda: window.findChild(QObject, 'queuePanel').property('opened'))
+        assert abs(center.x() + center.width()/2 - width/2) < 1
+        assert window.grabWindow().save(str(out / f'queue-{width}x{height}-{scale}.png'))
+        QTest.mouseClick(window, Qt.LeftButton, Qt.NoModifier, queue_button.mapToScene(QPointF(18, 18)).toPoint())
+        until(lambda: not window.findChild(QObject, 'queuePanel').property('visible'))
     print(f'PASS: {len(sizes)} logical/physical size cases and three views at scale {scale}; primary controls in bounds')
 finally:
     window.close()

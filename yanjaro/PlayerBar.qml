@@ -22,10 +22,18 @@ Rectangle {
         Artwork { url: bar.viewState.cover; visible: metadata.width > 160; Layout.preferredWidth: 48; Layout.preferredHeight: 48 }
         ColumnLayout {
             Layout.fillWidth: true
+            Layout.minimumWidth: 0
             spacing: 3
             Label { text: bar.viewState.current; font.bold: true; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true; ToolTip.visible: titleHover.hovered; ToolTip.text: text; HoverHandler { id: titleHover } }
-            EntityLinks { music: bar.music; rowData: bar.viewState.currentRow; Layout.fillWidth: true }
+            EntityLinks { showAlbum: true; music: bar.music; rowData: bar.viewState.currentRow; Layout.fillWidth: true }
             Label { text: bar.viewState.source; visible: text.length > 0; color: Theme.accent; font.pixelSize: Theme.caption; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true }
+        }
+        LikeButton {
+            music: bar.music
+            trackId: String(bar.viewState.currentId || "")
+            albumId: String(bar.viewState.currentRow.albumId || "")
+            Layout.preferredWidth: 36
+            Layout.preferredHeight: 36
         }
     }
     ColumnLayout {

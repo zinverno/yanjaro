@@ -1,0 +1,69 @@
+{
+  "run": "https://github.com/zinverno/yanjaro/actions/runs/37744989735",
+  "harness_commit": "fc0c227089aa9f33dd4126ac4d184646460a9424",
+  "source_commit": "1d2e248d770705decef7b35aad961cb56ba4397f",
+  "source_sha256": "85869f574c62af7c674b55a9393f3c505ca2380511bc5038db62d6aaf845a88f",
+  "version": "0.2.0rc3-1",
+  "systems": {
+    "arch": {
+      "artifact_id": 11535432061,
+      "artifact_zip_sha256": "75e29e0bebd3398d00280979597da3c8006e305b9733401a6ccd0858ebc3e124",
+      "container_digest": "archlinux@sha256:4e77cf2ea5f410e6f8be5abf93ccf17ce2436e87a138c167208356711a405dbd",
+      "runtime_versions": [
+        "yanjaro 0.2.0rc3-1",
+        "python 3.14.7-1",
+        "pyside6 6.11.2-3",
+        "mpv 1:0.41.0-6",
+        "python-mpv 1.0.8-2",
+        "python-secretstorage 3.5.0-1",
+        "python-jeepney 0.9.0-3"
+      ],
+      "status": {
+        "distribution": "PASS",
+        "dependencies": "PASS",
+        "test-environment": "PASS",
+        "source-provenance": "PASS",
+        "previous-build": "PASS",
+        "candidate-build": "PASS",
+        "package-content": "PASS",
+        "previous-launch": "PASS",
+        "upgrade-launch": "PASS",
+        "fresh-launch": "PASS",
+        "removal": "PASS",
+        "desktop/audio/account": "NOT RUN"
+      },
+      "package_sha256": "1e6f73100570385937519928ae4b7e6ee9230e8a7ba7cddb3705331ea7ef09d0",
+      "regular_payload_files_matching_local": 431
+    },
+    "manjaro": {
+      "artifact_id": 11534339860,
+      "artifact_zip_sha256": "c0c58783e733f65a18d1ab85a711bcea228a30164c2b56b9d5a508303e3658a2",
+      "container_digest": "manjarolinux/base@sha256:bbf1f1d746f28e138eea610e140d2f28cbb5b7c5da2fbff034b883527aa604e9",
+      "runtime_versions": [
+        "yanjaro 0.2.0rc3-1",
+        "python 3.14.7-1",
+        "pyside6 6.11.2-1",
+        "mpv 1:0.41.0-6",
+        "python-mpv 1.0.8-2",
+        "python-secretstorage 3.5.0-1",
+        "python-jeepney 0.9.0-3"
+      ],
+      "status": {
+        "distribution": "PASS",
+        "dependencies": "PASS",
+        "test-environment": "PASS",
+        "source-provenance": "PASS",
+        "previous-build": "PASS",
+        "candidate-build": "PASS",
+        "package-content": "PASS",
+        "previous-launch": "PASS",
+        "upgrade-launch": "PASS",
+        "fresh-launch": "PASS",
+        "removal": "PASS",
+        "desktop/audio/account": "NOT RUN"
+      },
+      "package_sha256": "d3fddd9015dc1e3c2fbf0d19196225c06afc61cfc6842f29cb443762032122e1",
+      "regular_payload_files_matching_local": 431
+    }
+  }
+}

@@ -25,6 +25,7 @@ class PlaybackController(QObject):
     changed = Signal()
     contentChanged = Signal()
     queueChanged = Signal()
+    likesChanged = Signal()
     _result = Signal(int, str, object, str)
     _code = Signal(int, str, str)
 
@@ -57,6 +58,11 @@ class PlaybackController(QObject):
         self.mix_warnings = []
         self.mix_seed = 0
         self.mix_liked = set()
+        self.liked_ids = set()
+        self.likes_ready = False
+        self.like_pending = {}
+        self.like_jobs = {}
+        self.like_refresh_needed = False
         self.station_preferences = {}
         self.station_query = ''
         self.station_groups = []
@@ -101,7 +107,7 @@ class PlaybackController(QObject):
                            storageAction='restore', mprisStatus='Системное управление не подключено',
                            view="likes", currentId="", current="Ничего не выбрано", artist="",
                            cover="", source="", loading=False, playerError=player.error,
-                           stationError="", waveActive=False,
+                           stationError="", likeError="", waveActive=False,
                            playReport="События этого запуска ещё не отправлялись.")
         self._result.connect(self._deliver, Qt.ConnectionType.QueuedConnection)
         self._code.connect(self._show_code, Qt.ConnectionType.QueuedConnection)
@@ -121,6 +127,14 @@ class PlaybackController(QObject):
     @Property('QVariantList', notify=contentChanged)
     def stationGroups(self):
         return self.station_groups
+
+    @Property('QVariantMap', notify=likesChanged)
+    def likesState(self):
+        # Updated only by likesChanged, rather than reconstructing 1000+ IDs
+        # on the 200ms player position notification.
+        return dict(ready=self.likes_ready,
+                    liked={track_id: True for track_id in self.liked_ids},
+                    pending={track_id: True for track_id in self.like_pending})
 
     def _page_key(self):
         return 'search:' + self.search_type if self._state['view'] == 'search' else self._state['view']
@@ -212,8 +226,13 @@ class PlaybackController(QObject):
                     page['meta'] = result.meta
                 if result.ids:
                     page["ids"] = result.ids
+                if view == 'likes' and number == 0:
+                    page['ids'] = result.ids  # Empty collection must clear old IDs.
+                    self.likes_ready = True
+                    self._sync_likes(result.ids)
                 # The playing context is a snapshot. Only its own next search page can extend it.
-                if (view == self.queue_page_key and number and self.queue_context == self.query
+                # Likes already queued every ID, including metadata placeholders.
+                if (view != 'likes' and view == self.queue_page_key and number and self.queue_context == self.query
                         and self.queue_search_generation == self.search_generation and not self.wave_station):
                     existing = {r["id"] for r in self.queue}
                     self.queue.extend(r.copy() for r in rows if r["id"] not in existing and r["available"])
@@ -260,6 +279,30 @@ class PlaybackController(QObject):
                 if not self.wave_station and self.queue_index >= 0:
                     self.queue[self.queue_index] = result.track.row()
                 self.player.play(result, paused=self.desired_paused)
+        elif operation == 'like':
+            track_id, was_liked = context
+            if track_id not in self.like_pending:
+                return
+            self.like_pending.pop(track_id)
+            self.like_jobs.pop(track_id, None)
+            if error:
+                if was_liked:
+                    self.liked_ids.add(track_id)
+                else:
+                    self.liked_ids.discard(track_id)
+                self._state['likeError'] = 'Не удалось изменить «Мне нравится». ' + error
+                self.likesChanged.emit()
+            else:
+                self._sync_likes(result)
+                likes = self.pages['likes']
+                likes['ids'] = tuple(result)
+                likes['total'] = len(result)
+                self.like_refresh_needed = True
+            if not self.like_pending and self.like_refresh_needed:
+                self.like_refresh_needed = False
+                self.pages['likes']['scroll'] = 0
+                self._load_page('likes', 0)  # Reset pagination offsets after mutation.
+            self.contentChanged.emit()
         elif operation == "queue-meta":
             if context != self.generation or error:
                 return
@@ -323,6 +366,46 @@ class PlaybackController(QObject):
         if self._state['signedIn']:
             self.storage_action = 'save' if enabled else 'delete'
             self.retry_storage()
+        self.changed.emit()
+
+    def _sync_likes(self, full_ids):
+        updated = {str(item).split(':', 1)[0] for item in full_ids}
+        # In-flight optimistic changes take precedence over stale page results.
+        for track_id, intended in self.like_pending.items():
+            if intended:
+                updated.add(track_id)
+            else:
+                updated.discard(track_id)
+        self.liked_ids = updated
+        self.likesChanged.emit()
+
+    @Slot(str, str)
+    def toggle_like(self, track_id, album_id):
+        track_id = str(track_id)
+        base = track_id.split(':', 1)[0]
+        if (not self._state['signedIn'] or not self.likes_ready or
+                not base.isdecimal() or base in self.like_pending):
+            return
+        was_liked = base in self.liked_ids
+        intended = not was_liked
+        self.like_pending[base] = intended
+        if intended:
+            self.liked_ids.add(base)
+        else:
+            self.liked_ids.discard(base)
+        self._state['likeError'] = ''
+        self.likesChanged.emit()
+        self.changed.emit()
+        account = self.account_generation
+        def change():
+            if self.closing or account != self.account_generation:
+                return ()
+            return self.api.set_track_liked(track_id, intended, album_id)
+        self.like_jobs[base] = self._work('like', (base, was_liked), change)
+
+    @Slot()
+    def clear_like_error(self):
+        self._state['likeError'] = ''
         self.changed.emit()
 
     def restore_account(self, unlock=False):
@@ -411,6 +494,15 @@ class PlaybackController(QObject):
         self.account_id = ''
         self.station_preferences = {}
         self.station_groups = []
+        self.liked_ids.clear()
+        self.likes_ready = False
+        for job in self.like_jobs.values():
+            job.cancel()
+        self.like_jobs.clear()
+        self.like_pending.clear()
+        self.like_refresh_needed = False
+        self._state['likeError'] = ''
+        self.likesChanged.emit()
         self.back_stack = []
         self._leave_wave()
         self.cancel_mix()
@@ -1143,7 +1235,7 @@ class PlaybackController(QObject):
         self.closing = True
         self.timer.stop()
         self.cancel.set()
-        for job in (*self.page_jobs.values(), self.play_job, self.meta_job, self.wave_job, self.auth_job, self.mix_job):
+        for job in (*self.page_jobs.values(), *self.like_jobs.values(), self.play_job, self.meta_job, self.wave_job, self.auth_job, self.mix_job):
             if job:
                 job.cancel()
         self.player.close()

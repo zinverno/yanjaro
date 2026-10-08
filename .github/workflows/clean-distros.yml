@@ -2,7 +2,7 @@ name: Clean distribution checks
 
 on:
   push:
-    branches: [feature/player-polish-and-discovery]
+    branches: [feature/likes-and-track-list]
     paths:
       - '.github/workflows/clean-distros.yml'
       - 'scripts/**'
@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   clean:
-    name: ${{ matrix.target }} / rc2-3
+    name: ${{ matrix.target }} / rc3-1
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     strategy:

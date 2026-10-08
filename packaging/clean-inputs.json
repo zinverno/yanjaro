@@ -1,9 +1,10 @@
 {
   "candidate": {
-    "version": "0.2.0rc2-3",
-    "source_commit": "6e7af545e5da1a5bdca42a4ed512ca38d6fdcaf9",
-    "source_date_epoch": "1791433523",
-    "source_sha256": "18e037b5c29747ebb1bcf8b8045a367b69e20ca60540a6557299ffb9e383707c"
+    "version": "0.2.0rc3-1",
+    "source_commit": "1d2e248d770705decef7b35aad961cb56ba4397f",
+    "source_date_epoch": "1791445200",
+    "source_sha256": "85869f574c62af7c674b55a9393f3c505ca2380511bc5038db62d6aaf845a88f",
+    "manifest": "candidate-rc3-1.json"
   },
   "previous": {
     "version": "0.2.0rc2-2",

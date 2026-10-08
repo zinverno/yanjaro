@@ -24,7 +24,7 @@ git -C "$project" rev-parse HEAD > "$output/harness-commit.txt"
 scratch=$(mktemp -d)
 input="$scratch/input"
 python3 "$project/scripts/prepare-clean.py" "$input"
-cp "$input/clean-inputs.json" "$input/candidate-rc2-3.json" "$output/"
+cp "$input/clean-inputs.json" "$input/candidate-manifest.json" "$output/"
 cp "$input/SHA256SUMS" "$output/input-SHA256SUMS"
 printf 'pinned Git inputs: PASS\n' >> "$output/host-result.txt"
 phase=container-availability

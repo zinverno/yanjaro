@@ -11,6 +11,7 @@ from unittest.mock import patch
 spec = importlib.util.spec_from_file_location('prepare_clean', Path(__file__).with_name('prepare-clean.py'))
 prepare_clean = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(prepare_clean)
+MANIFEST = json.loads((prepare_clean.ROOT / 'packaging/clean-inputs.json').read_text())['candidate'].get('manifest', 'candidate-rc2-3.json')
 
 
 class CleanInputs(unittest.TestCase):
@@ -35,7 +36,7 @@ class CleanInputs(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             (root / 'packaging').mkdir()
-            for name in ('clean-inputs.json', 'candidate-rc2-3.json'):
+            for name in ('clean-inputs.json', MANIFEST):
                 (root / 'packaging' / name).write_bytes((prepare_clean.ROOT / 'packaging' / name).read_bytes())
             p = root / 'packaging/clean-inputs.json'
             inputs = json.loads(p.read_text())
@@ -49,7 +50,7 @@ class CleanInputs(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             (root / 'packaging').mkdir()
-            for name in ('clean-inputs.json', 'candidate-rc2-3.json'):
+            for name in ('clean-inputs.json', MANIFEST):
                 data = json.loads((prepare_clean.ROOT / 'packaging' / name).read_text())
                 if name == 'clean-inputs.json':
                     data['candidate']['source_commit'] = 'HEAD'
