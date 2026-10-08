@@ -7,6 +7,8 @@ import subprocess
 
 parser=argparse.ArgumentParser()
 parser.add_argument('package', type=Path)
+parser.add_argument('--source', type=Path, default=Path(__file__).resolve().parents[1] / 'yanjaro')
+parser.add_argument('--version')
 args=parser.parse_args()
 package=args.package.resolve()
 names=subprocess.check_output(['bsdtar','-tf',str(package)],text=True).splitlines()
@@ -27,11 +29,14 @@ required={'usr/bin/yanjaro','usr/share/applications/yanjaro.desktop',
           'usr/share/licenses/yanjaro/LICENSE',
           'usr/share/licenses/yanjaro/yandex-music-LICENSE'}
 assert required.issubset(names), required-set(names)
-source_root=Path(__file__).resolve().parents[1] / 'yanjaro'
+source_root=args.source.resolve()
 expected={f'usr/lib/yanjaro/yanjaro/{p.relative_to(source_root)}'
           for p in source_root.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
 actual={n for n in names if n.startswith('usr/lib/yanjaro/yanjaro/') and not n.endswith('/')}
 assert actual==expected, 'Application resources differ from source (possible stale build files)'
+for name in sorted(actual):
+    expected_body=(source_root / name.removeprefix('usr/lib/yanjaro/yanjaro/')).read_bytes()
+    assert subprocess.check_output(['bsdtar','-xOf',str(package),name]) == expected_body, name
 for name in names:
     if name == 'usr/bin/yanjaro' or name.startswith('usr/lib/yanjaro/yanjaro/') and Path(name).suffix in {'.py','.qml'}:
         body=subprocess.check_output(['bsdtar','-xOf',str(package),name])
@@ -39,6 +44,8 @@ for name in names:
         assert not re.search(rb'\by[01]_[A-Za-z0-9_-]{24,}', body), 'Possible OAuth token in ' + name
         assert not re.search(rb'https?://[^\s\x22\x27]+/(?:get-mp3|get-opus)/', body), 'Possible audio URL in ' + name
 metadata=subprocess.check_output(['bsdtar','-xOf',str(package),'.PKGINFO'],text=True)
+if args.version:
+    assert 'pkgver = ' + args.version in metadata.splitlines(), 'Unexpected package version'
 for dependency in ('pyside6','python-mpv','mpv','python-requests','qt6-svg','python-secretstorage','python-jeepney'):
     assert any(line.startswith('depend = '+dependency) for line in metadata.splitlines()), dependency
 print('PASS: native layout, entry point, resources, declared dependencies and private-file exclusions')

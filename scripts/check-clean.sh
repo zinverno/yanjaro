@@ -1,5 +1,5 @@
 #!/bin/bash
-# Clean distribution test; only disposable Docker containers are modified.
+# Standard Docker host only; all pacman/makepkg operations stay in a disposable container.
 set -euo pipefail
 target=${1:?Usage: check-clean.sh arch|manjaro}
 case "$target" in
@@ -8,27 +8,41 @@ case "$target" in
   *) exit 2 ;;
 esac
 project=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-docker info >/dev/null
-input=$(mktemp -d)
-name="yanjaro-clean-$target-$$"
-trap 'docker rm -f "$name" >/dev/null 2>&1 || true; rm -rf "$input"' EXIT
-cp "$project/packaging/PKGBUILD" "$project/packaging/.SRCINFO" "$input/"
-cp "$project/dist/native/yanjaro-0.2.0rc2.tar.gz" "$input/"
-cp "$project/dist/native/yanjaro-0.2.0rc2-2-any.pkg.tar.zst" "$input/previous.pkg.tar.zst"
-cp "$project/scripts/clean-container.sh" "$project/scripts/smoke-installed.py" "$input/"
-# Optional verified wheel cache; makepkg still checks its declared checksum.
-sdk="$project/dist/native/yandex_music-3.2.0-py3-none-any.whl"
-if [ -f "$sdk" ]; then cp "$sdk" "$input/"; fi
-chmod -R a+rX "$input"
-output="$project/dist/clean/$target/$(date -u +%Y%m%dT%H%M%SZ)"
+output="$project/dist/clean/$target"
 mkdir -p "$output"
-docker pull "$image"
+phase=inputs
+failure=FAIL
+finish() {
+  code=$?
+  if [ "$code" -ne 0 ]; then printf '%s: %s (exit %s)\n' "$phase" "$failure" "$code" >> "$output/host-result.txt"; fi
+  if [ -n "${name:-}" ]; then docker rm -f "$name" >/dev/null 2>&1 || true; fi
+  if [ -n "${scratch:-}" ]; then rm -rf "$scratch"; fi
+}
+trap finish EXIT
+printf 'desktop/audio/account: NOT RUN\n' > "$output/host-result.txt"
+git -C "$project" rev-parse HEAD > "$output/harness-commit.txt"
+scratch=$(mktemp -d)
+input="$scratch/input"
+python3 "$project/scripts/prepare-clean.py" "$input"
+cp "$input/clean-inputs.json" "$input/candidate-rc2-3.json" "$output/"
+cp "$input/SHA256SUMS" "$output/input-SHA256SUMS"
+printf 'pinned Git inputs: PASS\n' >> "$output/host-result.txt"
+phase=container-availability
+failure=BLOCKED
+docker info >/dev/null
+docker pull --platform linux/amd64 "$image" 2>&1 | tee "$output/pull.log"
 digest=$(docker image inspect "$image" --format '{{index .RepoDigests 0}}')
 printf '%s\n' "$digest" > "$output/image.txt"
-printf '%s\n' "Results: $output"
-timeout --signal=TERM 20m docker run --rm --init --name "$name" \
-  --cpus=2 --memory=3g --pids-limit=512 \
+docker image inspect "$image" --format '{{.Id}} {{.Os}}/{{.Architecture}}' > "$output/image-id.txt"
+chmod -R a+rX "$input"
+name="yanjaro-clean-$target-$$"
+phase=container-checks
+failure=FAIL
+# No host home, source checkout, Docker socket, audio device or credentials are mounted.
+timeout --signal=TERM 25m docker run --rm --init --name "$name" \
+  --platform linux/amd64 --cpus=2 --memory=4g --pids-limit=512 \
   --mount "type=bind,src=$input,dst=/input,readonly" \
   --mount "type=bind,src=$output,dst=/output" \
   --env YANJARO_DISPOSABLE_CONTAINER=1 "$digest" \
   /bin/bash /input/clean-container.sh "$target" 2>&1 | tee "$output/run.log"
+printf 'container checks: PASS\n' >> "$output/host-result.txt"

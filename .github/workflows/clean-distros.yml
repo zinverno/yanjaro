@@ -1,0 +1,47 @@
+name: Clean distribution checks
+
+on:
+  push:
+    branches: [feature/player-polish-and-discovery]
+    paths:
+      - '.github/workflows/clean-distros.yml'
+      - 'scripts/**'
+      - 'packaging/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  clean:
+    name: ${{ matrix.target }} / rc2-3
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [arch, manjaro]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Test pinned input preparation
+        run: python3 -m unittest discover -s scripts -p 'test_clean_inputs.py' -v
+      - name: Build, check, install, upgrade and remove in disposable container
+        run: bash scripts/check-clean.sh '${{ matrix.target }}'
+      - name: Stage check summary
+        if: always()
+        run: |
+          for report in dist/clean/${{ matrix.target }}/{host-result,result}.txt; do
+            if test -f "$report"; then cat "$report" >> "$GITHUB_STEP_SUMMARY"; fi
+          done
+      - name: Preserve logs, provenance, packages and checksums
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: clean-${{ matrix.target }}-${{ github.sha }}-${{ github.run_attempt }}
+          path: dist/clean/${{ matrix.target }}/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
