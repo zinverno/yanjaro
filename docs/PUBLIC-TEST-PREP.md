@@ -65,3 +65,19 @@ AUR RPC 2026-10-08: `info?arg[]=yanjaro` вернул resultcount=0. Имя не
 Практический блокер тестового пакета: независимая чистая установка/запуск Manjaro ещё не доказаны. Для AUR дополнительно нужны чистый Arch build и проверка точных публичных источников финального рецепта. Качество эксперимента, снимок уже подтверждённой карточки и все масштабы не объявляются самостоятельными блокерами ограниченного теста. Merge, auto-merge, теги, видимость, Release и AUR агентом не менялись.
 
 Справочники: [PKGBUILD](https://man.archlinux.org/man/PKGBUILD.5.en), [Arch clean chroot](https://wiki.archlinux.org/title/DeveloperWiki:Building_in_a_clean_chroot), [AUR submission](https://wiki.archlinux.org/title/AUR_submission_guidelines), [Manjaro AUR/Pamac](https://wiki.manjaro.org/index.php?title=Arch_User_Repository), [официальный Manjaro Docker](https://github.com/manjaro/manjaro-docker), [видимость GitHub](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/setting-repository-visibility), [GitHub prerelease](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository). Arch Wiki в web-инструменте вернул защитную страницу; команды makepkg сверены с установленным инструментом, не с недоступным текстом.
+
+
+## Фактическая сборка rc2-3
+
+Полный `makepkg --force --cleanbuild` завершился кодом 0, включая **57 тестов check()** на Python 3.14.7 / Qt 6.11.2 / mpv 0.41 / SDK 3.2.0. Сборка в read-only host namespace Manjaro Stable, а не чистая ОС. Исполняемые Python/QML/SVG побайтно совпадают с принятым rc2-2; единственный изменённый ресурс приложения — `icons/README.md` с атрибуцией. Основной установленный пакет остался `0.2.0rc2-2`. Проверка самого smoke-harness с установленным пакетом прошла с явной заменой запрещённого IPC; это также не чистая установка.
+
+Все 107 файлов source snapshot совпали с Git-commit `6e7af545e5da1a5bdca42a4ed512ca38d6fdcaf9`; `SOURCE_DATE_EPOCH=1791433523`. Сгенерированная .SRCINFO соответствует PKGBUILD. Namcap повторён для рецепта и нового пакета: **0 E / 28 W**, без ошибок самого анализатора; причины те же, что в таблице NAMCAP.md. Package layout, declared dependencies, файлы лицензий, отсутствие приватных путей/данных и desktop-file-validate PASS. Все десять PNG не имеют текстовых/EXIF chunks; визуальная проверка проведена отдельно.
+
+| Артефакт | SHA-256 |
+|---|---|
+| `dist/native/yanjaro-0.2.0rc2-3-any.pkg.tar.zst` | `7315cd00230797119adee20cd2661043216d010b310a856a0cf8991e37c6b95c` |
+| `dist/native/yanjaro-0.2.0rc2.tar.gz` | `18e037b5c29747ebb1bcf8b8045a367b69e20ca60540a6557299ffb9e383707c` |
+
+Манифест — `packaging/candidate-rc2-3.json`, суммы — `dist/SHA256SUMS-rc2-3`. Подготовленная папка пользовательских файлов `dist/test-release-0.2.0rc2-3/` содержит только native, source, PKGBUILD, сгенерированную .SRCINFO, provenance.json и SHA256SUMS. Ничего из неё не загружено в Release/каталоги. Bundle, dev-окружение, пользовательские базы, логи, диагностические архивы и wheel/sdist в эту папку не включены.
+
+Прежние native rc2-2 (`7ba013afe09722b774ba180597e6c31dc68fc19516bcb714cea39f18d0812ea3`), его source (`4233db47fc854975652ac630204a30f35a083f87078112be3390f7ac42d67f95`, сохранён в `dist/rc2-2/`) и developer wheel/sdist остались неизменными. Старый файл SHA256SUMS-rc2 теперь указывает на сохранённый путь старого source; проверены все четыре его суммы. Отчёт о сборке дописан после заморозки rc2-3 и может быть новее отчёта внутри source.

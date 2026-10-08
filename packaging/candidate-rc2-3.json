@@ -1,0 +1,16 @@
+{
+  "source_commit": "6e7af545e5da1a5bdca42a4ed512ca38d6fdcaf9",
+  "source_date_epoch": "1791433523",
+  "version": "0.2.0rc2-3",
+  "build_environment": "Manjaro Stable x86_64 host, read-only /usr namespace; NOT clean OS",
+  "installed_version": "0.2.0rc2-2",
+  "build_command": "makepkg --force --cleanbuild",
+  "python": "3.14.7",
+  "qt": "6.11.2",
+  "mpv": "0.41.0",
+  "sdk": "3.2.0",
+  "artifacts": {
+    "dist/native/yanjaro-0.2.0rc2-3-any.pkg.tar.zst": "7315cd00230797119adee20cd2661043216d010b310a856a0cf8991e37c6b95c",
+    "dist/native/yanjaro-0.2.0rc2.tar.gz": "18e037b5c29747ebb1bcf8b8045a367b69e20ca60540a6557299ffb9e383707c"
+  }
+}
