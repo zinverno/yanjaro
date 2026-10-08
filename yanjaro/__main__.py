@@ -7,14 +7,15 @@ from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtQuickControls2 import QQuickStyle
 
 from .api import private_logging
-from .controller import Controller
+from .controller import PlaybackController
 from .player import Player
-from .desktop import Instance
+from .desktop import Instance, ArtworkNetwork
+from .storage import SecretStore
 
 
 def main():
     parser = argparse.ArgumentParser(description="Yanjaro Music — неофициальный клиент Яндекс Музыки")
-    parser.add_argument("--capture-ui", metavar="DIRECTORY", help="сохранить три экрана после входа и запуска музыки")
+    parser.add_argument("--capture-ui", metavar="DIRECTORY", help="сохранить экраны после входа и запуска музыки, без снимков системных уведомлений")
     options = parser.parse_args()
     private_logging()
     # Unhandled third-party exceptions may contain tokens or signed URLs.
@@ -32,8 +33,10 @@ def main():
     except RuntimeError:
         print("Не удалось запустить единственный экземпляр Yanjaro. Проверьте доступ к каталогу сеанса.", file=sys.stderr)
         return 1
-    controller = Controller(Player())
+    controller = PlaybackController(Player(), store=SecretStore())
     engine = QQmlApplicationEngine()
+    artwork_network = ArtworkNetwork()
+    engine.setNetworkAccessManagerFactory(artwork_network)
     engine.setInitialProperties({"music": controller})
     engine.load(Path(__file__).with_name("Main.qml"))
     if not engine.rootObjects():
@@ -46,12 +49,16 @@ def main():
         window.raise_()
         window.requestActivate()
     instance.activated.connect(activate)
+    from .mpris import Mpris
+    mpris = Mpris(controller, activate, app.quit)
     if options.capture_ui:
         from .capture import Capture
         capture = Capture(controller, window, options.capture_ui)
+    controller.restore_account()
     try:
         return app.exec()
     finally:
+        mpris.close()
         controller.close()
         instance.close()
         del engine

@@ -20,6 +20,10 @@ class Capture(QObject):
     def _capture(self):
         state = self.controller.state
         view = state['view']
+        if view == 'search':
+            view = 'search' if state['searchType'] in ('all', 'track') else 'search-' + state['searchType']
+        elif ':' in view:
+            view = view.split(':')[0]
         if state['signedIn'] and not state['code']:
             self.max_batches_received = max(self.max_batches_received, self.controller.wave_batches_received)
             self.max_batches_played = max(self.max_batches_played, len(self.controller.wave_played_batches))
@@ -30,7 +34,7 @@ class Capture(QObject):
                 'screens_saved': sorted(self.saved),
                 'evidence': 'local capture session; contains no track IDs, account IDs, tokens or URLs',
             }, indent=2) + '\n')
-        if (view in self.saved or view not in {'likes', 'search', 'stations'}
+        if (view in self.saved or view not in {'likes', 'search', 'stations', 'search-artist', 'search-album', 'artist', 'album', 'experiment'}
                 or not state['signedIn'] or state['code'] or not state['loaded']
                 or state['pageStatus'] != 'ready' or not self.controller.content['rows']):
             return

@@ -1,0 +1,96 @@
+{
+  "run_url": "https://github.com/zinverno/yanjaro/actions/runs/37732764558",
+  "harness_commit": "1d2db7cf8dbc512b3796917b20185eb3edbe5186",
+  "runner": "ubuntu-24.04",
+  "result": "PASS",
+  "inputs": {
+    "candidate": {
+      "version": "0.2.0rc2-3",
+      "source_commit": "6e7af545e5da1a5bdca42a4ed512ca38d6fdcaf9",
+      "source_date_epoch": "1791433523",
+      "source_sha256": "18e037b5c29747ebb1bcf8b8045a367b69e20ca60540a6557299ffb9e383707c"
+    },
+    "previous": {
+      "version": "0.2.0rc2-2",
+      "source_commit": "fea11e61542a04cc139a42b5749e692d637a6509",
+      "source_date_epoch": "1791360000",
+      "source_sha256": "ce12d8c223012edd994c7df4fb8c95fc76ea4fc93ddb1b3b86e2ec097e8cb183",
+      "provenance": "Rebuilt from this pinned commit, not the historical host binary. Application bytes match rc2-2; documentation includes the post-build report."
+    }
+  },
+  "command": "makepkg --force --cleanbuild --noconfirm",
+  "systems": {
+    "arch": {
+      "result": "PASS",
+      "job_url": "https://github.com/zinverno/yanjaro/actions/runs/37732764558/job/113165423578",
+      "image": "archlinux@sha256:4e77cf2ea5f410e6f8be5abf93ccf17ce2436e87a138c167208356711a405dbd",
+      "image_id": "sha256:757718cecb34fbe2c56e22b5f6299a45f149c7ce1c9b85def543a340bacdf7af linux/amd64",
+      "branch": "rolling",
+      "packages": {
+        "python": "3.14.7-1",
+        "pyside6": "6.11.2-3",
+        "qt6-base": "6.12.0-2",
+        "qt6-declarative": "6.12.0-1",
+        "mpv": "1:0.41.0-6",
+        "python-mpv": "1.0.8-2",
+        "python-secretstorage": "3.5.0-1",
+        "python-jeepney": "0.9.0-3",
+        "noto-fonts": "1:2026.10.01-1"
+      },
+      "check_tests": {
+        "previous": 51,
+        "candidate": 57
+      },
+      "input_preparation_tests": 3,
+      "artifact_url": "https://github.com/zinverno/yanjaro/actions/runs/37732764558/artifacts/11529808521",
+      "artifact_zip_sha256": "2c16d55f4e4c50a349cb5e5b324fa9a29f07ad78294c3d54caf3a34f6c8d1ed1",
+      "sha256": {
+        "previous/yanjaro-0.2.0rc2-2-any.pkg.tar.zst": "ffded2aae60ba2394fd0f15c62bc50917d8e1c5828e4e1bc1b1b3120eb29b055",
+        "previous/yanjaro-0.2.0rc2.tar.gz": "ce12d8c223012edd994c7df4fb8c95fc76ea4fc93ddb1b3b86e2ec097e8cb183",
+        "previous/PKGBUILD": "5452635107c2d671cb37cf1d32940ab17f2ed60f5066aab265d133161f32a4e7",
+        "previous/.SRCINFO": "bbdd6817351f6a921dae9f0585c81a0b88bdb7aff78702cce4ce11f6ab8c04af",
+        "candidate/yanjaro-0.2.0rc2-3-any.pkg.tar.zst": "5535ae78503600c6883d047d26b1cf78ebcf6f6a270e877457fc0ce5b9dc3907",
+        "candidate/yanjaro-0.2.0rc2.tar.gz": "18e037b5c29747ebb1bcf8b8045a367b69e20ca60540a6557299ffb9e383707c",
+        "candidate/PKGBUILD": "7eeb3e5cc63453bc824c06e960aca68134d831699c335a0af5316667956e78ed",
+        "candidate/.SRCINFO": "74b300a0d8d8bdc3b481daa1ce9af8e2dce60bd1de181b17a3bacc90613706e7"
+      }
+    },
+    "manjaro": {
+      "result": "PASS",
+      "job_url": "https://github.com/zinverno/yanjaro/actions/runs/37732764558/job/113165423417",
+      "image": "manjarolinux/base@sha256:bbf1f1d746f28e138eea610e140d2f28cbb5b7c5da2fbff034b883527aa604e9",
+      "image_id": "sha256:34de3b02667e27efd9af2403ed8bc5ab35f9f60053c0f86933c61d42bba35ab4 linux/amd64",
+      "branch": "stable",
+      "packages": {
+        "python": "3.14.7-1",
+        "pyside6": "6.11.2-1",
+        "qt6-base": "6.11.2-3",
+        "qt6-declarative": "6.11.2-1",
+        "mpv": "1:0.41.0-6",
+        "python-mpv": "1.0.8-2",
+        "python-secretstorage": "3.5.0-1",
+        "python-jeepney": "0.9.0-3",
+        "noto-fonts": "1:2026.09.01-1"
+      },
+      "check_tests": {
+        "previous": 51,
+        "candidate": 57
+      },
+      "input_preparation_tests": 3,
+      "artifact_url": "https://github.com/zinverno/yanjaro/actions/runs/37732764558/artifacts/11530074068",
+      "artifact_zip_sha256": "8cfbb02d644a2761920317291fb5e09565c4f409830903d8041f8e0c705164e7",
+      "sha256": {
+        "previous/yanjaro-0.2.0rc2-2-any.pkg.tar.zst": "0b374f25e019f615f90ce7b6750fc5e90df927f611c0743cf9599c5c9852eb12",
+        "previous/yanjaro-0.2.0rc2.tar.gz": "ce12d8c223012edd994c7df4fb8c95fc76ea4fc93ddb1b3b86e2ec097e8cb183",
+        "previous/PKGBUILD": "5452635107c2d671cb37cf1d32940ab17f2ed60f5066aab265d133161f32a4e7",
+        "previous/.SRCINFO": "bbdd6817351f6a921dae9f0585c81a0b88bdb7aff78702cce4ce11f6ab8c04af",
+        "candidate/yanjaro-0.2.0rc2-3-any.pkg.tar.zst": "e3927a9a6353f4e0ccd4b779359d094c9e7f90c6e8acfa7cf043dc582af6b0ea",
+        "candidate/yanjaro-0.2.0rc2.tar.gz": "18e037b5c29747ebb1bcf8b8045a367b69e20ca60540a6557299ffb9e383707c",
+        "candidate/PKGBUILD": "7eeb3e5cc63453bc824c06e960aca68134d831699c335a0af5316667956e78ed",
+        "candidate/.SRCINFO": "74b300a0d8d8bdc3b481daa1ce9af8e2dce60bd1de181b17a3bacc90613706e7"
+      }
+    }
+  },
+  "desktop_audio_account": "NOT RUN: offscreen, ao=null, synthetic profile, isolated session bus",
+  "historical_rc2_3_payload_comparison": "PASS: all 427 regular usr files match historical package bytes/modes/uid/gid; build metadata and archive hashes differ"
+}

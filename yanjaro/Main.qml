@@ -34,7 +34,7 @@ ApplicationWindow {
     Shortcut { sequence: "Ctrl+L"; onActivated: { search.forceActiveFocus(); search.selectAll() } }
     Shortcut {
         sequence: "Space"
-        enabled: window.s.loaded && !(window.activeFocusItem instanceof TextInput) && !(window.activeFocusItem instanceof TextEdit) && !(window.activeFocusItem instanceof AbstractButton)
+        enabled: window.s.canPause && !(window.activeFocusItem instanceof TextInput) && !(window.activeFocusItem instanceof TextEdit)
         onActivated: window.music.pause()
     }
 
@@ -63,6 +63,7 @@ ApplicationWindow {
                 ActionButton { objectName: "navLikes"; text: "Мне нравится"; symbol: "favorite"; selected: window.s.view === "likes"; Layout.fillWidth: true; onClicked: window.navigate("likes") }
                 ActionButton { objectName: "navStations"; text: "Станции"; symbol: "radio"; selected: window.s.view === "stations"; Layout.fillWidth: true; onClicked: window.navigate("stations") }
                 ActionButton { visible: window.s.view === "search" || window.s.query.length > 0; text: "Результаты поиска"; symbol: "search"; selected: window.s.view === "search"; Layout.fillWidth: true; onClicked: window.navigate("search") }
+                ActionButton { visible: window.s.experimentEnabled; text: "Подбор · эксперимент"; selected: window.s.view === "experiment"; Layout.fillWidth: true; onClicked: window.navigate("experiment") }
                 Item { Layout.fillHeight: true }
                 Rectangle { Layout.fillWidth: true; implicitHeight: 1; color: Theme.line }
                 ActionButton {
@@ -75,6 +76,7 @@ ApplicationWindow {
                     Menu {
                         id: profile
                         y: -height
+                        MenuItem { text: "Настройки аккаунта и системы"; onTriggered: settings.open() }
                         MenuItem { text: "О приложении"; onTriggered: about.open() }
                         MenuItem { text: "Выйти из аккаунта"; onTriggered: window.music.logout() }
                     }
@@ -107,9 +109,20 @@ ApplicationWindow {
             RowLayout {
                 Layout.fillWidth: true
                 Layout.topMargin: Theme.small
-                Label { text: window.s.heading; font.pixelSize: Theme.title; font.bold: true; Layout.fillWidth: true }
+                ActionButton { visible: window.s.canBack; text: "Назад"; symbol: "previous"; onClicked: window.music.back() }
+                Label { text: window.s.heading; elide: Text.ElideRight; textFormat: Text.PlainText; font.pixelSize: Theme.title; font.bold: true; Layout.fillWidth: true }
                 Label { visible: window.s.view === "likes" && window.s.total >= 0; text: window.s.total + " треков"; color: Theme.secondary }
             }
+            RowLayout {
+                visible: window.s.signedIn && window.s.view === "search"
+                Layout.fillWidth: true
+                Repeater {
+                    model: [{kind:"all", title:"Все"}, {kind:"track", title:"Треки"}, {kind:"artist", title:"Исполнители"}, {kind:"album", title:"Альбомы"}]
+                    ActionButton { required property var modelData; text: modelData.title; selected: window.s.searchType === modelData.kind; onClicked: window.music.search_tab(modelData.kind) }
+                }
+            }
+            ExperimentControls { music: window.music; viewState: window.s; Layout.fillWidth: true; visible: window.s.signedIn && window.s.view === "experiment" }
+            EntityHeader { music: window.music; viewState: window.s; Layout.fillWidth: true; visible: window.s.signedIn && (window.s.entityKind === "artist" || window.s.entityKind === "album") }
             RowLayout {
                 visible: window.s.signedIn && window.s.view === "likes" && window.s.total > 0
                 Layout.fillWidth: true
@@ -126,6 +139,7 @@ ApplicationWindow {
                 Item { Layout.fillHeight: true }
                 Label { text: "Вся ваша музыка — после входа"; font.pixelSize: 22; font.bold: true; wrapMode: Text.WordWrap; Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter }
                 Label { text: "Подтвердите доступ в браузере на странице Яндекса."; color: Theme.secondary; wrapMode: Text.WordWrap; Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter }
+                CheckBox { text: "Запомнить аккаунт на этом устройстве"; checked: window.s.remember; enabled: !window.s.authBusy; Layout.alignment: Qt.AlignHCenter; onToggled: window.music.remember_account(checked) }
                 ActionButton { text: window.s.authBusy ? "Ожидаем подтверждения…" : "Войти через браузер"; symbol: "account"; primary: true; enabled: !window.s.authBusy; Layout.alignment: Qt.AlignHCenter; onClicked: window.music.login() }
                 Label { visible: window.s.code.length > 0; text: window.s.code; font.pixelSize: 32; font.bold: true; Layout.alignment: Qt.AlignHCenter; Accessible.name: "Код подтверждения " + window.s.code }
                 Label { visible: window.s.code.length > 0; text: window.s.loginUrl; textFormat: Text.PlainText; color: Theme.secondary; wrapMode: Text.WordWrap; Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter }
@@ -135,6 +149,8 @@ ApplicationWindow {
                     ActionButton { text: "Открыть браузер"; visible: window.s.code.length > 0; onClicked: window.music.open_browser() }
                     ActionButton { text: "Отменить"; onClicked: window.music.cancel_login() }
                 }
+                Label { text: window.s.accountMessage; visible: text.length > 0; textFormat: Text.PlainText; wrapMode: Text.WordWrap; Layout.fillWidth: true; color: Theme.secondary }
+                ActionButton { text: window.s.storageAction === "delete" ? "Удалить сохранённый вход" : "Повторить доступ"; visible: window.s.authError.length > 0; enabled: !window.s.authBusy; onClicked: window.music.retry_storage() }
                 Label { visible: window.s.authError.length > 0; text: window.s.authError; textFormat: Text.PlainText; color: Theme.error; wrapMode: Text.WordWrap; Layout.fillWidth: true }
                 Item { Layout.fillHeight: true }
             }
@@ -143,6 +159,12 @@ ApplicationWindow {
                 Layout.fillWidth: true
                 Label { text: "Не удалось загрузить раздел. " + window.s.pageError; textFormat: Text.PlainText; color: Theme.error; wrapMode: Text.WordWrap; Layout.fillWidth: true }
                 ActionButton { text: "Повторить"; symbol: "retry"; onClicked: window.music.retry_page() }
+            }
+            RowLayout {
+                visible: window.s.signedIn && window.s.storageAction === "save"
+                Layout.fillWidth: true
+                Label { text: window.s.accountMessage; textFormat: Text.PlainText; color: Theme.error; wrapMode: Text.WordWrap; Layout.fillWidth: true }
+                ActionButton { text: "Повторить сохранение"; enabled: !window.s.authBusy; onClicked: window.music.retry_storage() }
             }
             RowLayout {
                 visible: window.s.signedIn && window.s.pageStatus === "loading"
@@ -221,11 +243,29 @@ ApplicationWindow {
                     enabled: modelData.available && modelData.queueIndex !== -1
                     onClicked: window.music.jump_queue(modelData.queueIndex)
                     contentItem: ColumnLayout {
-                        Label { text: (queued.modelData.isCurrent ? (window.s.loading ? "Загрузка: " : "Сейчас: ") : "") + queued.modelData.title; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true; color: queued.modelData.isCurrent ? Theme.accent : Theme.text }
+                        Label { text: (queued.modelData.isCurrent ? (Theme.playbackLabel(window.s.playbackStatus) + ": ") : "") + queued.modelData.title; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true; color: queued.modelData.isCurrent ? Theme.accent : Theme.text }
                         Label { text: queued.modelData.artist || queued.modelData.detail || ""; textFormat: Text.PlainText; elide: Text.ElideRight; Layout.fillWidth: true; color: Theme.secondary; font.pixelSize: Theme.caption }
                     }
                 }
             }
+        }
+    }
+    Dialog {
+        id: settings
+        title: "Аккаунт и системное управление"
+        anchors.centerIn: parent
+        width: Math.min(520, window.width - 40)
+        modal: true
+        standardButtons: Dialog.Close
+        ColumnLayout {
+            width: parent.width
+            CheckBox { text: "Запомнить аккаунт на этом устройстве"; checked: window.s.remember; enabled: !window.s.authBusy; onToggled: window.music.remember_account(checked) }
+            Label { text: window.s.accountMessage; wrapMode: Text.WordWrap; textFormat: Text.PlainText; Layout.fillWidth: true }
+            ActionButton { text: window.s.storageAction === "save" ? "Повторить сохранение" : window.s.storageAction === "delete" ? "Удалить сохранённый вход" : "Повторить доступ"; enabled: !window.s.authBusy; onClicked: window.music.retry_storage() }
+            CheckBox { text: "Подбор Yanjaro · эксперимент"; enabled: window.s.signedIn; checked: window.s.experimentEnabled; onToggled: window.music.enable_experiment(checked) }
+            Label { text: "После включения: локальные события и оценки, хранение до 90 дней. Каталог по запросу у Яндекса. Лайки Яндекса не меняются."; wrapMode: Text.WordWrap; Layout.fillWidth: true; color: Theme.secondary; font.pixelSize: Theme.caption }
+            ActionButton { text: "Очистить данные эксперимента"; enabled: window.s.signedIn; onClicked: window.music.clear_experiment() }
+            Label { text: window.s.mprisStatus; wrapMode: Text.WordWrap; Layout.fillWidth: true; color: Theme.secondary }
         }
     }
     Dialog {
@@ -235,6 +275,6 @@ ApplicationWindow {
         width: 470
         modal: true
         standardButtons: Dialog.Ok
-        Label { width: parent.width; text: "Неофициальный клиент Яндекс Музыки.\nGPL-3.0-or-later, без гарантий.\n\nТокен хранится только в памяти до выхода.\nИстория временно скрыта: новые прослушивания в ней не подтверждены.\n\nИконки: GNOME Project / Adwaita (LGPL-3.0)."; wrapMode: Text.WordWrap }
+        Label { width: parent.width; text: "Неофициальный клиент Яндекс Музыки.\nGPL-3.0-or-later, без гарантий.\n\nПри включённом запоминании токен хранится только в системном Secret Service. При отказе хранилища — только в памяти текущего сеанса.\nИстория временно скрыта: новые прослушивания в ней не подтверждены.\n\nИконки: GNOME Project / Adwaita (LGPL-3.0)."; wrapMode: Text.WordWrap }
     }
 }

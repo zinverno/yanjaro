@@ -10,12 +10,34 @@ from threading import Event
 from urllib.parse import urlsplit
 
 from yandex_music import Client, StationTracksResult
-from yandex_music.exceptions import DeviceAuthError, NetworkError, UnauthorizedError
+from requests.exceptions import ConnectionError as RequestConnectionError, SSLError
+from yandex_music.exceptions import BadRequestError, DeviceAuthError, NetworkError, NotFoundError, TimedOutError, UnauthorizedError
 from yandex_music.utils.request import Request
+from .catalog import classify
 
 
 class ApiError(Exception):
     """A fixed, safe message, never a server response or a URL."""
+
+
+class InvalidAccount(ApiError):
+    pass
+
+
+class AccountRequest(Request):
+    def _handle_error_response(self, status_code, content):
+        # SDK 3.2 conflates 401 and 403. Only a confirmed 401 invalidates access.
+        if status_code == 401:
+            raise InvalidAccount('Сохранённый вход недействителен. Войдите заново.')
+        if status_code == 403:
+            raise ApiError('Доступ к этой функции ограничен. Сохранённый аккаунт не удалён.')
+        try:
+            return super()._handle_error_response(status_code, content)
+        except NetworkError as exc:
+            # Keep SDK exception classes (Device Flow handles BadRequestError),
+            # but do not confuse HTTP refusal with a transport timeout.
+            exc.http_status = status_code
+            raise
 
 
 def private_logging():
@@ -28,7 +50,20 @@ def safe_error(exc):
         return str(exc)
     if isinstance(exc, UnauthorizedError):
         return "Доступ отклонён. Выйдите и войдите заново."
+    if isinstance(exc, BadRequestError):
+        return "Сервис отклонил запрос. Повторите действие или выберите другой трек."
+    if isinstance(exc, NotFoundError):
+        return "Запрошенный ресурс не найден. Повторите действие или выберите другой трек."
     if isinstance(exc, NetworkError):
+        status = getattr(exc, 'http_status', None)
+        if status == 429:
+            return "Слишком много запросов к сервису. Подождите и повторите действие."
+        if isinstance(status, int) and 500 <= status < 600:
+            return "Временный сбой сервиса. Повторите действие."
+        if isinstance(status, int) and 400 <= status < 500:
+            return f"Сервис отклонил запрос (HTTP {status}). Повторите действие."
+        if isinstance(exc, TimedOutError):
+            return "Сервис не ответил за отведённое время. Повторите действие."
         return "Сеть недоступна или истёк таймаут. Повторите действие."
     if isinstance(exc, DeviceAuthError):
         return "Яндекс не подтвердил вход. Повторите вход через браузер."
@@ -44,10 +79,12 @@ class Track:
     available: bool
     album_id: str = ""
     cover: str = ""
+    artists: tuple = ()
+    album_title: str = ""
 
     def row(self, detail=""):
         return dict(id=self.id, title=self.title, detail=detail or self.artist,
-                    artist=self.artist, cover=self.cover,
+                    artist=self.artist, cover=self.cover, artists=list(self.artists), albumId=self.album_id, albumTitle=self.album_title,
                     duration=self.duration, available=self.available, kind="track")
 
 
@@ -58,6 +95,7 @@ class Page:
     note: str = ""
     total: int = -1
     ids: tuple[str, ...] = ()
+    meta: dict = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -73,24 +111,60 @@ class WaveBatch:
     tracks: list[Track]
 
 
+def artwork(uri, size='300x300'):
+    if not isinstance(uri, str) or not uri:
+        return ''
+    url = uri if uri.startswith('https://') else 'https://' + uri.lstrip('/')
+    url = url.replace('%%', size)
+    parsed = urlsplit(url)
+    if (parsed.scheme != 'https' or parsed.hostname not in {'avatars.yandex.net', 'avatars.mds.yandex.net'}
+            or parsed.username or parsed.password or parsed.query or parsed.fragment or parsed.port not in (None, 443)):
+        return ''
+    return url
+
+
+def artist_links(artists):
+    return tuple(dict(id=str(a.id), title=a.name or 'Исполнитель') for a in artists or [] if getattr(a, 'id', None))
+
+
 def track_model(track):
-    albums = getattr(track, "albums", None) or []
-    cover = getattr(track, "cover_uri", None)
-    cover = "https://" + cover.replace("%%", "100x100") if isinstance(cover, str) else ""
-    # Only public artwork from the service CDN; never accept file URLs or credentials.
-    parsed = urlsplit(cover)
-    if parsed.hostname not in {"avatars.yandex.net", "avatars.mds.yandex.net"} or parsed.username or parsed.password:
-        cover = ""
-    return Track(str(track.id), track.title or "Без названия",
-                 ", ".join(a.name for a in track.artists or []),
+    albums = getattr(track, 'albums', None) or []
+    return Track(str(track.id), track.title or 'Без названия',
+                 ', '.join(a.name for a in track.artists or []),
                  (track.duration_ms or 0) / 1000, track.available is True,
-                 str(albums[0].id) if albums else "", cover)
+                 str(albums[0].id) if albums else '', artwork(getattr(track, 'cover_uri', None), '100x100'),
+                 artist_links(track.artists), getattr(albums[0], 'title', '') or '' if albums else '')
+
+
+def entity_row(entity, kind):
+    if kind == 'track':
+        return track_model(entity).row()
+    artists = getattr(entity, 'artists', []) or []
+    cover = getattr(entity, 'cover', None)
+    uri = getattr(cover, 'uri', '') if cover else ''
+    return dict(id=str(entity.id), kind=kind, title=(entity.name if kind == 'artist' else entity.title) or 'Без названия',
+                cover=artwork(uri or getattr(entity, 'cover_uri', '') or getattr(entity, 'og_image', '')),
+                artist=', '.join(a.name for a in artists), artists=list(artist_links(artists)),
+                detail='Исполнитель' if kind == 'artist' else ', '.join(a.name for a in artists),
+                year=getattr(entity, 'year', None) or '', duration=0, available=True)
+
+
+def station_row(station):
+    id = f'{station.id.type}:{station.id.tag}'
+    parent = getattr(station, 'parent_id', None)
+    parent = f'{parent.type}:{parent.tag}' if parent else ''
+    origin = getattr(station, 'id_for_from', '')
+    group, icon = classify(id, parent, origin)
+    art = getattr(station, 'icon', None)
+    return dict(id=id, title=station.name, detail=group, group=group, fallback=icon,
+                parentId=parent, origin=origin, cover=artwork(getattr(art, 'image_url', '')),
+                duration=0, available=True, kind='station')
 
 
 class MusicApi:
     def __init__(self, client=None):
         private_logging()
-        self.client = client or Client(request=Request(timeout=8))
+        self.client = client or Client(request=AccountRequest(timeout=8))
         self.authenticated = False
         self._likes = []
 
@@ -126,7 +200,7 @@ class MusicApi:
                     if not self.client.me or not self.client.me.account.uid:
                         raise ApiError("Не удалось подтвердить аккаунт.")
                     self.authenticated = True
-                    return "Вход выполнен"
+                    return str(self.client.me.account.uid)
             raise ApiError("Вход отменён.")
         finally:
             if not self.authenticated:
@@ -139,6 +213,15 @@ class MusicApi:
         self.client.me = None
         self.client.account_uid = None
         self._likes = []
+
+    def restore(self, token):
+        self.client.token = token
+        self.client.request.set_authorization(token)
+        self.client.init()
+        if not self.client.me or not self.client.me.account.uid:
+            raise ApiError('Не удалось подтвердить аккаунт. Повторите доступ.')
+        self.authenticated = True
+        return str(self.client.me.account.uid)
 
     def _require_login(self):
         if not self.authenticated:
@@ -163,41 +246,119 @@ class MusicApi:
         self._require_login()
         return [track_model(t).row() for t in self.client.tracks(ids)]
 
-    def search(self, text, page=0):
+    def search(self, text, page=0, type_='track'):
         self._require_login()
         text = text.strip()
-        if not text or len(text) > 300:
-            raise ApiError("Введите название песни длиной до 300 символов.")
-        result = self.client.search(text, type_="track", page=page)
+        if not text or len(text) > 300 or type_ not in {'all','track','artist','album'}:
+            raise ApiError('Введите запрос длиной до 300 символов.')
+        result = self.client.search(text, type_=type_, page=page)
         if result is None:
-            raise ApiError("Не удалось получить результаты поиска.")
-        found = result.tracks
-        return Page([track_model(t).row() for t in found.results] if found else [],
-                    bool(found and (page + 1) * found.per_page < found.total),
-                    total=found.total if found else 0)
+            raise ApiError('Не удалось получить результаты поиска.')
+        if type_ != 'all':
+            found = getattr(result, type_ + 's', None)
+            return Page([entity_row(t, type_) for t in found.results] if found else [],
+                        bool(found and (page + 1) * found.per_page < found.total),
+                        total=found.total if found else 0)
+        rows = []
+        best = getattr(result, 'best', None)
+        if best and best.type in {'track','artist','album'} and best.result:
+            rows.append(dict(entity_row(best.result, best.type), section='Лучший результат'))
+        for kind, heading in [('track','Треки'),('artist','Исполнители'),('album','Альбомы')]:
+            found = getattr(result, kind + 's', None)
+            if found:
+                rows.extend(dict(entity_row(e, kind), section=heading) for e in found.results[:6])
+        return Page(rows)
 
-    def stream(self, track_id):
+    def entity(self, kind, id, page=0):
         self._require_login()
-        tracks = self.client.tracks([track_id])
+        if not str(id).isdigit():
+            raise ApiError('Некорректный идентификатор каталога.')
+        if kind == 'album':
+            album = self.client.albums_with_tracks(id)
+            if not album:
+                raise ApiError('Не удалось загрузить альбом.')
+            rows = []
+            for disc, tracks in enumerate(album.volumes or [], 1):
+                for position, track in enumerate(tracks, 1):
+                    row = track_model(track).row()
+                    row.update(albumId=str(album.id), albumTitle=album.title,
+                               section=f'Диск {disc}' if len(album.volumes) > 1 else '',
+                               key=f'{disc}:{position}:{track.id}')
+                    rows.append(row)
+            return Page(rows, total=len(rows), meta=entity_row(album, 'album'))
+        if kind == 'artist':
+            brief = self.client.artists_brief_info(id) if page == 0 else None
+            found = self.client.artists_tracks(id, page=page, page_size=50)
+            if not found or (page == 0 and (not brief or not brief.artist)):
+                raise ApiError('Не удалось загрузить исполнителя.')
+            meta = entity_row(brief.artist, 'artist') if brief else {}
+            if brief:
+                meta['albums'] = [entity_row(a, 'album') for a in (brief.albums or [])[:6]]
+            total = found.pager.total if found.pager else -1
+            return Page([track_model(t).row() for t in found.tracks],
+                        (page + 1) * 50 < total, total=total, meta=meta)
+        if kind == 'artist-albums':
+            found = self.client.artists_direct_albums(id, page=page, page_size=20)
+            if not found:
+                raise ApiError('Не удалось загрузить альбомы исполнителя.')
+            total = found.pager.total if found.pager else -1
+            return Page([entity_row(a, 'album') for a in found.albums], (page + 1) * 20 < total,
+                        total=total, meta={'title':'Альбомы исполнителя'})
+        raise ApiError('Раздел каталога не поддерживается.')
+
+    def stream(self, track_id, cancel=None):
+        self._require_login()
+        cancel = cancel or Event()
+        retried = False
+
+        def read(label, call):
+            nonlocal retried
+            while True:
+                if cancel.is_set():
+                    raise ApiError('Подготовка воспроизведения отменена.')
+                try:
+                    return call()
+                except NetworkError as exc:
+                    status = getattr(exc, 'http_status', None)
+                    transient = (isinstance(exc, TimedOutError) or status in (408,500,502,503,504)
+                                 or status is None and isinstance(exc.__cause__, RequestConnectionError)
+                                 and not isinstance(exc.__cause__, SSLError))
+                    if retried or not transient:
+                        raise ApiError(label + ': ' + safe_error(exc)) from None
+                    retried = True  # One retry total, only the failed idempotent read.
+                    if cancel.wait(.4):
+                        raise ApiError('Подготовка воспроизведения отменена.') from None
+
+        tracks = read('Не удалось получить сведения о треке', lambda: self.client.tracks([track_id]))
         if not tracks or tracks[0].available is not True:
             raise ApiError("Полный трек недоступен для этого аккаунта или региона.")
-        variants = self.client.tracks_download_info(track_id)
+        variants = read('Не удалось получить варианты аудио', lambda: self.client.tracks_download_info(track_id))
         full = [v for v in variants if v.preview is False and v.codec in {"mp3", "aac"}]
         if not full:
             raise ApiError("Полного аудио нет: сервис вернул только превью или неподдерживаемый формат.")
         variant = max(full, key=lambda v: v.bitrate_in_kbps)
-        url = variant.get_direct_link()
+        url = read('Не удалось получить адрес аудио', variant.get_direct_link)
         parsed = urlsplit(url)
         if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
             raise ApiError("Сервис вернул неподдерживаемую ссылку на аудио.")
         return Stream(track_model(tracks[0]), url)
 
+    def candidates(self, kind, id):
+        self._require_login()
+        if not str(id).isdigit():
+            raise ApiError('Некорректный источник подбора.')
+        if kind == 'artist':
+            result = self.client.artists_tracks(id, page=0, page_size=20)
+            return [track_model(t).row() for t in result.tracks[:20]] if result else []
+        if kind == 'album':
+            album = self.client.albums_with_tracks(id)
+            return [track_model(t).row() for volume in album.volumes or [] for t in volume][:40] if album else []
+        raise ApiError('Источник экспериментального подбора не поддерживается.')
+
     def stations(self):
         self._require_login()
         stations = self.client.rotor_stations_list()
-        return Page([dict(id=f"{s.station.id.type}:{s.station.id.tag}",
-                          title=s.station.name, detail="Радиостанция", duration=0,
-                          available=True, kind="station") for s in stations])
+        return Page([station_row(s.station) for s in stations])
 
     def wave_batch(self, station, previous=None, start=False):
         self._require_login()

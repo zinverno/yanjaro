@@ -64,6 +64,10 @@
     "account": {
       "source": "symbolic/status/avatar-default-symbolic.svg",
       "sha256": "017ac0ebce425c10a1a7540da3505f1eecfe0e36532607df7a610a0356394e5f"
+    },
+    "repeat": {
+      "source": "symbolic/status/media-playlist-repeat-symbolic.svg",
+      "sha256": "bd04fc37895d21369f851164d97dd14d9caa551d594fddbeb8f4ce39c2d1e36f"
     }
   }
 }

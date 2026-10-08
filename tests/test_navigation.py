@@ -4,7 +4,7 @@ import unittest
 from unittest.mock import Mock, patch
 
 from yanjaro.api import Page, Stream, Track, WaveBatch
-from yanjaro.controller import Controller
+from yanjaro.controller import PlaybackController
 from test_desktop import until, APP
 from test_wave import StubPlayer
 
@@ -13,9 +13,9 @@ class NavigationTests(unittest.TestCase):
     def setUp(self):
         self.api, self.player = Mock(), StubPlayer()
         self.tracks = [Track(str(i), f'Test track {i}', 'Test artist', 180, True) for i in range(12)]
-        self.api.stream.side_effect = lambda id: Stream(self.tracks[int(id.split(':')[0])], 'https://example.test/audio')
+        self.api.stream.side_effect = lambda id, cancel=None: Stream(self.tracks[int(id.split(':')[0])], 'https://example.test/audio')
         self.api.track_rows.side_effect = lambda ids: [self.tracks[int(id)].row() for id in ids]
-        self.c = Controller(self.player, self.api)
+        self.c = PlaybackController(self.player, self.api)
         self.c._state['signedIn'] = True
 
     def tearDown(self):
@@ -23,7 +23,7 @@ class NavigationTests(unittest.TestCase):
 
     def test_slow_search_cannot_replace_new_results_or_block_navigation(self):
         started, release = threading.Event(), threading.Event()
-        def search(query, page):
+        def search(query, page, type_):
             if query == 'old':
                 started.set()
                 release.wait(2)
