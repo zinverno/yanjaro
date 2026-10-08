@@ -2,8 +2,8 @@
 # Generate PKGBUILD and .SRCINFO with scripts/prepare-native.py; no floating Git branch.
 # Maintainer: zinverno <https://github.com/zinverno>
 pkgname=yanjaro
-pkgver=0.2.0rc2
-pkgrel=3
+pkgver=0.2.0rc3
+pkgrel=1
 pkgdesc='Unofficial Yandex Music client / Неофициальный клиент Яндекс Музыки'
 url='https://github.com/zinverno/yanjaro'
 arch=('any')
@@ -23,6 +23,10 @@ prepare() {
 check() {
     cd "$srcdir/yanjaro-$pkgver"
     PYTHONPATH="$srcdir/sdk" QT_QPA_PLATFORM=offscreen python -m unittest discover -s tests -v
+    /usr/lib/qt6/bin/qmllint yanjaro/*.qml
+    for scale in 1 1.25 1.5; do
+        PYTHONPATH="$srcdir/sdk" QT_QPA_PLATFORM=offscreen QT_SCALE_FACTOR="$scale" python tests/render_ui.py "$srcdir/ui-checks/$scale"
+    done
     desktop-file-validate packaging/yanjaro.desktop
 }
 

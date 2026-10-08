@@ -69,16 +69,21 @@ chown -R yanjaro-test:yanjaro-test /work /home/yanjaro-test
 pacman -Q > /output/packages.txt
 results[$phase]=PASS
 phase=source-provenance
+previous_version=$(python -c 'import json; print(json.load(open("/input/clean-inputs.json"))["previous"]["version"])')
+candidate_version=$(python -c 'import json; print(json.load(open("/input/clean-inputs.json"))["candidate"]["version"])')
+test "$(vercmp "$candidate_version" "$previous_version")" -gt 0
 for name in previous candidate; do
   mkdir "/work/$name"
   bsdtar -xf "/input/$name.git.tar" -C "/work/$name"
   chown -R yanjaro-test:yanjaro-test "/work/$name"
   epoch=$(python -c 'import json,sys; print(json.load(open("/input/clean-inputs.json"))[sys.argv[1]]["source_date_epoch"])' "$name")
   runuser -u yanjaro-test -- env SOURCE_DATE_EPOCH="$epoch" python "/work/$name/scripts/prepare-native.py"
+  version=$(python -c 'import json,sys; print(json.load(open("/input/clean-inputs.json"))[sys.argv[1]]["version"])' "$name")
+  source_archive="yanjaro-${version%-*}.tar.gz"
   expected=$(python -c 'import json,sys; print(json.load(open("/input/clean-inputs.json"))[sys.argv[1]]["source_sha256"])' "$name")
-  printf '%s  %s\n' "$expected" "/work/$name/dist/native/yanjaro-0.2.0rc2.tar.gz" | sha256sum -c -
+  printf '%s  %s\n' "$expected" "/work/$name/dist/native/$source_archive" | sha256sum -c -
   mkdir "/output/$name"
-  cp "/work/$name/dist/native/"{PKGBUILD,.SRCINFO,yanjaro-0.2.0rc2.tar.gz} "/output/$name/"
+  cp "/work/$name/dist/native/"{PKGBUILD,.SRCINFO,"$source_archive"} "/output/$name/"
 done
 cmp /work/candidate/dist/native/PKGBUILD /input/PKGBUILD
 cmp /work/candidate/dist/native/.SRCINFO /input/.SRCINFO
@@ -88,6 +93,7 @@ for name in previous candidate; do
   cd "/work/$name/dist/native"
   # No --nocheck, --nodeps, --skipchecksums or substituted dependency environment.
   runuser -u yanjaro-test -- makepkg --force --cleanbuild --noconfirm 2>&1 | tee "/output/$name/makepkg.log"
+  if [ -d src/ui-checks ]; then cp -r src/ui-checks "/output/$name/"; fi
   # Arch's default debug option lists a possible -debug package even when
   # this pure-Python package produces none. Select the declared main package.
   runuser -u yanjaro-test -- makepkg --packagelist > "/output/$name/packagelist.txt"
@@ -128,13 +134,13 @@ smoke() {
     dbus-run-session -- /usr/bin/python /input/smoke-installed.py
 }
 phase=previous-launch
-pacman -U --noconfirm /output/previous/yanjaro-0.2.0rc2-2-any.pkg.tar.zst
-test "$(pacman -Q yanjaro)" = 'yanjaro 0.2.0rc2-2'
+pacman -U --noconfirm "/output/previous/yanjaro-$previous_version-any.pkg.tar.zst"
+test "$(pacman -Q yanjaro)" = "yanjaro $previous_version"
 smoke 2>&1 | tee /output/previous/smoke.log
 results[$phase]=PASS
 phase=upgrade-launch
-pacman -U --noconfirm /output/candidate/yanjaro-0.2.0rc2-3-any.pkg.tar.zst
-test "$(pacman -Q yanjaro)" = 'yanjaro 0.2.0rc2-3'
+pacman -U --noconfirm "/output/candidate/yanjaro-$candidate_version-any.pkg.tar.zst"
+test "$(pacman -Q yanjaro)" = "yanjaro $candidate_version"
 smoke 2>&1 | tee /output/candidate/upgrade-smoke.log
 test "$(cat /home/yanjaro-test/.config/yanjaro/release-test-sentinel)" = 'synthetic preference'
 desktop-file-validate /usr/share/applications/yanjaro.desktop
@@ -144,7 +150,7 @@ cat /output/runtime-versions.txt
 results[$phase]=PASS
 phase=fresh-launch
 pacman -R --noconfirm yanjaro
-pacman -U --noconfirm /output/candidate/yanjaro-0.2.0rc2-3-any.pkg.tar.zst
+pacman -U --noconfirm "/output/candidate/yanjaro-$candidate_version-any.pkg.tar.zst"
 smoke 2>&1 | tee /output/candidate/fresh-smoke.log
 results[$phase]=PASS
 phase=removal

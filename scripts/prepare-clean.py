@@ -13,19 +13,23 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def prepare(output):
     inputs = json.loads((ROOT / 'packaging/clean-inputs.json').read_text())
-    candidate = json.loads((ROOT / 'packaging/candidate-rc2-3.json').read_text())
+    manifest = inputs['candidate'].get('manifest', 'candidate-rc2-3.json')
+    assert Path(manifest).name == manifest and manifest.endswith('.json')
+    candidate = json.loads((ROOT / 'packaging' / manifest).read_text())
+    source_version = inputs['candidate']['version'].rsplit('-', 1)[0]
     assert inputs['candidate']['source_commit'] == candidate['source_commit']
     assert inputs['candidate']['source_date_epoch'] == candidate['source_date_epoch']
     assert inputs['candidate']['version'] == candidate['version']
-    assert inputs['candidate']['source_sha256'] == candidate['artifacts']['dist/native/yanjaro-0.2.0rc2.tar.gz']
+    assert inputs['candidate']['source_sha256'] == candidate['artifacts'][f'dist/native/yanjaro-{source_version}.tar.gz']
     output.mkdir(parents=True, exist_ok=False)
     for name, spec in inputs.items():
         commit = spec['source_commit']
         assert re.fullmatch('[0-9a-f]{40}', commit), 'Input must pin a full Git commit'
         assert subprocess.check_output(['git', 'rev-parse', commit + '^{commit}'], cwd=ROOT, text=True).strip() == commit
         subprocess.run(['git', 'archive', '--format=tar', '--output=' + str(output / (name + '.git.tar')), commit], cwd=ROOT, check=True)
-    for name in ('PKGBUILD', '.SRCINFO', 'candidate-rc2-3.json', 'clean-inputs.json'):
+    for name in ('PKGBUILD', '.SRCINFO', 'clean-inputs.json'):
         shutil.copyfile(ROOT / 'packaging' / name, output / name)
+    shutil.copyfile(ROOT / 'packaging' / manifest, output / 'candidate-manifest.json')
     for name in ('clean-container.sh', 'smoke-installed.py', 'check-package.py'):
         shutil.copyfile(ROOT / 'scripts' / name, output / name)
     sums = ''.join(f'{hashlib.sha256(p.read_bytes()).hexdigest()}  {p.name}\n'
