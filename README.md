@@ -2,7 +2,7 @@
 
 Неофициальный клиент **Yandex Music / Яндекс Музыки** для Manjaro: Python, PySide6 / Qt Quick, libmpv и yandex-music 3.2.0. GPL-3.0-or-later. Репозиторий: [zinverno/yanjaro](https://github.com/zinverno/yanjaro).
 
-**0.2.0rc3 — кандидат с лайками и компактными строками треков, не публичный Release.** Отдельная ветка `feature/likes-and-track-list` продолжает проверенный rc2-3. Проверки и короткая живая приёмка новых действий: [LIKES-rc3.md](docs/LIKES-rc3.md). Автоматические доказательства, живая приёмка и ограничения разделены в [VALIDATION.md](VALIDATION.md). Старые подтверждения rc1 не заменяют проверку нового пакета.
+**0.2.0rc4 — кандидат с исправлением Previous, не публичный Release.** Ветка `fix/previous-from-likes` продолжает rc3-1 без замены его артефактов. Previous сначала возвращается по истории переходов, затем идёт назад по полной очереди; Next возвращает вперёд. Проверки и короткая ручная приёмка: [PREVIOUS-rc4.md](docs/PREVIOUS-rc4.md). Статус лайков сохранён в [LIKES-rc3.md](docs/LIKES-rc3.md). Автоматические доказательства, живая приёмка и ограничения разделены в [VALIDATION.md](VALIDATION.md). Старые подтверждения rc1 не заменяют проверку нового пакета.
 
 ## Повседневное управление
 
@@ -50,7 +50,7 @@ uv pip install --python .venv/bin/python --require-hashes -r requirements.lock
 ./scripts/build-native.sh
 ```
 
-Новый кандидат: `dist/native/yanjaro-0.2.0rc3-1-any.pkg.tar.zst`, контрольная сумма и manifest рядом. Проверенный rc2-3 сохранён отдельно. На компьютере владельца установлен и принят `rc2-2`; его живая приёмка не переносится на новые действия лайков. `.SRCINFO` генерируется makepkg; источник — существующий локальный архив, не выдуманный тег. Установка нового кандидата на основной системе требует отдельного согласования. После установки запуск из меню **Yanjaro Music** либо:
+Новый кандидат: `dist/native/yanjaro-0.2.0rc4-1-any.pkg.tar.zst`, контрольная сумма и manifest рядом. Проверенные rc2-3 и rc3-1 сохранены отдельно. На компьютере владельца при начале этапа установлен `rc3-1`; наличие пакета не считается новой живой приёмкой лайков или Previous. `.SRCINFO` генерируется makepkg; источник — существующий локальный архив, не выдуманный тег. Установка нового кандидата на основной системе требует отдельного согласования. После установки запуск из меню **Yanjaro Music** либо:
 
 ```sh
 /usr/bin/yanjaro
@@ -64,7 +64,7 @@ uv pip install --python .venv/bin/python --require-hashes -r requirements.lock
 QT_QPA_PLATFORM=offscreen .venv/bin/python -m unittest discover -s tests -v
 .venv/bin/pyside6-qmllint yanjaro/*.qml
 desktop-file-validate packaging/yanjaro.desktop
-python3 scripts/check-package.py dist/native/yanjaro-0.2.0rc3-1-any.pkg.tar.zst
+python3 scripts/check-package.py dist/native/yanjaro-0.2.0rc4-1-any.pkg.tar.zst
 ```
 
 Тесты используют синтетические API/хранилище, настоящий Qt Quick и настоящий libmpv с локальным WAV и `ao=null`. Это не проверка слышимого звука и не аккаунт. `tests/render_ui.py` проверяет центр/границы при 1024×700, 1366×768, 1920×1080 и масштабах 1/1.25/1.5; снимки явно помечены SYNTHETIC.

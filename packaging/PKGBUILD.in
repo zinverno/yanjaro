@@ -2,7 +2,7 @@
 # Generate PKGBUILD and .SRCINFO with scripts/prepare-native.py; no floating Git branch.
 # Maintainer: zinverno <https://github.com/zinverno>
 pkgname=yanjaro
-pkgver=0.2.0rc3
+pkgver=0.2.0rc4
 pkgrel=1
 pkgdesc='Unofficial Yandex Music client / Неофициальный клиент Яндекс Музыки'
 url='https://github.com/zinverno/yanjaro'
