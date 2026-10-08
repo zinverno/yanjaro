@@ -10,7 +10,7 @@ GitHub API неожиданно сообщил `private=false`, `visibility=publ
 
 `main` остаётся на `e935957583d28d2821f31a2f211609cc509ee7c4` и не включает `feature/desktop-ui-and-packaging` (`6296f65`). Поэтому база последовательного PR — `feature/desktop-ui-and-packaging`; родительская ветка не сливается автоматически. Других PR для этих изменений на начало проверки нет.
 
-Постоянная резервная копия исходного этапа: `dist/backups/yanjaro-before-public-20261008.bundle`, SHA-256 `29b95c78b8114cb9695ba8a881b5ecf9c842d04eaab748d8c29e3276d460893a`. `git bundle verify` подтверждает полную историю без prerequisites. Итоговая копия — `dist/yanjaro-rc2-review.bundle`; исходные копии не удаляются. Bundle не предназначен для пользовательского Release.
+Постоянная резервная копия исходного этапа: `dist/backups/yanjaro-before-public-20261008.bundle`, SHA-256 `29b95c78b8114cb9695ba8a881b5ecf9c842d04eaab748d8c29e3276d460893a`. `git bundle verify` подтверждает полную историю без prerequisites. Итоговая копия этого этапа — `dist/yanjaro-public-test-review.bundle`; исходный `dist/yanjaro-rc2-review.bundle` не изменяется и не удаляется. Bundle не предназначен для пользовательского Release.
 
 ## Аудит раскрытия
 
