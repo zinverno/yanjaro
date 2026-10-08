@@ -1,0 +1,12 @@
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
+work/
+*.parquet
+*.npz
+*.jsonl
+artifacts/*
+!artifacts/README.md
+!artifacts/.gitkeep
+.env

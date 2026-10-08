@@ -1,0 +1,38 @@
+{
+  "source": "yandex/yambda",
+  "revision": "dd6f3a19eef5866e346c3270e098baa641a44948",
+  "method": "bounded curl download of two small feedback files; actual read_events/build_pairs, not remote CLI prepare",
+  "status": "PASS",
+  "feedback_files": {
+    "likes": {
+      "rows": 881456,
+      "schema": "uid: uint32\ntimestamp: uint32\nitem_id: uint32\nis_organic: uint8",
+      "bytes": 7180817,
+      "sha256": "694087077dbacfcc1d22a5ca85cc6bd8ab182361933406e60500624c6a422bc4"
+    },
+    "dislikes": {
+      "rows": 107776,
+      "schema": "uid: uint32\ntimestamp: uint32\nitem_id: uint32\nis_organic: uint8",
+      "bytes": 990007,
+      "sha256": "64f240a6d62b8acdfa6efae660a54d10ebc64f9f2f0aeeef8e6bb0dbe7dc2802"
+    }
+  },
+  "likes_users": 8283,
+  "dislikes_users": 5951,
+  "pairs": 45565,
+  "unique_ids": 67418,
+  "users": 4376,
+  "train_users_before_audio_coverage": 3476,
+  "holdout_users_before_audio_coverage": 900,
+  "train_pairs_before_audio_coverage": 35741,
+  "holdout_pairs_before_audio_coverage": 9824,
+  "strictly_historical_context_verified": true,
+  "max_users": 10000,
+  "window_days": 14,
+  "context_len": 8,
+  "max_pairs": 50000,
+  "per_user": 64,
+  "seconds": 3.306343963020481,
+  "peak_rss_kib": 243632,
+  "training_status": "NOT RUN"
+}

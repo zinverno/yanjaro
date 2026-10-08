@@ -1,0 +1,219 @@
+{
+  "rows": 7721749,
+  "row_groups": [
+    {
+      "index": 0,
+      "rows": 262144,
+      "compressed_bytes": 270564268,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 1,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 2,
+      "rows": 262144,
+      "compressed_bytes": 270564280,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 3,
+      "rows": 262144,
+      "compressed_bytes": 270564284,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 4,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 5,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 6,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 7,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 8,
+      "rows": 262144,
+      "compressed_bytes": 270563256,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 9,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 10,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 11,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 12,
+      "rows": 262144,
+      "compressed_bytes": 270564281,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 13,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 14,
+      "rows": 262144,
+      "compressed_bytes": 270564281,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 15,
+      "rows": 262144,
+      "compressed_bytes": 270564282,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 16,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 17,
+      "rows": 262144,
+      "compressed_bytes": 270564282,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 18,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 19,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 20,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 21,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 22,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 23,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 24,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 25,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 26,
+      "rows": 262144,
+      "compressed_bytes": 270564284,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 27,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 28,
+      "rows": 262144,
+      "compressed_bytes": 270564286,
+      "uncompressed_bytes": 270810521
+    },
+    {
+      "index": 29,
+      "rows": 119573,
+      "compressed_bytes": 123413773,
+      "uncompressed_bytes": 123526091
+    }
+  ],
+  "schema": "item_id: uint32\nembed: large_list<element: double>\n  child 0, element: double\nnormalized_embed: large_list<element: double>\n  child 0, element: double",
+  "projected_full_scan_bytes": 7969776991,
+  "source": "yandex/yambda",
+  "revision": "dd6f3a19eef5866e346c3270e098baa641a44948",
+  "status": "PASS",
+  "method": "curl HTTP 206 ranges; local PyArrow decoding of sparse assembly",
+  "hf_filesystem_status": "BLOCKED: ConnectError in this execution environment",
+  "range_reader_cli_status": "NOT RUN remotely",
+  "downloaded_bytes": 123424184,
+  "probe_limit_bytes": 134217728,
+  "embedding_http_status": 206,
+  "embedding_download_seconds": 61.997105,
+  "sample_rows": 256,
+  "sampled_group": 29,
+  "dimension": 128,
+  "norm_min": 0.9999999999999998,
+  "norm_max": 1.0000000000000007,
+  "decode_seconds": 0.32602057300391607,
+  "peak_rss_kib": 200852,
+  "projection_seconds_at_observed_rate": 4019.269538728234,
+  "evidence_sha256": {
+    "yambda-metadata.bin": "e8f2129f2605beab54591d64d51db8eb60274bf947ac445f3bc3b0740c1bbb7c",
+    "yambda-last-ids.bin": "bd240fdaaf9cc3c7625fb506674bdee56da33aee43540153455a39e83df0da36",
+    "yambda-last-vectors.bin": "b997ddf678b2dfcef86dcbc8641f0d0e67e425fd6bf5597a4c0b98a87174b74a"
+  },
+  "coverage_in_sampled_group": {
+    "wanted_ids": 67418,
+    "matched_ids": 1018,
+    "pairs_with_full_audio": 0,
+    "missing_pairs": 45565,
+    "train_pairs": 0,
+    "holdout_pairs": 0,
+    "note": "Same already downloaded row group, no additional network read. Not whole-dataset coverage."
+  }
+}
