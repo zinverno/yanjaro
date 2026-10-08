@@ -34,8 +34,9 @@ pacman-conf > /output/pacman.conf.txt
 # The minimal Arch image strips docs through NoExtract. Exercise installation
 # of the complete package, including its documentation, inside this root only.
 if [ "$target" = arch ]; then
-  grep --fixed-strings --line-regexp --quiet '[core]' /etc/pacman.conf
-  sed -i '/^\[core\]/i NoExtract = !usr/share/doc !usr/share/doc/*' /etc/pacman.conf
+  # The image includes another [options] file after its repository sections.
+  # Append after that include so these exceptions win over its NoExtract rules.
+  printf '\n[options]\nNoExtract = !usr/share/doc !usr/share/doc/*\n' >> /etc/pacman.conf
 fi
 pacman-conf > /output/pacman-effective.conf.txt
 cp /etc/makepkg.conf /output/makepkg.conf.txt
