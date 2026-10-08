@@ -1,9 +1,9 @@
 {
   "candidate": {
     "version": "0.2.0rc4-1",
-    "source_commit": "958d4a3c1c1e7c223ddfec519e8b6f53a47f6c30",
-    "source_date_epoch": "1791450587",
-    "source_sha256": "85cb9b1cea676138867665b8c6825d2d78be504a6e702eed21d5069af3c89252",
+    "source_commit": "e9a094a7eb978fda1aaf9966dbf7d0b596276ab7",
+    "source_date_epoch": "1791450957",
+    "source_sha256": "11dd959d197f44ed61581cf120646baf0c10bcd2eca025cf939e851e031e8377",
     "manifest": "candidate-rc4-1.json"
   },
   "previous": {

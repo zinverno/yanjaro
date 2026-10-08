@@ -25,7 +25,7 @@ pkgbase = yanjaro
 	noextract = yandex_music-3.2.0-py3-none-any.whl
 	source = yanjaro-0.2.0rc4.tar.gz
 	source = yandex_music-3.2.0-py3-none-any.whl::https://files.pythonhosted.org/packages/67/76/fc7b9653df26f3f8255e033a302a478b4eb899beeddbd66ae48c005654bb/yandex_music-3.2.0-py3-none-any.whl
-	sha256sums = 85cb9b1cea676138867665b8c6825d2d78be504a6e702eed21d5069af3c89252
+	sha256sums = 11dd959d197f44ed61581cf120646baf0c10bcd2eca025cf939e851e031e8377
 	sha256sums = b897889882707512ece92ca5663aba879dcaa26a88a6ba1c301dec6e2c5bdc3c
 
 pkgname = yanjaro

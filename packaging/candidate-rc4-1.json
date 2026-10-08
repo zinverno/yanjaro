@@ -1,6 +1,6 @@
 {
-  "source_commit": "958d4a3c1c1e7c223ddfec519e8b6f53a47f6c30",
-  "source_date_epoch": "1791450587",
+  "source_commit": "e9a094a7eb978fda1aaf9966dbf7d0b596276ab7",
+  "source_date_epoch": "1791450957",
   "version": "0.2.0rc4-1",
   "build_environment": "Manjaro Stable x86_64 host, full makepkg without installing; NOT clean OS",
   "installed_version": "0.2.0rc3-1",
@@ -10,7 +10,7 @@
   "mpv": "0.41.0",
   "sdk": "3.2.0",
   "artifacts": {
-    "dist/native/yanjaro-0.2.0rc4.tar.gz": "85cb9b1cea676138867665b8c6825d2d78be504a6e702eed21d5069af3c89252",
-    "dist/native/yanjaro-0.2.0rc4-1-any.pkg.tar.zst": "d2a07df025888eb7861109f9e26dd708f089cbf9b7fb8cd8e0adaafac437328c"
+    "dist/native/yanjaro-0.2.0rc4.tar.gz": "11dd959d197f44ed61581cf120646baf0c10bcd2eca025cf939e851e031e8377",
+    "dist/native/yanjaro-0.2.0rc4-1-any.pkg.tar.zst": "6219dbf8a1706f9635dcbfc09fcc6962bdd5d9b8222a1afd5b9232b92445bb7e"
   }
 }
