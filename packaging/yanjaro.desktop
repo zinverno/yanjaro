@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=Yanjaro Music
+GenericName=Music Player
+GenericName[ru]=Музыкальный проигрыватель
+Comment=Unofficial Yandex Music client
+Comment[ru]=Неофициальный клиент Яндекс Музыки
+Exec=yanjaro
+TryExec=yanjaro
+Icon=yanjaro
+Terminal=false
+Categories=AudioVideo;Audio;Player;Qt;
+Keywords=yanjaro;yandex music;music;player;
+Keywords[ru]=yanjaro;yandex music;яндекс музыка;яндекс;музыка;плеер;
+StartupNotify=true
+StartupWMClass=yanjaro

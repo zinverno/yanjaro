@@ -4,16 +4,22 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "yanjaro-music"
-version = "0.1.0"
+version = "0.2.0rc1"
 description = "Minimal Yandex Music desktop client for Manjaro"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE", "LICENSE-STATUS.md"]
 requires-python = ">=3.11,<3.15"
-dependencies = ["PySide6-Essentials==6.11.2", "python-mpv==1.0.8", "yandex-music==3.2.0"]
+dependencies = ["PySide6-Essentials>=6.8,<7", "python-mpv==1.0.8", "yandex-music==3.2.0"]
+
+[project.urls]
+Repository = "https://github.com/zinverno/yanjaro"
 
 [project.scripts]
+yanjaro = "yanjaro.__main__:main"
 yanjaro-music = "yanjaro.__main__:main"
 
 [tool.setuptools.package-data]
-yanjaro = ["*.qml"]
+yanjaro = ["*.qml", "qmldir", "icons/*"]
 
 [tool.setuptools.packages.find]
 include = ["yanjaro*"]

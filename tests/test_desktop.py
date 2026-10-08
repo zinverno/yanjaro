@@ -7,7 +7,7 @@ import time
 import unittest
 import wave
 from pathlib import Path
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 from PySide6.QtCore import QTimer, QObject, QPointF, Qt
 from PySide6.QtGui import QGuiApplication
@@ -65,6 +65,31 @@ class DesktopTests(unittest.TestCase):
             until(lambda: bool(ended))
             self.assertFalse(failures, failures)
 
+    def test_real_volume_and_mute(self):
+        self.player.set_volume(23)
+        until(lambda: self.player.state["volume"] == 23)
+        self.player.toggle_mute()
+        until(lambda: self.player.state["muted"])
+        self.player.toggle_mute()
+        until(lambda: not self.player.state["muted"])
+
+    def test_instance_never_removes_a_live_owner_socket(self):
+        from yanjaro.desktop import Instance
+        with patch('yanjaro.desktop.QLockFile') as locks, patch('yanjaro.desktop.QLocalServer') as servers, patch('yanjaro.desktop.QLocalSocket') as sockets:
+            locks.return_value.tryLock.return_value = False
+            sockets.return_value.waitForConnected.return_value = True
+            instance = Instance('/tmp')
+            self.assertFalse(instance.acquire())
+            servers.removeServer.assert_not_called()
+            servers.return_value.listen.assert_not_called()
+            sockets.return_value.connectToServer.assert_called_once_with('/tmp/yanjaro.socket')
+            locks.return_value.tryLock.return_value = True
+            servers.return_value.listen.return_value = True
+            self.assertTrue(instance.acquire())
+            servers.removeServer.assert_called_once_with('/tmp/yanjaro.socket')
+            instance.close()
+            locks.return_value.unlock.assert_called_once()
+
     def test_qml_load_and_worker_does_not_block_gui(self):
         worker_ids = []
         release = threading.Event()
@@ -93,7 +118,7 @@ class DesktopTests(unittest.TestCase):
             self.assertNotEqual(worker_ids[0], threading.get_ident())
             release.set()
             until(lambda: not controller.state["busy"])
-            self.assertEqual(controller.state["rows"], [])
+            self.assertEqual(controller.content["rows"], [])
         finally:
             timer.stop()
             release.set()
@@ -136,6 +161,57 @@ class DesktopTests(unittest.TestCase):
             APP.processEvents()
             self.player.seek.assert_called_once()
             self.assertGreater(self.player.seek.call_args.args[0], 60)
+        finally:
+            window.close()
+            controller.close()
+            del engine
+
+    def test_selection_keyboard_and_scroll_do_not_restart_playback(self):
+        controller = Controller(self.player, Mock())
+        controller._state["signedIn"] = True
+        rows = [Track(str(i), "Длинное название " * 12, "Исполнитель", 180, True).row() for i in range(500)]
+        controller.pages["likes"].update(rows=rows, total=500, status="ready")
+        controller.pages["stations"].update(rows=[], status="ready")
+        engine = QQmlApplicationEngine()
+        engine.setInitialProperties({"music": controller})
+        engine.load(Path(__file__).parents[1] / "yanjaro/Main.qml")
+        window = engine.rootObjects()[0]
+        try:
+            window.resize(1024, 700)
+            QTest.qWait(100)
+            controller.play = Mock()
+            controller.pause = Mock()
+            listing = window.findChild(QObject, "tracksList")
+            point = listing.mapToScene(QPointF(140, 30)).toPoint()
+            QTest.mouseClick(window, Qt.MouseButton.LeftButton, Qt.KeyboardModifier.NoModifier, point)
+            self.assertEqual(listing.property("currentIndex"), 0)
+            controller.play.assert_not_called()
+            QTest.mouseDClick(window, Qt.MouseButton.LeftButton, Qt.KeyboardModifier.NoModifier, point)
+            controller.play.assert_called_once_with("0")
+            controller.play.reset_mock()
+            listing.forceActiveFocus()
+            QTest.keyClick(window, Qt.Key.Key_Return)
+            controller.play.assert_called_once_with("0")
+            self.player.state.update(loaded=True, paused=False)
+            controller.changed.emit()
+            search = window.findChild(QObject, "searchField")
+            search.forceActiveFocus()
+            QTest.keyClick(window, Qt.Key.Key_A)
+            QTest.keyClick(window, Qt.Key.Key_Space)
+            self.assertEqual(search.property("text"), "a ")
+            controller.pause.assert_not_called()
+            listing.setProperty("contentY", 900)
+            controller.save_scroll(900)
+            controller.show("stations")
+            QTest.qWait(30)
+            controller.show("likes")
+            QTest.qWait(50)
+            self.assertAlmostEqual(listing.property("contentY"), 900, delta=1)
+            self.player.changed.emit()
+            APP.processEvents()
+            self.assertAlmostEqual(listing.property("contentY"), 900, delta=1)
+            delegates = [o for o in window.findChildren(QObject) if o.objectName().startswith("rowPlay")]
+            self.assertLess(len(delegates), 70)  # A 500-row model stays virtualized.
         finally:
             window.close()
             controller.close()

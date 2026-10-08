@@ -13,7 +13,7 @@ class Player(QObject):
     def __init__(self, audio_output=None):
         super().__init__()
         self.state = dict(ready=False, loaded=False, paused=True, position=0.0,
-                          duration=0.0, seekable=False, buffering=False)
+                          duration=0.0, seekable=False, buffering=False, volume=60.0, muted=False)
         self.engine = None
         self.error = ""
         self.expected_duration = 0
@@ -28,7 +28,7 @@ class Player(QObject):
             if audio_output:
                 options["ao"] = audio_output
             self.engine = mpv.MPV(**options)
-            for name in ("time-pos", "duration", "pause", "seekable", "paused-for-cache"):
+            for name in ("time-pos", "duration", "pause", "seekable", "paused-for-cache", "volume", "mute"):
                 self.engine.observe_property(name, lambda name, value: self._event.emit(name, value))
 
             @self.engine.event_callback("file-loaded", "end-file")
@@ -45,7 +45,7 @@ class Player(QObject):
     @Slot(str, object)
     def _receive(self, name, value):
         fields = {"time-pos": "position", "duration": "duration", "pause": "paused",
-                  "seekable": "seekable", "paused-for-cache": "buffering"}
+                  "seekable": "seekable", "paused-for-cache": "buffering", "volume": "volume", "mute": "muted"}
         if name in fields and value is not None:
             self.state[fields[name]] = value
         elif name == "loaded":
@@ -100,6 +100,12 @@ class Player(QObject):
         self._command("stop")
         self.state.update(loaded=False, paused=True, position=0.0, duration=0.0, seekable=False)
         self.changed.emit()
+
+    def set_volume(self, value):
+        self._command("set", "volume", max(0, min(value, 100)))
+
+    def toggle_mute(self):
+        self._command("cycle", "mute")
 
     def close(self):
         if self.engine:
