@@ -3,6 +3,7 @@
   "chromium": "153.0.8010.12",
   "webkit": "26.6",
   "checks": [
+    "cross-site recruitment link opens landing page without allocating a session",
     "no collection/cookie before consent; decline",
     "real audio and autosave",
     "lost acknowledgement and idempotent retry",
