@@ -41,23 +41,62 @@ jobs:
         run: |
           python -m listening_study demo work/demo
           python -m listening_study analyze work/demo/study.json work/demo/responses work/demo/results.json
-      - name: Install pinned browser harness in runner temp
-        run: |
-          npm install --prefix "$RUNNER_TEMP/listening-browser" --no-save --ignore-scripts playwright@1.63.0
-          node "$RUNNER_TEMP/listening-browser/node_modules/playwright/cli.js" install --with-deps chromium webkit
-      - name: Real browser interaction and private loopback HTTP
-        run: |
-          export PLAYWRIGHT_MODULE="$RUNNER_TEMP/listening-browser/node_modules/playwright"
-          node tests/browser.cjs work/demo work/browser
-          node tests/collection-browser.cjs work/demo work/collection-browser
-          python -c 'from listening_study.common import read_json; from listening_study.analysis import validate_response; validate_response(read_json("work/browser/browser-response.json"), read_json("work/demo/study.json"))'
-      - name: Preserve only synthetic report and UI screenshots
+      - name: Preserve synthetic analysis report
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: listening-study-demo-${{ github.event.pull_request.head.sha }}
+          name: listening-study-analysis-${{ github.event.pull_request.head.sha }}
+          path: experiments/listening-study/work/demo/results.json
+          if-no-files-found: error
+          retention-days: 14
+
+  browsers:
+    runs-on: ubuntu-24.04
+    # Cold WebKit system dependencies can exceed ten minutes on the Ubuntu mirror.
+    # Keep preparation separately bounded, with time left for both suites/artifacts.
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: experiments/listening-study
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.13'
+      - name: Prepare isolated synthetic browser fixture
+        timeout-minutes: 3
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements.txt
+          python -m listening_study demo work/demo
+      - name: Install pinned browser harness in runner temp
+        timeout-minutes: 3
+        run: npm install --prefix "$RUNNER_TEMP/listening-browser" --no-save --ignore-scripts playwright@1.63.0
+      - name: Install Chromium and WebKit system dependencies
+        timeout-minutes: 20
+        run: node "$RUNNER_TEMP/listening-browser/node_modules/playwright/cli.js" install-deps chromium webkit
+      - name: Install pinned Chromium and WebKit binaries
+        timeout-minutes: 5
+        run: node "$RUNNER_TEMP/listening-browser/node_modules/playwright/cli.js" install chromium webkit
+      - name: Browser interaction and private loopback HTTP
+        timeout-minutes: 5
+        run: |
+          export PLAYWRIGHT_MODULE="$RUNNER_TEMP/listening-browser/node_modules/playwright"
+          node tests/browser.cjs work/demo work/browser
+          python -c 'from listening_study.common import read_json; from listening_study.analysis import validate_response; validate_response(read_json("work/browser/browser-response.json"), read_json("work/demo/study.json"))'
+      - name: Chromium desktop and WebKit mobile collection journeys
+        timeout-minutes: 5
+        run: |
+          export PLAYWRIGHT_MODULE="$RUNNER_TEMP/listening-browser/node_modules/playwright"
+          node tests/collection-browser.cjs work/demo work/collection-browser
+      - name: Preserve only synthetic browser reports and UI screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: listening-study-browsers-${{ github.event.pull_request.head.sha }}
           path: |
-            experiments/listening-study/work/demo/results.json
             experiments/listening-study/work/browser/browser-checks.json
             experiments/listening-study/work/browser/*.png
             experiments/listening-study/work/collection-browser/collection-checks.json
