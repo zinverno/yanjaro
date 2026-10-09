@@ -45,7 +45,8 @@ def interval(values, draws):
         position = q * (len(valid) - 1)
         i = int(position)
         return valid[i] + (valid[min(i + 1, len(valid) - 1)] - valid[i]) * (position - i)
-    return {"ci95": [quantile(.025), quantile(.975)], "valid_resamples": len(valid)}
+    return {"ci95": [quantile(.025), quantile(.975)], "valid_resamples": len(valid),
+            "degenerate": valid[0] == valid[-1]}
 
 
 def bootstrap(cells, participants, sources, *, draws, seed, crossed=False):

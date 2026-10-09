@@ -1,6 +1,6 @@
 {
   "schema": "yanjaro.listening.v0.1",
-  "study_sha256": "06a6512af2ea4f08d78f7ccb48e8f49cc34c47fb7b43d3c0fa1591aedb42a3b1",
+  "study_sha256": "c5832f4780cbdde32b0b1121367fa58a9216ec9592239ba5170cf7f27d924a3c",
   "demo": true,
   "phase": "demo",
   "bootstrap_draws": 2000,
@@ -24,14 +24,16 @@
           0.6111111111111112,
           0.7065217391304348
         ],
-        "valid_resamples": 2000
+        "valid_resamples": 2000,
+        "degenerate": false
       },
       "crossed_participant_source_bootstrap": {
         "ci95": [
           0.5434715512614063,
           0.7674865831842574
         ],
-        "valid_resamples": 2000
+        "valid_resamples": 2000,
+        "degenerate": false
       },
       "equal_participant_mean": 0.6583333333333333,
       "equal_source_mean": 0.6592261904761905,
@@ -104,14 +106,16 @@
           0.41975308641975306,
           0.4945054945054945
         ],
-        "valid_resamples": 2000
+        "valid_resamples": 2000,
+        "degenerate": false
       },
       "crossed_participant_source_bootstrap": {
         "ci95": [
           0.3332386363636364,
           0.5862068965517241
         ],
-        "valid_resamples": 2000
+        "valid_resamples": 2000,
+        "degenerate": false
       },
       "equal_participant_mean": 0.45,
       "equal_source_mean": 0.455982905982906,

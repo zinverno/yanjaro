@@ -13,6 +13,8 @@ python3.13 -m venv .venv
 
 Открой `work/demo-v01/demo-next.html` в браузере: это полноценная автономная страница со встроенными **синтетическими** WAV. `demo-similarity.html` показывает альтернативную формулировку. Аудио, HTML и ответы не добавляются в Git. Генератор создаёт 24 сигнала × 8 секунд, 8 заданий (6 A/B, 2 C/D), frozen manifest, явную scripted-review и 32 файла искусственных ответов. **Demo-теги вымышлены, они не являются музыкальной разметкой.**
 
+![Реальный снимок synthetic demo в Chromium](validation/screenshots/comparison.png)
+
 Для локального HTTP-режима:
 
 ```sh

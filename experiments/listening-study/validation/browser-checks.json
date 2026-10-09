@@ -1,0 +1,25 @@
+{
+  "demo": true,
+  "browser": "153.0.8010.12",
+  "checks": [
+    "consent",
+    "actual WAV playback",
+    "exclusive playback",
+    "listening gate",
+    "blind payload/DOM",
+    "choice/neither/skip",
+    "voluntary JSON export",
+    "no browser storage/cookies",
+    "withdrawal after export",
+    "mobile layout",
+    "mid-session withdrawal",
+    "portable file demo + embedded audio",
+    "separate similarity wording",
+    "decline before consent",
+    "loopback HTTP allowlist + origin/host checks",
+    "no response POST handler",
+    "no-store audio"
+  ],
+  "externalRequests": 0,
+  "pageErrors": []
+}

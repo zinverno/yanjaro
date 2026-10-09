@@ -78,6 +78,7 @@ def screen(catalog):
 
 
 def freeze(catalog, review, *, study_id, seed, phase):
+    require(catalog.get("schema") == VERSION and type(catalog.get("demo")) is bool, "Invalid catalog schema")
     require(identifier(study_id) and type(seed) is int and 0 <= seed < 2**32, "Invalid study ID/seed")
     require(phase in ("demo", "pilot", "confirmatory"), "Invalid phase")
     require(catalog["demo"] == (phase == "demo"), "Demo cannot become real evidence")
@@ -114,6 +115,8 @@ def freeze(catalog, review, *, study_id, seed, phase):
                     and isinstance(r.get("notes"), str) and len(r["notes"].strip()) >= 12, "Manual pair review required")
     require(any(t["kind"] == "primary" for t in trials), "No primary contrast")
     selected = {t: tracks[t] for t in sorted(used)}
+    for key in ("source_sha256", "clip_sha256"):
+        require(len({t[key] for t in selected.values()}) == len(selected), "Repeated recording across trials")
     for t in selected.values():
         rights_ok(t["rights"])
         require(file_hash(t["clip"]) == t["clip_sha256"], "Clip changed since preparation")
@@ -126,7 +129,8 @@ def freeze(catalog, review, *, study_id, seed, phase):
 def validate_study(study, *, audio=False):
     require(study.get("schema") == VERSION and study.get("sha256") == digest({k: v for k, v in study.items() if k != "sha256"}),
             "Study digest/schema mismatch")
-    require(type(study.get("demo")) is bool and study["demo"] == (study.get("phase") == "demo"), "Phase mismatch")
+    require(study.get("phase") in ("demo", "pilot", "confirmatory") and type(study.get("demo")) is bool
+            and study["demo"] == (study["phase"] == "demo"), "Phase mismatch")
     require(2 <= len(study["trials"]) <= 32 and study["policy"] == POLICY
             and study.get("assignment_version") == "schedule-v1", "Invalid design")
     if audio:

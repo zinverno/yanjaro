@@ -162,6 +162,17 @@ class StudyTests(unittest.TestCase):
         validate_study(self.study, audio=True)
         self.assertEqual(len(list((self.root / "responses").glob("*.json"))), 32)
 
+    def test_versioned_demo_taskset_matches_generator(self):
+        golden = read_json(Path(__file__).parent.parent / "examples/demo-taskset.json")
+        self.assertEqual(golden, {k: self.study[k] for k in golden})
+
+    def test_duplicate_recording_across_distinct_trials_rejected(self):
+        catalog = copy.deepcopy(self.catalog)
+        catalog["tracks"][3]["source_sha256"] = catalog["tracks"][0]["source_sha256"]
+        review = copy.deepcopy(self.review); review["catalog_sha256"] = digest(catalog)
+        with self.assertRaisesRegex(ValueError, "Repeated recording"):
+            freeze(catalog, review, study_id="test", seed=1, phase="demo")
+
     def test_unreviewed_pairs_cannot_freeze(self):
         review = screen(self.catalog); review["trials"] = self.study["trials"]
         with self.assertRaisesRegex(ValueError, "Manual"):
@@ -273,6 +284,12 @@ class StudyTests(unittest.TestCase):
         self.assertEqual(result["next"]["rhythm_share_among_decisive"], 1)
         self.assertEqual(result["similarity"]["rhythm_share_among_decisive"], 0)
         self.assertIsNone(result["next"]["participant_cluster_bootstrap"]["ci95"])
+
+    def test_homogeneous_bootstrap_flagged_as_degenerate(self):
+        result = analyze(self.study, [response(self.study, 0), response(self.study, 1)], draws=200)
+        interval = result["results_by_prompt"]["next"]["participant_cluster_bootstrap"]
+        self.assertEqual(interval["ci95"], [1, 1])
+        self.assertTrue(interval["degenerate"])
 
     def test_source_sensitivity_detects_influential_song(self):
         data = [response(self.study, slot, first=False) for slot in range(4)]
