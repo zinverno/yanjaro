@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const {spawn} = require("node:child_process");
+const http = require("node:http");
 const {pathToFileURL} = require("node:url");
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE || "playwright");
 
@@ -106,7 +107,13 @@ async function pageFor(viewport = {width: 1200, height: 1000}) {
   checks.push("portable file demo + embedded audio", "separate similarity wording", "decline before consent");
   for (const url of ["/study.json", "/../study.json", "/responses", "/raw/anything.wav"]) assert.equal((await fetch(base + url)).status, 404);
   assert.equal((await fetch(base + "/session", {headers: {Origin: "https://example.org"}})).status, 403);
-  assert.equal((await fetch(base + "/session", {headers: {Host: "example.org"}})).status, 403);
+  // Fetch owns the Host header; use HTTP's raw header API for this negative probe.
+  const wrongHost = await new Promise((resolve, reject) => {
+    http.get(base + "/session", {headers: {Host: "example.org"}}, reply => {
+      reply.resume(); resolve(reply.statusCode);
+    }).on("error", reject);
+  });
+  assert.equal(wrongHost, 403);
   assert.equal((await fetch(base + "/responses", {method: "POST", body: "do not store"})).status, 501);
   const audioReply = await fetch(base + session.trials[0].source);
   assert.equal(audioReply.headers.get("content-type"), "audio/wav");
