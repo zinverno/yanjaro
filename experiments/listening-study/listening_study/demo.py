@@ -60,6 +60,8 @@ def build_demo(out):
     write_new(out / "demo-review.json", review)
     study = freeze(catalog, review, study_id="demo-v0_1", seed=20261009, phase="demo")
     write_new(out / "study.json", study)
+    from .collection import demo_config
+    write_new(out / "collection.demo.json", demo_config())
     from .portable import export_demo
     export_demo(study, out / "demo-next.html")
     export_demo(study, out / "demo-similarity.html", prompt="similarity")

@@ -10,7 +10,7 @@
 </head>
 <body>
   <main>
-    <header><a href="/" aria-label="Начать заново">yanjaro<span> / listening study</span></a><span class="version">v0.1 · локально</span></header>
+    <header><a href="/" aria-label="Начать заново">yanjaro<span> / listening study</span></a><span class="version">v0.1</span></header>
     <div id="demo" class="notice" hidden>DEMO · синтетические звуки, не реальные песни. Ответы проверяют работу интерфейса.</div>
     <section id="welcome">
       <p class="eyebrow">НЕСКОЛЬКО МИНУТ МУЗЫКИ</p>
@@ -20,12 +20,27 @@
         <h2>Перед началом</h2>
         <p>Надень наушники и выбери комфортную громкость. Все отрывки можно слушать повторно. Не меняй громкость между вариантами, если это комфортно.</p>
         <p>Участие добровольное. Можно выбрать «Ни одна», пропустить задание или выйти. Имена, аккаунты и контакты не нужны.</p>
-        <p>Ответы остаются в памяти этой страницы. В конце ты сам решишь, сохранить ли анонимный файл для исследователя. Закрытие или отказ удалит несохранённые ответы.</p>
+        <p id="privacy-copy">Ответы остаются в памяти этой страницы. В конце ты сам решишь, сохранить ли анонимный файл для исследователя. Закрытие или отказ удалит несохранённые ответы.</p>
         <label class="consent"><input id="consent" type="checkbox"> Мне 18 лет или больше; я понимаю условия и согласен участвовать.</label>
         <button id="start" class="primary" disabled>Начать прослушивание <span aria-hidden="true">↗</span></button>
         <button id="decline" class="text-button">Не участвовать</button>
       </div>
     </section>
+    <section id="resume" hidden>
+      <h1>Продолжим прослушивание?</h1>
+      <p>В этом браузере уже есть сессия. Подтверждённые ответы сохранены. После завершения здесь можно проверить отправку или удалить ответы.</p>
+      <button id="continue" class="primary">Продолжить</button>
+      <button id="resume-withdraw" class="text-button">Удалить ответы и отказаться</button>
+    </section>
+    <aside id="restore-card" class="notice" hidden>
+      <label for="restore-code">Уже участвовал в другом браузере? Введи резервный код:</label>
+      <input id="restore-code" type="text" maxlength="43" autocomplete="off" spellcheck="false">
+      <button id="restore">Восстановить сессию</button>
+    </aside>
+    <aside id="recovery-card" class="notice" hidden>
+      <p>Сохрани резервный код, если захочешь продолжить или удалить ответы в другом браузере. Код даёт доступ к твоим ответам — не публикуй его. После закрытия этой страницы он больше не показывается.</p>
+      <code id="recovery-code"></code>
+    </aside>
     <section id="trial" hidden>
       <div class="progress-label"><span id="progress-text"></span><span>Слушай в своём темпе</span></div>
       <progress id="progress" value="0" max="1" aria-label="Прогресс исследования"></progress>
@@ -41,12 +56,15 @@
     </section>
     <section id="finished" hidden>
       <p class="eyebrow">ГОТОВО</p><h1 tabindex="-1" id="finish-title">Спасибо за прослушивание.</h1>
-      <p class="lead">Ответы ещё не сохранены и не отправлены. Ты можешь скачать анонимный файл и добровольно передать его исследователю.</p>
+      <p id="finish-copy" class="lead">Ответы ещё не сохранены и не отправлены. Ты можешь скачать анонимный файл и добровольно передать его исследователю.</p>
+      <button id="submit" class="primary" hidden>Завершить и отправить ответы</button>
       <button id="download" class="primary">Сохранить анонимные ответы</button>
       <button id="discard" class="text-button">Удалить ответы и выйти</button>
-      <p class="hint">Если файл уже скачан, отказ на странице не удалит его с диска. Удали файл самостоятельно или попроси исследователя удалить его по случайному коду внутри файла.</p>
+      <p id="download-hint" class="hint">Если файл уже скачан, отказ на странице не удалит его с диска. Удали файл самостоятельно или попроси исследователя удалить его по случайному коду внутри файла.</p>
     </section>
-    <section id="withdrawn" hidden><p class="eyebrow">УЧАСТИЕ ЗАВЕРШЕНО</p><h1 tabindex="-1" id="exit-title">Можно закрыть страницу.</h1><p class="lead">Ответы удалены из памяти страницы. Ничего не отправлено. Ранее скачанный файл, если он есть, нужно удалить отдельно.</p></section>
+    <section id="withdrawn" hidden><p class="eyebrow">УЧАСТИЕ ЗАВЕРШЕНО</p><h1 tabindex="-1" id="exit-title">Можно закрыть страницу.</h1><p id="exit-copy" class="lead">Ответы удалены из памяти страницы. Ничего не отправлено. Ранее скачанный файл, если он есть, нужно удалить отдельно.</p></section>
+    <aside id="reward" class="notice" hidden><p>Для участников SurveyCircle: код завершения</p><strong id="reward-code"></strong><p>Используй его в SurveyCircle. Не публикуй и не передавай другим.</p></aside>
+    <details id="credits" hidden><summary>Музыка и авторы</summary><p id="credits-text"></p></details>
     <p id="status" role="status" aria-live="polite"></p>
     <footer><span>Yanjaro Listening Study</span><span>Только звук. Твоё впечатление.</span></footer>
   </main>

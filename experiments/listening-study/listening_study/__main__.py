@@ -24,6 +24,13 @@ def main():
     p.add_argument("study", type=Path); p.add_argument("--slot", type=int, required=True)
     p.add_argument("--question", choices=("next", "similarity"), required=True)
     p.add_argument("--port", type=int, default=8765)
+    for command in ("collect", "export-collected", "purge-collected"):
+        p = sub.add_parser(command, help="Private SQLite collection; loopback preview and operator-only maintenance")
+        p.add_argument("study", type=Path); p.add_argument("database", type=Path); p.add_argument("config", type=Path)
+        if command == "collect":
+            p.add_argument("--port", type=int, default=8765)
+        if command == "export-collected":
+            p.add_argument("out", type=Path)
     p = sub.add_parser("analyze", help="Validate anonymous exports and compute clustered intervals")
     p.add_argument("study", type=Path); p.add_argument("responses", type=Path); p.add_argument("out", type=Path)
     p.add_argument("--draws", type=int, default=2000); p.add_argument("--seed", type=int, default=20261009)
@@ -53,6 +60,22 @@ def main():
                 server.serve_forever()
             finally:
                 server.server_close()
+        elif args.command in ("collect", "export-collected", "purge-collected"):
+            from .collection import Collection
+            collector = Collection(read_json(args.study), args.database, read_json(args.config))
+            if args.command == "collect":
+                from .server import make_server
+                collector.purge()
+                server = make_server(collector.study, port=args.port, collection=collector)
+                print(f"Collection preview, loopback only: http://127.0.0.1:{server.server_port}", flush=True)
+                try:
+                    server.serve_forever()
+                finally:
+                    server.server_close()
+            elif args.command == "export-collected":
+                print(collector.export(args.out))
+            else:
+                collector.purge()
         elif args.command == "analyze":
             from .analysis import analyze
             paths = sorted(args.responses.glob("*.json"))

@@ -5,3 +5,6 @@ work/
 *.mp3
 *.flac
 responses/
+*.sqlite*
+collection.private.json
+exports/

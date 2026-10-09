@@ -18,18 +18,22 @@ def validate_response(response, study):
     except (ValueError, AttributeError, TypeError):
         raise ValueError("Participant ID must be a random UUID") from None
     require(pid.version == 4 and str(pid) == response["participant_id"], "Expected canonical random UUIDv4")
-    require(response["status"] == "complete", "Only voluntarily exported complete sessions are accepted")
+    require(response["status"] == "complete", "Only explicitly completed sessions are accepted")
     assigned = schedule(study, response["slot"], response["prompt_id"])
-    answers = response["answers"]
-    require(isinstance(answers, list) and len(answers) == len(assigned), "Incomplete session")
+    validate_answers(response["answers"], assigned, complete=True)
+    return assigned
+
+
+def validate_answers(answers, assigned, *, complete=False):
+    require(isinstance(answers, list) and len(answers) <= len(assigned), "Invalid answers")
+    require(not complete or len(answers) == len(assigned), "Incomplete session")
     for answer, task in zip(answers, assigned):
-        require(set(answer) == {"trial_id", "choice", "heard"} and answer["trial_id"] == task["id"],
+        require(isinstance(answer, dict) and set(answer) == {"trial_id", "choice", "heard"} and answer["trial_id"] == task["id"],
                 "Unknown, repeated, or out-of-order trial")
         require(answer["choice"] in ("left", "right", "neither", "skip"), "Invalid choice")
         require(isinstance(answer["heard"], dict) and set(answer["heard"]) == {"source", "left", "right"}
                 and all(type(v) is bool for v in answer["heard"].values()), "Invalid listening flags")
         require(answer["choice"] == "skip" or all(answer["heard"].values()), "Choice without listening")
-    return assigned
 
 
 def fraction(counts):

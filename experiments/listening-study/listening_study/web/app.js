@@ -2,7 +2,47 @@
 const $ = id => document.getElementById(id);
 const roles = ["source", "left", "right"];
 let bundle = null, response = null, index = 0, heard = {}, elapsed = {}, previous = {};
-let loading = false;
+let loading = false, initialized = false, collecting = false, config = null, savedState = null;
+async function api(path, data) {
+  const options = {cache: "no-store", credentials: "same-origin"};
+  if (data !== undefined) Object.assign(options, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(data)});
+  const reply = await fetch("/api/" + path, options);
+  if (!reply.ok) throw new Error("request failed");
+  return reply.json();
+}
+async function action(work) {
+  if (loading) return;
+  loading = true;
+  for (const b of document.querySelectorAll("button")) b.disabled = true;
+  try { await work(); }
+  catch { $("status").textContent = "Сервер не подтвердил действие. Проверь соединение и повтори попытку. Можно обновить страницу: подтверждённые ответы сохранятся."; }
+  finally {
+    loading = false;
+    for (const b of document.querySelectorAll("button")) b.disabled = false;
+    $("start").disabled = !initialized || !$("consent").checked;
+    updateButtons();
+  }
+}
+function credits(state) {
+  $("credits").hidden = !state.credits;
+  $("credits-text").textContent = (state.credits || []).join("\n\n");
+  $("reward").hidden = !state.surveycircle_code;
+  $("reward-code").textContent = state.surveycircle_code || "";
+}
+function accept(state) {
+  savedState = state;
+  credits(state);
+  if (["withdrawn", "expired", "unavailable"].includes(state.status)) {
+    stopAudio(true); response = bundle = null;
+    $("exit-copy").textContent = state.status === "withdrawn" ? "Ответы удалены с сервера. Повторная отправка этой сессии закрыта." : "Сессия недоступна или срок хранения истёк. Ответы этой сессии восстановить нельзя.";
+    $("recovery-card").hidden = true; show("withdrawn"); return;
+  }
+  bundle = state.bundle; response = state.response; index = response.answers.length;
+  if (state.recovery_code) {
+    $("recovery-code").textContent = state.recovery_code; $("recovery-card").hidden = false;
+  }
+  render();
+}
 
 async function loadBundle() {
   const embedded = $("embedded-study");
@@ -13,7 +53,8 @@ async function loadBundle() {
 }
 
 function show(id) {
-  for (const name of ["welcome", "trial", "finished", "withdrawn"]) $(name).hidden = name !== id;
+  for (const name of ["welcome", "trial", "finished", "withdrawn", "resume"]) $(name).hidden = name !== id;
+  $("restore-card").hidden = !collecting || !["welcome", "resume"].includes(id);
 }
 function stopAudio(clear = false) {
   for (const role of roles) {
@@ -21,7 +62,12 @@ function stopAudio(clear = false) {
     if (clear) { $(role).removeAttribute("src"); $(role).load(); }
   }
 }
-function withdraw() {
+async function withdraw() {
+  if (collecting && savedState && savedState.status !== "new") {
+    await action(async () => { stopAudio(); accept(await api("withdraw", {})); });
+    return;
+  }
+  if (loading) return;
   stopAudio(true);
   response = null; bundle = null; heard = {}; elapsed = {}; previous = {};
   show("withdrawn"); $("status").textContent = ""; $("exit-title").focus();
@@ -33,7 +79,13 @@ function updateButtons() {
 function render() {
   stopAudio();
   if (index === bundle.trials.length) {
-    stopAudio(true); response.status = "complete"; show("finished"); $("finish-title").focus(); return;
+    stopAudio(true);
+    if (collecting) {
+      const done = response.status === "complete";
+      $("finish-copy").textContent = done ? "Ответы сохранены. Спасибо! Файл скачивать и пересылать не нужно." : "Все задания пройдены. Ответы сохранены как незавершённая сессия. Подтверди завершение, чтобы включить их в исследование.";
+      $("submit").hidden = done; $("download").hidden = true; $("download-hint").hidden = true;
+    } else { response.status = "complete"; }
+    show("finished"); $("finish-title").focus(); return;
   }
   const trial = bundle.trials[index];
   heard = {}; elapsed = {}; previous = {};
@@ -46,9 +98,13 @@ function render() {
   $("question").textContent = bundle.prompt; $("status").textContent = "";
   updateButtons(); show("trial"); $("question").focus();
 }
-$("consent").addEventListener("change", () => { $("start").disabled = !$("consent").checked; });
+$("consent").addEventListener("change", () => { $("start").disabled = !initialized || !$("consent").checked; });
 $("start").addEventListener("click", async () => {
-  if (!$("consent").checked || loading) return;
+  if (!initialized || !$("consent").checked || loading) return;
+  if (collecting) {
+    await action(async () => { accept(await api("start", {consent: true, consent_version: config.consent_version})); });
+    return;
+  }
   loading = true; $("start").disabled = true;
   try {
     const data = await loadBundle();
@@ -81,10 +137,16 @@ for (const role of roles) {
   });
 }
 for (const button of document.querySelectorAll("[data-choice]")) {
-  button.addEventListener("click", () => {
+  button.addEventListener("click", async () => {
     if (!response || $("trial").hidden || button.disabled) return;
-    response.answers.push({trial_id: bundle.trials[index].id, choice: button.dataset.choice, heard: {...heard}});
-    index++; render();
+    const answer = {trial_id: bundle.trials[index].id, choice: button.dataset.choice, heard: {...heard}};
+    if (collecting) {
+      await action(async () => {
+        stopAudio();
+        accept(await api("answer", {index, answer}));
+        $("status").textContent = "Ответ сохранён на сервере.";
+      });
+    } else { response.answers.push(answer); index++; render(); }
   });
 }
 for (const id of ["decline", "withdraw", "discard"]) $(id).addEventListener("click", withdraw);
@@ -96,8 +158,27 @@ $("download").addEventListener("click", () => {
   link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   $("status").textContent = "Файл подготовлен к сохранению. Передача исследователю — только по твоему решению.";
 });
-// Read only the demo label before consent. No participant is allocated, no audio fetched.
-loadBundle()
-  .then(data => { $("demo").hidden = !data.demo; })
-  .catch(() => { $("status").textContent = "Исследование недоступно. Проверь локальный сервер."; });
+$("submit").addEventListener("click", () => action(async () => { accept(await api("complete", {})); }));
+$("continue").addEventListener("click", () => action(async () => { accept(await api("state")); }));
+$("resume-withdraw").addEventListener("click", withdraw);
+$("restore").addEventListener("click", () => action(async () => {
+  const state = await api("resume", {code: $("restore-code").value.trim()});
+  $("restore-code").value = ""; accept(state);
+}));
+// A read before consent neither allocates a seat nor creates a cookie. Existing consent may be resumed explicitly.
+loadBundle().then(async data => {
+  $("demo").hidden = !data.demo;
+  if (!data.collection) { initialized = true; $("start").disabled = !$("consent").checked; return; }
+  collecting = true; config = data;
+  $("privacy-copy").textContent = `После согласия каждый ответ сохраняется на сервере под случайным кодом. Нужен только cookie для продолжения и защиты от повторной отправки; имена, IP-адреса, аккаунты и данные устройства в базу не записываются. Сеть и хостинг технически обрабатывают IP при соединении. Незавершённые ответы удаляются через 7 дней после начала, остальные — ${config.delete_on} (UTC). Отказ удаляет ответы сразу; минимальная отметка об отказе без ответов остаётся до этой даты. Закрытие вкладки не означает отказ: вернись в том же браузере или используй резервный код. Доступ к ответам — у исследователя; публикуются только сводные результаты. Контакт: ${config.contact}.`;
+  $("restore-card").hidden = false;
+  const state = await api("state");
+  initialized = true; $("start").disabled = !$("consent").checked;
+  if (state.status !== "new") {
+    savedState = state;
+    if (["in_progress", "complete"].includes(state.status)) show("resume");
+    else accept(state);
+  }
+}).catch(() => { $("start").disabled = true; $("status").textContent = "Исследование недоступно. Обнови страницу позже."; });
 window.addEventListener("pagehide", () => { stopAudio(true); response = null; bundle = null; });
+window.addEventListener("pageshow", event => { if (event.persisted) location.reload(); });

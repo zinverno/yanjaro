@@ -35,6 +35,7 @@ jobs:
           python -m pip check
           node --check listening_study/web/app.js
           node --check tests/browser.cjs
+          node --check tests/collection-browser.cjs
           python -m unittest discover -s tests -v
       - name: Generate synthetic study and analyze scripted answers
         run: |
@@ -43,11 +44,12 @@ jobs:
       - name: Install pinned browser harness in runner temp
         run: |
           npm install --prefix "$RUNNER_TEMP/listening-browser" --no-save --ignore-scripts playwright@1.63.0
-          node "$RUNNER_TEMP/listening-browser/node_modules/playwright/cli.js" install --with-deps chromium
+          node "$RUNNER_TEMP/listening-browser/node_modules/playwright/cli.js" install --with-deps chromium webkit
       - name: Real browser interaction and private loopback HTTP
         run: |
           export PLAYWRIGHT_MODULE="$RUNNER_TEMP/listening-browser/node_modules/playwright"
           node tests/browser.cjs work/demo work/browser
+          node tests/collection-browser.cjs work/demo work/collection-browser
           python -c 'from listening_study.common import read_json; from listening_study.analysis import validate_response; validate_response(read_json("work/browser/browser-response.json"), read_json("work/demo/study.json"))'
       - name: Preserve only synthetic report and UI screenshots
         if: always()
@@ -58,5 +60,7 @@ jobs:
             experiments/listening-study/work/demo/results.json
             experiments/listening-study/work/browser/browser-checks.json
             experiments/listening-study/work/browser/*.png
+            experiments/listening-study/work/collection-browser/collection-checks.json
+            experiments/listening-study/work/collection-browser/*.png
           if-no-files-found: error
           retention-days: 14
