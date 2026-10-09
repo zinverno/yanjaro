@@ -21,7 +21,7 @@ def export_demo(study, out, *, slot=0, prompt="next"):
     css, js = (web / "style.css").read_text(), (web / "app.js").read_text()
     def csp_hash(text):
         return "'sha256-" + base64.b64encode(hashlib.sha256(text.encode()).digest()).decode() + "'"
-    csp = f"default-src 'none'; media-src data:; style-src {csp_hash(css)}; script-src {csp_hash(js)}; base-uri 'none'; form-action 'none'"
+    csp = f"default-src 'none'; img-src data:; media-src data:; style-src {csp_hash(css)}; script-src {csp_hash(js)}; base-uri 'none'; form-action 'none'"
     html = (web / "index.html").read_text()
     html = html.replace('<link rel="stylesheet" href="/style.css">', f'<meta http-equiv="Content-Security-Policy" content="{csp}"><style>{css}</style>')
     html = html.replace('<script src="/app.js" defer></script>', '')

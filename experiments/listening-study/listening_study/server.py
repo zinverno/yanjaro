@@ -51,7 +51,7 @@ def make_server(study, slot, prompt, port=8765):
             self.send_header("Referrer-Policy", "no-referrer")
             self.send_header("X-Content-Type-Options", "nosniff")
             self.send_header("Content-Security-Policy", "default-src 'self'; connect-src 'self'; media-src 'self'; "
-                             "img-src 'self'; style-src 'self'; script-src 'self'; frame-ancestors 'none'; "
+                             "img-src 'self' data:; style-src 'self'; script-src 'self'; frame-ancestors 'none'; "
                              "base-uri 'none'; form-action 'none'")
             self.end_headers()
             self.wfile.write(body)

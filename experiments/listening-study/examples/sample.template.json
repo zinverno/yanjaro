@@ -1,0 +1,16 @@
+{
+  "schema": "yanjaro.listening.v0.1",
+  "demo": false,
+  "metadata_provenance": {"source": "MTG-Jamendo", "revision": "REPLACE_WITH_40_HEX_REVISION", "metadata_sha256": "REPLACE_WITH_TSV_SHA256", "metadata_license": "CC-BY-NC-SA-4.0"},
+  "tracks": [
+    {
+      "id": "track_0000001", "artist_id": "artist_000001", "genre": [], "instrument": [],
+      "path": "/private/explicitly-permitted-file.wav", "start": 30, "seconds": 15,
+      "rights": {
+        "reviewed": false, "local_analysis": false, "excerpt_derivatives": false,
+        "local_listening": false, "blind_presentation": false,
+        "license": "", "evidence": "", "attribution": "", "verified_on": "", "scope": ""
+      }
+    }
+  ]
+}

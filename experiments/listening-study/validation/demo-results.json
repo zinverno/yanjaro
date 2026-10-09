@@ -1,0 +1,170 @@
+{
+  "schema": "yanjaro.listening.v0.1",
+  "study_sha256": "06a6512af2ea4f08d78f7ccb48e8f49cc34c47fb7b43d3c0fa1591aedb42a3b1",
+  "demo": true,
+  "phase": "demo",
+  "bootstrap_draws": 2000,
+  "bootstrap_seed": 20261009,
+  "results_by_prompt": {
+    "next": {
+      "participants": 16,
+      "primary_sources": 6,
+      "primary_outcomes": {
+        "skip": 2,
+        "rhythm": 60,
+        "genre": 31,
+        "neither": 3
+      },
+      "primary_trials": 96,
+      "decisive_choices": 91,
+      "rhythm_share_among_decisive": 0.6593406593406593,
+      "rhythm_share_all_primary": 0.625,
+      "participant_cluster_bootstrap": {
+        "ci95": [
+          0.6111111111111112,
+          0.7065217391304348
+        ],
+        "valid_resamples": 2000
+      },
+      "crossed_participant_source_bootstrap": {
+        "ci95": [
+          0.5434715512614063,
+          0.7674865831842574
+        ],
+        "valid_resamples": 2000
+      },
+      "equal_participant_mean": 0.6583333333333333,
+      "equal_source_mean": 0.6592261904761905,
+      "leave_one_source_out": {
+        "d000": 0.6578947368421053,
+        "d050": 0.6578947368421053,
+        "d010": 0.6623376623376623,
+        "d030": 0.6578947368421053,
+        "d020": 0.6666666666666666,
+        "d040": 0.6533333333333333
+      },
+      "by_source": {
+        "d000": {
+          "rhythm": 10,
+          "genre": 5,
+          "share": 0.6666666666666666
+        },
+        "d050": {
+          "rhythm": 10,
+          "genre": 5,
+          "share": 0.6666666666666666
+        },
+        "d010": {
+          "rhythm": 9,
+          "genre": 5,
+          "share": 0.6428571428571429
+        },
+        "d030": {
+          "rhythm": 10,
+          "genre": 5,
+          "share": 0.6666666666666666
+        },
+        "d020": {
+          "rhythm": 10,
+          "genre": 6,
+          "share": 0.625
+        },
+        "d040": {
+          "rhythm": 11,
+          "genre": 5,
+          "share": 0.6875
+        }
+      },
+      "control_outcomes": {
+        "both_far": 11,
+        "both_near": 15,
+        "neither": 3,
+        "skip": 3
+      },
+      "chosen_sides": {
+        "right": 45,
+        "left": 46
+      }
+    },
+    "similarity": {
+      "participants": 16,
+      "primary_sources": 6,
+      "primary_outcomes": {
+        "skip": 5,
+        "rhythm": 40,
+        "genre": 47,
+        "neither": 4
+      },
+      "primary_trials": 96,
+      "decisive_choices": 87,
+      "rhythm_share_among_decisive": 0.45977011494252873,
+      "rhythm_share_all_primary": 0.4166666666666667,
+      "participant_cluster_bootstrap": {
+        "ci95": [
+          0.41975308641975306,
+          0.4945054945054945
+        ],
+        "valid_resamples": 2000
+      },
+      "crossed_participant_source_bootstrap": {
+        "ci95": [
+          0.3332386363636364,
+          0.5862068965517241
+        ],
+        "valid_resamples": 2000
+      },
+      "equal_participant_mean": 0.45,
+      "equal_source_mean": 0.455982905982906,
+      "leave_one_source_out": {
+        "d020": 0.4444444444444444,
+        "d000": 0.4583333333333333,
+        "d010": 0.47297297297297297,
+        "d030": 0.47297297297297297,
+        "d040": 0.4583333333333333,
+        "d050": 0.4507042253521127
+      },
+      "by_source": {
+        "d020": {
+          "rhythm": 8,
+          "genre": 7,
+          "share": 0.5333333333333333
+        },
+        "d000": {
+          "rhythm": 7,
+          "genre": 8,
+          "share": 0.4666666666666667
+        },
+        "d010": {
+          "rhythm": 5,
+          "genre": 8,
+          "share": 0.38461538461538464
+        },
+        "d030": {
+          "rhythm": 5,
+          "genre": 8,
+          "share": 0.38461538461538464
+        },
+        "d040": {
+          "rhythm": 7,
+          "genre": 8,
+          "share": 0.4666666666666667
+        },
+        "d050": {
+          "rhythm": 8,
+          "genre": 8,
+          "share": 0.5
+        }
+      },
+      "control_outcomes": {
+        "both_far": 16,
+        "both_near": 14,
+        "neither": 2
+      },
+      "chosen_sides": {
+        "right": 45,
+        "left": 42
+      }
+    }
+  },
+  "interpretation": "Exploratory conditional proportion; synthetic results are not listener evidence. No hypothesis confirmation."
+}
