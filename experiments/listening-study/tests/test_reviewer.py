@@ -13,6 +13,28 @@ from listening_study.reviewer import export_review, provisional_trials, review_b
 
 
 class QualityTests(unittest.TestCase):
+    def test_real_snapshot_is_measured_but_not_an_approved_study(self):
+        report = read_json(Path(__file__).parent.parent / "validation/real-audio-v1.json")
+        rows = [r for r in report["records"] if r["status"] == "ANALYZED_PROVISIONAL"]
+        self.assertEqual(len(rows), 10)
+        self.assertFalse(report["demo"])
+        for r in rows:
+            self.assertEqual(r["source_sha256"], r["quality"]["source_sha256"])
+            self.assertEqual(r["clip_sha256"], r["rendered_quality"]["source_sha256"])
+            self.assertEqual(r["rendered_quality"]["duration_seconds"], 15)
+            self.assertLessEqual(r["rendered_quality"]["peak_abs"], .98)
+            self.assertFalse(r["public_release_approved"])
+            self.assertEqual(r["human_review"], "NOT RUN")
+        catalog = {"schema": "yanjaro.listening.v0.1", "tracks": [dict(r, artist_id=r["creator_id"]) for r in rows]}
+        pairs = screen(catalog)["pairs"]
+        self.assertEqual(len(pairs), report["screen"]["eligible_directed_pairs"])
+        self.assertEqual({c:sum(p.get("condition")==c for p in pairs) for c in "ABCD"}, report["screen"]["condition_counts"])
+        self.assertEqual(provisional_trials(catalog, pairs)["options"], report["screen"]["trial_options"])
+        for r in report["records"]:
+            if not r["downloaded"]:
+                self.assertIsNone(r["features"])
+                self.assertEqual(r["download_http_status"], 403)
+
     def test_fixed_windows_no_padding_or_score_search(self):
         self.assertEqual(excerpt_window(45)["start"], 30)
         self.assertEqual(excerpt_window(22)["start"], 3.5)

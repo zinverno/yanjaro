@@ -1,4 +1,23 @@
-# Validation — pool audit and CI preparation
+# Validation — first real audio and private researcher review
+
+Continued from requested HEAD `5e25b22cc4223b45528b6316de411be6dc50676c`. [Real audio report](REAL_AUDIO.md) and [sanitized measurements](validation/real-audio-v1.json) are separate from synthetic UI/test evidence.
+
+| Gate | Status / evidence |
+|---|---|
+| Primary publication / permitted acquisition | PASS for 10 exact OGA File(s) attachments, explicit CC0 checked before download; matching byte lengths, original and clip SHA-256, private dated evidence; no album/crawler download |
+| TRG Banks t01–t04 acquisition | BLOCKED; 403 from the four supplied normal individual FLAC links; no retry, stream extraction, alternate format/master or access workaround |
+| Real decoding / preparation / explicit features | PASS technically; 10 full decodes, 10 fixed 15 s windows, raw and rendered features, original/rendered quality diagnostics; audible artifacts remain NOT RUN |
+| Existing screen-v1 on actual features | PASS execution; A/B/C/D counts all zero, 56 unknown-tag and 8 uncertain directed pairs, zero triples; thresholds unchanged |
+| Eight real triples ready | FAIL; insufficient recordings/authors and no qualifying pairs |
+| Independent researcher review | New offline two-file UI; separate local drafts/JSON, per-recording and per-pair judgments, BPM/similarity errors, no automatic approval; files outside Git |
+| Human review / perceptual validation / real freeze | NOT RUN; all real results PROVISIONAL |
+| Public service, paid resources, participant recruitment | NOT RUN; not authorized in this iteration |
+
+The first new review browser run [37916899201](https://github.com/zinverno/yanjaro/actions/runs/37916899201) caught horizontal overflow in mobile WebKit; existing standalone/collection suites passed. The fix constrains grid/select intrinsic width, preserves the assertion and saves a mobile screenshot before it. Exact final HEAD, test counts and final CI conclusions are recorded in [PR #9](https://github.com/zinverno/yanjaro/pull/9) after completion; no success is inferred from an earlier head. All new CI review audio/decisions are synthetic. Actual-device/Zen/headphone acceptance remains NOT RUN.
+
+---
+
+# Historical validation — pool audit and CI preparation
 
 Continued from the exact requested PR #9 HEAD `ad4f5d3c4e18059e64cb8913c6b4792772d59961`. No experiment deployment or real audio acquisition.
 
