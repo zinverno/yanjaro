@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-09",
+  "baseline_head": "079a9b41c8b194f31783a65d8748573b97bb93dc",
+  "baseline_http_tests": "FAIL: blocked in TestClient/AnyIO portal; killed at 20s",
+  "minimal_socketpair_send": "PermissionError errno=1 (EPERM)",
+  "cause": "Sandbox blocks socket.send on the asyncio wakeup socket. CPython _write_to_self catches OSError; selector thread is not woken, leaving TestClient waiting on its future.",
+  "fix": "HTTPX AsyncClient with ASGITransport; async handlers for bounded in-memory work, no worker handoff. No socket or sandbox monkeypatches.",
+  "original_http_checks_preserved": ["healthz", "missing bearer", "wrong bearer", "authenticated rank", "schema mismatch", "duplicate IDs", "wrong dimension"],
+  "original_four_service_tests": "PASS: 4 passed in 0.33s",
+  "full_suite_after_fix": "PASS: 23 passed in 0.48s; zero skips",
+  "evidence_scope": "Synthetic fixtures; not real weights, model quality, load testing or hosted API acceptance"
+}

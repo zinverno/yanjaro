@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-09",
+  "manual_workflow_sha256": "b8cfae7dffcb18fe5af8b770daa76b03639148f6911b1356619de0ae3f0b9d3f",
+  "registration_pr": 8,
+  "registration_head": "a50a4e9d8904e6cf1e63c8168ce463f679469c4a",
+  "source_review": "PASS",
+  "only_trigger": "workflow_dispatch",
+  "permissions": {
+    "contents": "read"
+  },
+  "allowed_mode": "probe",
+  "allowed_ref": "refs/heads/experiment/remote-acoustic-yambda",
+  "shell_guard_cases": 6,
+  "shell_injection_execution": "rejected",
+  "artifact_allowlist": [
+    "experiments/remote-acoustic/artifacts/probe.json"
+  ],
+  "network_or_training_on_pr": "none; tests only",
+  "hosted_probe": "NOT RUN",
+  "training": "NOT RUN"
+}

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: yanjaro-acoustic-research
+    runtime: docker
+    plan: free
+    healthCheckPath: /healthz
+    autoDeployTrigger: off
+    envVars:
+      - key: MODEL_PATH
+        value: /app/artifacts/model.json
+      - key: YANJARO_RANK_API_KEY
+        sync: false
