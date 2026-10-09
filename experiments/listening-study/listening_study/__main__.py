@@ -16,6 +16,9 @@ def main():
     p.add_argument("sample", type=Path); p.add_argument("out", type=Path)
     p = sub.add_parser("screen", help="Generate provisional pairs and manual review template")
     p.add_argument("catalog", type=Path); p.add_argument("out", type=Path)
+    p = sub.add_parser("review-page", help="Export two private offline researcher pages; never approves pairs")
+    p.add_argument("catalog", type=Path); p.add_argument("pool", type=Path); p.add_argument("out", type=Path)
+    p.add_argument("--allow-real-audio", action="store_true")
     p = sub.add_parser("freeze", help="Validate approved pairs and freeze an immutable study manifest")
     p.add_argument("catalog", type=Path); p.add_argument("review", type=Path); p.add_argument("out", type=Path)
     p.add_argument("--study-id", required=True); p.add_argument("--seed", type=int, required=True)
@@ -48,6 +51,9 @@ def main():
         elif args.command == "screen":
             from .design import screen
             write_new(args.out, screen(read_json(args.catalog)))
+        elif args.command == "review-page":
+            from .reviewer import export_review
+            export_review(read_json(args.catalog), read_json(args.pool), args.out, allow_real_audio=args.allow_real_audio)
         elif args.command == "freeze":
             from .design import freeze
             write_new(args.out, freeze(read_json(args.catalog), read_json(args.review),

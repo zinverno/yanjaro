@@ -34,8 +34,10 @@ jobs:
         run: |
           python -m pip check
           node --check listening_study/web/app.js
+          node --check listening_study/web/review.js
           node --check tests/browser.cjs
           node --check tests/collection-browser.cjs
+          node --check tests/reviewer-browser.cjs
           python -m unittest discover -s tests -v
       - name: Generate synthetic study and analyze scripted answers
         run: |
@@ -91,6 +93,11 @@ jobs:
         run: |
           export PLAYWRIGHT_MODULE="$RUNNER_TEMP/listening-browser/node_modules/playwright"
           node tests/collection-browser.cjs work/demo work/collection-browser
+      - name: Offline researcher review in Chromium and WebKit
+        timeout-minutes: 5
+        run: |
+          export PLAYWRIGHT_MODULE="$RUNNER_TEMP/listening-browser/node_modules/playwright"
+          node tests/reviewer-browser.cjs work/demo work/reviewer-browser
       - name: Preserve only synthetic browser reports and UI screenshots
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -101,5 +108,7 @@ jobs:
             experiments/listening-study/work/browser/*.png
             experiments/listening-study/work/collection-browser/collection-checks.json
             experiments/listening-study/work/collection-browser/*.png
+            experiments/listening-study/work/reviewer-browser/review-checks.json
+            experiments/listening-study/work/reviewer-browser/*.png
           if-no-files-found: error
           retention-days: 14
