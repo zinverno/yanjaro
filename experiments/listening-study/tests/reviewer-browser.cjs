@@ -72,6 +72,7 @@ async function exported(p) {
   const second=await open(ctx,path.join(temp,'pages/reviewer-2.html'));
   assert.equal(await second.locator('#track-form [data-field=instruments]').inputValue(),'');
   await second.locator('#import').setInputFiles(saved.filename);
+  await second.waitForFunction(()=>document.getElementById('error').textContent.includes('другому проверяющему'));
   assert.match(await second.locator('#error').textContent(),/другому проверяющему/);
   const secondSaved=await exported(second);
   assert.equal(secondSaved.data.reviewer,'reviewer-2');
@@ -80,6 +81,7 @@ async function exported(p) {
   const importedCtx=await desktop.newContext({acceptDownloads:true});
   const restored=await open(importedCtx,path.join(temp,'pages/reviewer-1.html'));
   await restored.locator('#import').setInputFiles(saved.filename);
+  await restored.waitForFunction(()=>document.querySelector('#track-form [data-field=instruments]').value==='Synthetic reviewer one observation');
   assert.equal(await restored.locator('#track-form [data-field=instruments]').inputValue(),'Synthetic reviewer one observation');
   const original=await restored.locator('#selectors select').first().inputValue();
   await restored.locator('#selectors select').nth(1).selectOption(original);
@@ -89,6 +91,7 @@ async function exported(p) {
   const empty=await open(ctx,path.join(temp,'empty/reviewer-1.html'));
   assert.match(await empty.locator('#pool-status').textContent(),/Строгих вариантов троек: 0/);
   await empty.locator('#import').setInputFiles(saved.filename);
+  await empty.waitForFunction(()=>document.getElementById('error').textContent.includes('другому проверяющему или набору'));
   assert.match(await empty.locator('#error').textContent(),/другому проверяющему или набору/);
   assert.equal(await empty.locator('#players audio').count(),3);
   checks.push('zero-triple pool still playable; mismatched catalog import rejected');
