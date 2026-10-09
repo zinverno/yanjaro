@@ -1,4 +1,26 @@
-# Validation — recruitment preparation
+# Validation — pool audit and CI preparation
+
+Continued from the exact requested PR #9 HEAD `ad4f5d3c4e18059e64cb8913c6b4792772d59961`. No experiment deployment or real audio acquisition.
+
+| Gate | Status / evidence |
+|---|---|
+| Cancelled CI diagnosis | PASS; [run 37897137055](https://github.com/zinverno/yanjaro/actions/runs/37897137055), job 113710939443: unit checks succeeded; 07:06:37–07:16:37 UTC installation exhausted the 10-minute job budget while apt was still downloading Ubuntu packages; browser checks skipped, artifact contained only the synthetic analysis report |
+| CI organization repair | PASS at `325fe137b603c8b5109ecb7e57ee13dd09b7a175`; [run 37908440745](https://github.com/zinverno/yanjaro/actions/runs/37908440745): both synthetic and browsers jobs succeeded, including both existing browser suites |
+| Updated pool local checks | PASS; 52 Python tests, including retained 24 IDs, 36–60 bound, author groups, evidence scopes, unknown features/rights and CSV separation of source hints from unfilled human observations |
+| Original 24 publication audit | PASS as evidence audit; 21 differing statements, 3 index-only/unavailable exact sources. No claim that differing statements revoke CC0 |
+| Expanded pool | PASS as review inventory; 44 named recordings, 9 author groups; 10 exact publication pages + 4 named-album CC0 statements, 23 differing statements, 7 index-only records |
+| Real masters / 6 A/B + 2 C/D validation | NOT RUN; zero acquired files, zero measured excerpts, zero accepted triples. Counting publications is not a musical feasibility result |
+| Public launch / recruitment | NOT RUN; no deployment, paid resource, audio publication or participant contact |
+
+The cancelled installation did not show a browser assertion failure. Splitting out the browser job preserves independent unit feedback. Within its 45-minute job budget, fixture preparation and npm each have 3 minutes, system packages 20, browser binaries 5, each browser suite 5; the remaining margin allows runner setup and artifacts. Both Chromium and WebKit remain required; no `continue-on-error`, cache-hit bypass or reduced test list. Reports are separate per job and exact PR head. This follows [Playwright CI guidance](https://playwright.dev/docs/ci) to provide an environment with browsers/system dependencies and leave timeout margin; no image/version or player dependency change was needed.
+
+The repair run predates the pool fixture changes; **final-head acceptance is recorded in the PR body and [PR #9 checks](https://github.com/zinverno/yanjaro/pull/9/checks), not inferred from this earlier success**. Historical screenshots below remain explicitly tied to their original successful run. Final validation must include both study jobs plus existing distribution jobs at the new head.
+
+Local `/tmp` space exhaustion was handled by removing only this study's disposable wheel/cache directories and four verified synthetic demo fixtures; source checkout, virtual environment and versioned artifacts were preserved. Local socket/browser restrictions remain, so real browser acceptance comes from GitHub Actions.
+
+---
+
+# Historical validation — recruitment preparation
 
 All audio, sessions and screenshots in automated checks are **synthetic demo**, not listeners. Continued from the exact user-specified draft PR #9 HEAD `3eacfc819deeeb507c25c286bed3deacc7ea204e`; main was `1c83c3776de565ed57416015f32a7ddd999af29f`. Same experimental branch, no rewrite/merge of #6/#7.
 

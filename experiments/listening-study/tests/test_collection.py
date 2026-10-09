@@ -1,4 +1,5 @@
 import copy
+import csv
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, timedelta
 from pathlib import Path
@@ -66,12 +67,53 @@ class CollectionTests(unittest.TestCase):
     def test_shortlist_is_not_fake_measured_or_approved_audio(self):
         candidates = read_json(Path(__file__).parent.parent / "examples/real-candidates.v1.json")
         self.assertEqual(candidates["status"], "REVIEW_ONLY_NOT_A_STUDY")
-        self.assertEqual(len(candidates["tracks"]), 24)
+        self.assertEqual(candidates["pool_revision"], 2)
+        self.assertGreaterEqual(len(candidates["tracks"]), 36)
+        self.assertLessEqual(len(candidates["tracks"]), 60)
+        self.assertGreaterEqual(len({t["creator_id"] for t in candidates["tracks"]}), 8)
+        self.assertEqual(len({t["id"] for t in candidates["tracks"]}), len(candidates["tracks"]))
         for track in candidates["tracks"]:
             self.assertIsNone(track["features"])
             self.assertIsNone(track["local_file_sha256"])
+            self.assertIsNone(track["confirmed_recording_license"])
+            self.assertIsNone(track["excerpt_start"])
+            self.assertIsNone(track["excerpt_seconds"])
             self.assertFalse(track["rights_reviewed"])
             self.assertFalse(track["public_release_approved"])
+            self.assertFalse(track["review"]["listened"])
+            self.assertIn(track["publication_status"], candidates["status_definitions"])
+            self.assertTrue(track["license_evidence"])
+            self.assertTrue(track["recording_locator"])
+            for kind in ("genre", "instrument"):
+                if track[kind]:
+                    self.assertTrue(track[kind + "_source"]["url"].startswith("https://"))
+                    self.assertTrue(track[kind + "_source"]["scope"])
+                else:
+                    self.assertIsNone(track[kind + "_source"])
+            if track["publication_status"] == "CONFLICTING_STATEMENTS":
+                self.assertGreaterEqual(len({lic for e in track["license_evidence"] for lic in e["observed_licenses"]}
+                                           | {track["declared_license"]}), 2)
+            if track["publication_status"] == "CONFIRMED_RECORD_PAGE":
+                self.assertTrue(any(e["access"] == "page_read" and track["declared_license"] in e["observed_licenses"]
+                                    for e in track["license_evidence"]))
+    def test_review_sheet_preserves_ids_and_separates_hints_from_observations(self):
+        examples = Path(__file__).parent.parent / "examples"
+        tracks = read_json(examples / "real-candidates.v1.json")["tracks"]
+        with (examples / "listening-review.v1.csv").open(newline="") as file:
+            rows = list(csv.DictReader(file))
+        self.assertEqual([t["id"] for t in tracks], [r["id"] for r in rows])
+        originals = {f"{prefix}{n:02}" for prefix in ("h", "j") for n in range(1, 9)}
+        originals |= {f"m{n:02}" for n in (1, 2, 3, 4, 5, 6, 12, 14)}
+        self.assertEqual({t["id"] for t in tracks[:24]}, originals)
+        for track, row in zip(tracks, rows):
+            for key in ("artist", "title", "source", "creator_id", "publication_status", "declared_license"):
+                self.assertEqual(track[key], row[key])
+            self.assertEqual(row["confirmed_recording_license"], "UNKNOWN")
+            self.assertEqual(row["instrument_hint"], "; ".join(track["instrument"]) or "UNKNOWN")
+            for key in ("listen_status", "keep", "heard_instruments", "heard_genre", "bpm_manual", "start_seconds",
+                        "duration_seconds", "master_sha256", "applicable_license", "analysis_permission",
+                        "excerpt_permission", "public_playback_permission", "delayed_attribution_permission"):
+                self.assertEqual(row[key], "", f"unreviewed {track['id']} must not prefill {key}")
     def test_restart_recovery_and_foreign_session(self):
         token, state = self.start()
         saved = self.answer(token, state)

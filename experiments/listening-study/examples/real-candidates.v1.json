@@ -3,14 +3,20 @@
   "demo": false,
   "status": "REVIEW_ONLY_NOT_A_STUDY",
   "checked_on": "2026-10-09",
-  "evidence_note": "Primary FMA pages surfaced in web search; direct FMA opens returned HTTP 403. Search-index observations are not archived permission receipts. Album-only evidence is explicitly weaker. No audio downloaded.",
-  "genre_note": "Positive subset of source genre labels, not exhaustive annotations. Instrumental is not an instrument. Empty instrument list means unknown.",
+  "evidence_note": "Publication audit only. page_read means parsed primary page text inspected; search_index is weaker. No page is an archived master-file receipt. No real audio fetched. Different statements may be parallel grants, not revocation; owner must establish the applicable grant for the chosen master.",
+  "genre_note": "Positive source hints, not validated tags for screening. Album/collection hints are explicitly scoped. [] and null mean unknown, never negative. Numeric features remain null.",
   "rights_profile": {
     "CC0-1.0": {
       "excerpt_processing": "permitted for the rights actually dedicated",
       "public_blind_playback": "permitted for the rights actually dedicated; no mandatory credit timing",
       "later_attribution": "optional courtesy; planned after completion or withdrawal",
       "admission": "confirm exact recording, authority, source evidence and third-party samples before any acquisition or publication"
+    },
+    "CC-BY-4.0": {
+      "excerpt_processing": "allowed subject to attribution, license link and indication of changes",
+      "public_blind_playback": "not approved for this study until a compliant delayed-attribution arrangement is documented",
+      "later_attribution": "required credits; completion and withdrawal page planned, timing not assumed sufficient",
+      "admission": "verify exact recording/license version, attribution timing, master and third-party rights"
     }
   },
   "tracks": [
@@ -18,12 +24,10 @@
       "id": "h01",
       "artist": "HoliznaCC0",
       "title": "Classic",
-      "source": "https://freemusicarchive.org/music/holiznacc0/rock-montage/classic/",
-      "license": "CC0-1.0",
+      "source": "https://holiznacc0.bandcamp.com/album/rock-montage",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index",
-      "additional_evidence": [],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Blues",
         "Rock",
@@ -43,18 +47,50 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": ""
-      }
+      },
+      "original_source": "https://freemusicarchive.org/music/holiznacc0/rock-montage/classic/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Classic",
+      "creator_id": "holizna",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/holiznacc0/rock-montage/classic/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://holiznacc0.bandcamp.com/album/rock-montage",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC0-1.0",
+            "CC-BY-4.0"
+          ],
+          "note": "Author profile dedicates the archive to CC0 and waives credit; the publication license link resolves to CC BY 4.0. Retain both statements; master not compared."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/holiznacc0/rock-montage/classic/",
+        "scope": "track",
+        "access": "search_index"
+      },
+      "instrument_source": null,
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "h02",
       "artist": "HoliznaCC0",
       "title": "Punk",
-      "source": "https://freemusicarchive.org/music/holiznacc0/rock-montage/punk/",
-      "license": "CC0-1.0",
+      "source": "https://holiznacc0.bandcamp.com/album/rock-montage",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index",
-      "additional_evidence": [],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Rock",
         "Punk",
@@ -76,18 +112,50 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": ""
-      }
+      },
+      "original_source": "https://freemusicarchive.org/music/holiznacc0/rock-montage/punk/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Punk",
+      "creator_id": "holizna",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/holiznacc0/rock-montage/punk/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://holiznacc0.bandcamp.com/album/rock-montage",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC0-1.0",
+            "CC-BY-4.0"
+          ],
+          "note": "Author profile dedicates the archive to CC0 and waives credit; the publication license link resolves to CC BY 4.0. Retain both statements; master not compared."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/holiznacc0/rock-montage/punk/",
+        "scope": "track",
+        "access": "search_index"
+      },
+      "instrument_source": null,
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "h03",
       "artist": "HoliznaCC0",
       "title": "Unwind",
       "source": "https://freemusicarchive.org/music/holiznacc0/kick-it-laid-back-hiphop/unwind/",
-      "license": "CC0-1.0",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index",
-      "additional_evidence": [],
+      "evidence_level": "declared_index",
       "genre": [
         "Jazz",
         "Funk",
@@ -107,18 +175,39 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": ""
-      }
+      },
+      "original_source": "https://freemusicarchive.org/music/holiznacc0/kick-it-laid-back-hiphop/unwind/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Unwind",
+      "creator_id": "holizna",
+      "publication_status": "DECLARED_INDEX",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/holiznacc0/kick-it-laid-back-hiphop/unwind/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/holiznacc0/kick-it-laid-back-hiphop/unwind/",
+        "scope": "track",
+        "access": "search_index"
+      },
+      "instrument_source": null,
+      "owner_action": "Open the exact publication, save dated license evidence and identify the original master before acquisition; then listen and review."
     },
     {
       "id": "h04",
       "artist": "HoliznaCC0",
       "title": "Movement",
       "source": "https://freemusicarchive.org/music/holiznacc0/left-overs/movement-1/",
-      "license": "CC0-1.0",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index",
-      "additional_evidence": [],
+      "evidence_level": "declared_index",
       "genre": [
         "Hip-Hop",
         "Hip-Hop Beats"
@@ -136,18 +225,39 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": ""
-      }
+      },
+      "original_source": "https://freemusicarchive.org/music/holiznacc0/left-overs/movement-1/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Movement",
+      "creator_id": "holizna",
+      "publication_status": "DECLARED_INDEX",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/holiznacc0/left-overs/movement-1/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/holiznacc0/left-overs/movement-1/",
+        "scope": "track",
+        "access": "search_index"
+      },
+      "instrument_source": null,
+      "owner_action": "Open the exact publication, save dated license evidence and identify the original master before acquisition; then listen and review."
     },
     {
       "id": "h05",
       "artist": "HoliznaCC0",
       "title": "Make Love",
-      "source": "https://freemusicarchive.org/music/holiznacc0/bassic/make-love",
-      "license": "CC0-1.0",
+      "source": "https://holiznacc0.bandcamp.com/track/make-love",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index",
-      "additional_evidence": [],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Jazz",
         "Funk",
@@ -168,18 +278,50 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": ""
-      }
+      },
+      "original_source": "https://freemusicarchive.org/music/holiznacc0/bassic/make-love",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Make Love",
+      "creator_id": "holizna",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/holiznacc0/bassic/make-love",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://holiznacc0.bandcamp.com/track/make-love",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC0-1.0",
+            "CC-BY-4.0"
+          ],
+          "note": "Author profile dedicates the archive to CC0 and waives credit; the publication license link resolves to CC BY 4.0. Retain both statements; master not compared."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/holiznacc0/bassic/make-love",
+        "scope": "track",
+        "access": "search_index"
+      },
+      "instrument_source": null,
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "h06",
       "artist": "HoliznaCC0",
       "title": "Mercury",
-      "source": "https://freemusicarchive.org/music/holiznacc0/interstellar-pop-songs/mercury-1/",
-      "license": "CC0-1.0",
+      "source": "https://holiznacc0.bandcamp.com/track/mercury",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index",
-      "additional_evidence": [],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Pop",
         "Electronic",
@@ -200,18 +342,50 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": ""
-      }
+      },
+      "original_source": "https://freemusicarchive.org/music/holiznacc0/interstellar-pop-songs/mercury-1/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Mercury",
+      "creator_id": "holizna",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/holiznacc0/interstellar-pop-songs/mercury-1/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://holiznacc0.bandcamp.com/track/mercury",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC0-1.0",
+            "CC-BY-4.0"
+          ],
+          "note": "Author profile dedicates the archive to CC0 and waives credit; the publication license link resolves to CC BY 4.0. Retain both statements; master not compared."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/holiznacc0/interstellar-pop-songs/mercury-1/",
+        "scope": "track",
+        "access": "search_index"
+      },
+      "instrument_source": null,
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "h07",
       "artist": "HoliznaCC0",
       "title": "NPC Theme",
       "source": "https://freemusicarchive.org/music/holiznacc0/chiptunes/npc-theme/",
-      "license": "CC0-1.0",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index",
-      "additional_evidence": [],
+      "evidence_level": "declared_index",
       "genre": [
         "Electronic",
         "Soundtrack",
@@ -231,18 +405,39 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": ""
-      }
+      },
+      "original_source": "https://freemusicarchive.org/music/holiznacc0/chiptunes/npc-theme/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "NPC Theme",
+      "creator_id": "holizna",
+      "publication_status": "DECLARED_INDEX",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/holiznacc0/chiptunes/npc-theme/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/holiznacc0/chiptunes/npc-theme/",
+        "scope": "track",
+        "access": "search_index"
+      },
+      "instrument_source": null,
+      "owner_action": "Open the exact publication, save dated license evidence and identify the original master before acquisition; then listen and review."
     },
     {
       "id": "h08",
       "artist": "HoliznaCC0",
       "title": "Red Skies",
-      "source": "https://freemusicarchive.org/music/holiznacc0/chiptunes/red-skies/",
-      "license": "CC0-1.0",
+      "source": "https://holiznacc0.bandcamp.com/track/red-skies",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index",
-      "additional_evidence": [],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Pop",
         "Electronic",
@@ -262,24 +457,56 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": ""
-      }
+      },
+      "original_source": "https://freemusicarchive.org/music/holiznacc0/chiptunes/red-skies/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Red Skies",
+      "creator_id": "holizna",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/holiznacc0/chiptunes/red-skies/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://holiznacc0.bandcamp.com/track/red-skies",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC0-1.0",
+            "CC-BY-4.0"
+          ],
+          "note": "Author profile dedicates the archive to CC0 and waives credit; the publication license link resolves to CC BY 4.0. Retain both statements; master not compared."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/holiznacc0/chiptunes/red-skies/",
+        "scope": "track",
+        "access": "search_index"
+      },
+      "instrument_source": null,
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "j01",
       "artist": "John Bartmann",
       "title": "Home At Last",
-      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/home-at-last",
-      "license": "CC0-1.0",
+      "source": "https://johnbartmann.bandcamp.com/track/home-at-last",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index+author_album",
-      "additional_evidence": [
-        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884"
-      ],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Soundtrack"
       ],
-      "instrument": [],
+      "instrument": [
+        "piano"
+      ],
       "features": null,
       "excerpt_start": null,
       "excerpt_seconds": null,
@@ -291,25 +518,73 @@
         "selected": false,
         "vocals": null,
         "tempo_alias_checked": false,
-        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
-      }
+        "notes": "Инструменты указаны автором, не проверены на слух. Сопоставить мастер Patreon с лицензией; не считать разные версии автоматически одной записью."
+      },
+      "original_source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/home-at-last",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Home-At-Last-Master.wav (Patreon attachment; not fetched)",
+      "creator_id": "john-bartmann",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/home-at-last",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index+author_album",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://www.patreon.com/johnbartmann/posts/public-domain-88180884",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_master_attachment",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author dedicates Album One to CC0 and lists this named master attachment. Only the text and filename were inspected."
+        },
+        {
+          "url": "https://johnbartmann.bandcamp.com/track/home-at-last",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Track license link resolves to CC BY 4.0; track/album text also identifies the public-domain release. Same-master applicability remains unresolved."
+        }
+      ],
+      "genre_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/home-at-last",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/home-at-last",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "j02",
       "artist": "John Bartmann",
       "title": "West in Africa",
-      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/west-in-africa",
-      "license": "CC0-1.0",
+      "source": "https://johnbartmann.bandcamp.com/track/west-in-africa",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index+author_album",
-      "additional_evidence": [
-        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884"
-      ],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Soundtrack"
       ],
-      "instrument": [],
+      "instrument": [
+        "acoustic guitar",
+        "skin drums",
+        "hand claps",
+        "woodblock"
+      ],
       "features": null,
       "excerpt_start": null,
       "excerpt_seconds": null,
@@ -321,22 +596,64 @@
         "selected": false,
         "vocals": null,
         "tempo_alias_checked": false,
-        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
-      }
+        "notes": "Инструменты указаны автором, не проверены на слух. Сопоставить мастер Patreon с лицензией; не считать разные версии автоматически одной записью."
+      },
+      "original_source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/west-in-africa",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "West-in-Africa-Master.wav (Patreon attachment; not fetched)",
+      "creator_id": "john-bartmann",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/west-in-africa",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index+author_album",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://www.patreon.com/johnbartmann/posts/public-domain-88180884",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_master_attachment",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author dedicates Album One to CC0 and lists this named master attachment. Only the text and filename were inspected."
+        },
+        {
+          "url": "https://johnbartmann.bandcamp.com/track/west-in-africa",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Track license link resolves to CC BY 4.0; track/album text also identifies the public-domain release. Same-master applicability remains unresolved."
+        }
+      ],
+      "genre_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/west-in-africa",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/west-in-africa",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "j03",
       "artist": "John Bartmann",
       "title": "Happy Clappy",
-      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/happy-clappy",
-      "license": "CC0-1.0",
+      "source": "https://johnbartmann.bandcamp.com/track/happy-clappy",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index+author_album",
-      "additional_evidence": [
-        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884",
-        "https://johnbartmann.bandcamp.com/track/happy-clappy"
-      ],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Soundtrack"
       ],
@@ -357,25 +674,81 @@
         "selected": false,
         "vocals": null,
         "tempo_alias_checked": false,
-        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
-      }
+        "notes": "Инструменты указаны автором, не проверены на слух. Сопоставить мастер Patreon с лицензией; не считать разные версии автоматически одной записью."
+      },
+      "original_source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/happy-clappy",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Happy-Clappy-Master.wav (Patreon attachment; not fetched)",
+      "creator_id": "john-bartmann",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/happy-clappy",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index+author_album",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://www.patreon.com/johnbartmann/posts/public-domain-88180884",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_master_attachment",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author dedicates Album One to CC0 and lists this named master attachment. Only the text and filename were inspected."
+        },
+        {
+          "url": "https://johnbartmann.bandcamp.com/track/happy-clappy",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Track license link resolves to CC BY 4.0; track/album text also identifies the public-domain release. Same-master applicability remains unresolved."
+        },
+        {
+          "url": "https://commons.wikimedia.org/wiki/File:John_Bartmann_-_09_-_Happy_Clappy.ogg",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "mirror_metadata",
+          "observed_licenses": [
+            "CC0-1.0",
+            "CC-BY-NC-ND-4.0"
+          ],
+          "note": "Commons description says CC0 while displayed embedded metadata says CC BY-NC-ND 4.0; no audio fetched. Do not silently use this mirror."
+        }
+      ],
+      "genre_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/happy-clappy",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/happy-clappy",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "j04",
       "artist": "John Bartmann",
       "title": "Tender Moment",
-      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/tender-moment",
-      "license": "CC0-1.0",
+      "source": "https://johnbartmann.bandcamp.com/track/tender-moment",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index+author_album",
-      "additional_evidence": [
-        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884"
-      ],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Soundtrack"
       ],
-      "instrument": [],
+      "instrument": [
+        "piano"
+      ],
       "features": null,
       "excerpt_start": null,
       "excerpt_seconds": null,
@@ -387,22 +760,64 @@
         "selected": false,
         "vocals": null,
         "tempo_alias_checked": false,
-        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
-      }
+        "notes": "Инструменты указаны автором, не проверены на слух. Сопоставить мастер Patreon с лицензией; не считать разные версии автоматически одной записью."
+      },
+      "original_source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/tender-moment",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Tender-Moment-Master.wav (Patreon attachment; not fetched)",
+      "creator_id": "john-bartmann",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/tender-moment",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index+author_album",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://www.patreon.com/johnbartmann/posts/public-domain-88180884",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_master_attachment",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author dedicates Album One to CC0 and lists this named master attachment. Only the text and filename were inspected."
+        },
+        {
+          "url": "https://johnbartmann.bandcamp.com/track/tender-moment",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Track license link resolves to CC BY 4.0; track/album text also identifies the public-domain release. Same-master applicability remains unresolved."
+        }
+      ],
+      "genre_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/tender-moment",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/tender-moment",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "j05",
       "artist": "John Bartmann",
       "title": "Robot Gypsy Jazz",
-      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/robot-gypsy-jazz",
-      "license": "CC0-1.0",
+      "source": "https://johnbartmann.bandcamp.com/track/robot-gypsy-jazz",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index+author_album",
-      "additional_evidence": [
-        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884",
-        "https://johnbartmann.bandcamp.com/track/robot-gypsy-jazz"
-      ],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Soundtrack"
       ],
@@ -423,25 +838,73 @@
         "selected": false,
         "vocals": null,
         "tempo_alias_checked": false,
-        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
-      }
+        "notes": "Инструменты указаны автором, не проверены на слух. Сопоставить мастер Patreon с лицензией; не считать разные версии автоматически одной записью."
+      },
+      "original_source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/robot-gypsy-jazz",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Robot-Gypsy-Jazz-Master.wav (Patreon attachment; not fetched)",
+      "creator_id": "john-bartmann",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/robot-gypsy-jazz",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index+author_album",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://www.patreon.com/johnbartmann/posts/public-domain-88180884",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_master_attachment",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author dedicates Album One to CC0 and lists this named master attachment. Only the text and filename were inspected."
+        },
+        {
+          "url": "https://johnbartmann.bandcamp.com/track/robot-gypsy-jazz",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Track license link resolves to CC BY 4.0; track/album text also identifies the public-domain release. Same-master applicability remains unresolved."
+        }
+      ],
+      "genre_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/robot-gypsy-jazz",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/robot-gypsy-jazz",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "j06",
       "artist": "John Bartmann",
       "title": "Happy African Village",
-      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/happy-african-village",
-      "license": "CC0-1.0",
+      "source": "https://johnbartmann.bandcamp.com/track/happy-african-village",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index+author_album",
-      "additional_evidence": [
-        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884"
-      ],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Soundtrack"
       ],
-      "instrument": [],
+      "instrument": [
+        "acoustic guitar",
+        "skin drums",
+        "shaker",
+        "hand claps"
+      ],
       "features": null,
       "excerpt_start": null,
       "excerpt_seconds": null,
@@ -453,25 +916,73 @@
         "selected": false,
         "vocals": null,
         "tempo_alias_checked": false,
-        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
-      }
+        "notes": "Инструменты указаны автором, не проверены на слух. Сопоставить мастер Patreon с лицензией; не считать разные версии автоматически одной записью."
+      },
+      "original_source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/happy-african-village",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Happy-African-Village-Master.wav (Patreon attachment; not fetched)",
+      "creator_id": "john-bartmann",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/happy-african-village",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index+author_album",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://www.patreon.com/johnbartmann/posts/public-domain-88180884",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_master_attachment",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author dedicates Album One to CC0 and lists this named master attachment. Only the text and filename were inspected."
+        },
+        {
+          "url": "https://johnbartmann.bandcamp.com/track/happy-african-village",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Track license link resolves to CC BY 4.0; track/album text also identifies the public-domain release. Same-master applicability remains unresolved."
+        }
+      ],
+      "genre_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/happy-african-village",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/happy-african-village",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "j07",
       "artist": "John Bartmann",
       "title": "Secret Agent Rock",
-      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/",
-      "license": "CC0-1.0",
+      "source": "https://johnbartmann.bandcamp.com/track/secret-agent-rock",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "author_album",
-      "additional_evidence": [
-        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884"
-      ],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Soundtrack"
       ],
-      "instrument": [],
+      "instrument": [
+        "drum kit",
+        "electric guitar",
+        "organ",
+        "percussion"
+      ],
       "features": null,
       "excerpt_start": null,
       "excerpt_seconds": null,
@@ -483,25 +994,84 @@
         "selected": false,
         "vocals": null,
         "tempo_alias_checked": false,
-        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
-      }
+        "notes": "Инструменты указаны автором, не проверены на слух. Сопоставить мастер Patreon с лицензией; не считать разные версии автоматически одной записью."
+      },
+      "original_source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Secret-Agent-Rock-Master.wav (Patreon attachment; not fetched)",
+      "creator_id": "john-bartmann",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "author_album",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://www.patreon.com/johnbartmann/posts/public-domain-88180884",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_master_attachment",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author dedicates Album One to CC0 and lists this named master attachment. Only the text and filename were inspected."
+        },
+        {
+          "url": "https://johnbartmann.bandcamp.com/track/secret-agent-rock",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Track license link resolves to CC BY 4.0; track/album text also identifies the public-domain release. Same-master applicability remains unresolved."
+        },
+        {
+          "url": "https://commons.wikimedia.org/wiki/File:John_Bartmann_-_17_-_Secret_Agent_Rock.ogg",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "mirror_metadata",
+          "observed_licenses": [
+            "CC0-1.0",
+            "CC-BY-NC-ND-4.0"
+          ],
+          "note": "Commons description says CC0 while displayed embedded metadata says CC BY-NC-ND 4.0; no audio fetched. Do not silently use this mirror."
+        }
+      ],
+      "genre_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/secret-agent-rock",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/secret-agent-rock",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "j08",
       "artist": "John Bartmann",
       "title": "Interstellar Space",
-      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/",
-      "license": "CC0-1.0",
+      "source": "https://johnbartmann.bandcamp.com/track/interstellar-space",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "author_album",
-      "additional_evidence": [
-        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884"
-      ],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Soundtrack"
       ],
-      "instrument": [],
+      "instrument": [
+        "violin",
+        "strings",
+        "horns",
+        "synth bass"
+      ],
       "features": null,
       "excerpt_start": null,
       "excerpt_seconds": null,
@@ -513,26 +1083,71 @@
         "selected": false,
         "vocals": null,
         "tempo_alias_checked": false,
-        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
-      }
+        "notes": "Инструменты указаны автором, не проверены на слух. Сопоставить мастер Patreon с лицензией; не считать разные версии автоматически одной записью."
+      },
+      "original_source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Interstellar-Space-Master.wav (Patreon attachment; not fetched)",
+      "creator_id": "john-bartmann",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "author_album",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://www.patreon.com/johnbartmann/posts/public-domain-88180884",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_master_attachment",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author dedicates Album One to CC0 and lists this named master attachment. Only the text and filename were inspected."
+        },
+        {
+          "url": "https://johnbartmann.bandcamp.com/track/interstellar-space",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Track license link resolves to CC BY 4.0; track/album text also identifies the public-domain release. Same-master applicability remains unresolved."
+        }
+      ],
+      "genre_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/interstellar-space",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument_source": {
+        "url": "https://johnbartmann.bandcamp.com/track/interstellar-space",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "m01",
       "artist": "Monplaisir",
       "title": "Free To Use 1",
-      "source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/Monplaisir_-_Free_To_Use_-_01_Free_To_Use_1",
-      "license": "CC0-1.0",
+      "source": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index",
-      "additional_evidence": [
-        "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/"
-      ],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Folk",
         "Soundtrack"
       ],
-      "instrument": [],
+      "instrument": [
+        "guitar"
+      ],
       "features": null,
       "excerpt_start": null,
       "excerpt_seconds": null,
@@ -545,25 +1160,60 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": "Monplaisir и Komiku/Loyalty Freak/Alpha Hydrae — псевдонимы Rrrrrose; не считать разными авторами."
-      }
+      },
+      "original_source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/Monplaisir_-_Free_To_Use_-_01_Free_To_Use_1",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Free To Use 1",
+      "creator_id": "rrrrrose",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/Monplaisir_-_Free_To_Use_-_01_Free_To_Use_1",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Author album lists this title, but its license link is CC BY 4.0, unlike the earlier FMA CC0 label. Public-domain tags do not settle which master is covered."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/Monplaisir_-_Free_To_Use_-_01_Free_To_Use_1",
+        "scope": "track",
+        "access": "search_index"
+      },
+      "instrument_source": {
+        "url": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
+        "scope": "album_hint",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "m02",
       "artist": "Monplaisir",
       "title": "Free To Use 2",
-      "source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
-      "license": "CC0-1.0",
+      "source": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "album_index_pending_track",
-      "additional_evidence": [
-        "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/"
-      ],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Folk",
         "Soundtrack"
       ],
-      "instrument": [],
+      "instrument": [
+        "guitar"
+      ],
       "features": null,
       "excerpt_start": null,
       "excerpt_seconds": null,
@@ -576,25 +1226,60 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": "Monplaisir и Komiku/Loyalty Freak/Alpha Hydrae — псевдонимы Rrrrrose; не считать разными авторами."
-      }
+      },
+      "original_source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Free To Use 2",
+      "creator_id": "rrrrrose",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "album_index_pending_track",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Author album lists this title, but its license link is CC BY 4.0, unlike the earlier FMA CC0 label. Public-domain tags do not settle which master is covered."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+        "scope": "album",
+        "access": "search_index"
+      },
+      "instrument_source": {
+        "url": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
+        "scope": "album_hint",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "m03",
       "artist": "Monplaisir",
       "title": "Free To Use 3",
-      "source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
-      "license": "CC0-1.0",
+      "source": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "album_index_pending_track",
-      "additional_evidence": [
-        "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/"
-      ],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Folk",
         "Soundtrack"
       ],
-      "instrument": [],
+      "instrument": [
+        "guitar"
+      ],
       "features": null,
       "excerpt_start": null,
       "excerpt_seconds": null,
@@ -607,25 +1292,68 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": "Monplaisir и Komiku/Loyalty Freak/Alpha Hydrae — псевдонимы Rrrrrose; не считать разными авторами."
-      }
+      },
+      "original_source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Free To Use 3",
+      "creator_id": "rrrrrose",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "album_index_pending_track",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Author album lists this title, but its license link is CC BY 4.0, unlike the earlier FMA CC0 label. Public-domain tags do not settle which master is covered."
+        },
+        {
+          "url": "https://rrrrroseazerty.neocities.org/posts/a-content-id-story",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track_provenance",
+          "observed_licenses": [],
+          "note": "Artist identifies Free To Use 3 as a guitar improvisation and describes unauthorized Content ID claims; this is provenance, not a new license grant."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+        "scope": "album",
+        "access": "search_index"
+      },
+      "instrument_source": {
+        "url": "https://rrrrroseazerty.neocities.org/posts/a-content-id-story",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "m04",
       "artist": "Monplaisir",
       "title": "Free To Use 4",
-      "source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
-      "license": "CC0-1.0",
+      "source": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "album_index_pending_track",
-      "additional_evidence": [
-        "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/"
-      ],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Folk",
         "Soundtrack"
       ],
-      "instrument": [],
+      "instrument": [
+        "guitar"
+      ],
       "features": null,
       "excerpt_start": null,
       "excerpt_seconds": null,
@@ -638,25 +1366,60 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": "Monplaisir и Komiku/Loyalty Freak/Alpha Hydrae — псевдонимы Rrrrrose; не считать разными авторами."
-      }
+      },
+      "original_source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Free To Use 4",
+      "creator_id": "rrrrrose",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "album_index_pending_track",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Author album lists this title, but its license link is CC BY 4.0, unlike the earlier FMA CC0 label. Public-domain tags do not settle which master is covered."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+        "scope": "album",
+        "access": "search_index"
+      },
+      "instrument_source": {
+        "url": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
+        "scope": "album_hint",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "m05",
       "artist": "Monplaisir",
       "title": "Free To Use 5",
-      "source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
-      "license": "CC0-1.0",
+      "source": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "album_index_pending_track",
-      "additional_evidence": [
-        "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/"
-      ],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Folk",
         "Soundtrack"
       ],
-      "instrument": [],
+      "instrument": [
+        "guitar"
+      ],
       "features": null,
       "excerpt_start": null,
       "excerpt_seconds": null,
@@ -669,25 +1432,60 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": "Monplaisir и Komiku/Loyalty Freak/Alpha Hydrae — псевдонимы Rrrrrose; не считать разными авторами."
-      }
+      },
+      "original_source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Free To Use 5",
+      "creator_id": "rrrrrose",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "album_index_pending_track",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Author album lists this title, but its license link is CC BY 4.0, unlike the earlier FMA CC0 label. Public-domain tags do not settle which master is covered."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+        "scope": "album",
+        "access": "search_index"
+      },
+      "instrument_source": {
+        "url": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
+        "scope": "album_hint",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "m06",
       "artist": "Monplaisir",
       "title": "Free To Use 6",
-      "source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
-      "license": "CC0-1.0",
+      "source": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "album_index_pending_track",
-      "additional_evidence": [
-        "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/"
-      ],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Folk",
         "Soundtrack"
       ],
-      "instrument": [],
+      "instrument": [
+        "guitar"
+      ],
       "features": null,
       "excerpt_start": null,
       "excerpt_seconds": null,
@@ -700,25 +1498,60 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": "Monplaisir и Komiku/Loyalty Freak/Alpha Hydrae — псевдонимы Rrrrrose; не считать разными авторами."
-      }
+      },
+      "original_source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Free To Use 6",
+      "creator_id": "rrrrrose",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "album_index_pending_track",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Author album lists this title, but its license link is CC BY 4.0, unlike the earlier FMA CC0 label. Public-domain tags do not settle which master is covered."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+        "scope": "album",
+        "access": "search_index"
+      },
+      "instrument_source": {
+        "url": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
+        "scope": "album_hint",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "m12",
       "artist": "Monplaisir",
       "title": "Free To Use 12",
-      "source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
-      "license": "CC0-1.0",
+      "source": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "album_index_pending_track",
-      "additional_evidence": [
-        "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/"
-      ],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Folk",
         "Soundtrack"
       ],
-      "instrument": [],
+      "instrument": [
+        "guitar"
+      ],
       "features": null,
       "excerpt_start": null,
       "excerpt_seconds": null,
@@ -731,24 +1564,61 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": "Monplaisir и Komiku/Loyalty Freak/Alpha Hydrae — псевдонимы Rrrrrose; не считать разными авторами."
-      }
+      },
+      "original_source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Free To Use 12",
+      "creator_id": "rrrrrose",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "album_index_pending_track",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Author album lists this title, but its license link is CC BY 4.0, unlike the earlier FMA CC0 label. Public-domain tags do not settle which master is covered."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+        "scope": "album",
+        "access": "search_index"
+      },
+      "instrument_source": {
+        "url": "https://chezmonplaisir.bandcamp.com/album/free-to-use",
+        "scope": "album_hint",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
     },
     {
       "id": "m14",
       "artist": "Monplaisir",
       "title": "Débordement",
-      "source": "https://freemusicarchive.org/music/Monplaisir/Le_chant_des_Stompbox/Monplaisir_-_Le_chant_des_Stompbox_-_02_Dbordement/",
-      "license": "CC0-1.0",
+      "source": "https://chezmonplaisir.bandcamp.com/album/le-chant-des-stompbox",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "checked_on": "2026-10-09",
-      "evidence_level": "track_index",
-      "additional_evidence": [],
+      "evidence_level": "conflicting_statements",
       "genre": [
         "Rock",
         "Noise",
         "Experimental"
       ],
-      "instrument": [],
+      "instrument": [
+        "guitar"
+      ],
       "features": null,
       "excerpt_start": null,
       "excerpt_seconds": null,
@@ -761,7 +1631,1240 @@
         "vocals": null,
         "tempo_alias_checked": false,
         "notes": "Источник помечает запись как неинструментальную; проверить вокал/текст и резкие фрагменты."
+      },
+      "original_source": "https://freemusicarchive.org/music/Monplaisir/Le_chant_des_Stompbox/Monplaisir_-_Le_chant_des_Stompbox_-_02_Dbordement/",
+      "declared_license": "CC0-1.0",
+      "confirmed_recording_license": null,
+      "recording_locator": "Débordement",
+      "creator_id": "rrrrrose",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "license_evidence": [
+        {
+          "url": "https://freemusicarchive.org/music/Monplaisir/Le_chant_des_Stompbox/Monplaisir_-_Le_chant_des_Stompbox_-_02_Dbordement/",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track_index",
+          "observed_licenses": [],
+          "note": "Direct retrieval failed (FMA 403 or fetch error). CC0-1.0 was reported by the earlier FMA index inventory; this is not a newly readable license receipt."
+        },
+        {
+          "url": "https://chezmonplaisir.bandcamp.com/album/le-chant-des-stompbox",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Author album lists this title, but its license link is CC BY 4.0, unlike the earlier FMA CC0 label. Public-domain tags do not settle which master is covered."
+        }
+      ],
+      "genre_source": {
+        "url": "https://freemusicarchive.org/music/Monplaisir/Le_chant_des_Stompbox/Monplaisir_-_Le_chant_des_Stompbox_-_02_Dbordement/",
+        "scope": "track",
+        "access": "search_index"
+      },
+      "instrument_source": {
+        "url": "https://chezmonplaisir.bandcamp.com/album/le-chant-des-stompbox",
+        "scope": "album_hint",
+        "access": "page_read"
+      },
+      "owner_action": "Resolve the differing license statements for the chosen master; archive the applicable grant (or obtain clarification), then review excerpts. No silent CC0 assumption."
+    },
+    {
+      "id": "t01",
+      "artist": "TRG Banks",
+      "creator_id": "trg-banks",
+      "title": "Garden party",
+      "source": "https://trgbanks.bandcamp.com/album/the-rainbows-end",
+      "recording_locator": "The Rainbow's End, track 5: Garden party",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFIRMED_NAMED_ALBUM",
+      "evidence_level": "confirmed_named_album",
+      "license_evidence": [
+        {
+          "url": "https://trgbanks.bandcamp.com/album/the-rainbows-end",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Album lists this exact title. Artist explicitly states all tracks are CC0 1.0 and explains that Bandcamp's 'all rights reserved' field is inapplicable; credits are optional. Cover image has a separate CC BY-SA 2.0 license and is excluded."
+        },
+        {
+          "url": "https://trgbanks.bandcamp.com/track/Garden-party",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track",
+          "observed_licenses": [],
+          "note": "Track URL failed in this tool; use the readable album listing/player."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      },
+      "owner_action": "Save dated publication/license evidence and match the named original file before acquisition; review samples/third-party rights and listen. Public release remains unapproved.",
+      "genre": [
+        "ambient",
+        "progressive",
+        "psychedelic",
+        "soundtrack"
+      ],
+      "genre_source": {
+        "url": "https://trgbanks.bandcamp.com/album/the-rainbows-end",
+        "scope": "album_hint",
+        "access": "page_read"
+      },
+      "instrument": [],
+      "instrument_source": null
+    },
+    {
+      "id": "t02",
+      "artist": "TRG Banks",
+      "creator_id": "trg-banks",
+      "title": "Evening journey",
+      "source": "https://trgbanks.bandcamp.com/album/the-rainbows-end",
+      "recording_locator": "The Rainbow's End, track 2: Evening journey",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFIRMED_NAMED_ALBUM",
+      "evidence_level": "confirmed_named_album",
+      "license_evidence": [
+        {
+          "url": "https://trgbanks.bandcamp.com/album/the-rainbows-end",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Album lists this exact title. Artist explicitly states all tracks are CC0 1.0 and explains that Bandcamp's 'all rights reserved' field is inapplicable; credits are optional. Cover image has a separate CC BY-SA 2.0 license and is excluded."
+        },
+        {
+          "url": "https://trgbanks.bandcamp.com/track/Evening-journey",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track",
+          "observed_licenses": [],
+          "note": "Track URL failed in this tool; use the readable album listing/player."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      },
+      "owner_action": "Save dated publication/license evidence and match the named original file before acquisition; review samples/third-party rights and listen. Public release remains unapproved.",
+      "genre": [
+        "ambient",
+        "progressive",
+        "psychedelic",
+        "soundtrack"
+      ],
+      "genre_source": {
+        "url": "https://trgbanks.bandcamp.com/album/the-rainbows-end",
+        "scope": "album_hint",
+        "access": "page_read"
+      },
+      "instrument": [],
+      "instrument_source": null
+    },
+    {
+      "id": "t03",
+      "artist": "TRG Banks",
+      "creator_id": "trg-banks",
+      "title": "Walking on water",
+      "source": "https://trgbanks.bandcamp.com/album/the-rainbows-end",
+      "recording_locator": "The Rainbow's End, track 3: Walking on water",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFIRMED_NAMED_ALBUM",
+      "evidence_level": "confirmed_named_album",
+      "license_evidence": [
+        {
+          "url": "https://trgbanks.bandcamp.com/album/the-rainbows-end",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Album lists this exact title. Artist explicitly states all tracks are CC0 1.0 and explains that Bandcamp's 'all rights reserved' field is inapplicable; credits are optional. Cover image has a separate CC BY-SA 2.0 license and is excluded."
+        },
+        {
+          "url": "https://trgbanks.bandcamp.com/track/Walking-on-water",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track",
+          "observed_licenses": [],
+          "note": "Track URL failed in this tool; use the readable album listing/player."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      },
+      "owner_action": "Save dated publication/license evidence and match the named original file before acquisition; review samples/third-party rights and listen. Public release remains unapproved.",
+      "genre": [
+        "ambient",
+        "progressive",
+        "psychedelic",
+        "soundtrack"
+      ],
+      "genre_source": {
+        "url": "https://trgbanks.bandcamp.com/album/the-rainbows-end",
+        "scope": "album_hint",
+        "access": "page_read"
+      },
+      "instrument": [],
+      "instrument_source": null
+    },
+    {
+      "id": "t04",
+      "artist": "TRG Banks",
+      "creator_id": "trg-banks",
+      "title": "Back on the road",
+      "source": "https://trgbanks.bandcamp.com/album/the-rainbows-end",
+      "recording_locator": "The Rainbow's End, track 9: Back on the road",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFIRMED_NAMED_ALBUM",
+      "evidence_level": "confirmed_named_album",
+      "license_evidence": [
+        {
+          "url": "https://trgbanks.bandcamp.com/album/the-rainbows-end",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Album lists this exact title. Artist explicitly states all tracks are CC0 1.0 and explains that Bandcamp's 'all rights reserved' field is inapplicable; credits are optional. Cover image has a separate CC BY-SA 2.0 license and is excluded."
+        },
+        {
+          "url": "https://trgbanks.bandcamp.com/track/Back-on-the-road",
+          "checked_on": "2026-10-09",
+          "access": "unavailable",
+          "scope": "track",
+          "observed_licenses": [],
+          "note": "Track URL failed in this tool; use the readable album listing/player."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      },
+      "owner_action": "Save dated publication/license evidence and match the named original file before acquisition; review samples/third-party rights and listen. Public release remains unapproved.",
+      "genre": [
+        "ambient",
+        "progressive",
+        "psychedelic",
+        "soundtrack"
+      ],
+      "genre_source": {
+        "url": "https://trgbanks.bandcamp.com/album/the-rainbows-end",
+        "scope": "album_hint",
+        "access": "page_read"
+      },
+      "instrument": [],
+      "instrument_source": null
+    },
+    {
+      "id": "s01",
+      "artist": "Spring Spring / Julie Damsgaard",
+      "creator_id": "spring-spring",
+      "title": "Jazz",
+      "source": "https://opengameart.org/content/jazz-1",
+      "recording_locator": "jazz.ogg",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFIRMED_RECORD_PAGE",
+      "evidence_level": "confirmed_record_page",
+      "license_evidence": [
+        {
+          "url": "https://opengameart.org/content/jazz-1",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author publication names the recording and links CC0 1.0. File bytes and third-party rights are not verified."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      },
+      "owner_action": "Save dated publication/license evidence and match the named original file before acquisition; review samples/third-party rights and listen. Public release remains unapproved.",
+      "genre": [
+        "Jazz",
+        "swing"
+      ],
+      "genre_source": {
+        "url": "https://opengameart.org/content/jazz-1",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument": [
+        "piano",
+        "Bass"
+      ],
+      "instrument_source": {
+        "url": "https://opengameart.org/content/jazz-1",
+        "scope": "track",
+        "access": "page_read"
+      }
+    },
+    {
+      "id": "s02",
+      "artist": "Spring Spring / Julie Damsgaard",
+      "creator_id": "spring-spring",
+      "title": "(Basically not) Fusion Jazz",
+      "source": "https://opengameart.org/content/basically-not-fusion-jazz",
+      "recording_locator": "fusion jazz.ogg",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFIRMED_RECORD_PAGE",
+      "evidence_level": "confirmed_record_page",
+      "license_evidence": [
+        {
+          "url": "https://opengameart.org/content/basically-not-fusion-jazz",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author publication names the recording and links CC0 1.0. File bytes and third-party rights are not verified."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      },
+      "owner_action": "Save dated publication/license evidence and match the named original file before acquisition; review samples/third-party rights and listen. Public release remains unapproved.",
+      "genre": [
+        "fusion",
+        "Jazz",
+        "swing"
+      ],
+      "genre_source": {
+        "url": "https://opengameart.org/content/basically-not-fusion-jazz",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument": [
+        "Electric Piano",
+        "piano",
+        "synth",
+        "Bass"
+      ],
+      "instrument_source": {
+        "url": "https://opengameart.org/content/basically-not-fusion-jazz",
+        "scope": "track",
+        "access": "page_read"
+      }
+    },
+    {
+      "id": "s03",
+      "artist": "Spring Spring / Julie Damsgaard",
+      "creator_id": "spring-spring",
+      "title": "Courtroom",
+      "source": "https://opengameart.org/content/courtroom-and-judgement",
+      "recording_locator": "courtroom.ogg",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFIRMED_RECORD_PAGE",
+      "evidence_level": "confirmed_record_page",
+      "license_evidence": [
+        {
+          "url": "https://opengameart.org/content/courtroom-and-judgement",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_collection",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author publication names the recording and links CC0 1.0. File bytes and third-party rights are not verified."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Теги общие для Courtroom и Judgement; не считать все инструменты подтверждёнными для courtroom.ogg."
+      },
+      "owner_action": "Save dated publication/license evidence and match the named original file before acquisition; review samples/third-party rights and listen. Public release remains unapproved.",
+      "genre": [
+        "orchestral"
+      ],
+      "genre_source": {
+        "url": "https://opengameart.org/content/courtroom-and-judgement",
+        "scope": "collection_hint",
+        "access": "page_read"
+      },
+      "instrument": [
+        "piano",
+        "timpani",
+        "synth",
+        "brass",
+        "snares",
+        "strings"
+      ],
+      "instrument_source": {
+        "url": "https://opengameart.org/content/courtroom-and-judgement",
+        "scope": "collection_hint",
+        "access": "page_read"
+      }
+    },
+    {
+      "id": "s04",
+      "artist": "Spring Spring / Julie Damsgaard",
+      "creator_id": "spring-spring",
+      "title": "Kingdom of a Million Elephants under a White Parasol",
+      "source": "https://opengameart.org/content/kingdom-of-a-million-elephants-under-a-white-parasol",
+      "recording_locator": "kingdom of a million elephants under a white parasol.ogg",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFIRMED_RECORD_PAGE",
+      "evidence_level": "confirmed_record_page",
+      "license_evidence": [
+        {
+          "url": "https://opengameart.org/content/kingdom-of-a-million-elephants-under-a-white-parasol",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author publication names the recording and links CC0 1.0. File bytes and third-party rights are not verified."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "У источника есть тематические теги asian/faux asian; не превращать их в установленный жанр или этническую аутентичность."
+      },
+      "owner_action": "Save dated publication/license evidence and match the named original file before acquisition; review samples/third-party rights and listen. Public release remains unapproved.",
+      "genre": [],
+      "genre_source": null,
+      "instrument": [
+        "flute",
+        "strings",
+        "violin",
+        "xylophone",
+        "marimba",
+        "brass"
+      ],
+      "instrument_source": {
+        "url": "https://opengameart.org/content/kingdom-of-a-million-elephants-under-a-white-parasol",
+        "scope": "track",
+        "access": "page_read"
+      }
+    },
+    {
+      "id": "o01",
+      "artist": "Joth",
+      "creator_id": "joth",
+      "title": "Funked Up",
+      "source": "https://opengameart.org/content/funked-up",
+      "recording_locator": "Funked Up.mp3",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFIRMED_RECORD_PAGE",
+      "evidence_level": "confirmed_record_page",
+      "license_evidence": [
+        {
+          "url": "https://opengameart.org/content/funked-up",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author publication names the recording and links CC0 1.0. File bytes and third-party rights are not verified."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      },
+      "owner_action": "Save dated publication/license evidence and match the named original file before acquisition; review samples/third-party rights and listen. Public release remains unapproved.",
+      "genre": [
+        "funk",
+        "Rock"
+      ],
+      "genre_source": {
+        "url": "https://opengameart.org/content/funked-up",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument": [
+        "Guitar",
+        "Bass",
+        "Rhodes",
+        "keyboard",
+        "drumset"
+      ],
+      "instrument_source": {
+        "url": "https://opengameart.org/content/funked-up",
+        "scope": "track",
+        "access": "page_read"
+      }
+    },
+    {
+      "id": "o02",
+      "artist": "Joth",
+      "creator_id": "joth",
+      "title": "Bossa Nova",
+      "source": "https://opengameart.org/content/bossa-nova",
+      "recording_locator": "8bit Bossa.mp3",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFIRMED_RECORD_PAGE",
+      "evidence_level": "confirmed_record_page",
+      "license_evidence": [
+        {
+          "url": "https://opengameart.org/content/bossa-nova",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author publication names the recording and links CC0 1.0. File bytes and third-party rights are not verified."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Источник указывает 129bpm, но это не измерение нашего отрывка; features и bpm_manual остаются пустыми."
+      },
+      "owner_action": "Save dated publication/license evidence and match the named original file before acquisition; review samples/third-party rights and listen. Public release remains unapproved.",
+      "genre": [
+        "Jazz",
+        "bossa nova"
+      ],
+      "genre_source": {
+        "url": "https://opengameart.org/content/bossa-nova",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument": [],
+      "instrument_source": null
+    },
+    {
+      "id": "o03",
+      "artist": "Joth",
+      "creator_id": "joth",
+      "title": "8Bit Title Screen",
+      "source": "https://opengameart.org/content/8bit-title-screen",
+      "recording_locator": "8Bit Title Screen.mp3",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFIRMED_RECORD_PAGE",
+      "evidence_level": "confirmed_record_page",
+      "license_evidence": [
+        {
+          "url": "https://opengameart.org/content/8bit-title-screen",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author publication names the recording and links CC0 1.0. File bytes and third-party rights are not verified."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Короткий loop; достаточность 15 секунд проверить по файлу. 8-bit не доказывает конкретный инструмент."
+      },
+      "owner_action": "Save dated publication/license evidence and match the named original file before acquisition; review samples/third-party rights and listen. Public release remains unapproved.",
+      "genre": [
+        "8-bit",
+        "retro"
+      ],
+      "genre_source": {
+        "url": "https://opengameart.org/content/8bit-title-screen",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument": [],
+      "instrument_source": null
+    },
+    {
+      "id": "o04",
+      "artist": "Joth",
+      "creator_id": "joth",
+      "title": "Fantasy Orchestral Theme",
+      "source": "https://opengameart.org/content/fantasy-orchestral-theme",
+      "recording_locator": "FantasyOrchestralTheme.mp3",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFIRMED_RECORD_PAGE",
+      "evidence_level": "confirmed_record_page",
+      "license_evidence": [
+        {
+          "url": "https://opengameart.org/content/fantasy-orchestral-theme",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author publication names the recording and links CC0 1.0. File bytes and third-party rights are not verified."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      },
+      "owner_action": "Save dated publication/license evidence and match the named original file before acquisition; review samples/third-party rights and listen. Public release remains unapproved.",
+      "genre": [
+        "orchestral"
+      ],
+      "genre_source": {
+        "url": "https://opengameart.org/content/fantasy-orchestral-theme",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument": [
+        "strings"
+      ],
+      "instrument_source": {
+        "url": "https://opengameart.org/content/fantasy-orchestral-theme",
+        "scope": "track",
+        "access": "page_read"
+      }
+    },
+    {
+      "id": "u01",
+      "artist": "Juhani Junkala / SubspaceAudio",
+      "creator_id": "juhani-junkala",
+      "title": "Epic Boss Battle",
+      "source": "https://opengameart.org/content/boss-battle-music",
+      "recording_locator": "Juhani Junkala - Epic Boss Battle [Seamlessly Looping].wav",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFIRMED_RECORD_PAGE",
+      "evidence_level": "confirmed_record_page",
+      "license_evidence": [
+        {
+          "url": "https://opengameart.org/content/boss-battle-music",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author publication names the recording and links CC0 1.0. File bytes and third-party rights are not verified."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      },
+      "owner_action": "Save dated publication/license evidence and match the named original file before acquisition; review samples/third-party rights and listen. Public release remains unapproved.",
+      "genre": [
+        "orchestral"
+      ],
+      "genre_source": {
+        "url": "https://opengameart.org/content/boss-battle-music",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument": [],
+      "instrument_source": null
+    },
+    {
+      "id": "u02",
+      "artist": "Juhani Junkala / SubspaceAudio",
+      "creator_id": "juhani-junkala",
+      "title": "JRPG Theme",
+      "source": "https://opengameart.org/content/jrpg-trailer-theme",
+      "recording_locator": "Juhani Junkala - JRPG Theme [Loop Ready].wav",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFIRMED_RECORD_PAGE",
+      "evidence_level": "confirmed_record_page",
+      "license_evidence": [
+        {
+          "url": "https://opengameart.org/content/jrpg-trailer-theme",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Author publication names the recording and links CC0 1.0. File bytes and third-party rights are not verified."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      },
+      "owner_action": "Save dated publication/license evidence and match the named original file before acquisition; review samples/third-party rights and listen. Public release remains unapproved.",
+      "genre": [
+        "JRPG"
+      ],
+      "genre_source": {
+        "url": "https://opengameart.org/content/jrpg-trailer-theme",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument": [],
+      "instrument_source": null
+    },
+    {
+      "id": "i01",
+      "artist": "Kimiko Ishizaka (J. S. Bach)",
+      "creator_id": "kimiko-ishizaka",
+      "title": "Aria",
+      "source": "https://kimikoishizaka.bandcamp.com/track/aria",
+      "recording_locator": "2012 Open Goldberg Variations: Aria",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "evidence_level": "conflicting_statements",
+      "license_evidence": [
+        {
+          "url": "https://kimikoishizaka.bandcamp.com/track/aria",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [],
+          "note": "Track belongs to the named 2012 Open Goldberg release. Album text dedicates all tracks to CC0; Bandcamp album license link is CC BY 4.0. Preserve both, match the exact master."
+        },
+        {
+          "url": "https://kimikoishizaka.bandcamp.com/album/j-s-bach-open-goldberg-variations-bwv-988-piano",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC0-1.0",
+            "CC-BY-4.0"
+          ],
+          "note": "All-tracks CC0 dedication and differing CC BY 4.0 license link both observed."
+        },
+        {
+          "url": "https://opengoldbergvariations.org/",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "project",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Official project identifies the same album and allows all uses of the public-domain recording; CC0 naming also in project source config."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Две альтернативы из одного произведения; для первых 8 троек выбрать не более одной, чтобы не повторять общий тематический материал."
+      },
+      "owner_action": "Archive project dedication and resolve differing Bandcamp display for this master; do not transfer permission to other Bach recordings.",
+      "genre": [
+        "classical",
+        "baroque"
+      ],
+      "genre_source": {
+        "url": "https://kimikoishizaka.bandcamp.com/track/aria",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument": [
+        "piano"
+      ],
+      "instrument_source": {
+        "url": "https://kimikoishizaka.bandcamp.com/track/aria",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "work_group": "bach-bwv988-open-goldberg-2012"
+    },
+    {
+      "id": "i02",
+      "artist": "Kimiko Ishizaka (J. S. Bach)",
+      "creator_id": "kimiko-ishizaka",
+      "title": "Variatio 5 a 1 ovvero 2 Clav.",
+      "source": "https://kimikoishizaka.bandcamp.com/track/variatio-5-a-1-ovvero-2-clav",
+      "recording_locator": "2012 Open Goldberg Variations: Variatio 5 a 1 ovvero 2 Clav.",
+      "declared_license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "CONFLICTING_STATEMENTS",
+      "evidence_level": "conflicting_statements",
+      "license_evidence": [
+        {
+          "url": "https://kimikoishizaka.bandcamp.com/track/variatio-5-a-1-ovvero-2-clav",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "track",
+          "observed_licenses": [],
+          "note": "Track belongs to the named 2012 Open Goldberg release. Album text dedicates all tracks to CC0; Bandcamp album license link is CC BY 4.0. Preserve both, match the exact master."
+        },
+        {
+          "url": "https://kimikoishizaka.bandcamp.com/album/j-s-bach-open-goldberg-variations-bwv-988-piano",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "named_album",
+          "observed_licenses": [
+            "CC0-1.0",
+            "CC-BY-4.0"
+          ],
+          "note": "All-tracks CC0 dedication and differing CC BY 4.0 license link both observed."
+        },
+        {
+          "url": "https://opengoldbergvariations.org/",
+          "checked_on": "2026-10-09",
+          "access": "page_read",
+          "scope": "project",
+          "observed_licenses": [
+            "CC0-1.0"
+          ],
+          "note": "Official project identifies the same album and allows all uses of the public-domain recording; CC0 naming also in project source config."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Две альтернативы из одного произведения; для первых 8 троек выбрать не более одной, чтобы не повторять общий тематический материал."
+      },
+      "owner_action": "Archive project dedication and resolve differing Bandcamp display for this master; do not transfer permission to other Bach recordings.",
+      "genre": [
+        "classical",
+        "baroque"
+      ],
+      "genre_source": {
+        "url": "https://kimikoishizaka.bandcamp.com/track/variatio-5-a-1-ovvero-2-clav",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "instrument": [
+        "piano"
+      ],
+      "instrument_source": {
+        "url": "https://kimikoishizaka.bandcamp.com/track/variatio-5-a-1-ovvero-2-clav",
+        "scope": "track",
+        "access": "page_read"
+      },
+      "work_group": "bach-bwv988-open-goldberg-2012"
+    },
+    {
+      "id": "k01",
+      "artist": "Kevin MacLeod",
+      "creator_id": "kevin-macleod",
+      "title": "Funkorama",
+      "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100474",
+      "recording_locator": "USUAN1100474",
+      "declared_license": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "DECLARED_INDEX",
+      "evidence_level": "declared_index",
+      "license_evidence": [
+        {
+          "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100474",
+          "checked_on": "2026-10-09",
+          "access": "search_index",
+          "scope": "track",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Exact ISRC page in the search index states CC BY 4.0 and these tags. Direct canonical pages timed out or returned only an unpopulated player; save a readable exact-record license before admission."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Числа BPM у автора не перенесены в features или bpm_manual: отрывок не измерен. CC BY требует атрибуции; время её показа пока не согласовано."
+      },
+      "owner_action": "Verify exact ISRC/master and CC BY version; document a compliant attribution/changes notice and agreement for blind playback with credits after completion or withdrawal.",
+      "genre": [
+        "Funk"
+      ],
+      "genre_source": {
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100474",
+        "scope": "track",
+        "access": "search_index"
+      },
+      "instrument": [
+        "Guitar",
+        "Bass",
+        "Drum Kit",
+        "Organ",
+        "Synth"
+      ],
+      "instrument_source": {
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100474",
+        "scope": "track",
+        "access": "search_index"
+      }
+    },
+    {
+      "id": "k02",
+      "artist": "Kevin MacLeod",
+      "creator_id": "kevin-macleod",
+      "title": "Cold Funk",
+      "source": "https://www.incompetech.com/music/royalty-free/index.html?isrc=USUAN1100499",
+      "recording_locator": "USUAN1100499",
+      "declared_license": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "DECLARED_INDEX",
+      "evidence_level": "declared_index",
+      "license_evidence": [
+        {
+          "url": "https://www.incompetech.com/music/royalty-free/index.html?isrc=USUAN1100499",
+          "checked_on": "2026-10-09",
+          "access": "search_index",
+          "scope": "track",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Exact ISRC page in the search index states CC BY 4.0 and these tags. Direct canonical pages timed out or returned only an unpopulated player; save a readable exact-record license before admission."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Числа BPM у автора не перенесены в features или bpm_manual: отрывок не измерен. CC BY требует атрибуции; время её показа пока не согласовано."
+      },
+      "owner_action": "Verify exact ISRC/master and CC BY version; document a compliant attribution/changes notice and agreement for blind playback with credits after completion or withdrawal.",
+      "genre": [
+        "Rock"
+      ],
+      "genre_source": {
+        "url": "https://www.incompetech.com/music/royalty-free/index.html?isrc=USUAN1100499",
+        "scope": "track",
+        "access": "search_index"
+      },
+      "instrument": [
+        "Guitar",
+        "Bass",
+        "Kit",
+        "EP",
+        "Bells"
+      ],
+      "instrument_source": {
+        "url": "https://www.incompetech.com/music/royalty-free/index.html?isrc=USUAN1100499",
+        "scope": "track",
+        "access": "search_index"
+      }
+    },
+    {
+      "id": "k03",
+      "artist": "Kevin MacLeod",
+      "creator_id": "kevin-macleod",
+      "title": "Carefree",
+      "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400037&lt=",
+      "recording_locator": "USUAN1400037",
+      "declared_license": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "DECLARED_INDEX",
+      "evidence_level": "declared_index",
+      "license_evidence": [
+        {
+          "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400037&lt=",
+          "checked_on": "2026-10-09",
+          "access": "search_index",
+          "scope": "track",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Exact ISRC page in the search index states CC BY 4.0 and these tags. Direct canonical pages timed out or returned only an unpopulated player; save a readable exact-record license before admission."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Числа BPM у автора не перенесены в features или bpm_manual: отрывок не измерен. CC BY требует атрибуции; время её показа пока не согласовано."
+      },
+      "owner_action": "Verify exact ISRC/master and CC BY version; document a compliant attribution/changes notice and agreement for blind playback with credits after completion or withdrawal.",
+      "genre": [
+        "Contemporary"
+      ],
+      "genre_source": {
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400037&lt=",
+        "scope": "track",
+        "access": "search_index"
+      },
+      "instrument": [
+        "Ukulele",
+        "Guitar",
+        "Marimba",
+        "Glockenspiel",
+        "Percussion"
+      ],
+      "instrument_source": {
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400037&lt=",
+        "scope": "track",
+        "access": "search_index"
+      }
+    },
+    {
+      "id": "k04",
+      "artist": "Kevin MacLeod",
+      "creator_id": "kevin-macleod",
+      "title": "8bit Dungeon Boss",
+      "source": "https://incompetech.com/music/royalty-free/index.html?Search=Search&isrc=USUAN1200067",
+      "recording_locator": "USUAN1200067",
+      "declared_license": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "confirmed_recording_license": null,
+      "checked_on": "2026-10-09",
+      "publication_status": "DECLARED_INDEX",
+      "evidence_level": "declared_index",
+      "license_evidence": [
+        {
+          "url": "https://incompetech.com/music/royalty-free/index.html?Search=Search&isrc=USUAN1200067",
+          "checked_on": "2026-10-09",
+          "access": "search_index",
+          "scope": "track",
+          "observed_licenses": [
+            "CC-BY-4.0"
+          ],
+          "note": "Exact ISRC page in the search index states CC BY 4.0 and these tags. Direct canonical pages timed out or returned only an unpopulated player; save a readable exact-record license before admission."
+        }
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Числа BPM у автора не перенесены в features или bpm_manual: отрывок не измерен. CC BY требует атрибуции; время её показа пока не согласовано."
+      },
+      "owner_action": "Verify exact ISRC/master and CC BY version; document a compliant attribution/changes notice and agreement for blind playback with credits after completion or withdrawal.",
+      "genre": [
+        "Electronica"
+      ],
+      "genre_source": {
+        "url": "https://incompetech.com/music/royalty-free/index.html?Search=Search&isrc=USUAN1200067",
+        "scope": "track",
+        "access": "search_index"
+      },
+      "instrument": [
+        "Synths"
+      ],
+      "instrument_source": {
+        "url": "https://incompetech.com/music/royalty-free/index.html?Search=Search&isrc=USUAN1200067",
+        "scope": "track",
+        "access": "search_index"
       }
     }
-  ]
+  ],
+  "pool_revision": 2,
+  "based_on_head": "ad4f5d3c4e18059e64cb8913c6b4792772d59961",
+  "status_definitions": {
+    "DECLARED_INDEX": "A named source/index declares a license; readable exact-record primary evidence is missing.",
+    "CONFIRMED_RECORD_PAGE": "Primary publication names this recording/file and license; downloaded file identity, authority and third-party rights are still unverified.",
+    "CONFIRMED_NAMED_ALBUM": "Readable author statement explicitly covers all named album tracks; individual file is unverified.",
+    "CONFLICTING_STATEMENTS": "Different license statements observed; do not silently select the most permissive. Could be parallel grants or different masters, not proven infringement/revocation."
+  }
 }
