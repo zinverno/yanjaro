@@ -108,7 +108,16 @@ async function exported(p) {
   const phone=await open(mobileCtx,path.join(temp,'pages/reviewer-2.html'));
   await phone.screenshot({path:path.join(out,'review-mobile.png'),fullPage:true});
   if (!await phone.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth))
-    console.error('Mobile overflow:',await phone.evaluate(()=>[...document.querySelectorAll('main *')].filter(e=>e.getBoundingClientRect().right>innerWidth).slice(0,8).map(e=>({tag:e.tagName,id:e.id,width:e.getBoundingClientRect().width}))));
+    console.error('Mobile overflow:',await phone.evaluate(()=>{
+      const measure=()=>({inner:innerWidth,client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,body:document.body.scrollWidth,visual:visualViewport.width});
+      const original=measure(), results={};
+      const overflowing=[...document.querySelectorAll('main *')].filter(e=>e.scrollWidth>e.clientWidth+1).slice(0,12).map(e=>({tag:e.tagName,id:e.id,client:e.clientWidth,scroll:e.scrollWidth,box:e.getBoundingClientRect().width}));
+      for(const selector of ['select','audio','input','details','header','footer']) {
+        const nodes=[...document.querySelectorAll(selector)], previous=nodes.map(e=>e.style.display);
+        nodes.forEach(e=>e.style.display='none');results[selector]=measure();nodes.forEach((e,i)=>e.style.display=previous[i]);
+      }
+      return {original,overflowing,hiddenElementDiagnostics:results};
+    }));
   assert.equal(await phone.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true);
   await phone.locator('#players audio').first().evaluate(a=>a.play());
   await phone.waitForFunction(()=>document.querySelector('#players audio').currentTime>.2);
