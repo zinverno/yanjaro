@@ -1,4 +1,33 @@
-# Validation — Listening Study v0.1
+# Validation — recruitment preparation
+
+All audio, sessions and screenshots in automated checks are **synthetic demo**, not listeners. Continued from the exact user-specified draft PR #9 HEAD `3eacfc819deeeb507c25c286bed3deacc7ea204e`; main was `1c83c3776de565ed57416015f32a7ddd999af29f`. Same experimental branch, no rewrite/merge of #6/#7.
+
+| Gate | Status / evidence |
+|---|---|
+| Local Python checks | PASS; 50 tests covering old study invariants plus collection, concurrent allocation, retry, resume, erasure, retention, closed intake and shortlist unknowns |
+| Collection browser acceptance | PASS at `072aa2a49ba1f1c08e65125fe34db8e3cd3dcc48`; [run 37894472954](https://github.com/zinverno/yanjaro/actions/runs/37894472954), 12 scenario groups, Chromium 153.0.8010.12 and WebKit 26.6 (iPhone 13 profile), zero external page requests / JS errors |
+| Existing standalone demo browser acceptance | PASS in same run, 17 checks; memory-only export still works independently |
+| Loss/recovery cases | PASS; real WAV, actual HTTP/SQLite, lost acknowledgement **after** commit, retry without duplicate, tab close + process restart, new-browser recovery/revoked old cookie, completion failure/retry, mobile withdrawal failure/retry |
+| Real music shortlist | PASS as research inventory: 24 named records / 3 creators, declared CC0-1.0, exact source/evidence levels, private listening CSV; no audio/feature fabrication |
+| Admission of 24 real clips | NOT RUN; no files acquired, rights receipts/individual track checks and human review still pending |
+| Ready to recruit publicly today | **FAIL**; approved real stimuli, production HTTP/HTTPS acceptance, responsible operator/contact and 3–5-person pretest not completed |
+| Actual Android/iPhone/Zen + headphones | NOT RUN; emulation cannot establish physical-device/audible acceptance |
+| SurveyCircle listing/code redemption, public TLS/load/provider logging | NOT RUN; no listing/deployment/account/payment performed |
+| Existing Yanjaro / Release / AUR / Render / Yambda training | NOT RUN; untouched/out of scope |
+
+The evidence above identifies its tested code. Later changes add direct aggregate analysis (no stale raw exports), UTC expiry, purge without traffic, permanent intake closure, and clearer UI errors. The workflow tests each subsequent exact PR head; consult [PR #9 checks](https://github.com/zinverno/yanjaro/pull/9/checks) for final-head status, not this historical run alone.
+
+New acceptance harness: `tests/collection-browser.cjs`; [machine-readable evidence](validation/collection-checks.json). The final launch gates, retention policy and neutral invitation are in [LAUNCH.md](LAUNCH.md). License evidence and unresolved checks are in [CANDIDATES.md](CANDIDATES.md). Direct FMA opens returned 403; primary FMA search-index records and artist pages are explicitly distinguished from archived rights clearance.
+
+![Collection, desktop synthetic demo](validation/screenshots/collection-desktop.png)
+
+[Mobile WebKit](validation/screenshots/collection-mobile.png) · [Completed collection](validation/screenshots/collection-finished.png). Browser screenshots from the cited run; only the random demo recovery code is masked by Playwright (magenta), no image editing.
+
+Reproduce from this directory: `python -m unittest discover -s tests -v`, generate a fresh `demo`, then run both `tests/browser.cjs` and `tests/collection-browser.cjs` with Playwright 1.63.0 + Chromium/WebKit. Local socket/browser restrictions remain; real HTTP/browser evidence is from CI, not an unrun local browser. Artifacts allow only synthetic screenshots/check summaries/aggregate metrics; never upload SQLite, real clips, cookies, raw answers or SurveyCircle codes.
+
+---
+
+# Historical validation — original offline v0.1
 
 All input audio and answers in these checks are **synthetic demo**. No human listening results or real MTG audio were obtained. User explicitly limited this iteration to demo and pilot preparation.
 

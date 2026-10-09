@@ -1,0 +1,21 @@
+{
+  "demo": true,
+  "chromium": "153.0.8010.12",
+  "webkit": "26.6",
+  "checks": [
+    "no collection/cookie before consent; decline",
+    "real audio and autosave",
+    "lost acknowledgement and idempotent retry",
+    "tab close + server restart recovery",
+    "explicit completion with retry",
+    "reward/credits only after completion",
+    "recovery code in another browser + old cookie revoked",
+    "completed answers deleted",
+    "mobile WebKit real playback, neither, reload",
+    "mobile width and withdrawal failure/retry",
+    "CSRF, session and database access boundaries",
+    "HttpOnly cookie; no localStorage/fingerprinting/external requests"
+  ],
+  "externalRequests": 0,
+  "pageErrors": []
+}

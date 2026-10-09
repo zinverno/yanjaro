@@ -1,6 +1,6 @@
 """Small, single-study SQLite collector; no identities, network calls or request logs."""
 from contextlib import contextmanager
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 import hashlib
 import json
 import os
@@ -11,12 +11,16 @@ import secrets
 import sqlite3
 import uuid
 
-from .analysis import validate_answers, validate_response
-from .common import digest, require, write_new
+from .analysis import analyze, validate_answers, validate_response
+from .common import digest, require
 from .design import public_bundle, schedule, validate_study
 
 CONSENT = "collection-consent-v1"
 TOKEN = re.compile(r"[A-Za-z0-9_-]{43}\Z")
+
+
+def today_utc():
+    return datetime.now(timezone.utc).date()
 
 
 def token_hash(token):
@@ -25,7 +29,7 @@ def token_hash(token):
 
 
 def demo_config():
-    today = date.today()
+    today = today_utc()
     return {"consent_version": CONSENT, "capacity": 32, "contact": "Локальный DEMO: исследователь за этим компьютером",
             "intake_closes_on": str(today + timedelta(days=30)), "delete_on": str(today + timedelta(days=90)),
             "surveycircle_code": "DEMO — не код SurveyCircle", "public_origin": None}
@@ -57,6 +61,8 @@ class Collection:
             expected = digest({"study": study["sha256"], "config": config, "storage": "collection-v1"})
             db.execute("INSERT OR IGNORE INTO meta VALUES (1, ?)", (expected,))
             require(db.execute("SELECT digest FROM meta").fetchone()[0] == expected, "Database belongs to another study/config")
+            db.execute("CREATE TABLE IF NOT EXISTS intake (id INTEGER PRIMARY KEY CHECK(id=1), closed INTEGER NOT NULL)")
+            db.execute("INSERT OR IGNORE INTO intake VALUES(1,0)")
             db.execute("""CREATE TABLE IF NOT EXISTS sessions (
                 id INTEGER PRIMARY KEY, token TEXT UNIQUE NOT NULL, recovery TEXT UNIQUE NOT NULL,
                 prompt TEXT NOT NULL, slot INTEGER NOT NULL, day TEXT NOT NULL,
@@ -90,10 +96,13 @@ class Collection:
         else:
             db.execute("UPDATE sessions SET response=NULL, status='expired' WHERE status='in_progress' AND day <= ?",
                        (str(today - timedelta(days=7)),))
+        # Expiry must survive a subsequent rejected token/answer, which rolls back its own transaction.
+        db.commit()
+        db.execute("BEGIN IMMEDIATE")
 
     def purge(self):
         with self.db() as db:
-            self.purge_in(db, date.today())
+            self.purge_in(db, today_utc())
 
     def find(self, db, token):
         row = db.execute("SELECT * FROM sessions WHERE token=?", (token_hash(token),)).fetchone()
@@ -113,7 +122,7 @@ class Collection:
     def start(self, token, consent):
         require(consent == {"consent": True, "consent_version": CONSENT} and type(consent["consent"]) is bool,
                 "Explicit current consent required")
-        today = date.today()
+        today = today_utc()
         with self.db() as db:
             self.purge_in(db, today)
             if token:
@@ -121,6 +130,7 @@ class Collection:
                 if row:
                     return token, self.view(row)
             require(today < date.fromisoformat(self.config["intake_closes_on"]), "Recruitment closed")
+            require(not db.execute("SELECT closed FROM intake").fetchone()[0], "Recruitment closed")
             used = {(r[0], r[1]) for r in db.execute("SELECT prompt,slot FROM sessions WHERE status IN ('in_progress','complete')")}
             seat = next((s for s in self.deck if s not in used), None)
             require(seat is not None, "All study places are occupied")
@@ -137,12 +147,12 @@ class Collection:
 
     def state(self, token):
         with self.db() as db:
-            self.purge_in(db, date.today())
+            self.purge_in(db, today_utc())
             return self.view(self.find(db, token))
 
     def resume(self, code):
         with self.db() as db:
-            self.purge_in(db, date.today())
+            self.purge_in(db, today_utc())
             row = db.execute("SELECT * FROM sessions WHERE recovery=?", (token_hash(code),)).fetchone()
             require(row is not None, "Recovery code unavailable")
             token = secrets.token_urlsafe(32)
@@ -153,7 +163,7 @@ class Collection:
         require(isinstance(payload, dict) and set(payload) == {"index", "answer"} and type(payload["index"]) is int,
                 "Unexpected answer fields")
         with self.db() as db:
-            self.purge_in(db, date.today())
+            self.purge_in(db, today_utc())
             row = self.find(db, token)
             require(row["status"] == "in_progress", "Session is closed")
             response = json.loads(row["response"])
@@ -169,30 +179,28 @@ class Collection:
 
     def complete(self, token):
         with self.db() as db:
-            self.purge_in(db, date.today())
+            self.purge_in(db, today_utc())
             row = self.find(db, token)
             require(row["status"] in ("in_progress", "complete"), "Session is closed")
             response = json.loads(row["response"])
             response["status"] = "complete"
             validate_response(response, self.study)
             db.execute("UPDATE sessions SET status='complete',response=? WHERE id=?", (json.dumps(response), row["id"]))
+            if db.execute("SELECT COUNT(*) FROM sessions WHERE status='complete'").fetchone()[0] == self.config["capacity"]:
+                db.execute("UPDATE intake SET closed=1")
             return self.view(self.find(db, token))
 
     def withdraw(self, token):
         with self.db() as db:
-            self.purge_in(db, date.today())
+            self.purge_in(db, today_utc())
             row = self.find(db, token)
             db.execute("UPDATE sessions SET status='withdrawn',response=NULL WHERE id=?", (row["id"],))
             return self.view(self.find(db, token))
 
-    def export(self, out):
-        out = Path(out)
-        out.mkdir(mode=0o700)  # Fresh private snapshot; no public HTTP/admin endpoint.
+    def report(self, *, draws=2000):
+        # Read the current database directly: no stale raw exports left behind after withdrawal.
         with self.db() as db:
-            self.purge_in(db, date.today())
+            self.purge_in(db, today_utc())
             counts = dict(db.execute("SELECT status,COUNT(*) FROM sessions GROUP BY status").fetchall())
-            for row in db.execute("SELECT response FROM sessions WHERE status='complete'"):
-                response = json.loads(row[0])
-                validate_response(response, self.study)
-                write_new(out / (response["participant_id"] + ".json"), response)
-        return counts
+            responses = [json.loads(row[0]) for row in db.execute("SELECT response FROM sessions WHERE status='complete'")]
+        return {**analyze(self.study, responses, draws=draws), "collection_counts": counts}

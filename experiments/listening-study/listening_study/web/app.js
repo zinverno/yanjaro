@@ -7,7 +7,14 @@ async function api(path, data) {
   const options = {cache: "no-store", credentials: "same-origin"};
   if (data !== undefined) Object.assign(options, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(data)});
   const reply = await fetch("/api/" + path, options);
-  if (!reply.ok) throw new Error("request failed");
+  if (!reply.ok) {
+    const data = await reply.json().catch(() => ({}));
+    const error = new Error("request failed");
+    error.publicMessage = {closed: "Набор в это исследование завершён. Существующую сессию ещё можно открыть для проверки или удаления.",
+      full: "Сейчас все места заняты. Попробуй вернуться позже; новая сессия не создана.",
+      busy: "Слишком много запросов. Подожди минуту и повтори попытку."}[data.error];
+    throw error;
+  }
   return reply.json();
 }
 async function action(work) {
@@ -15,7 +22,7 @@ async function action(work) {
   loading = true;
   for (const b of document.querySelectorAll("button")) b.disabled = true;
   try { await work(); }
-  catch { $("status").textContent = "Сервер не подтвердил действие. Проверь соединение и повтори попытку. Можно обновить страницу: подтверждённые ответы сохранятся."; }
+  catch (error) { $("status").textContent = error.publicMessage || "Сервер не подтвердил действие. Проверь соединение и повтори попытку. Можно обновить страницу: подтверждённые ответы сохранятся."; }
   finally {
     loading = false;
     for (const b of document.querySelectorAll("button")) b.disabled = false;
@@ -168,12 +175,12 @@ $("restore").addEventListener("click", () => action(async () => {
 // A read before consent neither allocates a seat nor creates a cookie. Existing consent may be resumed explicitly.
 loadBundle().then(async data => {
   $("demo").hidden = !data.demo;
-  if (!data.collection) { initialized = true; $("start").disabled = !$("consent").checked; return; }
+  if (!data.collection) { initialized = true; $("decline").disabled = false; $("start").disabled = !$("consent").checked; return; }
   collecting = true; config = data;
-  $("privacy-copy").textContent = `После согласия каждый ответ сохраняется на сервере под случайным кодом. Нужен только cookie для продолжения и защиты от повторной отправки; имена, IP-адреса, аккаунты и данные устройства в базу не записываются. Сеть и хостинг технически обрабатывают IP при соединении. Незавершённые ответы удаляются через 7 дней после начала, остальные — ${config.delete_on} (UTC). Отказ удаляет ответы сразу; минимальная отметка об отказе без ответов остаётся до этой даты. Закрытие вкладки не означает отказ: вернись в том же браузере или используй резервный код. Доступ к ответам — у исследователя; публикуются только сводные результаты. Контакт: ${config.contact}.`;
+  $("privacy-copy").textContent = `После согласия каждый ответ сохраняется на сервере под случайным кодом. Нужен только cookie для продолжения и защиты от повторной отправки; имена, IP-адреса, аккаунты и данные устройства в базу не записываются. Сеть и хостинг технически обрабатывают IP при соединении. Незавершённые ответы удаляются на седьмой календарный день UTC после начала, остальные — ${config.delete_on} (UTC). Отказ удаляет ответы сразу; минимальная отметка об отказе без ответов остаётся до этой даты. Закрытие вкладки не означает отказ: вернись в том же браузере или используй резервный код. Доступ к ответам — у исследователя; публикуются только сводные результаты. Контакт: ${config.contact}.`;
   $("restore-card").hidden = false;
   const state = await api("state");
-  initialized = true; $("start").disabled = !$("consent").checked;
+  initialized = true; $("decline").disabled = false; $("start").disabled = !$("consent").checked;
   if (state.status !== "new") {
     savedState = state;
     if (["in_progress", "complete"].includes(state.status)) show("resume");

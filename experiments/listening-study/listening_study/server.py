@@ -14,6 +14,11 @@ WEB = Path(__file__).parent / "web"
 
 
 class QuietServer(ThreadingHTTPServer):
+    def service_actions(self):
+        if getattr(self, "collector", None) and time.monotonic() >= getattr(self, "next_purge", 0):
+            self.collector.purge()
+            self.next_purge = time.monotonic() + 60
+
     def handle_error(self, request, client_address):
         pass  # BaseServer's traceback includes the peer IP. Do not log participant connections.
 
@@ -133,7 +138,11 @@ def make_server(study, slot=0, prompt="next", port=8765, *, collection=None):
                     require(not payload, "Unexpected fields")
                     result = (collection.complete if path == "/api/complete" else collection.withdraw)(self.cookie())
                 self.json_reply(result, token)
-            except (ValueError, TypeError, KeyError, UnicodeError):
+            except ValueError as error:
+                code = {"Recruitment closed": "closed", "All study places are occupied": "full",
+                        "Please retry later": "busy"}.get(str(error), "refused")
+                self.reply(400, json.dumps({"error": code}).encode(), "application/json")
+            except (TypeError, KeyError, UnicodeError):
                 self.reply(400, b'{"error":"Request refused; reload saved progress or contact researcher"}', "application/json")
             except (sqlite3.Error, OSError):
                 self.reply(503, b'{"error":"Storage unavailable; retry later"}', "application/json")
@@ -155,4 +164,6 @@ def make_server(study, slot=0, prompt="next", port=8765, *, collection=None):
             self.wfile.write(body)
 
     require(type(port) is int and 0 <= port <= 65535, "Invalid port")
-    return QuietServer(("127.0.0.1", port), Handler)
+    server = QuietServer(("127.0.0.1", port), Handler)
+    server.collector = collection
+    return server

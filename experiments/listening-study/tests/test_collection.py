@@ -5,11 +5,11 @@ from pathlib import Path
 import secrets
 import tempfile
 import unittest
-from unittest.mock import patch
-from listening_study.analysis import analyze
+from unittest.mock import Mock, patch
 from listening_study.collection import Collection, CONSENT, demo_config
 from listening_study.common import digest, read_json
 from listening_study.demo import build_demo
+from listening_study.server import QuietServer
 
 CONSENT_BODY = {"consent": True, "consent_version": CONSENT}
 
@@ -54,6 +54,24 @@ class CollectionTests(unittest.TestCase):
         _, again = self.store.start(token, CONSENT_BODY)
         self.assertEqual(state["response"], again["response"])
         self.assertNotIn("recovery_code", again)
+    def test_capacity_closure_survives_late_withdrawal(self):
+        for _ in range(32):
+            token, _ = self.finish()
+        self.store.withdraw(token)
+        with self.assertRaisesRegex(ValueError, "closed"):
+            self.start()
+        restarted = Collection(self.study, self.path, self.config)
+        with self.assertRaisesRegex(ValueError, "closed"):
+            restarted.start(None, CONSENT_BODY)
+    def test_shortlist_is_not_fake_measured_or_approved_audio(self):
+        candidates = read_json(Path(__file__).parent.parent / "examples/real-candidates.v1.json")
+        self.assertEqual(candidates["status"], "REVIEW_ONLY_NOT_A_STUDY")
+        self.assertEqual(len(candidates["tracks"]), 24)
+        for track in candidates["tracks"]:
+            self.assertIsNone(track["features"])
+            self.assertIsNone(track["local_file_sha256"])
+            self.assertFalse(track["rights_reviewed"])
+            self.assertFalse(track["public_release_approved"])
     def test_restart_recovery_and_foreign_session(self):
         token, state = self.start()
         saved = self.answer(token, state)
@@ -89,9 +107,8 @@ class CollectionTests(unittest.TestCase):
         token, state = self.finish()
         self.assertEqual(self.store.complete(token), state)
         with self.assertRaises(ValueError): self.answer(token, state)
-        out = Path(self.tmp.name) / "export"
-        self.assertEqual(self.store.export(out), {"in_progress": 1, "complete": 1})
-        result = analyze(self.study, [read_json(p) for p in out.glob("*.json")], draws=200)
+        result = self.store.report(draws=200)
+        self.assertEqual(result["collection_counts"], {"in_progress": 1, "complete": 1})
         self.assertEqual(sum(r["participants"] for r in result["results_by_prompt"].values()), 1)
         self.assertIn("surveycircle_code", state)
         self.assertIn("credits", state)
@@ -109,9 +126,9 @@ class CollectionTests(unittest.TestCase):
     def test_completed_withdrawal_removed_from_export(self):
         token, state = self.finish()
         self.store.withdraw(token)
-        out = Path(self.tmp.name) / "export"
-        self.assertEqual(self.store.export(out), {"withdrawn": 1})
-        self.assertEqual(list(out.iterdir()), [])
+        result = self.store.report(draws=200)
+        self.assertEqual(result["collection_counts"], {"withdrawn": 1})
+        self.assertEqual(sum(r["participants"] for r in result["results_by_prompt"].values()), 0)
         self.assertNotIn(state["response"]["participant_id"].encode(), self.path.read_bytes())
     def test_partial_expiry_and_absolute_retention(self):
         token, state = self.start()
@@ -119,19 +136,34 @@ class CollectionTests(unittest.TestCase):
             db.execute("UPDATE sessions SET day=?", (str(date.today() - timedelta(days=7)),))
         self.assertEqual(self.store.state(token)["status"], "expired")
         self.assertNotIn(state["response"]["participant_id"].encode(), self.path.read_bytes())
-        with patch("listening_study.collection.date") as clock:
-            clock.today.return_value = date.fromisoformat(self.config["delete_on"])
-            clock.fromisoformat.side_effect = date.fromisoformat
+        with patch("listening_study.collection.today_utc") as clock:
+            clock.return_value = date.fromisoformat(self.config["delete_on"])
             self.store.purge()
             with self.assertRaises(ValueError): self.start()
         with self.store.db() as db:
             self.assertEqual(db.execute("SELECT COUNT(*) FROM sessions").fetchone()[0], 0)
+    def test_expiry_survives_rejected_request(self):
+        token, _ = self.start()
+        with patch("listening_study.collection.today_utc", return_value=date.fromisoformat(self.config["delete_on"])):
+            with self.assertRaises(ValueError):
+                self.store.state(token)
+        with self.store.db() as db:
+            self.assertEqual(db.execute("SELECT COUNT(*) FROM sessions").fetchone()[0], 0)
+    def test_idle_server_runs_retention_without_requests(self):
+        server = object.__new__(QuietServer)
+        server.collector = Mock()
+        with patch("listening_study.server.time.monotonic", return_value=100):
+            server.service_actions()
+            server.service_actions()
+        self.assertEqual(server.collector.purge.call_count, 1)
+        with patch("listening_study.server.time.monotonic", return_value=161):
+            server.service_actions()
+        self.assertEqual(server.collector.purge.call_count, 2)
     def test_config_binding_and_closed_intake(self):
         with self.assertRaisesRegex(ValueError, "another"):
             Collection(self.study, self.path, {**self.config, "contact": "A different operator contact"})
-        with patch("listening_study.collection.date") as clock:
-            clock.today.return_value = date.fromisoformat(self.config["intake_closes_on"])
-            clock.fromisoformat.side_effect = date.fromisoformat
+        with patch("listening_study.collection.today_utc") as clock:
+            clock.return_value = date.fromisoformat(self.config["intake_closes_on"])
             with self.assertRaisesRegex(ValueError, "closed"): self.start()
     def test_public_rights_not_inferred(self):
         study = copy.deepcopy(self.study); study.update(demo=False, phase="pilot")

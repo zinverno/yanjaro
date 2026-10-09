@@ -1,0 +1,767 @@
+{
+  "schema": "candidate-shortlist-v1",
+  "demo": false,
+  "status": "REVIEW_ONLY_NOT_A_STUDY",
+  "checked_on": "2026-10-09",
+  "evidence_note": "Primary FMA pages surfaced in web search; direct FMA opens returned HTTP 403. Search-index observations are not archived permission receipts. Album-only evidence is explicitly weaker. No audio downloaded.",
+  "genre_note": "Positive subset of source genre labels, not exhaustive annotations. Instrumental is not an instrument. Empty instrument list means unknown.",
+  "rights_profile": {
+    "CC0-1.0": {
+      "excerpt_processing": "permitted for the rights actually dedicated",
+      "public_blind_playback": "permitted for the rights actually dedicated; no mandatory credit timing",
+      "later_attribution": "optional courtesy; planned after completion or withdrawal",
+      "admission": "confirm exact recording, authority, source evidence and third-party samples before any acquisition or publication"
+    }
+  },
+  "tracks": [
+    {
+      "id": "h01",
+      "artist": "HoliznaCC0",
+      "title": "Classic",
+      "source": "https://freemusicarchive.org/music/holiznacc0/rock-montage/classic/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index",
+      "additional_evidence": [],
+      "genre": [
+        "Blues",
+        "Rock",
+        "Lo-fi Rock",
+        "Indie-Rock"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      }
+    },
+    {
+      "id": "h02",
+      "artist": "HoliznaCC0",
+      "title": "Punk",
+      "source": "https://freemusicarchive.org/music/holiznacc0/rock-montage/punk/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index",
+      "additional_evidence": [],
+      "genre": [
+        "Rock",
+        "Punk",
+        "Lo-fi Rock",
+        "Loud-Rock",
+        "Indie-Rock",
+        "Garage"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      }
+    },
+    {
+      "id": "h03",
+      "artist": "HoliznaCC0",
+      "title": "Unwind",
+      "source": "https://freemusicarchive.org/music/holiznacc0/kick-it-laid-back-hiphop/unwind/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index",
+      "additional_evidence": [],
+      "genre": [
+        "Jazz",
+        "Funk",
+        "Hip-Hop",
+        "Chill-out"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      }
+    },
+    {
+      "id": "h04",
+      "artist": "HoliznaCC0",
+      "title": "Movement",
+      "source": "https://freemusicarchive.org/music/holiznacc0/left-overs/movement-1/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index",
+      "additional_evidence": [],
+      "genre": [
+        "Hip-Hop",
+        "Hip-Hop Beats"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      }
+    },
+    {
+      "id": "h05",
+      "artist": "HoliznaCC0",
+      "title": "Make Love",
+      "source": "https://freemusicarchive.org/music/holiznacc0/bassic/make-love",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index",
+      "additional_evidence": [],
+      "genre": [
+        "Jazz",
+        "Funk",
+        "Hip-Hop",
+        "Alternative Hip-Hop",
+        "Hip-Hop Beats"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      }
+    },
+    {
+      "id": "h06",
+      "artist": "HoliznaCC0",
+      "title": "Mercury",
+      "source": "https://freemusicarchive.org/music/holiznacc0/interstellar-pop-songs/mercury-1/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index",
+      "additional_evidence": [],
+      "genre": [
+        "Pop",
+        "Electronic",
+        "Techno",
+        "Dance",
+        "Synth Pop"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      }
+    },
+    {
+      "id": "h07",
+      "artist": "HoliznaCC0",
+      "title": "NPC Theme",
+      "source": "https://freemusicarchive.org/music/holiznacc0/chiptunes/npc-theme/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index",
+      "additional_evidence": [],
+      "genre": [
+        "Electronic",
+        "Soundtrack",
+        "Chiptune",
+        "Minimalism"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      }
+    },
+    {
+      "id": "h08",
+      "artist": "HoliznaCC0",
+      "title": "Red Skies",
+      "source": "https://freemusicarchive.org/music/holiznacc0/chiptunes/red-skies/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index",
+      "additional_evidence": [],
+      "genre": [
+        "Pop",
+        "Electronic",
+        "Chiptune",
+        "Chip Music"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": ""
+      }
+    },
+    {
+      "id": "j01",
+      "artist": "John Bartmann",
+      "title": "Home At Last",
+      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/home-at-last",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index+author_album",
+      "additional_evidence": [
+        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884"
+      ],
+      "genre": [
+        "Soundtrack"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
+      }
+    },
+    {
+      "id": "j02",
+      "artist": "John Bartmann",
+      "title": "West in Africa",
+      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/west-in-africa",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index+author_album",
+      "additional_evidence": [
+        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884"
+      ],
+      "genre": [
+        "Soundtrack"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
+      }
+    },
+    {
+      "id": "j03",
+      "artist": "John Bartmann",
+      "title": "Happy Clappy",
+      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/happy-clappy",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index+author_album",
+      "additional_evidence": [
+        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884",
+        "https://johnbartmann.bandcamp.com/track/happy-clappy"
+      ],
+      "genre": [
+        "Soundtrack"
+      ],
+      "instrument": [
+        "voice",
+        "ukulele",
+        "hand claps",
+        "glockenspiel"
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
+      }
+    },
+    {
+      "id": "j04",
+      "artist": "John Bartmann",
+      "title": "Tender Moment",
+      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/tender-moment",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index+author_album",
+      "additional_evidence": [
+        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884"
+      ],
+      "genre": [
+        "Soundtrack"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
+      }
+    },
+    {
+      "id": "j05",
+      "artist": "John Bartmann",
+      "title": "Robot Gypsy Jazz",
+      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/robot-gypsy-jazz",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index+author_album",
+      "additional_evidence": [
+        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884",
+        "https://johnbartmann.bandcamp.com/track/robot-gypsy-jazz"
+      ],
+      "genre": [
+        "Soundtrack"
+      ],
+      "instrument": [
+        "electronic beat",
+        "robot voice",
+        "horns",
+        "acoustic guitar"
+      ],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
+      }
+    },
+    {
+      "id": "j06",
+      "artist": "John Bartmann",
+      "title": "Happy African Village",
+      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/happy-african-village",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index+author_album",
+      "additional_evidence": [
+        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884"
+      ],
+      "genre": [
+        "Soundtrack"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
+      }
+    },
+    {
+      "id": "j07",
+      "artist": "John Bartmann",
+      "title": "Secret Agent Rock",
+      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "author_album",
+      "additional_evidence": [
+        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884"
+      ],
+      "genre": [
+        "Soundtrack"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
+      }
+    },
+    {
+      "id": "j08",
+      "artist": "John Bartmann",
+      "title": "Interstellar Space",
+      "source": "https://freemusicarchive.org/music/John_Bartmann/Public_Domain_Soundtrack_Music_Album_One/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "author_album",
+      "additional_evidence": [
+        "https://www.patreon.com/johnbartmann/posts/public-domain-88180884"
+      ],
+      "genre": [
+        "Soundtrack"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Сверить именно мастер из разрешённого альбома. У архивных копий Happy Clappy / Secret Agent Rock встречаются конфликтующие старые ID3 CC BY-NC-ND; не переносить разрешение на другой файл."
+      }
+    },
+    {
+      "id": "m01",
+      "artist": "Monplaisir",
+      "title": "Free To Use 1",
+      "source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/Monplaisir_-_Free_To_Use_-_01_Free_To_Use_1",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index",
+      "additional_evidence": [
+        "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/"
+      ],
+      "genre": [
+        "Folk",
+        "Soundtrack"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Monplaisir и Komiku/Loyalty Freak/Alpha Hydrae — псевдонимы Rrrrrose; не считать разными авторами."
+      }
+    },
+    {
+      "id": "m02",
+      "artist": "Monplaisir",
+      "title": "Free To Use 2",
+      "source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "album_index_pending_track",
+      "additional_evidence": [
+        "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/"
+      ],
+      "genre": [
+        "Folk",
+        "Soundtrack"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Monplaisir и Komiku/Loyalty Freak/Alpha Hydrae — псевдонимы Rrrrrose; не считать разными авторами."
+      }
+    },
+    {
+      "id": "m03",
+      "artist": "Monplaisir",
+      "title": "Free To Use 3",
+      "source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "album_index_pending_track",
+      "additional_evidence": [
+        "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/"
+      ],
+      "genre": [
+        "Folk",
+        "Soundtrack"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Monplaisir и Komiku/Loyalty Freak/Alpha Hydrae — псевдонимы Rrrrrose; не считать разными авторами."
+      }
+    },
+    {
+      "id": "m04",
+      "artist": "Monplaisir",
+      "title": "Free To Use 4",
+      "source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "album_index_pending_track",
+      "additional_evidence": [
+        "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/"
+      ],
+      "genre": [
+        "Folk",
+        "Soundtrack"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Monplaisir и Komiku/Loyalty Freak/Alpha Hydrae — псевдонимы Rrrrrose; не считать разными авторами."
+      }
+    },
+    {
+      "id": "m05",
+      "artist": "Monplaisir",
+      "title": "Free To Use 5",
+      "source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "album_index_pending_track",
+      "additional_evidence": [
+        "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/"
+      ],
+      "genre": [
+        "Folk",
+        "Soundtrack"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Monplaisir и Komiku/Loyalty Freak/Alpha Hydrae — псевдонимы Rrrrrose; не считать разными авторами."
+      }
+    },
+    {
+      "id": "m06",
+      "artist": "Monplaisir",
+      "title": "Free To Use 6",
+      "source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "album_index_pending_track",
+      "additional_evidence": [
+        "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/"
+      ],
+      "genre": [
+        "Folk",
+        "Soundtrack"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Monplaisir и Komiku/Loyalty Freak/Alpha Hydrae — псевдонимы Rrrrrose; не считать разными авторами."
+      }
+    },
+    {
+      "id": "m12",
+      "artist": "Monplaisir",
+      "title": "Free To Use 12",
+      "source": "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "album_index_pending_track",
+      "additional_evidence": [
+        "https://freemusicarchive.org/music/Monplaisir/Free_To_Use/"
+      ],
+      "genre": [
+        "Folk",
+        "Soundtrack"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Monplaisir и Komiku/Loyalty Freak/Alpha Hydrae — псевдонимы Rrrrrose; не считать разными авторами."
+      }
+    },
+    {
+      "id": "m14",
+      "artist": "Monplaisir",
+      "title": "Débordement",
+      "source": "https://freemusicarchive.org/music/Monplaisir/Le_chant_des_Stompbox/Monplaisir_-_Le_chant_des_Stompbox_-_02_Dbordement/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "checked_on": "2026-10-09",
+      "evidence_level": "track_index",
+      "additional_evidence": [],
+      "genre": [
+        "Rock",
+        "Noise",
+        "Experimental"
+      ],
+      "instrument": [],
+      "features": null,
+      "excerpt_start": null,
+      "excerpt_seconds": null,
+      "local_file_sha256": null,
+      "rights_reviewed": false,
+      "public_release_approved": false,
+      "review": {
+        "listened": false,
+        "selected": false,
+        "vocals": null,
+        "tempo_alias_checked": false,
+        "notes": "Источник помечает запись как неинструментальную; проверить вокал/текст и резкие фрагменты."
+      }
+    }
+  ]
+}

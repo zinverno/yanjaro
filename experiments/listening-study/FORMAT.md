@@ -38,4 +38,14 @@
 
 `analyze` проверяет exact allowlist всех response/answer/heard полей, UUIDv4, hash, phase, prompt, slot, полный порядок заданий, отсутствие повторного participant ID или slot в одном вопросе. Для содержательного ответа нужны три heard=true. Это контроль целостности формата, не доказательство внимательности/уникальности человека или аутентичности голосов. Изменённые, смешанные версии, незавершённые/отозванные файлы отклоняются; они не игнорируются незаметно.
 
-После отказа нет сохраняемой withdrawal-записи. Для missingness оператор ведёт только отдельные агрегаты приглашений/согласий/отказов, без связи с личностью. Не публиковать сырой экспорт реального участника. Анализ группирует два вопроса раздельно, сохраняет demo/phase/hash, bootstrap seed/draws и условные/безусловные знаменатели.
+В автономном `serve`/portable после отказа нет сохраняемой withdrawal-записи. В `collect` есть минимальная отметка без UUID/ответов, описанная ниже. Для missingness оператор ведёт только отдельные агрегаты приглашений/согласий/отказов, без связи с личностью. Не публиковать сырой экспорт реального участника. Анализ группирует два вопроса раздельно, сохраняет demo/phase/hash, bootstrap seed/draws и условные/безусловные знаменатели.
+
+## Collection v1 (новый режим, тот же frozen taskset)
+
+`/session` возвращает только collection=true, demo, consent_version, delete_on и contact. Назначение создаётся в POST `/api/start` после `{consent:true,consent_version:"collection-consent-v1"}`. HttpOnly-cookie — единственный автоматический ключ. GET `/api/state` возвращает собственный статус, bundle и response; новая сессия не создаётся при чтении. Никаких query-параметров с секретами.
+
+POST `/api/answer`: ровно `{index,answer}`; index — порядковый номер с нуля, answer сохраняет прежний allowlist. Полный response не принимается от клиента: UUID, slot, prompt, study/hash/demo/phase задаёт сервер. POST `/api/complete` и `/api/withdraw`: пустой объект. POST `/api/resume`: только `{code}`. Все мутации требуют точный Origin и JSON; лимит body 16 KiB. Ответы/конфликтующие retries валидируются на сервере. Выбор без heard=true отклоняется, кроме skip.
+
+SQLite привязан к хэшу исследования и приватной конфигурации. `meta`: hash; `intake`: один флаг закрытия при 32 завершениях; `sessions`: внутренний id, SHA256 cookie и recovery, prompt/slot, UTC-дата, consent version, status и JSON response. Статусы new/unavailable существуют только в API; сохраняемые — in_progress/complete/withdrawn/expired. После withdrawal/expiry response=NULL (включая UUID), секреты остаются только как хэши до delete_on. В delete_on строки sessions удаляются; старые токены больше не принимаются.
+
+`analyze-collected` читает только complete прямо из текущей базы, использует прежний строгий validate_response и раздельные метрики; добавляет collection_counts. Частичные ответы сохраняются для восстановления, но не входят в главный estimand. Доступ к сырым ответам возможен только оператору через приватный файл, не через HTTP; не создавать сторонние выгрузки. Подробная политика и пределы анонимности: [LAUNCH.md](LAUNCH.md).
