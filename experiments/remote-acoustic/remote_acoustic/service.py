@@ -1,6 +1,5 @@
 """Stateless, authenticated remote ranker. No Yandex account, tokens or audio."""
 from __future__ import annotations
-from contextlib import asynccontextmanager
 import hmac
 import os
 from pathlib import Path
@@ -27,13 +26,14 @@ def create_app(model_path:Path|str,api_key:str,*,allow_demo:bool=False):
     model=Ranker.load(Path(model_path),allow_demo=allow_demo)
     app=FastAPI(title='Yanjaro Research Acoustic Ranker',version='0.1.0',docs_url=None,redoc_url=None)
 
+    # Bounded in-memory work only: no blocking I/O or worker-thread handoff.
     @app.get('/healthz')
-    def healthz():
+    async def healthz():
         return {'status':'ok','schema':model.metadata['schema'],'source':model.metadata['source'],
                 'catalog_mapping_available':False,'mood_validation':'not established'}
 
     @app.post('/v1/rank')
-    def rank(data:RankingRequest,authorization:str|None=Header(default=None)):
+    async def rank(data:RankingRequest,authorization:str|None=Header(default=None)):
         if not authorization or not authorization.startswith('Bearer ') or \
                 not hmac.compare_digest(authorization[7:],api_key):
             raise HTTPException(status_code=401,detail='Unauthorized')
