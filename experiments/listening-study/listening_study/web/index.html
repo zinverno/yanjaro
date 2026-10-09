@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Yanjaro · Listening Study</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header><a href="/" aria-label="Начать заново">yanjaro<span> / listening study</span></a><span class="version">v0.1 · локально</span></header>
+    <div id="demo" class="notice" hidden>DEMO · синтетические звуки, не реальные песни. Ответы проверяют работу интерфейса.</div>
+    <section id="welcome">
+      <p class="eyebrow">НЕСКОЛЬКО МИНУТ МУЗЫКИ</p>
+      <h1>Послушай.<br>Выбери продолжение.</h1>
+      <p class="lead">Один исходный отрывок и два варианта. Здесь нет правильных ответов — нам интересно твоё впечатление.</p>
+      <div class="consent-card">
+        <h2>Перед началом</h2>
+        <p>Надень наушники и выбери комфортную громкость. Все отрывки можно слушать повторно. Не меняй громкость между вариантами, если это комфортно.</p>
+        <p>Участие добровольное. Можно выбрать «Ни одна», пропустить задание или выйти. Имена, аккаунты и контакты не нужны.</p>
+        <p>Ответы остаются в памяти этой страницы. В конце ты сам решишь, сохранить ли анонимный файл для исследователя. Закрытие или отказ удалит несохранённые ответы.</p>
+        <label class="consent"><input id="consent" type="checkbox"> Мне 18 лет или больше; я понимаю условия и согласен участвовать.</label>
+        <button id="start" class="primary" disabled>Начать прослушивание <span aria-hidden="true">↗</span></button>
+        <button id="decline" class="text-button">Не участвовать</button>
+      </div>
+    </section>
+    <section id="trial" hidden>
+      <div class="progress-label"><span id="progress-text"></span><span>Слушай в своём темпе</span></div>
+      <progress id="progress" value="0" max="1" aria-label="Прогресс исследования"></progress>
+      <h1 id="question" tabindex="-1" class="question"></h1>
+      <p class="hint">Послушай хотя бы 5 секунд каждого отрывка, затем выбери вариант. Повторное прослушивание доступно в любой момент.</p>
+      <article class="source-card"><div><p class="eyebrow">ТОЧКА ОТСЧЁТА</p><h2>Исходный отрывок</h2></div><audio id="source" controls preload="none" aria-label="Исходный отрывок"></audio><span id="heard-source" class="heard"></span></article>
+      <div class="candidates">
+        <article><span class="number" aria-hidden="true">01</span><h2>Вариант 1</h2><audio id="left" controls preload="none" aria-label="Вариант 1"></audio><span id="heard-left" class="heard"></span><button id="choose-left" data-choice="left" disabled>Выбрать вариант 1</button></article>
+        <article><span class="number" aria-hidden="true">02</span><h2>Вариант 2</h2><audio id="right" controls preload="none" aria-label="Вариант 2"></audio><span id="heard-right" class="heard"></span><button id="choose-right" data-choice="right" disabled>Выбрать вариант 2</button></article>
+      </div>
+      <div class="alternatives"><button id="neither" data-choice="neither" disabled>Ни одна</button><button id="skip" data-choice="skip" class="text-button">Пропустить задание →</button></div>
+      <button id="withdraw" class="withdraw text-button">Отказаться от участия и удалить ответы</button>
+    </section>
+    <section id="finished" hidden>
+      <p class="eyebrow">ГОТОВО</p><h1 tabindex="-1" id="finish-title">Спасибо за прослушивание.</h1>
+      <p class="lead">Ответы ещё не сохранены и не отправлены. Ты можешь скачать анонимный файл и добровольно передать его исследователю.</p>
+      <button id="download" class="primary">Сохранить анонимные ответы</button>
+      <button id="discard" class="text-button">Удалить ответы и выйти</button>
+      <p class="hint">Если файл уже скачан, отказ на странице не удалит его с диска. Удали файл самостоятельно или попроси исследователя удалить его по случайному коду внутри файла.</p>
+    </section>
+    <section id="withdrawn" hidden><p class="eyebrow">УЧАСТИЕ ЗАВЕРШЕНО</p><h1 tabindex="-1" id="exit-title">Можно закрыть страницу.</h1><p class="lead">Ответы удалены из памяти страницы. Ничего не отправлено. Ранее скачанный файл, если он есть, нужно удалить отдельно.</p></section>
+    <p id="status" role="status" aria-live="polite"></p>
+    <footer><span>Yanjaro Listening Study</span><span>Только звук. Твоё впечатление.</span></footer>
+  </main>
+</body>
+</html>
