@@ -107,7 +107,8 @@ async function exported(p) {
   const mobileCtx=await mobile.newContext({...devices['iPhone 13'],acceptDownloads:true});
   const phone=await open(mobileCtx,path.join(temp,'pages/reviewer-2.html'));
   await phone.screenshot({path:path.join(out,'review-mobile.png'),fullPage:true});
-  if (!await phone.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth))
+  const fits=await phone.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth);
+  if (!fits)
     console.error('Mobile overflow:',await phone.evaluate(()=>{
       const measure=()=>({inner:innerWidth,client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,body:document.body.scrollWidth,visual:visualViewport.width});
       const original=measure(), results={};
@@ -118,13 +119,15 @@ async function exported(p) {
       }
       return {original,overflowing,hiddenElementDiagnostics:results};
     }));
-  assert.equal(await phone.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true);
+  assert.equal(fits,true);
   await phone.locator('#players audio').first().evaluate(a=>a.play());
   await phone.waitForFunction(()=>document.querySelector('#players audio').currentTime>.2);
   await phone.locator('#players audio').first().evaluate(a=>a.pause());
+  const mobileTrack=await phone.locator('#track option').last().getAttribute('value');
+  await phone.locator('#track').selectOption(mobileTrack);
   await phone.locator('#track-form [data-field=tempo_note]').fill('DEMO mobile observation');
   const phoneSaved=await exported(phone);
-  assert.equal(Object.values(phoneSaved.data.tracks)[0].tempo_note,'DEMO mobile observation');
+  assert.equal(phoneSaved.data.tracks[mobileTrack].tempo_note,'DEMO mobile observation');
   await phone.screenshot({path:path.join(out,'review-mobile.png'),fullPage:true});
   checks.push('WebKit mobile layout, actual playback and independent JSON download');
   assert.deepEqual(errors,[]); assert.deepEqual(outbound,[]);
