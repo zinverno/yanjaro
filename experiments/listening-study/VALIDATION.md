@@ -4,7 +4,7 @@ All audio, sessions and screenshots in automated checks are **synthetic demo**, 
 
 | Gate | Status / evidence |
 |---|---|
-| Local Python checks | PASS; 50 tests covering old study invariants plus collection, concurrent allocation, retry, resume, erasure, retention, closed intake and shortlist unknowns |
+| Local Python checks | PASS; 51 tests covering old study invariants plus collection, concurrent allocation, retry, resume, erasure, retention, closed intake and shortlist unknowns |
 | Collection browser acceptance | PASS at `072aa2a49ba1f1c08e65125fe34db8e3cd3dcc48`; [run 37894472954](https://github.com/zinverno/yanjaro/actions/runs/37894472954), 12 scenario groups, Chromium 153.0.8010.12 and WebKit 26.6 (iPhone 13 profile), zero external page requests / JS errors |
 | Existing standalone demo browser acceptance | PASS in same run, 17 checks; memory-only export still works independently |
 | Loss/recovery cases | PASS; real WAV, actual HTTP/SQLite, lost acknowledgement **after** commit, retry without duplicate, tab close + process restart, new-browser recovery/revoked old cookie, completion failure/retry, mobile withdrawal failure/retry |

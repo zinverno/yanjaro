@@ -170,3 +170,12 @@ class CollectionTests(unittest.TestCase):
         study["sha256"] = digest({k: v for k, v in study.items() if k != "sha256"})
         with self.assertRaisesRegex(ValueError, "public reproduction"):
             Collection(study, Path(self.tmp.name) / "real.sqlite", self.config)
+    def test_maintenance_does_not_create_an_empty_database_on_path_typo(self):
+        from listening_study.__main__ import main
+        missing = Path(self.tmp.name) / "missing.sqlite"
+        for command in ("analyze-collected", "purge-collected"):
+            argv = ["study", command, "study.json", str(missing), "config.json"]
+            if command == "analyze-collected": argv.append("out.json")
+            with patch("sys.argv", argv), patch("sys.stderr"):
+                self.assertEqual(main(), 2)
+            self.assertFalse(missing.exists())

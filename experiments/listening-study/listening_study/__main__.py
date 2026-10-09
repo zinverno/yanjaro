@@ -62,6 +62,8 @@ def main():
                 server.server_close()
         elif args.command in ("collect", "analyze-collected", "purge-collected"):
             from .collection import Collection
+            if args.command != "collect" and not args.database.is_file():
+                raise ValueError("Existing collection database required")
             collector = Collection(read_json(args.study), args.database, read_json(args.config))
             if args.command == "collect":
                 from .server import make_server
