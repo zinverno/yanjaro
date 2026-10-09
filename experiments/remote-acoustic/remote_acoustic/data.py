@@ -134,7 +134,8 @@ def download_small_yambda(destination: Path):
 
 def extract_needed_embeddings(source: str, ids: set[int], *, batch_size: int = 4096,
                               max_batches: int = 100, max_read_mib: int = 512,
-                              max_seconds: int = 600, report: dict | None = None):
+                              max_seconds: int = 600, report: dict | None = None,
+                              row_groups: list[int] | None = None):
     """Batch count limits decoded rows; byte/time limits bound actual remote reads."""
     import numpy as np
     import pyarrow.parquet as pq
@@ -154,9 +155,13 @@ def extract_needed_embeddings(source: str, ids: set[int], *, batch_size: int = 4
         pf = stack.enter_context(pq.ParquetFile(handle, pre_buffer=False))
         embeddings = {}
         try:
+            selected = list(range(pf.num_row_groups)) if row_groups is None else row_groups
+            if (not selected or len(set(selected)) != len(selected) or
+                    any(type(i) is not int or not 0 <= i < pf.num_row_groups for i in selected)):
+                raise ValueError("Invalid or duplicate row groups")
             if not {"item_id", "normalized_embed"} <= set(pf.schema_arrow.names):
                 raise ValueError("Yambda embeddings.parquet must contain item_id, normalized_embed")
-            batches = pf.iter_batches(batch_size=batch_size,
+            batches = pf.iter_batches(batch_size=batch_size, row_groups=selected,
                                       columns=["item_id", "normalized_embed"], use_threads=False)
             # islice stops BEFORE asking Arrow for an extra batch/row group.
             if max_batches:
@@ -176,6 +181,8 @@ def extract_needed_embeddings(source: str, ids: set[int], *, batch_size: int = 4
                     break
             stats.update(rows_read=rows, dataset_rows=pf.metadata.num_rows,
                          complete_scan=rows == pf.metadata.num_rows,
+                         row_groups_requested=selected,
+                         selected_rows=sum(pf.metadata.row_group(i).num_rows for i in selected),
                          wanted_ids=len(ids), found_ids=len(embeddings),
                          max_batches=max_batches)
             return embeddings

@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import resource
 import shutil
@@ -12,6 +13,15 @@ from .data import (read_events, build_pairs, atomic_jsonl, required_ids, load_pa
                    download_small_yambda, extract_needed_embeddings, save_vectors)
 from .model import build_training_arrays, train, export_model
 from .remote_io import RangeFile, REVISION, EMBEDDINGS, MIB, parquet_layout
+
+
+def parse_row_groups(value):
+    if not re.fullmatch(r'[0-9]+(?:,[0-9]+)*', value):
+        raise argparse.ArgumentTypeError('Use comma-separated nonnegative row-group indices')
+    groups = [int(i) for i in value.split(',')]
+    if len(groups) > 30 or len(set(groups)) != len(groups) or any(i >= 30 for i in groups):
+        raise argparse.ArgumentTypeError('Use unique Yambda row groups in 0..29')
+    return groups
 
 
 def digest(path):
@@ -62,6 +72,9 @@ def main(argv=None):
     subs = parser.add_subparsers(dest='command', required=True)
     inspect = subs.add_parser('probe', help='128 MiB / 180 second range and schema probe')
     inspect.add_argument('--output', type=Path, default=Path('artifacts/probe.json'))
+    coverage = subs.add_parser('coverage', help='ID-only coverage plan: 32 MiB / 180 seconds, no vectors')
+    coverage.add_argument('--work', type=Path, default=Path('work'))
+    coverage.add_argument('--output', type=Path, default=Path('artifacts/coverage.json'))
     prepare = subs.add_parser('prepare', help='Pinned real Yambda-50M feedback')
     prepare.add_argument('--work', type=Path, default=Path('work'))
     prepare.add_argument('--max-users', type=int, default=10_000)
@@ -73,6 +86,8 @@ def main(argv=None):
                          help='0 removes the row limit; byte/time limits still apply')
     extract.add_argument('--max-read-mib', type=int, default=512)
     extract.add_argument('--max-seconds', type=int, default=600)
+    extract.add_argument('--row-groups', type=parse_row_groups,
+                         help='Explicit comma-separated ordinals, e.g. 29; same byte/time limits')
     fit = subs.add_parser('train', help='Fit once, report user-disjoint holdout')
     fit.add_argument('--work', type=Path, default=Path('work'))
     fit.add_argument('--output', type=Path, default=Path('artifacts/model.json'))
@@ -80,6 +95,21 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.command == 'probe':
         probe(args.output)
+    elif args.command == 'coverage':
+        import pyarrow.parquet as pq
+        from .coverage import coverage_report
+        prep = json.loads((args.work/'prepare.json').read_text())
+        if (prep.get('source') != 'yandex/yambda' or prep.get('revision') != REVISION
+                or prep.get('pairs_sha256') != digest(args.work/'pairs.jsonl')):
+            raise ValueError('Missing or inconsistent real-data provenance')
+        # Remove stale diagnostics before a new bounded attempt.
+        args.output.unlink(missing_ok=True)
+        with RangeFile('embeddings.parquet', max_bytes=32*MIB, max_seconds=180) as source:
+            with pq.ParquetFile(source, pre_buffer=False) as pf:
+                report = coverage_report(pf, load_pairs(args.work/'pairs.jsonl'))
+            report.update(source='yandex/yambda', revision=REVISION, status='PASS', io=source.stats())
+        receipt(args.output, report)
+        print(json.dumps(report, indent=2))
     elif args.command == 'prepare':
         if not 1 <= args.max_users <= 10_000:
             raise ValueError('max-users must be in 1..10000')
@@ -111,7 +141,8 @@ def main(argv=None):
                   'revision': REVISION, 'status': 'FAIL'}
         try:
             vectors = extract_needed_embeddings(args.parquet, ids, max_batches=args.max_batches,
-                        max_read_mib=args.max_read_mib, max_seconds=args.max_seconds, report=report)
+                        max_read_mib=args.max_read_mib, max_seconds=args.max_seconds, report=report,
+                        row_groups=args.row_groups)
             num, dimension = save_vectors(args.work/'vectors.npz', vectors)
             report.update(status='PASS', found_ids=num, dimension=dimension,
                           vectors_sha256=digest(args.work/'vectors.npz'))

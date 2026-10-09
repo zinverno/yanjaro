@@ -1,18 +1,14 @@
-name: Yanjaro acoustic training (manual research)
+name: Yanjaro acoustic probe (manual research)
 
 on:
   workflow_dispatch:
     inputs:
       mode:
-        description: Probe first; training uses real data and can fail on coverage/limits
+        description: Only bounded probe is approved; training requires a separate review
         type: choice
-        options: [probe, train-bounded, train-full]
+        options: [probe]
         default: probe
-      max_read_mib:
-        description: Embedding scan payload ceiling (MiB), separate from 128 MiB probe
-        type: choice
-        options: ['512', '1024', '4096', '8192']
-        default: '512'
+        required: true
 
 permissions:
   contents: read
@@ -21,21 +17,26 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  research:
+  probe:
     runs-on: ubuntu-24.04
-    timeout-minutes: 85
+    timeout-minutes: 10
+    env:
+      MODE: ${{ inputs.mode }}
+      OPENBLAS_NUM_THREADS: '2'
+      OMP_NUM_THREADS: '2'
     defaults:
       run:
         working-directory: experiments/remote-acoustic
         shell: bash
-    env:
-      OPENBLAS_NUM_THREADS: '2'
-      OMP_NUM_THREADS: '2'
-      HF_HUB_DISABLE_TELEMETRY: '1'
-      HF_HUB_DISABLE_IMPLICIT_TOKEN: '1'
-      MODE: ${{ inputs.mode }}
-      MAX_READ_MIB: ${{ inputs.max_read_mib }}
     steps:
+      - name: Validate mode and experimental ref before any checkout or network work
+        id: gate
+        working-directory: .
+        run: |
+          if [ "$MODE" != probe ] || [ "$GITHUB_REF" != refs/heads/experiment/remote-acoustic-yambda ]; then
+            echo 'Only mode=probe on experiment/remote-acoustic-yambda is approved.' >&2
+            exit 2
+          fi
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
@@ -44,65 +45,25 @@ jobs:
           python-version: '3.12'
       - name: Install isolated research dependencies
         run: python -m pip install --disable-pip-version-check '.[train,serve,test]'
-      - name: Tests and notebook validation (synthetic, not model evidence)
+      - name: All tests and notebook validation (synthetic, no training evidence)
         run: |
-          timeout 120 python -m pytest -q
+          timeout --kill-after=10s 120s python -m pytest -q -o faulthandler_timeout=30
           python scripts/validate_notebook.py
-      - name: Probe actual range reads and schema (128 MiB / 180 seconds)
+      - name: Probe actual ranges and schema (128 MiB / 180-second I/O deadline)
         run: |
           ulimit -v 6291456
           timeout --kill-after=10s 4m python -m remote_acoustic.cli probe
-      - name: Check budget before training
-        if: inputs.mode != 'probe'
+      - name: Add aggregate probe report to job summary
+        if: always() && steps.gate.outcome == 'success'
         run: |
-          python scripts/check_training_budget.py --mode "$MODE" --max-read-mib "$MAX_READ_MIB"
-      - name: Prepare real feedback pairs (two small files, 32 MiB each maximum)
-        if: inputs.mode != 'probe'
-        run: |
-          ulimit -v 6291456
-          timeout --kill-after=10s 8m python -m remote_acoustic.cli prepare --work work
-      - name: Extract under enforced byte, time and memory limits
-        if: inputs.mode != 'probe'
-        run: |
-          ulimit -v 6291456
-          batches=64
-          if [ "$MODE" = train-full ]; then batches=0; fi
-          timeout --kill-after=10s 62m python -m remote_acoustic.cli extract \
-            --work work --max-batches "$batches" --max-read-mib "$MAX_READ_MIB" --max-seconds 3600
-      - name: Fit once and evaluate untouched holdout users
-        if: inputs.mode != 'probe'
-        run: |
-          ulimit -v 6291456
-          timeout --kill-after=10s 5m python -m remote_acoustic.cli train \
-            --work work --output artifacts/model.json --min-covered-pairs 100
-      - name: Save aggregate diagnostics (no IDs, events or vectors)
-        if: always()
-        run: |
-          mkdir -p artifacts
-          for report in prepare extract; do
-            if test -f "work/$report.json"; then cp "work/$report.json" "artifacts/$report.json"; fi
-          done
-          python -m pip freeze > artifacts/environment.txt
-          python scripts/summarize_run.py >> "$GITHUB_STEP_SUMMARY"
-      - name: Preserve diagnostics even when probe or training fails
-        if: always()
+          if test -f artifacts/probe.json; then
+            cat artifacts/probe.json >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Preserve aggregate diagnostics, never IDs or vectors
+        if: always() && steps.gate.outcome == 'success'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: yanjaro-acoustic-report-${{ github.run_id }}-${{ github.run_attempt }}
-          path: |
-            experiments/remote-acoustic/artifacts/probe.json
-            experiments/remote-acoustic/artifacts/prepare.json
-            experiments/remote-acoustic/artifacts/extract.json
-            experiments/remote-acoustic/artifacts/environment.txt
+          name: yanjaro-acoustic-probe-${{ github.run_id }}-${{ github.run_attempt }}
+          path: experiments/remote-acoustic/artifacts/probe.json
           retention-days: 14
           if-no-files-found: warn
-      - name: Save real model and held-out metrics only after successful training
-        if: success() && inputs.mode != 'probe'
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: yanjaro-yambda-model-${{ github.run_id }}-${{ github.run_attempt }}
-          path: |
-            experiments/remote-acoustic/artifacts/model.json
-            experiments/remote-acoustic/artifacts/metrics.json
-          retention-days: 30
-          if-no-files-found: error

@@ -1,0 +1,1180 @@
+{
+  "interpretation": "ID-only structural coverage, not validated vectors or trained-model metrics",
+  "selection_rule": "maximize training complete-pair count within 512 MiB; then minimize bytes; ordinal tie break",
+  "dataset_rows": 7721749,
+  "dataset_row_groups": 30,
+  "id_column_compressed_bytes": 31010963,
+  "pairs_in_source": 45565,
+  "required_ids": 67418,
+  "required_ids_found": 63998,
+  "required_ids_missing": 3420,
+  "pairs_missing_ids_even_after_full_scan": 13394,
+  "full_projection_bytes": 7969776991,
+  "single_group": [
+    {
+      "groups": [
+        0
+      ],
+      "projected_vector_and_id_bytes": 270564268,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        1
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        2
+      ],
+      "projected_vector_and_id_bytes": 270564280,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        3
+      ],
+      "projected_vector_and_id_bytes": 270564284,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        4
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        5
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        6
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        7
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        8
+      ],
+      "projected_vector_and_id_bytes": 270563256,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        9
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        10
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        11
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        12
+      ],
+      "projected_vector_and_id_bytes": 270564281,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        13
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        14
+      ],
+      "projected_vector_and_id_bytes": 270564281,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        15
+      ],
+      "projected_vector_and_id_bytes": 270564282,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        16
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        17
+      ],
+      "projected_vector_and_id_bytes": 270564282,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        18
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        19
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        20
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        21
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        22
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        23
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        24
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        25
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        26
+      ],
+      "projected_vector_and_id_bytes": 270564284,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        27
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        28
+      ],
+      "projected_vector_and_id_bytes": 270564286,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        29
+      ],
+      "projected_vector_and_id_bytes": 123413773,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    }
+  ],
+  "physical_prefix": [
+    {
+      "groups": [
+        0
+      ],
+      "projected_vector_and_id_bytes": 270564268,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        0,
+        1
+      ],
+      "projected_vector_and_id_bytes": 541128554,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2
+      ],
+      "projected_vector_and_id_bytes": 811692834,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "projected_vector_and_id_bytes": 1082257118,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "projected_vector_and_id_bytes": 1352821404,
+      "structural_complete_pairs": 0,
+      "train_pairs": 0,
+      "holdout_pairs": 0,
+      "train_users": 0,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "projected_vector_and_id_bytes": 1623385690,
+      "structural_complete_pairs": 2,
+      "train_pairs": 2,
+      "holdout_pairs": 0,
+      "train_users": 2,
+      "holdout_users": 0
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "projected_vector_and_id_bytes": 1893949976,
+      "structural_complete_pairs": 4,
+      "train_pairs": 3,
+      "holdout_pairs": 1,
+      "train_users": 3,
+      "holdout_users": 1
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "projected_vector_and_id_bytes": 2164514262,
+      "structural_complete_pairs": 8,
+      "train_pairs": 6,
+      "holdout_pairs": 2,
+      "train_users": 6,
+      "holdout_users": 2
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "projected_vector_and_id_bytes": 2435077518,
+      "structural_complete_pairs": 12,
+      "train_pairs": 10,
+      "holdout_pairs": 2,
+      "train_users": 8,
+      "holdout_users": 2
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "projected_vector_and_id_bytes": 2705641804,
+      "structural_complete_pairs": 15,
+      "train_pairs": 13,
+      "holdout_pairs": 2,
+      "train_users": 11,
+      "holdout_users": 2
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "projected_vector_and_id_bytes": 2976206090,
+      "structural_complete_pairs": 31,
+      "train_pairs": 29,
+      "holdout_pairs": 2,
+      "train_users": 17,
+      "holdout_users": 2
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "projected_vector_and_id_bytes": 3246770376,
+      "structural_complete_pairs": 47,
+      "train_pairs": 41,
+      "holdout_pairs": 6,
+      "train_users": 25,
+      "holdout_users": 6
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "projected_vector_and_id_bytes": 3517334657,
+      "structural_complete_pairs": 58,
+      "train_pairs": 50,
+      "holdout_pairs": 8,
+      "train_users": 29,
+      "holdout_users": 8
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "projected_vector_and_id_bytes": 3787898943,
+      "structural_complete_pairs": 89,
+      "train_pairs": 74,
+      "holdout_pairs": 15,
+      "train_users": 43,
+      "holdout_users": 12
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "projected_vector_and_id_bytes": 4058463224,
+      "structural_complete_pairs": 122,
+      "train_pairs": 100,
+      "holdout_pairs": 22,
+      "train_users": 63,
+      "holdout_users": 16
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "projected_vector_and_id_bytes": 4329027506,
+      "structural_complete_pairs": 163,
+      "train_pairs": 133,
+      "holdout_pairs": 30,
+      "train_users": 84,
+      "holdout_users": 22
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "projected_vector_and_id_bytes": 4599591792,
+      "structural_complete_pairs": 273,
+      "train_pairs": 224,
+      "holdout_pairs": 49,
+      "train_users": 120,
+      "holdout_users": 30
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "projected_vector_and_id_bytes": 4870156074,
+      "structural_complete_pairs": 414,
+      "train_pairs": 334,
+      "holdout_pairs": 80,
+      "train_users": 173,
+      "holdout_users": 52
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "projected_vector_and_id_bytes": 5140720360,
+      "structural_complete_pairs": 687,
+      "train_pairs": 551,
+      "holdout_pairs": 136,
+      "train_users": 268,
+      "holdout_users": 70
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "projected_vector_and_id_bytes": 5411284646,
+      "structural_complete_pairs": 1066,
+      "train_pairs": 825,
+      "holdout_pairs": 241,
+      "train_users": 356,
+      "holdout_users": 101
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "projected_vector_and_id_bytes": 5681848932,
+      "structural_complete_pairs": 1647,
+      "train_pairs": 1278,
+      "holdout_pairs": 369,
+      "train_users": 489,
+      "holdout_users": 137
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "projected_vector_and_id_bytes": 5952413218,
+      "structural_complete_pairs": 2406,
+      "train_pairs": 1843,
+      "holdout_pairs": 563,
+      "train_users": 674,
+      "holdout_users": 185
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "projected_vector_and_id_bytes": 6222977504,
+      "structural_complete_pairs": 3351,
+      "train_pairs": 2570,
+      "holdout_pairs": 781,
+      "train_users": 894,
+      "holdout_users": 229
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "projected_vector_and_id_bytes": 6493541790,
+      "structural_complete_pairs": 4927,
+      "train_pairs": 3870,
+      "holdout_pairs": 1057,
+      "train_users": 1145,
+      "holdout_users": 301
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ],
+      "projected_vector_and_id_bytes": 6764106076,
+      "structural_complete_pairs": 7230,
+      "train_pairs": 5678,
+      "holdout_pairs": 1552,
+      "train_users": 1463,
+      "holdout_users": 381
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "projected_vector_and_id_bytes": 7034670362,
+      "structural_complete_pairs": 10180,
+      "train_pairs": 8031,
+      "holdout_pairs": 2149,
+      "train_users": 1802,
+      "holdout_users": 467
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "projected_vector_and_id_bytes": 7305234646,
+      "structural_complete_pairs": 14231,
+      "train_pairs": 11300,
+      "holdout_pairs": 2931,
+      "train_users": 2147,
+      "holdout_users": 548
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "projected_vector_and_id_bytes": 7575798932,
+      "structural_complete_pairs": 19205,
+      "train_pairs": 15118,
+      "holdout_pairs": 4087,
+      "train_users": 2517,
+      "holdout_users": 647
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "projected_vector_and_id_bytes": 7846363218,
+      "structural_complete_pairs": 27508,
+      "train_pairs": 21765,
+      "holdout_pairs": 5743,
+      "train_users": 2888,
+      "holdout_users": 748
+    },
+    {
+      "groups": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "projected_vector_and_id_bytes": 7969776991,
+      "structural_complete_pairs": 32171,
+      "train_pairs": 25437,
+      "holdout_pairs": 6734,
+      "train_users": 3056,
+      "holdout_users": 800
+    }
+  ],
+  "budget_mib": 512,
+  "metadata_reserve_bytes": 1048576,
+  "feasible_group_sets": 59,
+  "best_within_budget": {
+    "groups": [
+      29
+    ],
+    "projected_vector_and_id_bytes": 123413773,
+    "structural_complete_pairs": 0,
+    "train_pairs": 0,
+    "holdout_pairs": 0,
+    "train_users": 0,
+    "holdout_users": 0
+  },
+  "full_id_coverage": {
+    "groups": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ],
+    "projected_vector_and_id_bytes": 7969776991,
+    "structural_complete_pairs": 32171,
+    "train_pairs": 25437,
+    "holdout_pairs": 6734,
+    "train_users": 3056,
+    "holdout_users": 800
+  },
+  "source": "yandex/yambda",
+  "revision": "dd6f3a19eef5866e346c3270e098baa641a44948",
+  "date": "2026-10-09",
+  "status": "PASS",
+  "method": "ID-only chunks from all 30 groups, curl HTTP 206 with exact Content-Range and length validation; no new vectors read",
+  "new_network_payload_bytes": 30530747,
+  "reused_id_payload_bytes": 480216,
+  "network_budget_bytes": 33554432,
+  "analysis_seconds": 1.1309397620207164,
+  "peak_rss_kib": 225432,
+  "trained_model_status": "NOT RUN",
+  "max_structural_pairs_within_budget": 0,
+  "max_train_pairs_within_budget": 0,
+  "id_chunk_manifest_sha256": "955a3d03392e2c615f80004c40e5e16f7806a7e9248464190dc7567bcab1454c"
+}

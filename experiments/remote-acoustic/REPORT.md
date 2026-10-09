@@ -1,52 +1,66 @@
-# Remote acoustic experiment report — 2026-10-08
+# Remote acoustic blocker report — 2026-10-09
 
-Base: `zinverno/yanjaro` main `1c83c3776de565ed57416015f32a7ddd999af29f`.
-Branch: `experiment/remote-acoustic-yambda`. Draft/unmerged; published `v0.2.0rc4`, production manifests, player, Release and AUR are outside this diff. No Render deployment.
+Work continues from PR #7 HEAD `079a9b41c8b194f31783a65d8748573b97bb93dc`, verified before changes. Branch: `experiment/remote-acoustic-yambda`. PR #6/#7 remain draft/unmerged. Registration is isolated in [draft PR #8](https://github.com/zinverno/yanjaro/pull/8), branch `ci/register-acoustic-probe`, based on main `1c83c3776de565ed57416015f32a7ddd999af29f`; it adds **only one workflow file**. No published player, Release, AUR or Render changes.
 
-## Real-data evidence
+## Test reliability — PASS
 
-Pinned dataset: [`yandex/yambda@dd6f3a19eef5866e346c3270e098baa641a44948`](https://huggingface.co/datasets/yandex/yambda/tree/dd6f3a19eef5866e346c3270e098baa641a44948).
+The old first HTTP test reproducibly hung in TestClient's AnyIO blocking portal and was terminated after 20 seconds. A minimal `socket.socketpair().send()` reproduced `PermissionError: EPERM` in this execution environment. CPython's asyncio `_write_to_self()` catches that `OSError`, leaving its selector thread asleep while TestClient waits for a future. This is an environment-dependent wakeup failure, not evidence that ranking computation deadlocked.
 
-| Check | Result |
-|---|---|
-| Parquet metadata and bounded range reads | PASS: HTTP 206; 123,424,184 bytes read, below 128 MiB |
-| Embedding table | 7,721,749 rows, 30 row groups, 13,814,230,943-byte full object |
-| Actual schema | `item_id: uint32`; `embed` and `normalized_embed`: `large_list<double>` |
-| Actual normalized vectors | 256 decoded sample rows, dimension 128, finite; norm range 0.9999999999999998–1.0000000000000007 |
-| Feedback input | 881,456 likes (7,180,817 bytes), 107,776 dislikes (990,007 bytes); uint32 uid/timestamp/item_id, uint8 is_organic |
-| Historical pair preparation | PASS: 45,565 pairs, 67,418 required IDs, 4,376 users; context precedes both targets and excludes them |
-| User-disjoint split before audio matching | Train: 35,741 pairs / 3,476 users; holdout: 9,824 pairs / 900 users |
-| Audio coverage from sampled group 29 | 1,018 required IDs; **0 complete pairs**, 45,565 missing |
-| Real training, cosine/learned holdout accuracy, weights | **NOT RUN / unavailable**: probe coverage is insufficient |
-| HfFileSystem in this environment | BLOCKED: `ConnectError`; no full-download fallback |
-| Integrated strict-range CLI on hosted runner / Colab | NOT RUN |
+All three HTTP test functions and their health/authentication/ranking/schema/duplicate/dimension assertions are preserved. They now use [FastAPI's documented HTTPX AsyncClient + ASGITransport pattern](https://fastapi.tiangolo.com/advanced/async-tests/) in one event loop. The two handlers perform only bounded in-memory work (at most 64 candidates × 2048 coordinates), so they use `async def` without worker-thread dispatch. Model loading remains before normal request handling. No dependency downgrade, socket monkeypatch, policy change, skip, xfail or removed test was used. This is not an API deployment or load-test result.
 
-Machine-readable [range/schema report](reports/real-data-probe.json) and [feedback preparation report](reports/real-feedback-prepare.json) contain file/range hashes and aggregate counts, never user IDs or vectors. Small feedback files were downloaded with explicit size/time limits, then the actual `read_events` and `build_pairs` functions were run. This is local real-data preparation, not a claimed remote `prepare` execution.
+Full local suite: **40 passed, zero skips**. Notebook: 12 cells, structure and Python syntax PASS; Colab execution NOT RUN. [Initial hosted experiment CI](https://github.com/zinverno/yanjaro/actions/runs/37872201042) passed all 23 then-existing tests at `630bed08243074e3442f71badbf3e0663de2ef68`, on Python 3.12, FastAPI 0.143.0, Starlette 1.7.0, AnyIO 4.15.1, NumPy 2.5.3, PyArrow 25.0.1. The expanded final suite is a required job in the new experiment workflow; check the exact final HEAD run linked in PR #7. Arch/Manjaro PASS at the supplied starting SHA verifies distribution builds only.
 
-The range probe downloaded the footer (8 + 10,403 bytes), last-group IDs (480,216 bytes) and last-group normalized vectors (122,933,557 bytes). Arrow decoded a sparse local assembly of only those ranges; the full 13.8 GB object was never downloaded. All 119,573 rows in that already downloaded group were subsequently checked for required-ID coverage without more network traffic. Total feedback plus embedding payload: 131,595,008 bytes, excluding small metadata APIs/data card and source/dependency retrieval.
+New PR CI is limited by paths to this experiment and its workflows. It runs all tests and notebook validation, with a 120-second process timeout and diagnostic traceback at 30 seconds. It does not fetch Yambda, start a hosted probe or train real weights. Root packaging CI is unchanged. [Diagnosis receipt](reports/test-hang-diagnosis.json).
 
-## Resource decision
+## Real embedding coverage — PASS analysis, FAIL training feasibility at 512 MiB
 
-Only `item_id` and `normalized_embed` are needed. Their compressed full-table projection is **7,969,776,991 bytes (7.42 GiB)** plus metadata requests. This avoids reading the unused `embed` column, not a guarantee of cheap full training.
+Dataset remains pinned to [`dd6f3a19eef5866e346c3270e098baa641a44948`](https://huggingface.co/datasets/yandex/yambda/tree/dd6f3a19eef5866e346c3270e098baa641a44948). There are 7,721,749 embedding rows in 30 row groups; uint32 item IDs and 128-dimensional normalized `large_list<double>` vectors. The full object is 13,814,230,943 bytes; the needed ID/vector projection totals 7,969,776,991 bytes.
 
-The 122,933,557-byte vector range took 61.997 seconds. Extrapolation gives ~67 minutes for projected payload; 50% headroom gives ~100 minutes. This is a single local observation, **not a measured GitHub runner duration**. It exceeds the configured 3600-second extraction gate, so no full pass was attempted.
+The original 8.17 MB feedback files were reused and SHA-256 checked. The original pair builder is unchanged: 45,565 strictly historical pairs, context length up to 8, 67,418 required IDs and a fixed user-disjoint split. No shorter context, relabeling or holdout-score tuning was introduced to manufacture coverage.
 
-Measured peak RSS: ~196 MiB for sparse sample decoding, ~238 MiB for feedback preparation. Strict HTTP buffering on a hosted runner is not included in those local measurements. Largest projected group is about 270 MB compressed; HTTP buffering can temporarily hold multiple copies. Selected 67,418 vectors × 128 × float32 have ~33 MiB raw payload; pair features need ~45 MiB at float64, plus dictionaries, temporary arrays and Arrow buffers. A 6 GiB process address-space limit and 1 GiB free-disk preflight leave room without storing the full table. No GPU is required for the 128-weight diagonal optimizer.
+Only the **item_id column** was fetched for the remaining 29 groups. New payload: **30,530,747 bytes**, capped at 32 MiB; prior group-29 IDs (480,216 bytes) were reused. All new responses had exact HTTP 206 Content-Range and expected byte counts. No new vector chunks were downloaded. Raw chunks/events remain in private temporary files, outside Git and public artifacts.
 
-[GitHub's public standard Linux runner](https://docs.github.com/en/actions/reference/runners/github-hosted-runners) is documented as 4 CPU / 16 GB RAM / 14 GB SSD. Public standard-runner use is free; private repositories use account minutes. The repository is public, but actual runner throughput and limits have not been measured. The workflow enforces a fresh probe, byte/time/memory limits and an 85-minute job timeout. No automatic retries or synthetic substitutes.
+Found required IDs: **63,998**. Missing from the entire embedding table: **3,420**, making **13,394 pairs structurally impossible** even after a full vector pass. Full-table ID coverage would permit at most **32,171 pairs**: 25,437 train / 6,734 holdout, 3,056 / 800 users. These are **ID-only upper bounds**, before validating actual vector values; they are not fit/evaluation metrics.
 
-## Integration and validation
+Every feasible set under the existing 512 MiB cap was enumerated: 30 single groups and 29 pairs consisting of one ordinary group plus the smaller last group. All **59 sets yield zero structurally complete pairs**. Set selection uses training pair counts only, then byte cost and ordinal tie-breaking; holdout counts are reported afterward.
 
-- Imported the standalone project into `experiments/remote-acoustic/`; root training workflow installs from this subdirectory. The live player and existing distribution workflow are unchanged.
-- Fixed the extra-batch read at `max_batches`, added strict HTTP response/byte/deadline checks, fixed source provenance and stale-artifact handling, and recorded split user counts plus separate metrics.
-- Probe is the default manual mode. A bounded training attempt may fail on missing context vectors; a full attempt must pass the resource preflight. Failure is preserved as failure, with aggregate reports.
-- Tests: 20 passed locally, including all data/model tests, strict-range regression tests and server startup rejection. Fixtures are synthetic and are not model-quality evidence.
-- Three synchronous TestClient HTTP tests could not complete locally: even the original first `/healthz` test hung in the AnyIO blocking portal; the diagnostic run was terminated at 40 seconds. API source is unchanged. These tests remain required by the workflow (120-second suite timeout); they were not weakened or skipped there.
-- Notebook: PASS for JSON/cell structure and Python syntax (12 cells); Colab execution NOT RUN. Workflow YAML parsed, manual-only event and read-only contents permissions checked; hosted execution NOT RUN.
-- PyArrow upper bound widened from `<24` to `<26` to include the available/tested 25.0.1. Local environment: Python 3.12.13, NumPy 2.2.6, PyArrow 25.0.1, pytest 9.1.1, FastAPI 0.141.1, Starlette 1.7.0, HTTPX 0.28.1. An isolated temporary venv was used; system Python was not changed.
+| Physical prefix | Projected ID/vector payload | Structural pairs: train / holdout | Users: train / holdout |
+|---|---:|---:|---:|
+| Groups 0–13 | 3,787,898,943 B | 74 / 15 | 43 / 12 |
+| Groups 0–14 | 4,058,463,224 B | 100 / 22 | 63 / 16 |
+| Groups 0–15 | 4,329,027,506 B | 133 / 30 | 84 / 22 |
+| Groups 0–19 | 5,411,284,646 B | 825 / 241 | 356 / 101 |
+| All groups | 7,969,776,991 B | 25,437 / 6,734 | 3,056 / 800 |
 
-## Next gate
+The extractor now accepts explicit `--row-groups`, rejects invalid/duplicate ordinals and keeps the same byte/time limits. The real group-29 check reused already verified cached ranges: 119,573 rows read, 1,018 matched IDs, dimension 128, **zero additional network bytes**. It validates selected-group extraction, not the integrated transport on GitHub. Tests verify that other groups are not selected and the coverage planner reads no vector column.
 
-[GitHub requires the dispatch workflow on the default branch](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow). Only the existing clean-distribution workflow is registered on `main`; this experimental training path returned 404 before publication. No merge or default-branch change is authorized in this handoff.
+Evidence: [complete aggregate coverage curve](reports/real-id-coverage.json), [selected-group extraction](reports/selected-group-extraction.json), [original range probe](reports/real-data-probe.json), [original feedback preparation](reports/real-feedback-prepare.json). The remote `coverage` command has a 32 MiB / 180-second ID-only cap and real-input provenance checks; hosted execution remains NOT RUN.
 
-The next owner decision is to register the reviewed manual workflow on `main` separately, then run `mode=probe` against the experimental ref. Only a successful remote probe/resource gate can precede a real training attempt. Save successful `model.json` and `metrics.json` from its artifact, compare holdout accuracy honestly, and review the weights before the separate Render stage. Missing weights currently block that stage.
+## Scaling design — proposal only, NOT RUN
+
+A small change with a useful ceiling is sequential row-group tasks in **one remote job**: one pinned revision, one immutable pair/split manifest, one shared cumulative byte/deadline budget, and one temporary vector bank. Each task requests only the chosen group's ID/normalized columns, retains required vectors and checks finite values/dimension. It stops before an over-budget request. Failed work does not produce model weights. A final fit happens once after enough complete real pairs are available; all raw state dies with the worker. Public outputs are aggregate coverage/resource receipts and, only after success, real weights plus holdout metrics.
+
+For cross-job or parallel work, independent jobs cannot train from mostly incomplete per-group examples. A coordinator would assign disjoint group ranges and reserve a **single approved total budget**, including retries and metadata. Joining vectors would require explicitly approved private storage or a private persistent worker, with least-privilege access, matching revision/pair checksums, atomic completion receipts and deletion after the join. No public Actions artifacts or caches may transport IDs, events or vectors. Such storage, credentials, jobs and automatic retries have **not** been provisioned. Splitting a 7.97 GB transfer into many jobs does not reduce its total traffic and is not permission to bypass a total cap.
+
+The first sizing candidate is a fixed prefix 0–14, whose structural ceiling is 122 pairs (100 train / 22 holdout). It requires about 4.06 GB plus a probe, feedback and metadata, **well above the current 512 MiB extraction cap**. At the old local range rate, projected payload time is ~34.1 minutes, ~51.2 minutes with 50% headroom, excluding setup/fit. The 22 holdout pairs from 16 users support only a first pipeline experiment, not a strong quality claim. Vector validation may reduce these counts. This is a conditional sizing option, **not an approved training plan or a runner measurement**.
+
+After owner-approved registration and a successful hosted probe, replace that old rate with the actual runner rate and propose one fixed group set, explicit aggregate bytes/time caps, minimum complete train/holdout counts, failure rules, tested dependency versions and artifact retention. Ask for separate approval before any larger vector budget or training. The previous 60-minute full-scan gate would reject the old ~67-minute full projection (~100 minutes with headroom).
+
+[GitHub documents public standard runners as free](https://docs.github.com/en/actions/reference/runners/github-hosted-runners), currently 4 CPU / 16 GB RAM / 14 GB SSD for ubuntu-24.04. A candidate public standard-runner execution requests no GPU or paid runner; private storage/account-specific charges are unmeasured and not authorized. No claim of an actual bill or hosted throughput is made.
+
+## Workflow review and registration — PASS preparation, NOT RUN merge/probe
+
+The file in PR #8 is byte-identical to the reviewed manual workflow in PR #7. It has only `workflow_dispatch`, `contents: read`, full-SHA action pins and `persist-credentials: false`. The only input is `mode=probe`. A shell guard rejects every other mode, main, tags and arbitrary refs before checkout. Inputs are quoted environment variables, never interpolated into shell source. Unit tests execute rejection of training mode and command-injection payloads. The workflow has no training, feedback preparation, vector-extraction or deployment command.
+
+Limits are unchanged or reduced: 128 MiB probe payload, 180-second I/O deadline, 4-minute probe process timeout, 6 GiB process address space, and a 10-minute whole-job timeout. Upload path is exactly aggregate `artifacts/probe.json` with 14-day retention; no directory glob or raw-data artifact. Automatic PR CI is a separate test-only workflow, not a trigger on this manual workflow.
+
+[GitHub requires default-branch registration](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow). After explicit approval and merge of **PR #8 only**, run:
+
+```sh
+gh workflow run yanjaro-remote-train.yml \
+  --repo zinverno/yanjaro \
+  --ref experiment/remote-acoustic-yambda \
+  -f mode=probe
+```
+
+Running on main intentionally fails; the implementation remains in draft PR #7. No probe was dispatched during this follow-up. No full vector pass, real fit, weights, held-out accuracy or deployment exists yet. The next decision is registration approval; the real training budget follows measured hosted evidence.

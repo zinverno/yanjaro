@@ -1,0 +1,18 @@
+{
+  "source": "yandex/yambda",
+  "revision": "dd6f3a19eef5866e346c3270e098baa641a44948",
+  "method": "Actual extract_needed_embeddings(row_groups=[29]) over cached verified HTTP ranges; zero new vector traffic",
+  "new_network_bytes": 0,
+  "rows_read": 119573,
+  "dataset_rows": 7721749,
+  "complete_scan": false,
+  "row_groups_requested": [
+    29
+  ],
+  "selected_rows": 119573,
+  "wanted_ids": 67418,
+  "found_ids": 1018,
+  "max_batches": 0,
+  "status": "PASS",
+  "dimension": 128
+}
