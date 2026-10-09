@@ -23,6 +23,7 @@ async function page(context) {
   p.on('pageerror',e=>errors.push(e.message));
   await p.route('**/*',r=> {
     const u=r.request().url();
+    if(u==='https://recruitment.invalid/') return r.fulfill({contentType:'text/html',body:`<a href="${base}/">Open listening study</a>`});
     if(u.startsWith(base+'/') || /^(data:|blob:)/.test(u)) return r.continue();
     outbound.push(u); return r.abort();
   });
@@ -50,7 +51,10 @@ async function state(context) {return (await context.request.get(base+'/api/stat
 (async()=>{
   await serve(); desktop=await chromium.launch();
   const ctx=await desktop.newContext({viewport:{width:1200,height:1000}});
-  let p=await page(ctx); await p.goto(base); await wait(p,'#restore-card');
+  let p=await page(ctx);
+  await p.goto('https://recruitment.invalid/');
+  await p.locator('a').click(); await wait(p,'#restore-card');
+  checks.push('cross-site recruitment link opens landing page without allocating a session');
   assert.equal((await ctx.cookies()).length,0);
   assert.equal((await state(ctx)).status,'new');
   await p.locator('#decline').click(); await wait(p,'#withdrawn');

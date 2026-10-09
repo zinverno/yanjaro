@@ -54,7 +54,12 @@ def make_server(study, slot=0, prompt="next", port=8765, *, collection=None):
             if self.headers.get("Host") != urlsplit(origin).netloc:
                 self.reply(403, b"Use the printed loopback address", "text/plain")
                 return False
-            if self.headers.get("Origin", "" if mutation else origin) != origin or self.headers.get("Sec-Fetch-Site") == "cross-site":
+            # Recruitment links arrive cross-site. Allow only a top-level landing document, never an API mutation.
+            landing = (not mutation and urlsplit(self.path).path == "/"
+                       and self.headers.get("Sec-Fetch-Mode") == "navigate"
+                       and self.headers.get("Sec-Fetch-Dest") == "document" and not self.headers.get("Origin"))
+            if not landing and (self.headers.get("Origin", "" if mutation else origin) != origin
+                                or self.headers.get("Sec-Fetch-Site") == "cross-site"):
                 self.reply(403, b"Cross-origin access refused", "text/plain")
                 return False
             return True
