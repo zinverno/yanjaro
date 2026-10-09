@@ -1,0 +1,69 @@
+name: Yanjaro acoustic probe (manual research)
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Only bounded probe is approved; training requires a separate review
+        type: choice
+        options: [probe]
+        default: probe
+        required: true
+
+permissions:
+  contents: read
+concurrency:
+  group: yanjaro-remote-acoustic
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      MODE: ${{ inputs.mode }}
+      OPENBLAS_NUM_THREADS: '2'
+      OMP_NUM_THREADS: '2'
+    defaults:
+      run:
+        working-directory: experiments/remote-acoustic
+        shell: bash
+    steps:
+      - name: Validate mode and experimental ref before any checkout or network work
+        id: gate
+        working-directory: .
+        run: |
+          if [ "$MODE" != probe ] || [ "$GITHUB_REF" != refs/heads/experiment/remote-acoustic-yambda ]; then
+            echo 'Only mode=probe on experiment/remote-acoustic-yambda is approved.' >&2
+            exit 2
+          fi
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install isolated research dependencies
+        run: python -m pip install --disable-pip-version-check '.[train,serve,test]'
+      - name: All tests and notebook validation (synthetic, no training evidence)
+        run: |
+          timeout --kill-after=10s 120s python -m pytest -q -o faulthandler_timeout=30
+          python scripts/validate_notebook.py
+      - name: Probe actual ranges and schema (128 MiB / 180-second I/O deadline)
+        run: |
+          ulimit -v 6291456
+          timeout --kill-after=10s 4m python -m remote_acoustic.cli probe
+      - name: Add aggregate probe report to job summary
+        if: always() && steps.gate.outcome == 'success'
+        run: |
+          if test -f artifacts/probe.json; then
+            cat artifacts/probe.json >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Preserve aggregate diagnostics, never IDs or vectors
+        if: always() && steps.gate.outcome == 'success'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: yanjaro-acoustic-probe-${{ github.run_id }}-${{ github.run_attempt }}
+          path: experiments/remote-acoustic/artifacts/probe.json
+          retention-days: 14
+          if-no-files-found: warn
