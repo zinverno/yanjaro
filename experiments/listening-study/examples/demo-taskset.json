@@ -1,0 +1,82 @@
+{
+  "schema": "yanjaro.listening.v0.1",
+  "study_id": "demo-v0_1",
+  "demo": true,
+  "phase": "demo",
+  "seed": 20261009,
+  "assignment_version": "schedule-v1",
+  "policy": {
+    "id": "screen-v1",
+    "rhythm_near_max": 0.3,
+    "rhythm_far_mean": 0.65,
+    "rhythm_far_dimensions": 2,
+    "tag_near_each": 0.5,
+    "tag_far_each": 0.1,
+    "scales": {
+      "tempo_log2": 0.25,
+      "onset_log2": 1.0,
+      "regularity": 0.3,
+      "onset_strength": 0.4,
+      "energy_db": 6.0,
+      "dynamic_range_db": 8.0
+    }
+  },
+  "trials": [
+    {
+      "id": "t00",
+      "kind": "primary",
+      "source": "d000",
+      "first": "d001",
+      "second": "d002"
+    },
+    {
+      "id": "t01",
+      "kind": "primary",
+      "source": "d010",
+      "first": "d011",
+      "second": "d012"
+    },
+    {
+      "id": "t02",
+      "kind": "primary",
+      "source": "d020",
+      "first": "d021",
+      "second": "d022"
+    },
+    {
+      "id": "t03",
+      "kind": "primary",
+      "source": "d030",
+      "first": "d031",
+      "second": "d032"
+    },
+    {
+      "id": "t04",
+      "kind": "primary",
+      "source": "d040",
+      "first": "d041",
+      "second": "d042"
+    },
+    {
+      "id": "t05",
+      "kind": "primary",
+      "source": "d050",
+      "first": "d051",
+      "second": "d052"
+    },
+    {
+      "id": "t06",
+      "kind": "control",
+      "source": "d060",
+      "first": "d061",
+      "second": "d062"
+    },
+    {
+      "id": "t07",
+      "kind": "control",
+      "source": "d070",
+      "first": "d071",
+      "second": "d072"
+    }
+  ]
+}

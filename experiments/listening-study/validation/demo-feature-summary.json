@@ -1,0 +1,60 @@
+{
+  "demo": true,
+  "schema": "yanjaro.listening.v0.1",
+  "study_id": "demo-v0_1",
+  "study_sha256": "c5832f4780cbdde32b0b1121367fa58a9216ec9592239ba5170cf7f27d924a3c",
+  "recordings": 24,
+  "seconds_each": 8,
+  "primary_tasks": 6,
+  "control_tasks": 2,
+  "unknown_bpm": 0,
+  "selected_conditions": {
+    "A": 6,
+    "B": 6,
+    "C": 2,
+    "D": 2
+  },
+  "ranges": {
+    "bpm": [
+      120.0,
+      171.42857142857142
+    ],
+    "onsets_per_second": [
+      1.875,
+      5.625
+    ],
+    "onset_strength": [
+      0.4997190429037196,
+      1.0
+    ],
+    "onset_regularity": [
+      0.7347924698959434,
+      1.0
+    ],
+    "rms_db": [
+      -23.173904627609197,
+      -23.066247817818244
+    ],
+    "dynamic_range_db": [
+      6.947844021799206,
+      63.69292407205926
+    ],
+    "centroid_hz": [
+      182.0722126656699,
+      614.0292263231373
+    ],
+    "rolloff85_hz": [
+      199.4993093922652,
+      625.0
+    ],
+    "spectral_flatness": [
+      0.00026270714141562605,
+      0.003971096220615549
+    ],
+    "low_band_ratio": [
+      0.00037569852383891126,
+      0.9704567915441271
+    ]
+  },
+  "interpretation": "Self-generated signals only; no perceptual validation or real-music claim."
+}
