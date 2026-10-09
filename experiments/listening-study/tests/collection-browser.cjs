@@ -97,6 +97,7 @@ async function state(context) {return (await context.request.get(base+'/api/stat
   await p.unroute('**/api/complete'); await p.locator('#submit').click(); await wait(p,'#reward');
   const complete=await state(ctx);
   assert.equal(complete.status,'complete');
+  assert.equal(await p.locator('#status').textContent(),'');
   assert.deepEqual(complete.response.answers.map(a=>a.choice),['left','skip','neither','skip','skip','skip','skip','skip']);
   assert.equal(await p.locator('#download').isVisible(),false);
   await p.screenshot({path:path.join(out,'collection-finished.png'),fullPage:true,mask:[p.locator('#recovery-code')]});
@@ -123,6 +124,7 @@ async function state(context) {return (await context.request.get(base+'/api/stat
   assert.equal((await state(mctx)).status,'in_progress'); assert.equal(await m.locator('#withdrawn').isVisible(),false);
   await m.unroute('**/api/withdraw'); await m.locator('#withdraw').click(); await wait(m,'#withdrawn');
   assert.equal((await state(mctx)).status,'withdrawn');
+  assert.equal(await m.locator('#status').textContent(),'');
   checks.push('mobile WebKit real playback, neither, reload', 'mobile width and withdrawal failure/retry');
   const bad=await fetch(base+'/api/start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({consent:true,consent_version:'collection-consent-v1'})});
   assert.equal(bad.status,403);

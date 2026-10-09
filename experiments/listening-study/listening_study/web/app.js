@@ -37,6 +37,7 @@ function credits(state) {
   $("reward-code").textContent = state.surveycircle_code || "";
 }
 function accept(state) {
+  $("status").textContent = "";
   savedState = state;
   credits(state);
   if (["withdrawn", "expired", "unavailable"].includes(state.status)) {
