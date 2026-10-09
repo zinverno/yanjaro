@@ -103,6 +103,9 @@ async function exported(p) {
   mobile=await webkit.launch();
   const mobileCtx=await mobile.newContext({...devices['iPhone 13'],acceptDownloads:true});
   const phone=await open(mobileCtx,path.join(temp,'pages/reviewer-2.html'));
+  await phone.screenshot({path:path.join(out,'review-mobile.png'),fullPage:true});
+  if (!await phone.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth))
+    console.error('Mobile overflow:',await phone.evaluate(()=>[...document.querySelectorAll('main *')].filter(e=>e.getBoundingClientRect().right>innerWidth).slice(0,8).map(e=>({tag:e.tagName,id:e.id,width:e.getBoundingClientRect().width}))));
   assert.equal(await phone.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true);
   await phone.locator('#players audio').first().evaluate(a=>a.play());
   await phone.waitForFunction(()=>document.querySelector('#players audio').currentTime>.2);
