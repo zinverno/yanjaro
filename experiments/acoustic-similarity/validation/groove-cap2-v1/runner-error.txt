@@ -1,0 +1,3 @@
+2026-10-11T11:19:48.5665210Z ##[group]Run test -x "$RUNNER_TOOL_CACHE/Python/3.12.13/x64/bin/python3"
+2026-10-11T11:19:48.5666760Z test -x "$RUNNER_TOOL_CACHE/Python/3.12.13/x64/bin/python3"
+2026-10-11T11:19:48.5843261Z ##[error]Process completed with exit code 1.

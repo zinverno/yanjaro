@@ -73,14 +73,9 @@ jobs:
           retention-days: 90
 
   cap2-pilot:
-    # Explicit user authorization: only workflow run number 5, first attempt, PR #10.
-    # Later pushes get a new run number; reruns increment run_attempt and cannot train.
-    if: >-
-      ${{ github.run_number == 5 && github.run_attempt == 1 &&
-          github.event_name == 'pull_request' && github.event.action == 'synchronize' &&
-          github.event.pull_request.number == 10 &&
-          github.event.pull_request.head.repo.full_name == 'zinverno/yanjaro' &&
-          github.event.pull_request.head.ref == 'experiment/acoustic-similarity-v01' }}
+    # Authorized run 38135097182 / attempt 1 failed before training at runtime setup.
+    # No rerun: authorization is consumed; a further experiment needs a new instruction.
+    if: ${{ false }}
     needs: tests
     runs-on: ubuntu-24.04
     timeout-minutes: 10

@@ -1,4 +1,22 @@
-# Единственный разрешённый cap2 run
+# Cap2: единственная попытка остановилась до обучения
+
+**Runner setup — FAIL; training/evaluation — NOT RUN.**
+[Фактический run 38135097182, attempt 1](https://github.com/zinverno/yanjaro/actions/runs/38135097182)
+выполнен на `a442631cd004a304d766eb090d1b54ab25571157`. Проверка исполняемого файла
+`$RUNNER_TOOL_CACHE/Python/3.12.13/x64/bin/python3` завершилась exit code 1.
+Это моя ошибка подготовки workflow: я предположил наличие конкретной patch-версии
+в отдельном runner без подтверждения. Успешный setup-python в job tests не
+устанавливает Python в другом job. Данные и качество cap2 причиной отказа не были.
+
+Remote preflight, получение аудио, обучение, validation и новый test **не начались**.
+Новых weights/model.json нет. SHA новой модели отсутствует, а accuracy и разница
+не измерены. Повторный запуск не выполнялся; training job снова `if: false`.
+[Статус](validation/groove-cap2-v1/status.json) ·
+[Метрики NOT RUN](validation/groove-cap2-v1/metrics.json) ·
+[Ресурсы](validation/groove-cap2-v1/resources.json) ·
+[Provenance](validation/groove-cap2-v1/provenance.json) ·
+[Hashes](validation/groove-cap2-v1/hashes.json) ·
+[Короткое свидетельство ошибки](validation/groove-cap2-v1/runner-error.txt).
 
 Пользователь явно разрешил один ограниченный CPU fit/evaluation после HEAD
 `15e911d829a6f3683129de2bfcac37e47f55e995`. Исторический
@@ -17,7 +35,7 @@
   использует только ранее полученный официальный MIDI ZIP: **PASS, 3 оригинала,
   12 тактов, 29 допустимых triplets**, новых сетевых данных 0 байт.
 - Нет пересечения original IDs, drummer и MIDI SHA-256 со всеми прежними splits.
-  Аудиохеши будут проверены после получения, до извлечения/обучения.
+  Аудиохеши не проверены: до получения аудио процесс не дошёл.
 - Triplets SHA-256:
   `9b05777ec3cfa5ff727c55489a65bf60b0b0cdbf748f85f56a04fae59a971480`.
 
@@ -34,7 +52,7 @@ margin=0.05, temperature=0.1, logits ±ln(2)/2**. Ровно прежние 332 
 проверка контекста и create-only каталога; нет CLI-режима обхода. Новый push имеет
 другой run_number, manual rerun увеличивает run_attempt: оба отвергаются.
 [Семантика GitHub run_number/run_attempt](https://docs.github.com/en/actions/reference/workflows-and-actions/contexts).
-После выполнения job снова будет явно отключён.
+После этой попытки job явно отключён. Новый запуск не разрешается изменением run_number: требуется новая инструкция пользователя.
 
 - Standard ubuntu-24.04 CPU runner, два вычислительных потока.
 - Job wall ≤10 min, command timeout 540 s +10 s grace; CPU soft/hard 590/600 s,
@@ -48,13 +66,12 @@ margin=0.05, temperature=0.1, logits ±ln(2)/2**. Ровно прежние 332 
   как 382 152 bytes. Ещё 2 MiB зарезервированы для передачи результатов и transport;
   сумма 43 313 412 <44 040 192 bytes (**42 MiB**). Проверка до каждого запроса.
 - ZIP результата ≤64 KiB, его base64-передача <88 KiB, получение журнала ≤256 KiB.
-  Их сумма меньше половины 2 MiB резерва. После получения будут указаны фактические
-  размеры. HTTP/TLS overhead отдельно не измеряется; резерв не выдаётся за измерение.
+  Их сумма меньше половины 2 MiB резерва. В этой попытке ZIP модели не создавался. HTTP/TLS overhead отдельно не измеряется; резерв не выдаётся за измерение.
 - Git fetch и pip без автоматических повторов; используется уже установленный
   Python 3.12.13, без fallback-загрузки runtime. Зависимости и checkout, кроме учтённого
   research artifact, не входят в корпусный бюджет согласно исходному плану.
 
-## Сохранение результата
+## Предусмотренное сохранение успешного результата (NOT RUN)
 
 Результат передаётся одним ZIP через native workflow log, в ограниченных строках
 `CAP2_RESULT_DATA`; checksum/длина указаны в `CAP2_RESULT_START`. Это не исходное
@@ -68,9 +85,38 @@ provenance, acquisition/resource/status receipts и hashes. После одно�
 которые не соответствуют запрету retries. Здесь нет artifact SDK/API uploader;
 ошибка получения журнала не приводит к повторному обучению.
 
-## Статус
+## Фактический статус и ресурсы
 
-Remote training/evaluation: **NOT RUN** до единственного разрешённого запуска.
+| Этап | Результат |
+|---|---|
+| HEAD, source artifact SHA, frozen config | PASS |
+| Локальный MIDI-only preflight | PASS: 3 originals / 12 bars / 29 comparisons |
+| CI tests на запускающем commit | PASS: 72 tests локально, Actions tests job success |
+| Подготовка отдельного CPU runner | FAIL: executable check exit 1 |
+| Remote preflight / audio download | NOT RUN |
+| Training / validation / new test | NOT RUN |
+| Новая модель / SHA | NOT RUN; model.json не создан |
+| Отключение real job после попытки | PASS; повторов нет |
+
+Cap2 job: **2 s wall** по started_at/completed_at GitHub, отдельный tests job 49 s.
+Experiment process не стартовал: CPU time и RSS **не измерены**, не ноль.
+Новых исходных данных и аудио получено **0 bytes**, нового model artifact — 0 bytes.
+382 152 bytes входного archive учитывались в согласованном плане; точные git wire
+bytes не измерялись. Нельзя выдавать source bytes за весь сетевой трафик runner.
+GPU не использован, платные сервисы не создавались.
+
+Ни uniform, ни cap2 на новом test не оценены: **0 выполненных из 29 допустимых
+сравнений**, correct/ties/incorrect и delta неизвестны. Повторная validation также
+NOT RUN. Прошлые 226/247 cap2 и 227/247 uniform остаются исключительно результатом
+прошлой диагностики; они не подставлены вместо результатов этого запуска.
+
+Следующий технический шаг перед новым разрешением: убрать предположение о
+предустановленном patch runtime, подготовить проверяемое Python-окружение **в самом
+job эксперимента** без автоматических retries и проверить подготовку независимо
+от обучения. Здесь этот шаг не запускает ещё одну попытку и не расходует разрешение
+задним числом. Исполняемый workflow сейчас сохраняет отказавшую precondition для
+аудита и полностью отключён.
+
 Новый test содержит одного исполнителя, три связанные записи при 88 BPM и один
 TD-11 kit. Даже положительный результат будет относиться только к этому cohort,
 не к полноценным песням, тембровой универсальности или популяции исполнителей.
