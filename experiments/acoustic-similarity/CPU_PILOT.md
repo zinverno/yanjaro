@@ -1,7 +1,8 @@
 # CPU rhythm pilot v0.1
 
-Status before the authorized run: **NOT RUN**. Results will be recorded in
-[CPU_REPORT.md](CPU_REPORT.md); this protocol is fixed before looking at audio metrics.
+**Completed: real training PASS; quality improvement FAIL.** See
+[CPU_REPORT.md](CPU_REPORT.md). The procedure below was committed before audio metrics
+on `f1fe78b` (workflow syntax corrected on `c9e3742`); no model settings were tuned afterward.
 This is a separate experiment, not a relaxation of `model.train`'s human/MERT gate.
 The earlier 2,000-song collection plan remains a possible song study, not a prerequisite
 for training a small rhythm metric. No pretrained encoder or GPU is used here.

@@ -1,0 +1,130 @@
+{
+  "test": {
+    "baseline_accuracy": 0.8863636363636364,
+    "delta": -0.15909090909090906,
+    "groups": [
+      {
+        "baseline_accuracy": 0.875,
+        "bpm": 80,
+        "drummer": "drummer8",
+        "learned_accuracy": 0.9375,
+        "triplets": 32
+      },
+      {
+        "baseline_accuracy": 0.5,
+        "bpm": 90,
+        "drummer": "drummer8",
+        "learned_accuracy": 0.5,
+        "triplets": 12
+      },
+      {
+        "baseline_accuracy": 1.0,
+        "bpm": 94,
+        "drummer": "drummer8",
+        "learned_accuracy": 0.6363636363636364,
+        "triplets": 44
+      }
+    ],
+    "learned_accuracy": 0.7272727272727273,
+    "observed_result": "WORSE",
+    "population_improvement": "NOT ESTABLISHED: one held-out drummer per split; correlated bars/triplets",
+    "slices": {
+      "different_genre_similar_rhythm": {
+        "baseline_accuracy": 1.0,
+        "learned_accuracy": 0.0,
+        "status": "PASS",
+        "triplets": 16
+      },
+      "same_genre_different_rhythm": {
+        "baseline_accuracy": 0.5,
+        "learned_accuracy": 0.5,
+        "status": "PASS",
+        "triplets": 12
+      },
+      "same_tempo_different_instrumentation": {
+        "reason": "GMD uses a single TD-11 kit",
+        "status": "NOT RUN"
+      }
+    },
+    "tempo_only_accuracy": 0.5,
+    "triplets": 88
+  },
+  "validation": {
+    "baseline_accuracy": 0.9190283400809717,
+    "delta": -0.08502024291497978,
+    "groups": [
+      {
+        "baseline_accuracy": 1.0,
+        "bpm": 75,
+        "drummer": "drummer7",
+        "learned_accuracy": 0.84,
+        "triplets": 25
+      },
+      {
+        "baseline_accuracy": 1.0,
+        "bpm": 95,
+        "drummer": "drummer7",
+        "learned_accuracy": 0.8214285714285714,
+        "triplets": 28
+      },
+      {
+        "baseline_accuracy": 0.9,
+        "bpm": 100,
+        "drummer": "drummer7",
+        "learned_accuracy": 0.925,
+        "triplets": 40
+      },
+      {
+        "baseline_accuracy": 0.7777777777777778,
+        "bpm": 105,
+        "drummer": "drummer7",
+        "learned_accuracy": 0.8055555555555556,
+        "triplets": 36
+      },
+      {
+        "baseline_accuracy": 1.0,
+        "bpm": 112,
+        "drummer": "drummer7",
+        "learned_accuracy": 1.0,
+        "triplets": 38
+      },
+      {
+        "baseline_accuracy": 0.9166666666666666,
+        "bpm": 132,
+        "drummer": "drummer7",
+        "learned_accuracy": 0.7916666666666666,
+        "triplets": 48
+      },
+      {
+        "baseline_accuracy": 0.875,
+        "bpm": 135,
+        "drummer": "drummer7",
+        "learned_accuracy": 0.625,
+        "triplets": 32
+      }
+    ],
+    "learned_accuracy": 0.8340080971659919,
+    "observed_result": "WORSE",
+    "population_improvement": "NOT ESTABLISHED: one held-out drummer per split; correlated bars/triplets",
+    "slices": {
+      "different_genre_similar_rhythm": {
+        "baseline_accuracy": 0.8333333333333334,
+        "learned_accuracy": 1.0,
+        "status": "PASS",
+        "triplets": 24
+      },
+      "same_genre_different_rhythm": {
+        "baseline_accuracy": 0.9381443298969072,
+        "learned_accuracy": 0.845360824742268,
+        "status": "PASS",
+        "triplets": 194
+      },
+      "same_tempo_different_instrumentation": {
+        "reason": "GMD uses a single TD-11 kit",
+        "status": "NOT RUN"
+      }
+    },
+    "tempo_only_accuracy": 0.5,
+    "triplets": 247
+  }
+}

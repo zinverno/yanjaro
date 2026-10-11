@@ -1,4 +1,5 @@
-> Новый этап: отдельный [CPU rhythm pilot](CPU_PILOT.md), [его фактический отчёт](CPU_REPORT.md).
+> **Новый результат: реальные CPU rhythm weights обучены, но хуже baseline.**
+> Test: 72,73% learned против 88,64% baseline. [Отчёт и веса](CPU_REPORT.md).
 > Ниже сохранён исходный отчёт полного multi-aspect эксперимента на HEAD `da55781`;
 > он не задаёт предпосылки для первого CPU rhythm обучения.
 

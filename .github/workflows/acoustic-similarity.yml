@@ -37,14 +37,9 @@ jobs:
       - run: python -m unittest discover -s tests -v
 
   groove-pilot:
-    # Explicit manual "Re-run all jobs" of this PR run is the only training trigger.
-    # workflow_dispatch requires main registration; main stays untouched.
-    if: >-
-      github.run_attempt == '2' &&
-      github.event.pull_request.number == 10 &&
-      github.event.pull_request.head.repo.full_name == 'zinverno/yanjaro' &&
-      github.event.pull_request.head.ref == 'experiment/acoustic-similarity-v01' &&
-      github.triggering_actor == 'zinverno'
+    # The one authorized run (38127275492, attempt 2) is complete.
+    # Re-enabling real acquisition/training requires a separately approved change.
+    if: ${{ false }}
     needs: tests
     runs-on: ubuntu-24.04
     timeout-minutes: 20

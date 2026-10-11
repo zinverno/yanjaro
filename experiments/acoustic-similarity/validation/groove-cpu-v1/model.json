@@ -1,0 +1,319 @@
+{
+  "aspect": "rhythm",
+  "baseline": "same 128 beat-normalized audio features, uniform diagonal weights",
+  "code_sha256": "a42f3884f46a515c3aa5e502f72a1648cbf4971431a1336c1b3229c405aafd7c",
+  "counts": {
+    "test": {
+      "bars": 36,
+      "drummers": [
+        "drummer8"
+      ],
+      "originals": 9,
+      "triplets": 88,
+      "used_bars": 34,
+      "used_originals": 9
+    },
+    "train": {
+      "bars": 140,
+      "drummers": [
+        "drummer1",
+        "drummer10",
+        "drummer3",
+        "drummer5",
+        "drummer9"
+      ],
+      "originals": 36,
+      "triplets": 332,
+      "used_bars": 131,
+      "used_originals": 36
+    },
+    "validation": {
+      "bars": 84,
+      "drummers": [
+        "drummer7"
+      ],
+      "originals": 21,
+      "triplets": 247,
+      "used_bars": 80,
+      "used_originals": 21
+    }
+  },
+  "dataset_sha256": "e84463d8cd7249a9f49eab2fd31b83a655d0e9764d0bef75040b6409981b0e0b",
+  "encoder": null,
+  "feature_schema": "audio-flux-4bands-16phase-ac64-beat-normalized.v1",
+  "kind": "real-performed-midi",
+  "metrics": {
+    "test": {
+      "baseline_accuracy": 0.8863636363636364,
+      "delta": -0.15909090909090906,
+      "groups": [
+        {
+          "baseline_accuracy": 0.875,
+          "bpm": 80,
+          "drummer": "drummer8",
+          "learned_accuracy": 0.9375,
+          "triplets": 32
+        },
+        {
+          "baseline_accuracy": 0.5,
+          "bpm": 90,
+          "drummer": "drummer8",
+          "learned_accuracy": 0.5,
+          "triplets": 12
+        },
+        {
+          "baseline_accuracy": 1.0,
+          "bpm": 94,
+          "drummer": "drummer8",
+          "learned_accuracy": 0.6363636363636364,
+          "triplets": 44
+        }
+      ],
+      "learned_accuracy": 0.7272727272727273,
+      "observed_result": "WORSE",
+      "population_improvement": "NOT ESTABLISHED: one held-out drummer per split; correlated bars/triplets",
+      "slices": {
+        "different_genre_similar_rhythm": {
+          "baseline_accuracy": 1.0,
+          "learned_accuracy": 0.0,
+          "status": "PASS",
+          "triplets": 16
+        },
+        "same_genre_different_rhythm": {
+          "baseline_accuracy": 0.5,
+          "learned_accuracy": 0.5,
+          "status": "PASS",
+          "triplets": 12
+        },
+        "same_tempo_different_instrumentation": {
+          "reason": "GMD uses a single TD-11 kit",
+          "status": "NOT RUN"
+        }
+      },
+      "tempo_only_accuracy": 0.5,
+      "triplets": 88
+    },
+    "validation": {
+      "baseline_accuracy": 0.9190283400809717,
+      "delta": -0.08502024291497978,
+      "groups": [
+        {
+          "baseline_accuracy": 1.0,
+          "bpm": 75,
+          "drummer": "drummer7",
+          "learned_accuracy": 0.84,
+          "triplets": 25
+        },
+        {
+          "baseline_accuracy": 1.0,
+          "bpm": 95,
+          "drummer": "drummer7",
+          "learned_accuracy": 0.8214285714285714,
+          "triplets": 28
+        },
+        {
+          "baseline_accuracy": 0.9,
+          "bpm": 100,
+          "drummer": "drummer7",
+          "learned_accuracy": 0.925,
+          "triplets": 40
+        },
+        {
+          "baseline_accuracy": 0.7777777777777778,
+          "bpm": 105,
+          "drummer": "drummer7",
+          "learned_accuracy": 0.8055555555555556,
+          "triplets": 36
+        },
+        {
+          "baseline_accuracy": 1.0,
+          "bpm": 112,
+          "drummer": "drummer7",
+          "learned_accuracy": 1.0,
+          "triplets": 38
+        },
+        {
+          "baseline_accuracy": 0.9166666666666666,
+          "bpm": 132,
+          "drummer": "drummer7",
+          "learned_accuracy": 0.7916666666666666,
+          "triplets": 48
+        },
+        {
+          "baseline_accuracy": 0.875,
+          "bpm": 135,
+          "drummer": "drummer7",
+          "learned_accuracy": 0.625,
+          "triplets": 32
+        }
+      ],
+      "learned_accuracy": 0.8340080971659919,
+      "observed_result": "WORSE",
+      "population_improvement": "NOT ESTABLISHED: one held-out drummer per split; correlated bars/triplets",
+      "slices": {
+        "different_genre_similar_rhythm": {
+          "baseline_accuracy": 0.8333333333333334,
+          "learned_accuracy": 1.0,
+          "status": "PASS",
+          "triplets": 24
+        },
+        "same_genre_different_rhythm": {
+          "baseline_accuracy": 0.9381443298969072,
+          "learned_accuracy": 0.845360824742268,
+          "status": "PASS",
+          "triplets": 194
+        },
+        "same_tempo_different_instrumentation": {
+          "reason": "GMD uses a single TD-11 kit",
+          "status": "NOT RUN"
+        }
+      },
+      "tempo_only_accuracy": 0.5,
+      "triplets": 247
+    }
+  },
+  "plan_sha256": "aa8977f3d79f91a7e086db8f0869b4228ba65e76d80d1220560fce8474b5a905",
+  "schema": "yanjaro.rhythm-midi-head.v0.1",
+  "settings": {
+    "epochs": 300,
+    "learning_rate": 0.1,
+    "margin": 0.05,
+    "regularization": 0.01,
+    "selection": "fixed before test; no validation tuning",
+    "temperature": 0.1
+  },
+  "status": "TRAINED RESEARCH PILOT - NOT A SONG SIMILARITY MODEL",
+  "target_schema": "performed-midi-9drums-16phase-binary-jaccard.v1",
+  "training_loss": 0.7241272218797177,
+  "version": "0.1.0",
+  "weights": [
+    0.040992705913627164,
+    0.0015666194242622451,
+    0.005876430284110639,
+    0.002331270599490099,
+    0.0017631776438320164,
+    0.0021459330669492864,
+    0.0015740553908730258,
+    0.0015666194242622451,
+    0.07441026033413102,
+    0.0020288801137465775,
+    0.08553452237070812,
+    0.0040961521914184024,
+    0.08553452237070812,
+    0.0021596225337797,
+    0.005449875635680261,
+    0.0021317338596470933,
+    0.0015666194242622451,
+    0.001609482325728922,
+    0.005924346454521118,
+    0.0019384162343200782,
+    0.08553452237070812,
+    0.0017981784186767685,
+    0.002556567129640844,
+    0.0015666194242622451,
+    0.0015666194242622451,
+    0.08553452237070812,
+    0.002291271269397975,
+    0.002609699795028721,
+    0.08553452237070812,
+    0.0017285116808546557,
+    0.0021920017544253493,
+    0.0015666194242622451,
+    0.0015666194242622451,
+    0.0015666194242622451,
+    0.002595211543303722,
+    0.001884010042223916,
+    0.05929222435177167,
+    0.00162879961514148,
+    0.002421023295252122,
+    0.0015666194242622451,
+    0.0015666194242622451,
+    0.08553452237070812,
+    0.0023253042800674283,
+    0.002644392775629119,
+    0.002604592981240775,
+    0.0016366275668429527,
+    0.002367484453740984,
+    0.0015666194242622451,
+    0.0015666194242622451,
+    0.0016070416622487177,
+    0.0025080983979312243,
+    0.0020588269154417577,
+    0.0018878321559619576,
+    0.0016617465415541212,
+    0.0026155873546208257,
+    0.0015666194242622451,
+    0.0015666194242622451,
+    0.0033484975667739314,
+    0.001686199761536706,
+    0.0022209591235324887,
+    0.0020253830076869235,
+    0.0018131241113490608,
+    0.0030330895093103245,
+    0.0015666194242622451,
+    0.001814442189151791,
+    0.001731206650260439,
+    0.0017515508655926038,
+    0.002086508557914563,
+    0.0016106343766383979,
+    0.0016858091606197709,
+    0.0016302533003821904,
+    0.0020797683666569805,
+    0.0017023050431967857,
+    0.001656236827217747,
+    0.0016339961825893336,
+    0.0020789630528742307,
+    0.0016110779542893516,
+    0.001630281961723536,
+    0.0016796200452881768,
+    0.08553452237070812,
+    0.0017679857588528871,
+    0.0016224765667735067,
+    0.0016256791819503778,
+    0.0017662678080218339,
+    0.0016883098173484778,
+    0.0015892446754238968,
+    0.0016170452943131616,
+    0.0015666194242622451,
+    0.001689921461758453,
+    0.0016484409422742774,
+    0.0015851614206390952,
+    0.0015666194242622451,
+    0.0016097502795055741,
+    0.0015869028189241657,
+    0.0015666194242622451,
+    0.0019891746387750184,
+    0.001734594253502444,
+    0.0016321893096352068,
+    0.001612934886712663,
+    0.0016200958243851539,
+    0.0015873120613072516,
+    0.0015912967596811672,
+    0.0016550116508061627,
+    0.0016361302893980743,
+    0.0016016040062464395,
+    0.0016183759987512204,
+    0.0015867227911158031,
+    0.0016382451780893785,
+    0.0015996678463889276,
+    0.0015896895180357948,
+    0.0015666194242622451,
+    0.0015666194242622451,
+    0.0016105435886255583,
+    0.0016093290830685163,
+    0.0015861080419191723,
+    0.0016180500256933656,
+    0.0016001954095691607,
+    0.0015887463381308734,
+    0.0016022458740061246,
+    0.0016138361227529443,
+    0.001599666273062483,
+    0.0015994745679398855,
+    0.0015963966582412685,
+    0.0015978950322192637,
+    0.0015966947027636225,
+    0.001593808942330195,
+    0.0015666194242622451,
+    0.001598829619159422
+  ]
+}
