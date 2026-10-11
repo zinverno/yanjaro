@@ -65,23 +65,34 @@ def distances(a, b, rows, bank, weights=None):
     return result
 
 
-def fit_head(X, offset, *, epochs=300, lr=.1, regularization=.01):
+def contrastive_objective(theta, X, offset, regularization):
+    """Total objective and its logit gradient, before the optimizer's projection."""
+    weights = softmax(theta)
+    z = (X @ weights + offset + .05) / .1
+    sigmoid = np.exp(-np.logaddexp(0, -z))
+    gw = X.T @ sigmoid / (len(X) * .1)
+    gradient = weights * (gw - weights @ gw) + 2 * regularization * theta / len(theta)
+    loss = np.mean(np.logaddexp(0, z)) + regularization * np.mean(theta**2)
+    return float(loss), gradient
+
+
+def fit_head(X, offset, *, epochs=300, lr=.1, regularization=.01, logit_bound=2., trace=None):
     """Softplus(margin + d_positive - d_negative); no preference targets."""
     X, offset = np.asarray(X, dtype=float), np.asarray(offset, dtype=float)
     require(X.ndim == 2 and len(X) > 0 and X.shape[1] > 0 and offset.shape == (len(X),) and
             np.isfinite(X).all() and np.isfinite(offset).all(), "Invalid contrastive arrays")
+    require(type(epochs) is int and epochs > 0 and np.isfinite([lr, regularization, logit_bound]).all()
+            and lr > 0 and regularization >= 0 and logit_bound > 0, "Invalid optimizer settings")
     theta = np.zeros(X.shape[1])
     m, v = np.zeros_like(theta), np.zeros_like(theta)
     for step in range(1, epochs + 1):
-        weights = softmax(theta)
-        z = (X @ weights + offset + .05) / .1
-        sigmoid = np.exp(-np.logaddexp(0, -z))
-        gw = X.T @ sigmoid / (len(X) * .1)
-        g = weights * (gw - weights @ gw) + 2 * regularization * theta / len(theta)
+        _, g = contrastive_objective(theta, X, offset, regularization)
         m = .9 * m + .1 * g
         v = .999 * v + .001 * g**2
         theta -= lr * (m / (1 - .9**step)) / (np.sqrt(v / (1 - .999**step)) + 1e-8)
-        theta = np.clip(theta, -2, 2)
+        theta = np.clip(theta, -logit_bound, logit_bound)
+        if trace is not None:
+            trace.append(theta.copy())
     weights = softmax(theta)
     loss = np.mean(np.logaddexp(0, (X @ weights + offset + .05) / .1))
     require(np.isfinite(weights).all() and np.isfinite(loss), "Training diverged")
