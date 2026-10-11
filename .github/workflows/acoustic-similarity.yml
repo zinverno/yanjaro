@@ -71,3 +71,45 @@ jobs:
           path: experiments/acoustic-similarity/runs/groove-cpu-v1/
           if-no-files-found: error
           retention-days: 90
+
+  cap2-pilot:
+    # Explicit user authorization: only workflow run number 5, first attempt, PR #10.
+    # Later pushes get a new run number; reruns increment run_attempt and cannot train.
+    if: >-
+      ${{ github.run_number == 5 && github.run_attempt == 1 &&
+          github.event_name == 'pull_request' && github.event.action == 'synchronize' &&
+          github.event.pull_request.number == 10 &&
+          github.event.pull_request.head.repo.full_name == 'zinverno/yanjaro' &&
+          github.event.pull_request.head.ref == 'experiment/acoustic-similarity-v01' }}
+    needs: tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      SOURCE_COMMIT: ${{ github.event.pull_request.head.sha }}
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      PIP_RETRIES: '0'
+      GIT_TERMINAL_PROMPT: '0'
+    steps:
+      - name: Fetch authorized public source once, without checkout action retries
+        run: |
+          git init .
+          git remote add origin https://github.com/zinverno/yanjaro.git
+          git -c protocol.version=2 fetch --no-tags --depth=2 origin "$SOURCE_COMMIT"
+          git checkout --detach FETCH_HEAD
+          test "$(git rev-parse HEAD^)" = 15e911d829a6f3683129de2bfcac37e47f55e995
+      - name: Use pinned preinstalled Python, with no runtime download fallback
+        run: |
+          test -x "$RUNNER_TOOL_CACHE/Python/3.12.13/x64/bin/python3"
+          echo "$RUNNER_TOOL_CACHE/Python/3.12.13/x64/bin" >> "$GITHUB_PATH"
+      - name: Install locked dependencies without retries
+        working-directory: experiments/acoustic-similarity
+        run: |
+          python3 -m pip install --retries 0 --timeout 30 --require-hashes --only-binary=:all: -r requirements.lock
+          python3 -m pip install --no-index --no-deps --no-build-isolation -e .
+          python3 -m pip check
+      - name: One cap2 fit and held-out evaluation, at most 42 MiB research transfers
+        working-directory: experiments/acoustic-similarity
+        run: |
+          ulimit -v 4194304
+          ulimit -t 600
+          timeout --kill-after=10s 540s python3 -m acoustic_similarity.cap2 run
