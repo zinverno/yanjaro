@@ -1,0 +1,54 @@
+{
+  "checked_on": "2026-10-11",
+  "models": [
+    {
+      "id": "m-a-p/MERT-v1-95M",
+      "revision": "12af15fef9d0ac838c3f475bfbbf26d2060dd4f5",
+      "license_card": "cc-by-nc-4.0",
+      "metadata_sha256": "7a0a955a4a1970f230c027d6e997e5029c94b12889c9c99ecff7be7fcd042ee0",
+      "api_url": "https://huggingface.co/api/models/m-a-p/MERT-v1-95M",
+      "weight_files": [
+        {
+          "path": "pytorch_model.bin",
+          "bytes": 377552987
+        }
+      ],
+      "weights_downloaded": false,
+      "inference": "NOT RUN"
+    },
+    {
+      "id": "OpenMuQ/MuQ-large-msd-iter",
+      "revision": "0562a57814f6f8bbd9fdea0a25921a2fce1a841a",
+      "license_card": "cc-by-nc-4.0",
+      "metadata_sha256": "b774fbacc3bae8abedafe757de363d8577cbe41fc2e7fed407ffa532e6182352",
+      "api_url": "https://huggingface.co/api/models/OpenMuQ/MuQ-large-msd-iter",
+      "weight_files": [
+        {
+          "path": "model.safetensors",
+          "bytes": 1333825096
+        },
+        {
+          "path": "pytorch_model.bin",
+          "bytes": 1333965438
+        }
+      ],
+      "weights_downloaded": false,
+      "inference": "NOT RUN"
+    },
+    {
+      "id": "laion/clap-htsat-unfused",
+      "revision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "license_card": "apache-2.0",
+      "metadata_sha256": "bb96f7e01d8c19dd3fccf05908a3f2936f60534549e29579b8f45838d36b5663",
+      "api_url": "https://huggingface.co/api/models/laion/clap-htsat-unfused",
+      "weight_files": [
+        {
+          "path": "pytorch_model.bin",
+          "bytes": 614525833
+        }
+      ],
+      "weights_downloaded": false,
+      "inference": "NOT RUN"
+    }
+  ]
+}
