@@ -1,0 +1,40 @@
+{
+  "annotation_triplets_sha256": "7e20e946ecbebc2f57142bad13f3ae50b383b87b8d06c595a853cbad511abff9",
+  "audio_training": "NOT RUN",
+  "bars": {
+    "test": 36,
+    "train": 140,
+    "validation": 84
+  },
+  "cohort_sha256": "aa8977f3d79f91a7e086db8f0869b4228ba65e76d80d1220560fce8474b5a905",
+  "excluded_bars": [
+    {
+      "beat": 4,
+      "cells": 2,
+      "original_id": "drummer3/session1/20"
+    },
+    {
+      "beat": 12,
+      "cells": 2,
+      "original_id": "drummer3/session1/20"
+    },
+    {
+      "beat": 8,
+      "cells": 1,
+      "original_id": "drummer3/session1/14"
+    },
+    {
+      "beat": 16,
+      "cells": 2,
+      "original_id": "drummer3/session1/14"
+    }
+  ],
+  "midi_archive_sha256": "651cbc524ffb891be1a3e46d89dc82a1cecb09a57c748c7b45b844c4841dcc1e",
+  "records": 66,
+  "status": "PASS",
+  "triplets": {
+    "test": 88,
+    "train": 332,
+    "validation": 247
+  }
+}
