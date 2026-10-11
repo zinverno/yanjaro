@@ -1,0 +1,73 @@
+{
+  "scope": "runtime-only; not a real cap2 experiment",
+  "expected_initial_head": "97217a15350b517afde111c5e48887491f60b233",
+  "source_commit": "0c034acd368465073cd01b0691d8219dd849b30c",
+  "run_url": "https://github.com/zinverno/yanjaro/actions/runs/38136852081",
+  "run_id": 38136852081,
+  "run_number": 7,
+  "run_attempt": 1,
+  "job_id": 114462372250,
+  "job": "runtime-smoke",
+  "runner": "ubuntu-24.04",
+  "started_at": "2026-10-11T11:47:32Z",
+  "completed_at": "2026-10-11T11:48:26Z",
+  "job_wall_seconds": 54,
+  "setup_python_action_sha": "a26af69be951a213d495a4c3e4e4022e16d87065",
+  "python_version": "3.12.13",
+  "pip_version": "26.2.1",
+  "checks": {
+    "setup_python": "PASS",
+    "exact_patch_version": "PASS",
+    "python_python3_pip_following_steps": "PASS",
+    "locked_dependencies": "PASS",
+    "editable_package": "PASS",
+    "pip_check": "PASS",
+    "package_import": "PASS",
+    "unit_tests": "PASS",
+    "cli_help_entry_points": "PASS",
+    "research_calls_blocked": "PASS"
+  },
+  "unit_tests": {
+    "count": 75,
+    "wall_seconds": 22.086,
+    "forbidden_calls": [],
+    "note": "Existing train-only numerical regressions run in memory. No new model/result is saved; no real test evaluation."
+  },
+  "training_jobs": {
+    "cap2-pilot": "SKIPPED",
+    "groove-pilot": "SKIPPED"
+  },
+  "cap2_training": "NOT RUN",
+  "real_test_evaluation": "NOT RUN",
+  "new_model_sha256": null,
+  "runtime_downloads": {
+    "cache_miss": true,
+    "python_archive_url": "https://github.com/actions/python-versions/releases/download/3.12.13-27650778726/python-3.12.13-linux-24.04-x64.tar.gz",
+    "bootstrap_pip": {
+      "from_version": "25.0.1",
+      "to_version": "26.2.1",
+      "metadata_and_wheel_downloaded": true
+    },
+    "locked_pypi_wheels_downloaded": true,
+    "wire_bytes": null,
+    "budget_scope": "Infrastructure runtime/package traffic, outside the 42 MiB future research corpus/artifact budget; not measured as zero."
+  },
+  "new_dataset_download_bytes": 0,
+  "new_paid_services": false,
+  "historical_guards_unchanged": {
+    "run_number": "5",
+    "run_attempt": "1",
+    "parent": "15e911d829a6f3683129de2bfcac37e47f55e995"
+  },
+  "next_experiment": "DISABLED; separate user authorization and fresh run/parent/output bindings required. Historical guards are not reusable.",
+  "sha256": {
+    ".github/workflows/acoustic-similarity.yml": "0b5bc217a193c0bb603008f8a134cf4906d775efc5954cd47e8bc37ad4ff21ec",
+    "experiments/acoustic-similarity/requirements.lock": "ae514d65c8c8239b5f4374be95d1d54581f88d2821cf8cc5b5bcfe13df4ec19f",
+    "experiments/acoustic-similarity/scripts/runtime_smoke.py": "1e4fb6039f741122b60edd938cb7d49dacfd7a1f98b856d9a1032222b7044116",
+    "experiments/acoustic-similarity/tests/test_runtime.py": "dfc4d6ff6590833cba064754d62d0da6d86c1b3cdf26905edd202feddeda5db6",
+    "experiments/acoustic-similarity/acoustic_similarity/cap2.py": "64f55a4bf259e5e04ee91cfeeab87bdc507bf1df04def611db438387030e517b",
+    "experiments/acoustic-similarity/validation/groove-diagnostics-v1/next-run-proposal.json": "3a1fa404c496aa3f6634b4fd8f92ab58adc77915c22f20ea722587aef03b2b3b",
+    "experiments/acoustic-similarity/validation/groove-cpu-v1/artifacts.zip": "72a1f4505afcc095d3ffaddd3cdc354cc1718c08861313fd91bfb6788b7fc79e",
+    "experiments/acoustic-similarity/validation/runtime-smoke-v1/log-excerpt.txt": "2c4dc44801865100c16c4835ea8c26b1e8c69af934c708a3b976b6e795d711f0"
+  }
+}

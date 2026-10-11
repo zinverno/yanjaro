@@ -43,8 +43,27 @@ action добавляет выбранный Python в PATH следующих �
 не выдаются за реальные данные или качество музыки. Обычные `tests` и distro CI
 также могут автоматически исполняться на PR; ни один training job не включается.
 
-Локальная проверка: **PASS, 75 tests, forbidden_calls=[]**. Remote smoke пока
-**NOT RUN**; после выполнения здесь будет зафиксирован фактический run и результат.
+Локальная проверка: **PASS, 75 tests, forbidden_calls=[]**.
+[Remote smoke 38136852081, attempt 1](https://github.com/zinverno/yanjaro/actions/runs/38136852081/job/114462372250)
+на `0c034acd368465073cd01b0691d8219dd849b30c`: **PASS** с первой попытки.
+Job занял 54 s (11:47:32–11:48:26 UTC); 75 tests — 22.086 s.
+[Машиночитаемое свидетельство](validation/runtime-smoke-v1/result.json) ·
+[Выдержка фактического лога](validation/runtime-smoke-v1/log-excerpt.txt).
+
+| Проверка | Remote результат |
+|---|---|
+| setup-python и точный Python 3.12.13 | PASS, включая реальный cache miss/download |
+| python / python3 / pip в последующих шагах | PASS; pip 26.2.1 |
+| requirements.lock с hash verification и установка пакета | PASS |
+| pip check / import acoustic_similarity | PASS |
+| Unit tests с запретами | PASS: 75, forbidden_calls=[] |
+| Три CLI help entry points без реального аудио | PASS |
+| cap2-pilot / groove-pilot | SKIPPED, оба выключены |
+| Новый cap2 fit / real test / новые веса | NOT RUN |
+
+В этой попытке исправление не потребовало повторного smoke job. Сетевые ошибки
+получения статуса/лога через GitHub API были только у read-only наблюдения;
+повторные запросы не перезапускали job.
 
 ## Сетевой трафик runtime
 
@@ -52,8 +71,12 @@ action добавляет выбранный Python в PATH следующих �
 ветки, Python 3.12.13 из `actions/python-versions` при cache miss и колёса PyPI
 для неизменного lockfile. Python/package traffic **не относится** к лимиту
 42 MiB будущих исследовательских данных и артефактов. Smoke не скачивает MIDI/WAV,
-датасеты или энкодеры. Фактические cache/download строки будут сохранены после run;
-полный wire traffic не измеряется и не будет назван нулевым.
+датасеты или энкодеры. Фактический лог подтверждает cache miss и получение
+[Python archive](https://github.com/actions/python-versions/releases/download/3.12.13-27650778726/python-3.12.13-linux-24.04-x64.tar.gz),
+bootstrap-обновление pip с 25.0.1 до 26.2.1 (metadata + wheel), затем wheel downloads
+из lockfile. Строки download сохранены отдельно; их округлённые размеры не являются
+измерением полного wire traffic. Ноль относится только к новым dataset downloads,
+не к подготовке runtime. Lockfile и SHA зависимостей не изменены.
 Новые платные сервисы не создаются; используется стандартный CPU runner.
 
 ## Следующий единственный опыт: подготовлен, отключён
