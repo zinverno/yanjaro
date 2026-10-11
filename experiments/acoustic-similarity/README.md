@@ -1,3 +1,6 @@
+> **Runtime-only этап:** [исправление setup-python и smoke-проверка](RUNTIME_SMOKE.md).
+> Новое обучение не разрешено; оба real-training jobs отключены.
+
 > **Cap2: runner setup FAIL, обучение/test NOT RUN.** [Фактический запуск и причина](CAP2_RUN.md).
 > Повтора не было; новые веса не созданы, training job отключён.
 

@@ -36,6 +36,46 @@ jobs:
       - run: python -m pip check
       - run: python -m unittest discover -s tests -v
 
+  runtime-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: experiments/acoustic-similarity
+    env:
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      PIP_RETRIES: '0'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Set up Python in this job (runtime traffic, outside research budget)
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12.13'
+      - name: Verify exact patch version and PATH in a following step
+        run: |
+          python -c 'import sys; assert sys.version_info[:3] == (3, 12, 13); print(sys.version)'
+          python3 -c 'import sys; assert sys.version_info[:3] == (3, 12, 13)'
+          python -m pip --version
+          pip --version
+      - name: Install locked dependencies (package traffic, outside research budget)
+        run: |
+          python -m pip install --retries 0 --timeout 30 --require-hashes --only-binary=:all: -r requirements.lock
+          python -m pip install --no-index --no-deps --no-build-isolation -e .
+      - name: Check installed runtime in a following step
+        run: |
+          python -m pip check
+          python -c 'import acoustic_similarity; print("acoustic_similarity import PASS")'
+      - name: Unit tests with acquisition and real test evaluation blocked
+        run: python scripts/runtime_smoke.py
+      - name: Installed CLI entry points without audio
+        run: |
+          yanjaro-similarity --help
+          yanjaro-rhythm --help
+          python -m acoustic_similarity.cap2 --help
+
   groove-pilot:
     # The one authorized run (38127275492, attempt 2) is complete.
     # Re-enabling real acquisition/training requires a separately approved change.
@@ -92,10 +132,14 @@ jobs:
           git -c protocol.version=2 fetch --no-tags --depth=2 origin "$SOURCE_COMMIT"
           git checkout --detach FETCH_HEAD
           test "$(git rev-parse HEAD^)" = 15e911d829a6f3683129de2bfcac37e47f55e995
-      - name: Use pinned preinstalled Python, with no runtime download fallback
+      - name: Set up Python in this job (runtime traffic, outside research budget)
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12.13'
+      - name: Verify exact runtime before dependencies
         run: |
-          test -x "$RUNNER_TOOL_CACHE/Python/3.12.13/x64/bin/python3"
-          echo "$RUNNER_TOOL_CACHE/Python/3.12.13/x64/bin" >> "$GITHUB_PATH"
+          python3 -c 'import sys; assert sys.version_info[:3] == (3, 12, 13)'
+          python3 -m pip --version
       - name: Install locked dependencies without retries
         working-directory: experiments/acoustic-similarity
         run: |
