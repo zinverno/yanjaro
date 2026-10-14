@@ -1,0 +1,128 @@
+{
+  "cases": [
+    {
+      "anchor": "o01",
+      "answer": null,
+      "candidates": [
+        "o03",
+        "s01"
+      ],
+      "case_id": "r01",
+      "selection": "PI/DSP first-neighbor disagreement"
+    },
+    {
+      "anchor": "o02",
+      "answer": null,
+      "candidates": [
+        "s01",
+        "o01"
+      ],
+      "case_id": "r02",
+      "selection": "PI/DSP first-neighbor disagreement"
+    },
+    {
+      "anchor": "o03",
+      "answer": null,
+      "candidates": [
+        "o01",
+        "u01"
+      ],
+      "case_id": "r03",
+      "selection": "PI/DSP first-neighbor disagreement"
+    },
+    {
+      "anchor": "o04",
+      "answer": null,
+      "candidates": [
+        "u01",
+        "s03"
+      ],
+      "case_id": "r04",
+      "selection": "PI nearest alternatives"
+    },
+    {
+      "anchor": "s01",
+      "answer": null,
+      "candidates": [
+        "u01",
+        "s04"
+      ],
+      "case_id": "r05",
+      "selection": "PI/DSP first-neighbor disagreement"
+    },
+    {
+      "anchor": "s02",
+      "answer": null,
+      "candidates": [
+        "u01",
+        "u02"
+      ],
+      "case_id": "r06",
+      "selection": "PI/DSP first-neighbor disagreement"
+    },
+    {
+      "anchor": "s03",
+      "answer": null,
+      "candidates": [
+        "u02",
+        "u01"
+      ],
+      "case_id": "r07",
+      "selection": "PI/DSP first-neighbor disagreement"
+    },
+    {
+      "anchor": "s04",
+      "answer": null,
+      "candidates": [
+        "s01",
+        "u01"
+      ],
+      "case_id": "r08",
+      "selection": "PI/DSP first-neighbor disagreement"
+    },
+    {
+      "anchor": "u01",
+      "answer": null,
+      "candidates": [
+        "o03",
+        "s02"
+      ],
+      "case_id": "r09",
+      "selection": "PI/DSP first-neighbor disagreement"
+    },
+    {
+      "anchor": "u02",
+      "answer": null,
+      "candidates": [
+        "s03",
+        "u01"
+      ],
+      "case_id": "r10",
+      "selection": "PI/DSP first-neighbor disagreement"
+    },
+    {
+      "anchor": "o02",
+      "answer": null,
+      "candidates": [
+        "o01",
+        "u01"
+      ],
+      "case_id": "r11",
+      "selection": "small PI first/second margin"
+    },
+    {
+      "anchor": "u01",
+      "answer": null,
+      "candidates": [
+        "s02",
+        "s03"
+      ],
+      "case_id": "r12",
+      "selection": "small PI first/second margin"
+    }
+  ],
+  "planned_blind_repeats": 2,
+  "protocol": "RHYTHM_PI_REVIEW.md",
+  "status": "NOT RUN",
+  "unique_comparisons": 12
+}

@@ -1,3 +1,9 @@
+> **2026-10-14 — выполнен phase-independent rhythm retrieval PI-v1.**
+> [Реальный Top-3 для 10/10 CC0-композиций, компоненты и ограничения](RHYTHM_PI_REPORT.md) ·
+> [зафиксированная формула](RHYTHM_PI_SPEC.md) · [независимая оценка, пока NOT RUN](RHYTHM_PI_REVIEW.md).
+> Поиск работает без downbeat; UNKNOWN tempo у u01 создаёт универсального соседа.
+> Качество/accuracy/recall NOT RUN; новых загрузок и обучения нет.
+
 > **2026-10-14 — проверена автоматическая применимость на десяти локальных композициях.**
 > [BPM, beat/downbeat candidates, отказы и ограничения](RHYTHM_AUTO_APPLICABILITY.md):
 > 2/10 устойчивых AUTO_CANDIDATE, 0/10 VERIFIED, 10/10 отказов strict Rhythm-v2.

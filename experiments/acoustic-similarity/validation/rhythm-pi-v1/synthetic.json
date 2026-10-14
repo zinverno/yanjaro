@@ -1,0 +1,204 @@
+{
+  "measurements": {
+    "accent_change": {
+      "contributions": {
+        "density": 0.0038099328203407765,
+        "intervals": 0.0,
+        "periodicity": 0.008310584533023887,
+        "tempo": 0.00035246216646780184
+      },
+      "distance": 0.012472979519832466,
+      "quality": "UNVALIDATED",
+      "score": 98.75270204801674,
+      "unknown_tempo": false
+    },
+    "clean_detected_events": 24,
+    "dense_irregular": {
+      "contributions": {
+        "density": 0.12301587301587301,
+        "intervals": 0.11224794262565188,
+        "periodicity": 0.13440514244243182,
+        "tempo": 0.17738133535474676
+      },
+      "distance": 0.5470502934387035,
+      "quality": "UNVALIDATED",
+      "score": 45.29497065612965,
+      "unknown_tempo": false
+    },
+    "dense_irregular_diagnostics": {
+      "acoustic_quality": "UNVALIDATED",
+      "band_events": [
+        210,
+        210,
+        210,
+        210
+      ],
+      "downbeat": "UNKNOWN; not required",
+      "effective_event_rate": 14.0,
+      "event_rate": 14.0,
+      "independent_similarity_labels": false,
+      "interior_onsets": 210,
+      "median_ioi_seconds": 0.0570386944244774,
+      "onsets": 210,
+      "strong_onsets": 210,
+      "tempo_alternatives_bpm": [
+        66.71506955394403,
+        133.43013910788807,
+        52.495212006172444,
+        104.99042401234489,
+        209.98084802468978,
+        46.93148463414021,
+        93.86296926828042,
+        187.72593853656085,
+        59.01487927045873,
+        118.02975854091746,
+        236.0595170818349
+      ],
+      "tempo_candidates": [
+        {
+          "ac_score": 0.28540116790005965,
+          "bpm": 133.43013910788807
+        },
+        {
+          "ac_score": 0.27471610705317795,
+          "bpm": 104.99042401234489
+        },
+        {
+          "ac_score": 0.2692748373620538,
+          "bpm": 93.86296926828042
+        },
+        {
+          "ac_score": 0.26582532128450986,
+          "bpm": 118.02975854091746
+        }
+      ],
+      "tempo_status": "AUTO_CANDIDATE"
+    },
+    "double_tempo": {
+      "contributions": {
+        "density": 0.038384512683578106,
+        "intervals": 0.0,
+        "periodicity": 0.11095802852882532,
+        "tempo": 0.09373470492736122
+      },
+      "distance": 0.24307724613976464,
+      "quality": "UNVALIDATED",
+      "score": 75.69227538602354,
+      "unknown_tempo": false
+    },
+    "half_tempo": {
+      "contributions": {
+        "density": 0.029761904761904767,
+        "intervals": 3.496446946337351e-18,
+        "periodicity": 0.13348763320416998,
+        "tempo": 0.0741809661674814
+      },
+      "distance": 0.23743050413355615,
+      "quality": "UNVALIDATED",
+      "score": 76.25694958664438,
+      "unknown_tempo": false
+    },
+    "independent_jitter_10ms": {
+      "contributions": {
+        "density": 0.0,
+        "intervals": 0.0026560292383535715,
+        "periodicity": 0.02073001662443256,
+        "tempo": 0.004840340052764031
+      },
+      "distance": 0.028226385915550163,
+      "quality": "UNVALIDATED",
+      "score": 97.17736140844498,
+      "unknown_tempo": false
+    },
+    "same_120bpm_different_pattern": {
+      "contributions": {
+        "density": 0.0,
+        "intervals": 0.13850461588858382,
+        "periodicity": 0.13410621213976182,
+        "tempo": 0.18245512686206458
+      },
+      "distance": 0.45506595489041024,
+      "quality": "UNVALIDATED",
+      "score": 54.493404510958975,
+      "unknown_tempo": false
+    },
+    "tonal_offbeats": {
+      "contributions": {
+        "density": 0.039384026067375566,
+        "intervals": 0.11534091125919563,
+        "periodicity": 0.051929434352042864,
+        "tempo": 0.1007936931522816
+      },
+      "detected_events": 48,
+      "distance": 0.30744806483089565,
+      "quality": "UNVALIDATED",
+      "score": 69.25519351691042,
+      "unknown_tempo": false
+    },
+    "translated_events": {
+      "contributions": {
+        "density": 0.0,
+        "intervals": 3.025837140310865e-17,
+        "periodicity": 1.4813064693226283e-16,
+        "tempo": 1.8362469032180926e-17
+      },
+      "distance": 1.9675148736755242e-16,
+      "quality": "UNVALIDATED",
+      "score": 99.99999999999997,
+      "unknown_tempo": false
+    },
+    "translated_waveform": {
+      "contributions": {
+        "density": 0.0,
+        "intervals": 3.025837140310865e-17,
+        "periodicity": 0.017233418913507697,
+        "tempo": 0.0
+      },
+      "detected_events": 24,
+      "distance": 0.017233418913507728,
+      "quality": "UNVALIDATED",
+      "score": 98.27665810864923,
+      "unknown_tempo": false
+    },
+    "twice_event_density": {
+      "contributions": {
+        "density": 0.038384512683578106,
+        "intervals": 0.0,
+        "periodicity": 0.11095802852882532,
+        "tempo": 0.09373470492736122
+      },
+      "distance": 0.24307724613976464,
+      "quality": "UNVALIDATED",
+      "score": 75.69227538602354,
+      "unknown_tempo": false
+    },
+    "waveform_jitter_10ms": {
+      "contributions": {
+        "density": 1.374575303303427e-07,
+        "intervals": 0.001820884671579153,
+        "periodicity": 0.018168578133685415,
+        "tempo": 0.10112498918909864
+      },
+      "detected_events": 24,
+      "distance": 0.12111458945189353,
+      "quality": "UNVALIDATED",
+      "score": 87.88854105481064,
+      "unknown_tempo": false
+    },
+    "weak_strong_hits": {
+      "contributions": {
+        "density": 0.003370625971928033,
+        "intervals": 3.496446946337351e-18,
+        "periodicity": 0.1033295252638334,
+        "tempo": 0.0741809661674814
+      },
+      "detected_events": 24,
+      "distance": 0.18088111740324284,
+      "quality": "UNVALIDATED",
+      "score": 81.91188825967572,
+      "unknown_tempo": false
+    }
+  },
+  "status": "PASS",
+  "tests": 9
+}

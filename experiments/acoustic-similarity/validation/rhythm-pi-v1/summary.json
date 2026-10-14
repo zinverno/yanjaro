@@ -1,0 +1,12 @@
+{
+  "abstained": 0,
+  "audio_published": false,
+  "independent_rhythm_similarity": "NOT RUN",
+  "indexed": 10,
+  "learned_weights": "NOT RUN",
+  "new_audio_download_bytes": 0,
+  "real_accuracy": "NOT RUN",
+  "real_recall": "NOT RUN",
+  "records": 10,
+  "tempo_unknown": 1
+}

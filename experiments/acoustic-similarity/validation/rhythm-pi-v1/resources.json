@@ -1,0 +1,18 @@
+{
+  "audio_download_bytes": 0,
+  "compute_threads": 2,
+  "cpu_seconds_including_imports": 11.163155,
+  "gpu": false,
+  "hard_cpu_limit_seconds": 540,
+  "hard_virtual_limit_mib": 1024,
+  "network_in_study_bytes": 0,
+  "new_dependencies_downloaded": false,
+  "peak_rss_mib": 355.06640625,
+  "python": "3.12.13",
+  "versions": {
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "soundfile": "0.13.1"
+  },
+  "wall_seconds_after_imports": 10.683072296000319
+}

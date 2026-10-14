@@ -1,0 +1,55 @@
+{
+  "base_head": "c9ca0bfd87fd9bbc12f42aa27eacdd66963c3dfa",
+  "code_head": "85133faf582cef4c8b8f9cc143248f00c2400b8e",
+  "code_sha256": {
+    "RHYTHM_PI_SPEC.md": "b81459c34c4894c6d77cca7a1f0a365bc3abbd7280f7f5afba67aaac99b0072d",
+    "acoustic_similarity/rhythm_auto.py": "fba1fa59895b6574895d9e188c1f81399d95db750434345b96e8ccbd11e1060b",
+    "acoustic_similarity/rhythm_pi.py": "f4b320b48f3f7de1db06aa4cd617582f752aea92013ac793d81f65a889cf46ae",
+    "acoustic_similarity/rhythm_v2.py": "4220f21a8afc4b972050253742976297f0cbb9cf5034abc4e1f5637a91cc5585",
+    "scripts/rhythm_pi_study.py": "b76ef1d0b54e1c323b45ca019faf895f8235b18fc057733a632e4c2f2a8498cb",
+    "tests/test_rhythm_pi.py": "aa66f0680f359f234f47c434405bcbf0a41a5a26f65cd9d08a51a9617df1b3ca"
+  },
+  "dsp_index_sha256": "9055df4ac720fa5c3ca83ff69c363bd7e33e1962cab40cb64cd642aa6ef1152f",
+  "feature_schema": "onset-pairac128x4-ioi32-density2-tempo64.pi-v1",
+  "input_hash_checks": "PASS: all ten audio files and evidence snapshots",
+  "manifest_sha256": "24ce999d2b1175640ad4ae73e0d1c487a8fa80cc2ca5581819f391e0a29a0b1e",
+  "order": "Saved before decoding and before any real pairwise comparison",
+  "policy": {
+    "band_relative_threshold": 0.2,
+    "component_weights": {
+      "density": 0.25,
+      "intervals": 0.25,
+      "periodicity": 0.25,
+      "tempo": 0.25
+    },
+    "dense_warning_per_second": 12.0,
+    "density_scale_per_second": 4.0,
+    "edge_seconds": 0.032,
+    "histogram_smoothing_bins": 0.75,
+    "interval_bins": 32,
+    "interval_log2_range": [
+      -3.0,
+      3.0
+    ],
+    "minimum_events": 8,
+    "missing_component_distance": 0.5,
+    "pair_bins": 128,
+    "pair_lag_seconds": [
+      0.04,
+      4.0
+    ],
+    "score": "100 * (1 - distance); NOT probability or validated similarity",
+    "tempo_bins": 64,
+    "tempo_bpm_range": [
+      40.0,
+      260.0
+    ],
+    "tempo_max_candidates": 4,
+    "tempo_min_ac": 0.1,
+    "tempo_octave_masses": [
+      0.25,
+      0.5,
+      0.25
+    ]
+  }
+}
