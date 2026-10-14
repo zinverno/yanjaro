@@ -1,0 +1,33 @@
+{
+  "bundle_limit_bytes": 65536,
+  "computational_threads": 2,
+  "cpu_limit_seconds": [
+    590,
+    600
+  ],
+  "cpu_seconds": 0.6352943050000001,
+  "fit_seconds": 0.012510585000001129,
+  "github_run_attempt": "1",
+  "github_run_id": "38535139426",
+  "gpu": false,
+  "input_artifact_bytes_charged": 382152,
+  "log_download_limit_bytes": 262144,
+  "peak_rss_mib": 192.33203125,
+  "peak_virtual_mib": 454.34765625,
+  "process_cpu_seconds": 1.22392469,
+  "python": "3.12.13",
+  "received_source_bytes": 40834108,
+  "reserved_transport_output_bytes": 2097152,
+  "source_commit": "7e541c2b52617b54135568c204246fbd44a27902",
+  "system_cpu_seconds": 0.16618,
+  "transfer_limit_bytes": 44040192,
+  "user_cpu_seconds": 1.057782,
+  "versions": {
+    "mido": "1.3.3",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "soundfile": "0.13.1"
+  },
+  "virtual_memory_limit_bytes": 4294967296,
+  "wall_seconds": 3.9597595369999965
+}

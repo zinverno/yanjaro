@@ -1,5 +1,9 @@
-> **Runtime-only этап:** [исправление setup-python и smoke-проверка](RUNTIME_SMOKE.md).
-> Новое обучение не разрешено; оба real-training jobs отключены.
+> **2026-10-14 — cap2 обучен, улучшение FAIL.** На новом drummer6 test:
+> uniform **10/29 (34,48%)**, cap2 **8/29 (27,59%)**, **−6,90 п.п.**
+> [Новый отчёт, модель, provenance и ресурсы](CAP2_V2_RUN.md). Один fit, одна test-оценка;
+> разрешение использовано, оба real-training jobs отключены. Ниже — история этапов.
+
+> **Исторический runtime-only этап:** [исправление setup-python и smoke-проверка](RUNTIME_SMOKE.md).
 
 > **Cap2: runner setup FAIL, обучение/test NOT RUN.** [Фактический запуск и причина](CAP2_RUN.md).
 > Повтора не было; новые веса не созданы, training job отключён.

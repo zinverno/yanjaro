@@ -1,0 +1,3710 @@
+{
+  "new_test": {
+    "by_component": [
+      {
+        "cap2": {
+          "accuracy": 0.27586206896551724,
+          "comparisons": 29,
+          "correct": 8,
+          "incorrect": 21,
+          "ties": 0
+        },
+        "component": "drummer6/session2/3",
+        "originals": [
+          "drummer6/session2/3",
+          "drummer6/session3/6",
+          "drummer6/session3/7"
+        ],
+        "uniform": {
+          "accuracy": 0.3448275862068966,
+          "comparisons": 29,
+          "correct": 10,
+          "incorrect": 19,
+          "ties": 0
+        }
+      }
+    ],
+    "by_original": [
+      {
+        "anchor_cap2": {
+          "accuracy": 0.4166666666666667,
+          "comparisons": 12,
+          "correct": 5,
+          "incorrect": 7,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 0.5,
+          "comparisons": 12,
+          "correct": 6,
+          "incorrect": 6,
+          "ties": 0
+        },
+        "original_id": "drummer6/session2/3",
+        "touching_cap2": {
+          "accuracy": 0.27586206896551724,
+          "comparisons": 29,
+          "correct": 8,
+          "incorrect": 21,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 0.3448275862068966,
+          "comparisons": 29,
+          "correct": 10,
+          "incorrect": 19,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 0.125,
+          "comparisons": 16,
+          "correct": 2,
+          "incorrect": 14,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 0.1875,
+          "comparisons": 16,
+          "correct": 3,
+          "incorrect": 13,
+          "ties": 0
+        },
+        "original_id": "drummer6/session3/6",
+        "touching_cap2": {
+          "accuracy": 0.27586206896551724,
+          "comparisons": 29,
+          "correct": 8,
+          "incorrect": 21,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 0.3448275862068966,
+          "comparisons": 29,
+          "correct": 10,
+          "incorrect": 19,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 1,
+          "correct": 1,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 1,
+          "correct": 1,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "original_id": "drummer6/session3/7",
+        "touching_cap2": {
+          "accuracy": 0.27586206896551724,
+          "comparisons": 29,
+          "correct": 8,
+          "incorrect": 21,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 0.3448275862068966,
+          "comparisons": 29,
+          "correct": 10,
+          "incorrect": 19,
+          "ties": 0
+        }
+      }
+    ],
+    "cap2": {
+      "accuracy": 0.27586206896551724,
+      "comparisons": 29,
+      "correct": 8,
+      "incorrect": 21,
+      "ties": 0
+    },
+    "delta_accuracy": -0.06896551724137934,
+    "improvement": "WORSE",
+    "triplets": [
+      {
+        "anchor": "drummer6/session2/3#beat4",
+        "cap2_margin": -0.00287701238958943,
+        "midi_margin": 0.3198757763975155,
+        "negative": "drummer6/session3/7#beat12",
+        "positive": "drummer6/session3/6#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": -0.0029194392454389645
+      },
+      {
+        "anchor": "drummer6/session2/3#beat4",
+        "cap2_margin": 0.0024125730325254727,
+        "midi_margin": 0.3198757763975155,
+        "negative": "drummer6/session3/7#beat4",
+        "positive": "drummer6/session3/6#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.0002957379638559391
+      },
+      {
+        "anchor": "drummer6/session2/3#beat4",
+        "cap2_margin": 0.0017854182570823714,
+        "midi_margin": 0.3198757763975155,
+        "negative": "drummer6/session3/7#beat8",
+        "positive": "drummer6/session3/6#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.00011030576085439142
+      },
+      {
+        "anchor": "drummer6/session2/3#beat4",
+        "cap2_margin": -0.014341919024034113,
+        "midi_margin": 0.25337331334332824,
+        "negative": "drummer6/session3/7#beat16",
+        "positive": "drummer6/session3/6#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": -0.014624651743275761
+      },
+      {
+        "anchor": "drummer6/session2/3#beat8",
+        "cap2_margin": 0.00020688256289233715,
+        "midi_margin": 0.29939393939393943,
+        "negative": "drummer6/session3/7#beat16",
+        "positive": "drummer6/session3/6#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": -0.003669693134623658
+      },
+      {
+        "anchor": "drummer6/session2/3#beat8",
+        "cap2_margin": -0.0020972997972041824,
+        "midi_margin": 0.29333333333333333,
+        "negative": "drummer6/session3/7#beat12",
+        "positive": "drummer6/session3/6#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": -0.0025343466600804224
+      },
+      {
+        "anchor": "drummer6/session2/3#beat8",
+        "cap2_margin": 0.002269439877469211,
+        "midi_margin": 0.29333333333333333,
+        "negative": "drummer6/session3/7#beat4",
+        "positive": "drummer6/session3/6#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.00039311393530676265
+      },
+      {
+        "anchor": "drummer6/session2/3#beat8",
+        "cap2_margin": 0.006373395481727168,
+        "midi_margin": 0.29333333333333333,
+        "negative": "drummer6/session3/7#beat8",
+        "positive": "drummer6/session3/6#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.0033353507044843163
+      },
+      {
+        "anchor": "drummer6/session2/3#beat12",
+        "cap2_margin": -0.004659783140244817,
+        "midi_margin": 0.42328042328042326,
+        "negative": "drummer6/session3/7#beat12",
+        "positive": "drummer6/session3/6#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": -0.004390369563549174
+      },
+      {
+        "anchor": "drummer6/session2/3#beat12",
+        "cap2_margin": 0.001951573355364784,
+        "midi_margin": 0.42328042328042326,
+        "negative": "drummer6/session3/7#beat4",
+        "positive": "drummer6/session3/6#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 7.981537677985819e-05
+      },
+      {
+        "anchor": "drummer6/session2/3#beat12",
+        "cap2_margin": 0.00355519962159612,
+        "midi_margin": 0.42328042328042326,
+        "negative": "drummer6/session3/7#beat8",
+        "positive": "drummer6/session3/6#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.0015403846792330761
+      },
+      {
+        "anchor": "drummer6/session2/3#beat12",
+        "cap2_margin": -0.0058596127991330195,
+        "midi_margin": 0.42328042328042326,
+        "negative": "drummer6/session3/7#beat12",
+        "positive": "drummer6/session3/6#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": -0.0035312052334006017
+      },
+      {
+        "anchor": "drummer6/session3/6#beat4",
+        "cap2_margin": 0.017806860971546434,
+        "midi_margin": 0.17878787878787883,
+        "negative": "drummer6/session3/7#beat12",
+        "positive": "drummer6/session2/3#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.011405401723816773
+      },
+      {
+        "anchor": "drummer6/session3/6#beat4",
+        "cap2_margin": 0.011120704618486014,
+        "midi_margin": 0.17878787878787883,
+        "negative": "drummer6/session3/7#beat4",
+        "positive": "drummer6/session2/3#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.006841400227060708
+      },
+      {
+        "anchor": "drummer6/session3/6#beat4",
+        "cap2_margin": 0.012851775636267476,
+        "midi_margin": 0.17878787878787883,
+        "negative": "drummer6/session3/7#beat8",
+        "positive": "drummer6/session2/3#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.008406651708471257
+      },
+      {
+        "anchor": "drummer6/session3/6#beat4",
+        "cap2_margin": 0.027671050393490694,
+        "midi_margin": 0.15464994775339602,
+        "negative": "drummer6/session3/7#beat12",
+        "positive": "drummer6/session2/3#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.01781829297509398
+      },
+      {
+        "anchor": "drummer6/session3/6#beat8",
+        "cap2_margin": 0.005978593079266559,
+        "midi_margin": 0.4285714285714286,
+        "negative": "drummer6/session3/7#beat12",
+        "positive": "drummer6/session2/3#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.0036110147802404222
+      },
+      {
+        "anchor": "drummer6/session3/6#beat8",
+        "cap2_margin": 0.007472552288176533,
+        "midi_margin": 0.4285714285714286,
+        "negative": "drummer6/session3/7#beat4",
+        "positive": "drummer6/session2/3#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.004067913204463139
+      },
+      {
+        "anchor": "drummer6/session3/6#beat8",
+        "cap2_margin": 0.009497035932885489,
+        "midi_margin": 0.4285714285714286,
+        "negative": "drummer6/session3/7#beat8",
+        "positive": "drummer6/session2/3#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.006260243437775689
+      },
+      {
+        "anchor": "drummer6/session3/6#beat8",
+        "cap2_margin": -0.004274673242589443,
+        "midi_margin": 0.3645320197044335,
+        "negative": "drummer6/session3/7#beat16",
+        "positive": "drummer6/session2/3#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": -0.006508660322039599
+      },
+      {
+        "anchor": "drummer6/session3/6#beat12",
+        "cap2_margin": 0.010731461027634132,
+        "midi_margin": 0.3862433862433863,
+        "negative": "drummer6/session3/7#beat12",
+        "positive": "drummer6/session2/3#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.005433099397461126
+      },
+      {
+        "anchor": "drummer6/session3/6#beat12",
+        "cap2_margin": 0.01575065013633857,
+        "midi_margin": 0.3862433862433863,
+        "negative": "drummer6/session3/7#beat4",
+        "positive": "drummer6/session2/3#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.008727084211690916
+      },
+      {
+        "anchor": "drummer6/session3/6#beat12",
+        "cap2_margin": 0.015436794573258982,
+        "midi_margin": 0.3862433862433863,
+        "negative": "drummer6/session3/7#beat8",
+        "positive": "drummer6/session2/3#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.009044725357241911
+      },
+      {
+        "anchor": "drummer6/session3/6#beat12",
+        "cap2_margin": -0.003488802879019707,
+        "midi_margin": 0.3645320197044335,
+        "negative": "drummer6/session3/7#beat16",
+        "positive": "drummer6/session2/3#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": -0.007704444615139864
+      },
+      {
+        "anchor": "drummer6/session3/6#beat16",
+        "cap2_margin": 0.007298796202718113,
+        "midi_margin": 0.289010989010989,
+        "negative": "drummer6/session3/7#beat16",
+        "positive": "drummer6/session2/3#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.001992801545628282
+      },
+      {
+        "anchor": "drummer6/session3/6#beat16",
+        "cap2_margin": 0.003489665220037926,
+        "midi_margin": 0.28365384615384615,
+        "negative": "drummer6/session3/7#beat12",
+        "positive": "drummer6/session2/3#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.0007175184665639245
+      },
+      {
+        "anchor": "drummer6/session3/6#beat16",
+        "cap2_margin": 0.0015260860534623464,
+        "midi_margin": 0.28365384615384615,
+        "negative": "drummer6/session3/7#beat4",
+        "positive": "drummer6/session2/3#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": -0.00041408233154572715
+      },
+      {
+        "anchor": "drummer6/session3/6#beat16",
+        "cap2_margin": 0.003996783569415444,
+        "midi_margin": 0.28365384615384615,
+        "negative": "drummer6/session3/7#beat8",
+        "positive": "drummer6/session2/3#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": 0.0013778663443960286
+      },
+      {
+        "anchor": "drummer6/session3/7#beat16",
+        "cap2_margin": -0.014644591556934785,
+        "midi_margin": 0.1515151515151516,
+        "negative": "drummer6/session2/3#beat8",
+        "positive": "drummer6/session3/6#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "test",
+        "uniform_margin": -0.010308535554447398
+      }
+    ],
+    "uniform": {
+      "accuracy": 0.3448275862068966,
+      "comparisons": 29,
+      "correct": 10,
+      "incorrect": 19,
+      "ties": 0
+    }
+  },
+  "old_test": "NOT RUN; previous drummer8 unchanged",
+  "population_improvement": "NOT ESTABLISHED: one performer, three connected originals",
+  "quality": "FAIL: no improvement",
+  "status": "PASS: measurements completed",
+  "validation": {
+    "by_component": [
+      {
+        "cap2": {
+          "accuracy": 0.7777777777777778,
+          "comparisons": 36,
+          "correct": 28,
+          "incorrect": 8,
+          "ties": 0
+        },
+        "component": "drummer7/eval_session/2",
+        "originals": [
+          "drummer7/eval_session/2",
+          "drummer7/session3/130",
+          "drummer7/session3/131"
+        ],
+        "uniform": {
+          "accuracy": 0.7777777777777778,
+          "comparisons": 36,
+          "correct": 28,
+          "incorrect": 8,
+          "ties": 0
+        }
+      },
+      {
+        "cap2": {
+          "accuracy": 0.9,
+          "comparisons": 40,
+          "correct": 36,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "component": "drummer7/session1/22",
+        "originals": [
+          "drummer7/session1/22",
+          "drummer7/session1/39",
+          "drummer7/session1/40"
+        ],
+        "uniform": {
+          "accuracy": 0.9,
+          "comparisons": 40,
+          "correct": 36,
+          "incorrect": 4,
+          "ties": 0
+        }
+      },
+      {
+        "cap2": {
+          "accuracy": 0.9166666666666666,
+          "comparisons": 48,
+          "correct": 44,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "component": "drummer7/session2/102",
+        "originals": [
+          "drummer7/session2/102",
+          "drummer7/session2/103",
+          "drummer7/session2/105"
+        ],
+        "uniform": {
+          "accuracy": 0.9166666666666666,
+          "comparisons": 48,
+          "correct": 44,
+          "incorrect": 4,
+          "ties": 0
+        }
+      },
+      {
+        "cap2": {
+          "accuracy": 1.0,
+          "comparisons": 28,
+          "correct": 28,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "component": "drummer7/session2/14",
+        "originals": [
+          "drummer7/session2/14",
+          "drummer7/session3/117",
+          "drummer7/session3/119"
+        ],
+        "uniform": {
+          "accuracy": 1.0,
+          "comparisons": 28,
+          "correct": 28,
+          "incorrect": 0,
+          "ties": 0
+        }
+      },
+      {
+        "cap2": {
+          "accuracy": 1.0,
+          "comparisons": 25,
+          "correct": 25,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "component": "drummer7/session2/29",
+        "originals": [
+          "drummer7/session2/29",
+          "drummer7/session2/33",
+          "drummer7/session2/93"
+        ],
+        "uniform": {
+          "accuracy": 1.0,
+          "comparisons": 25,
+          "correct": 25,
+          "incorrect": 0,
+          "ties": 0
+        }
+      },
+      {
+        "cap2": {
+          "accuracy": 0.84375,
+          "comparisons": 32,
+          "correct": 27,
+          "incorrect": 5,
+          "ties": 0
+        },
+        "component": "drummer7/session2/46",
+        "originals": [
+          "drummer7/session2/46",
+          "drummer7/session2/49",
+          "drummer7/session2/53"
+        ],
+        "uniform": {
+          "accuracy": 0.875,
+          "comparisons": 32,
+          "correct": 28,
+          "incorrect": 4,
+          "ties": 0
+        }
+      },
+      {
+        "cap2": {
+          "accuracy": 1.0,
+          "comparisons": 38,
+          "correct": 38,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "component": "drummer7/session3/48",
+        "originals": [
+          "drummer7/session3/48",
+          "drummer7/session3/49",
+          "drummer7/session3/64"
+        ],
+        "uniform": {
+          "accuracy": 1.0,
+          "comparisons": 38,
+          "correct": 38,
+          "incorrect": 0,
+          "ties": 0
+        }
+      }
+    ],
+    "by_original": [
+      {
+        "anchor_cap2": {
+          "accuracy": 0.75,
+          "comparisons": 16,
+          "correct": 12,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 0.75,
+          "comparisons": 16,
+          "correct": 12,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "original_id": "drummer7/eval_session/2",
+        "touching_cap2": {
+          "accuracy": 0.7777777777777778,
+          "comparisons": 36,
+          "correct": 28,
+          "incorrect": 8,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 0.7777777777777778,
+          "comparisons": 36,
+          "correct": 28,
+          "incorrect": 8,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 16,
+          "correct": 16,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 16,
+          "correct": 16,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "original_id": "drummer7/session1/22",
+        "touching_cap2": {
+          "accuracy": 0.9,
+          "comparisons": 40,
+          "correct": 36,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 0.9,
+          "comparisons": 40,
+          "correct": 36,
+          "incorrect": 4,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 16,
+          "correct": 16,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 16,
+          "correct": 16,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "original_id": "drummer7/session1/39",
+        "touching_cap2": {
+          "accuracy": 0.9,
+          "comparisons": 40,
+          "correct": 36,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 0.9,
+          "comparisons": 40,
+          "correct": 36,
+          "incorrect": 4,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 0.5,
+          "comparisons": 8,
+          "correct": 4,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 0.5,
+          "comparisons": 8,
+          "correct": 4,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "original_id": "drummer7/session1/40",
+        "touching_cap2": {
+          "accuracy": 0.9,
+          "comparisons": 40,
+          "correct": 36,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 0.9,
+          "comparisons": 40,
+          "correct": 36,
+          "incorrect": 4,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 0.9375,
+          "comparisons": 16,
+          "correct": 15,
+          "incorrect": 1,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 0.9375,
+          "comparisons": 16,
+          "correct": 15,
+          "incorrect": 1,
+          "ties": 0
+        },
+        "original_id": "drummer7/session2/102",
+        "touching_cap2": {
+          "accuracy": 0.9166666666666666,
+          "comparisons": 48,
+          "correct": 44,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 0.9166666666666666,
+          "comparisons": 48,
+          "correct": 44,
+          "incorrect": 4,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 0.9375,
+          "comparisons": 16,
+          "correct": 15,
+          "incorrect": 1,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 0.9375,
+          "comparisons": 16,
+          "correct": 15,
+          "incorrect": 1,
+          "ties": 0
+        },
+        "original_id": "drummer7/session2/103",
+        "touching_cap2": {
+          "accuracy": 0.9166666666666666,
+          "comparisons": 48,
+          "correct": 44,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 0.9166666666666666,
+          "comparisons": 48,
+          "correct": 44,
+          "incorrect": 4,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 0.875,
+          "comparisons": 16,
+          "correct": 14,
+          "incorrect": 2,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 0.875,
+          "comparisons": 16,
+          "correct": 14,
+          "incorrect": 2,
+          "ties": 0
+        },
+        "original_id": "drummer7/session2/105",
+        "touching_cap2": {
+          "accuracy": 0.9166666666666666,
+          "comparisons": 48,
+          "correct": 44,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 0.9166666666666666,
+          "comparisons": 48,
+          "correct": 44,
+          "incorrect": 4,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": null,
+        "anchor_uniform": null,
+        "original_id": "drummer7/session2/14",
+        "touching_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 28,
+          "correct": 28,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 28,
+          "correct": 28,
+          "incorrect": 0,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 9,
+          "correct": 9,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 9,
+          "correct": 9,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "original_id": "drummer7/session2/29",
+        "touching_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 25,
+          "correct": 25,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 25,
+          "correct": 25,
+          "incorrect": 0,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 16,
+          "correct": 16,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 16,
+          "correct": 16,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "original_id": "drummer7/session2/33",
+        "touching_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 25,
+          "correct": 25,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 25,
+          "correct": 25,
+          "incorrect": 0,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 0.9375,
+          "comparisons": 16,
+          "correct": 15,
+          "incorrect": 1,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 16,
+          "correct": 16,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "original_id": "drummer7/session2/46",
+        "touching_cap2": {
+          "accuracy": 0.84375,
+          "comparisons": 32,
+          "correct": 27,
+          "incorrect": 5,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 0.875,
+          "comparisons": 32,
+          "correct": 28,
+          "incorrect": 4,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 1,
+          "correct": 1,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 1,
+          "correct": 1,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "original_id": "drummer7/session2/49",
+        "touching_cap2": {
+          "accuracy": 0.84375,
+          "comparisons": 32,
+          "correct": 27,
+          "incorrect": 5,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 0.875,
+          "comparisons": 32,
+          "correct": 28,
+          "incorrect": 4,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 0.7333333333333333,
+          "comparisons": 15,
+          "correct": 11,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 0.7333333333333333,
+          "comparisons": 15,
+          "correct": 11,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "original_id": "drummer7/session2/53",
+        "touching_cap2": {
+          "accuracy": 0.84375,
+          "comparisons": 32,
+          "correct": 27,
+          "incorrect": 5,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 0.875,
+          "comparisons": 32,
+          "correct": 28,
+          "incorrect": 4,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": null,
+        "anchor_uniform": null,
+        "original_id": "drummer7/session2/93",
+        "touching_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 25,
+          "correct": 25,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 25,
+          "correct": 25,
+          "incorrect": 0,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 12,
+          "correct": 12,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 12,
+          "correct": 12,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "original_id": "drummer7/session3/117",
+        "touching_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 28,
+          "correct": 28,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 28,
+          "correct": 28,
+          "incorrect": 0,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 16,
+          "correct": 16,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 16,
+          "correct": 16,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "original_id": "drummer7/session3/119",
+        "touching_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 28,
+          "correct": 28,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 28,
+          "correct": 28,
+          "incorrect": 0,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 12,
+          "correct": 12,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 12,
+          "correct": 12,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "original_id": "drummer7/session3/130",
+        "touching_cap2": {
+          "accuracy": 0.7777777777777778,
+          "comparisons": 36,
+          "correct": 28,
+          "incorrect": 8,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 0.7777777777777778,
+          "comparisons": 36,
+          "correct": 28,
+          "incorrect": 8,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 0.5,
+          "comparisons": 8,
+          "correct": 4,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 0.5,
+          "comparisons": 8,
+          "correct": 4,
+          "incorrect": 4,
+          "ties": 0
+        },
+        "original_id": "drummer7/session3/131",
+        "touching_cap2": {
+          "accuracy": 0.7777777777777778,
+          "comparisons": 36,
+          "correct": 28,
+          "incorrect": 8,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 0.7777777777777778,
+          "comparisons": 36,
+          "correct": 28,
+          "incorrect": 8,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 6,
+          "correct": 6,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 6,
+          "correct": 6,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "original_id": "drummer7/session3/48",
+        "touching_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 38,
+          "correct": 38,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 38,
+          "correct": 38,
+          "incorrect": 0,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 16,
+          "correct": 16,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 16,
+          "correct": 16,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "original_id": "drummer7/session3/49",
+        "touching_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 38,
+          "correct": 38,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 38,
+          "correct": 38,
+          "incorrect": 0,
+          "ties": 0
+        }
+      },
+      {
+        "anchor_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 16,
+          "correct": 16,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "anchor_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 16,
+          "correct": 16,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "original_id": "drummer7/session3/64",
+        "touching_cap2": {
+          "accuracy": 1.0,
+          "comparisons": 38,
+          "correct": 38,
+          "incorrect": 0,
+          "ties": 0
+        },
+        "touching_uniform": {
+          "accuracy": 1.0,
+          "comparisons": 38,
+          "correct": 38,
+          "incorrect": 0,
+          "ties": 0
+        }
+      }
+    ],
+    "cap2": {
+      "accuracy": 0.9149797570850202,
+      "comparisons": 247,
+      "correct": 226,
+      "incorrect": 21,
+      "ties": 0
+    },
+    "delta_accuracy": -0.004048582995951455,
+    "improvement": "WORSE",
+    "triplets": [
+      {
+        "anchor": "drummer7/session1/40#beat4",
+        "cap2_margin": -0.008327672053305892,
+        "midi_margin": 0.28035982008995497,
+        "negative": "drummer7/session1/22#beat8",
+        "positive": "drummer7/session1/39#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.006285404576655104
+      },
+      {
+        "anchor": "drummer7/session1/40#beat4",
+        "cap2_margin": -0.010172194094107702,
+        "midi_margin": 0.24587706146926536,
+        "negative": "drummer7/session1/22#beat12",
+        "positive": "drummer7/session1/39#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.008978439629501775
+      },
+      {
+        "anchor": "drummer7/session1/40#beat4",
+        "cap2_margin": -0.007516693225142999,
+        "midi_margin": 0.24587706146926536,
+        "negative": "drummer7/session1/22#beat4",
+        "positive": "drummer7/session1/39#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.005516559215613826
+      },
+      {
+        "anchor": "drummer7/session1/40#beat4",
+        "cap2_margin": -0.0013099866906557006,
+        "midi_margin": 0.23688155922038978,
+        "negative": "drummer7/session1/22#beat8",
+        "positive": "drummer7/session1/39#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0012255506645659111
+      },
+      {
+        "anchor": "drummer7/session1/40#beat16",
+        "cap2_margin": 0.012662658704050114,
+        "midi_margin": 0.2890909090909092,
+        "negative": "drummer7/session1/39#beat12",
+        "positive": "drummer7/session1/22#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.011195190736431677
+      },
+      {
+        "anchor": "drummer7/session1/40#beat16",
+        "cap2_margin": 0.0010849173426544538,
+        "midi_margin": 0.24909090909090914,
+        "negative": "drummer7/session1/39#beat8",
+        "positive": "drummer7/session1/22#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.0017975810696312195
+      },
+      {
+        "anchor": "drummer7/session1/40#beat16",
+        "cap2_margin": 0.011843449997557477,
+        "midi_margin": 0.24363636363636365,
+        "negative": "drummer7/session1/39#beat12",
+        "positive": "drummer7/session1/22#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.00997003447312472
+      },
+      {
+        "anchor": "drummer7/session1/40#beat16",
+        "cap2_margin": 0.005440934119932705,
+        "midi_margin": 0.24242424242424254,
+        "negative": "drummer7/session1/39#beat16",
+        "positive": "drummer7/session1/22#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.0060726152847925775
+      },
+      {
+        "anchor": "drummer7/session1/22#beat4",
+        "cap2_margin": -0.015811249092339434,
+        "midi_margin": 0.38888888888888884,
+        "negative": "drummer7/session1/40#beat8",
+        "positive": "drummer7/session1/39#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.012497914624739755
+      },
+      {
+        "anchor": "drummer7/session1/22#beat4",
+        "cap2_margin": -0.01374263147748884,
+        "midi_margin": 0.373015873015873,
+        "negative": "drummer7/session1/40#beat8",
+        "positive": "drummer7/session1/39#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.010899337612398852
+      },
+      {
+        "anchor": "drummer7/session1/22#beat4",
+        "cap2_margin": -0.017852596658381875,
+        "midi_margin": 0.3587301587301587,
+        "negative": "drummer7/session1/40#beat12",
+        "positive": "drummer7/session1/39#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.012852022643721449
+      },
+      {
+        "anchor": "drummer7/session1/22#beat4",
+        "cap2_margin": -0.01578397904353129,
+        "midi_margin": 0.34285714285714286,
+        "negative": "drummer7/session1/40#beat12",
+        "positive": "drummer7/session1/39#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.011253445631380548
+      },
+      {
+        "anchor": "drummer7/session1/22#beat8",
+        "cap2_margin": -0.014501367051270624,
+        "midi_margin": 0.3502645502645503,
+        "negative": "drummer7/session1/40#beat8",
+        "positive": "drummer7/session1/39#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.011183074966767046
+      },
+      {
+        "anchor": "drummer7/session1/22#beat8",
+        "cap2_margin": -0.011872677534600064,
+        "midi_margin": 0.33571428571428563,
+        "negative": "drummer7/session1/40#beat8",
+        "positive": "drummer7/session1/39#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.009089596815426485
+      },
+      {
+        "anchor": "drummer7/session1/22#beat8",
+        "cap2_margin": -0.012382319286420838,
+        "midi_margin": 0.31917211328976036,
+        "negative": "drummer7/session1/40#beat12",
+        "positive": "drummer7/session1/39#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.008446710536511214
+      },
+      {
+        "anchor": "drummer7/session1/22#beat8",
+        "cap2_margin": -0.009753629769750288,
+        "midi_margin": 0.3046218487394957,
+        "negative": "drummer7/session1/40#beat12",
+        "positive": "drummer7/session1/39#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.00635323238517065
+      },
+      {
+        "anchor": "drummer7/session1/22#beat12",
+        "cap2_margin": -0.010904342065117999,
+        "midi_margin": 0.4444444444444444,
+        "negative": "drummer7/session1/40#beat8",
+        "positive": "drummer7/session1/39#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.008863657772968617
+      },
+      {
+        "anchor": "drummer7/session1/22#beat12",
+        "cap2_margin": -0.012586457203787312,
+        "midi_margin": 0.4259259259259258,
+        "negative": "drummer7/session1/40#beat8",
+        "positive": "drummer7/session1/39#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.00970960481100766
+      },
+      {
+        "anchor": "drummer7/session1/22#beat12",
+        "cap2_margin": -0.011514803386760055,
+        "midi_margin": 0.41428571428571426,
+        "negative": "drummer7/session1/40#beat12",
+        "positive": "drummer7/session1/39#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.008328644691812628
+      },
+      {
+        "anchor": "drummer7/session1/22#beat12",
+        "cap2_margin": -0.013196918525429372,
+        "midi_margin": 0.39576719576719566,
+        "negative": "drummer7/session1/40#beat12",
+        "positive": "drummer7/session1/39#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.009174591729851671
+      },
+      {
+        "anchor": "drummer7/session1/22#beat16",
+        "cap2_margin": -0.015163294337495588,
+        "midi_margin": 0.46285714285714286,
+        "negative": "drummer7/session1/40#beat8",
+        "positive": "drummer7/session1/39#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.008821694308280425
+      },
+      {
+        "anchor": "drummer7/session1/22#beat16",
+        "cap2_margin": -0.019394599170517945,
+        "midi_margin": 0.46285714285714286,
+        "negative": "drummer7/session1/40#beat8",
+        "positive": "drummer7/session1/39#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.015606964793900193
+      },
+      {
+        "anchor": "drummer7/session1/22#beat16",
+        "cap2_margin": -0.01792756426359907,
+        "midi_margin": 0.44285714285714284,
+        "negative": "drummer7/session1/40#beat8",
+        "positive": "drummer7/session1/39#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.013900372757964314
+      },
+      {
+        "anchor": "drummer7/session1/22#beat16",
+        "cap2_margin": -0.011426997074204874,
+        "midi_margin": 0.43176470588235294,
+        "negative": "drummer7/session1/40#beat12",
+        "positive": "drummer7/session1/39#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.005286577175693692
+      },
+      {
+        "anchor": "drummer7/session1/39#beat4",
+        "cap2_margin": -0.02543986349882873,
+        "midi_margin": 0.3909677419354839,
+        "negative": "drummer7/session1/40#beat8",
+        "positive": "drummer7/session1/22#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.02084348313529235
+      },
+      {
+        "anchor": "drummer7/session1/39#beat4",
+        "cap2_margin": -0.020668407468508412,
+        "midi_margin": 0.3709677419354839,
+        "negative": "drummer7/session1/40#beat8",
+        "positive": "drummer7/session1/22#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.01668062536991767
+      },
+      {
+        "anchor": "drummer7/session1/39#beat4",
+        "cap2_margin": -0.02816738906816407,
+        "midi_margin": 0.3533333333333334,
+        "negative": "drummer7/session1/40#beat12",
+        "positive": "drummer7/session1/22#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.021403514776104617
+      },
+      {
+        "anchor": "drummer7/session1/39#beat4",
+        "cap2_margin": -0.06754752176861785,
+        "midi_margin": 0.3533333333333334,
+        "negative": "drummer7/session1/40#beat16",
+        "positive": "drummer7/session1/22#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.05080549854898596
+      },
+      {
+        "anchor": "drummer7/session1/39#beat8",
+        "cap2_margin": -0.06502187754482376,
+        "midi_margin": 0.33999999999999997,
+        "negative": "drummer7/session1/40#beat16",
+        "positive": "drummer7/session1/22#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.04824328307219719
+      },
+      {
+        "anchor": "drummer7/session1/39#beat8",
+        "cap2_margin": -0.02441925937579431,
+        "midi_margin": 0.33870967741935487,
+        "negative": "drummer7/session1/40#beat12",
+        "positive": "drummer7/session1/22#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.018543497065342973
+      },
+      {
+        "anchor": "drummer7/session1/39#beat8",
+        "cap2_margin": -0.015402443382776677,
+        "midi_margin": 0.33870967741935487,
+        "negative": "drummer7/session1/40#beat8",
+        "positive": "drummer7/session1/22#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.014123272696546538
+      },
+      {
+        "anchor": "drummer7/session1/39#beat8",
+        "cap2_margin": -0.06339957156009166,
+        "midi_margin": 0.32148148148148137,
+        "negative": "drummer7/session1/40#beat16",
+        "positive": "drummer7/session1/22#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.04663296438079745
+      },
+      {
+        "anchor": "drummer7/session1/39#beat12",
+        "cap2_margin": -0.050679866257324624,
+        "midi_margin": 0.4,
+        "negative": "drummer7/session1/40#beat16",
+        "positive": "drummer7/session1/22#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.03376699495571285
+      },
+      {
+        "anchor": "drummer7/session1/39#beat12",
+        "cap2_margin": -0.022479511567920066,
+        "midi_margin": 0.3909677419354839,
+        "negative": "drummer7/session1/40#beat12",
+        "positive": "drummer7/session1/22#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.016044435186864933
+      },
+      {
+        "anchor": "drummer7/session1/39#beat12",
+        "cap2_margin": -0.017443584327576634,
+        "midi_margin": 0.3909677419354839,
+        "negative": "drummer7/session1/40#beat8",
+        "positive": "drummer7/session1/22#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.01572227313839887
+      },
+      {
+        "anchor": "drummer7/session1/39#beat12",
+        "cap2_margin": -0.05266984353119045,
+        "midi_margin": 0.2728571428571428,
+        "negative": "drummer7/session1/40#beat16",
+        "positive": "drummer7/session1/22#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.036387186856224406
+      },
+      {
+        "anchor": "drummer7/session1/39#beat16",
+        "cap2_margin": -0.02788182173184458,
+        "midi_margin": 0.29487179487179493,
+        "negative": "drummer7/session1/40#beat12",
+        "positive": "drummer7/session1/22#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.020578184680279256
+      },
+      {
+        "anchor": "drummer7/session1/39#beat16",
+        "cap2_margin": -0.06610965532040079,
+        "midi_margin": 0.29487179487179493,
+        "negative": "drummer7/session1/40#beat16",
+        "positive": "drummer7/session1/22#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.04851989550832061
+      },
+      {
+        "anchor": "drummer7/session1/39#beat16",
+        "cap2_margin": -0.02433168730221954,
+        "midi_margin": 0.29487179487179493,
+        "negative": "drummer7/session1/40#beat8",
+        "positive": "drummer7/session1/22#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.01978228861679878
+      },
+      {
+        "anchor": "drummer7/session1/39#beat16",
+        "cap2_margin": -0.026569912709162806,
+        "midi_margin": 0.2777777777777778,
+        "negative": "drummer7/session1/40#beat12",
+        "positive": "drummer7/session1/22#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.019317743252976888
+      },
+      {
+        "anchor": "drummer7/session3/48#beat4",
+        "cap2_margin": -0.004105407438676123,
+        "midi_margin": 0.20238095238095233,
+        "negative": "drummer7/session3/64#beat12",
+        "positive": "drummer7/session3/49#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0037891578043858245
+      },
+      {
+        "anchor": "drummer7/session3/48#beat4",
+        "cap2_margin": -0.0033488256383743783,
+        "midi_margin": 0.20238095238095233,
+        "negative": "drummer7/session3/64#beat12",
+        "positive": "drummer7/session3/49#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0025503854989184405
+      },
+      {
+        "anchor": "drummer7/session3/48#beat4",
+        "cap2_margin": -0.0023377033150891948,
+        "midi_margin": 0.20238095238095233,
+        "negative": "drummer7/session3/64#beat12",
+        "positive": "drummer7/session3/49#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.002360016941448025
+      },
+      {
+        "anchor": "drummer7/session3/48#beat12",
+        "cap2_margin": -0.005313034323970996,
+        "midi_margin": 0.20238095238095233,
+        "negative": "drummer7/session3/64#beat12",
+        "positive": "drummer7/session3/49#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.004406498960406811
+      },
+      {
+        "anchor": "drummer7/session3/48#beat12",
+        "cap2_margin": -0.004058102846495535,
+        "midi_margin": 0.20238095238095233,
+        "negative": "drummer7/session3/64#beat12",
+        "positive": "drummer7/session3/49#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0029142197858461395
+      },
+      {
+        "anchor": "drummer7/session3/48#beat12",
+        "cap2_margin": -0.002418660756566538,
+        "midi_margin": 0.20238095238095233,
+        "negative": "drummer7/session3/64#beat12",
+        "positive": "drummer7/session3/49#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0023205937789183553
+      },
+      {
+        "anchor": "drummer7/session3/49#beat4",
+        "cap2_margin": -0.029472548476958082,
+        "midi_margin": 0.6,
+        "negative": "drummer7/session3/48#beat16",
+        "positive": "drummer7/session3/64#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.021674738666084905
+      },
+      {
+        "anchor": "drummer7/session3/49#beat4",
+        "cap2_margin": -0.02614866719331636,
+        "midi_margin": 0.6,
+        "negative": "drummer7/session3/48#beat8",
+        "positive": "drummer7/session3/64#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.018868654066179793
+      },
+      {
+        "anchor": "drummer7/session3/49#beat4",
+        "cap2_margin": -0.03012449504636196,
+        "midi_margin": 0.4888888888888888,
+        "negative": "drummer7/session3/48#beat16",
+        "positive": "drummer7/session3/64#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.022145344082775967
+      },
+      {
+        "anchor": "drummer7/session3/49#beat4",
+        "cap2_margin": -0.02680061376272024,
+        "midi_margin": 0.4888888888888888,
+        "negative": "drummer7/session3/48#beat8",
+        "positive": "drummer7/session3/64#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.01933925948287085
+      },
+      {
+        "anchor": "drummer7/session3/49#beat8",
+        "cap2_margin": -0.032680749633853964,
+        "midi_margin": 0.40866873065015485,
+        "negative": "drummer7/session3/48#beat16",
+        "positive": "drummer7/session3/64#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.023530393645136177
+      },
+      {
+        "anchor": "drummer7/session3/49#beat8",
+        "cap2_margin": -0.029601373241253715,
+        "midi_margin": 0.40866873065015485,
+        "negative": "drummer7/session3/48#beat8",
+        "positive": "drummer7/session3/64#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.02098503463176006
+      },
+      {
+        "anchor": "drummer7/session3/49#beat8",
+        "cap2_margin": -0.03188884031631824,
+        "midi_margin": 0.3157894736842106,
+        "negative": "drummer7/session3/48#beat16",
+        "positive": "drummer7/session3/64#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.022674935174455586
+      },
+      {
+        "anchor": "drummer7/session3/49#beat8",
+        "cap2_margin": -0.028809463923717988,
+        "midi_margin": 0.3157894736842106,
+        "negative": "drummer7/session3/48#beat8",
+        "positive": "drummer7/session3/64#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.020129576161079465
+      },
+      {
+        "anchor": "drummer7/session3/49#beat12",
+        "cap2_margin": -0.03445924029717144,
+        "midi_margin": 0.40866873065015485,
+        "negative": "drummer7/session3/48#beat16",
+        "positive": "drummer7/session3/64#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.025359968914678368
+      },
+      {
+        "anchor": "drummer7/session3/49#beat12",
+        "cap2_margin": -0.03151634586227281,
+        "midi_margin": 0.40866873065015485,
+        "negative": "drummer7/session3/48#beat8",
+        "positive": "drummer7/session3/64#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.022759692609207356
+      },
+      {
+        "anchor": "drummer7/session3/49#beat12",
+        "cap2_margin": -0.03189442757495499,
+        "midi_margin": 0.3157894736842106,
+        "negative": "drummer7/session3/48#beat16",
+        "positive": "drummer7/session3/64#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.023117278050993985
+      },
+      {
+        "anchor": "drummer7/session3/49#beat12",
+        "cap2_margin": -0.02895153314005635,
+        "midi_margin": 0.3157894736842106,
+        "negative": "drummer7/session3/48#beat8",
+        "positive": "drummer7/session3/64#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.020517001745522984
+      },
+      {
+        "anchor": "drummer7/session3/49#beat16",
+        "cap2_margin": -0.03231955029007416,
+        "midi_margin": 0.40866873065015485,
+        "negative": "drummer7/session3/48#beat16",
+        "positive": "drummer7/session3/64#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.024388941893173692
+      },
+      {
+        "anchor": "drummer7/session3/49#beat16",
+        "cap2_margin": -0.029117247936643557,
+        "midi_margin": 0.40866873065015485,
+        "negative": "drummer7/session3/48#beat8",
+        "positive": "drummer7/session3/64#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.021561164424262886
+      },
+      {
+        "anchor": "drummer7/session3/49#beat16",
+        "cap2_margin": -0.030052623253668056,
+        "midi_margin": 0.3157894736842106,
+        "negative": "drummer7/session3/48#beat16",
+        "positive": "drummer7/session3/64#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.022014145417926966
+      },
+      {
+        "anchor": "drummer7/session3/49#beat16",
+        "cap2_margin": -0.026850320900237458,
+        "midi_margin": 0.3157894736842106,
+        "negative": "drummer7/session3/48#beat8",
+        "positive": "drummer7/session3/64#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.01918636794901615
+      },
+      {
+        "anchor": "drummer7/session3/64#beat4",
+        "cap2_margin": -0.030470483211951085,
+        "midi_margin": 0.5252525252525252,
+        "negative": "drummer7/session3/48#beat16",
+        "positive": "drummer7/session3/49#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.022369760879514367
+      },
+      {
+        "anchor": "drummer7/session3/64#beat4",
+        "cap2_margin": -0.02668336558118588,
+        "midi_margin": 0.5252525252525252,
+        "negative": "drummer7/session3/48#beat8",
+        "positive": "drummer7/session3/49#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.019279592436130453
+      },
+      {
+        "anchor": "drummer7/session3/64#beat4",
+        "cap2_margin": -0.02748208628810013,
+        "midi_margin": 0.4258373205741627,
+        "negative": "drummer7/session3/48#beat16",
+        "positive": "drummer7/session3/49#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.020368892223188276
+      },
+      {
+        "anchor": "drummer7/session3/64#beat4",
+        "cap2_margin": -0.023694968657334912,
+        "midi_margin": 0.4258373205741627,
+        "negative": "drummer7/session3/48#beat8",
+        "positive": "drummer7/session3/49#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.017278723779804366
+      },
+      {
+        "anchor": "drummer7/session3/64#beat8",
+        "cap2_margin": -0.029817301004124736,
+        "midi_margin": 0.5490196078431373,
+        "negative": "drummer7/session3/48#beat16",
+        "positive": "drummer7/session3/49#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.02240235922768111
+      },
+      {
+        "anchor": "drummer7/session3/64#beat8",
+        "cap2_margin": -0.02595220713220404,
+        "midi_margin": 0.5490196078431373,
+        "negative": "drummer7/session3/48#beat8",
+        "positive": "drummer7/session3/49#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.019137696423404328
+      },
+      {
+        "anchor": "drummer7/session3/64#beat8",
+        "cap2_margin": -0.02756432858456591,
+        "midi_margin": 0.44444444444444453,
+        "negative": "drummer7/session3/48#beat16",
+        "positive": "drummer7/session3/49#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.02034330511224445
+      },
+      {
+        "anchor": "drummer7/session3/64#beat8",
+        "cap2_margin": -0.023699234712645234,
+        "midi_margin": 0.44444444444444453,
+        "negative": "drummer7/session3/48#beat8",
+        "positive": "drummer7/session3/49#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.01707864230796767
+      },
+      {
+        "anchor": "drummer7/session3/64#beat12",
+        "cap2_margin": -0.028574331839589934,
+        "midi_margin": 0.35087719298245623,
+        "negative": "drummer7/session3/48#beat16",
+        "positive": "drummer7/session3/49#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.020042731963131624
+      },
+      {
+        "anchor": "drummer7/session3/64#beat12",
+        "cap2_margin": -0.025819176134119333,
+        "midi_margin": 0.35087719298245623,
+        "negative": "drummer7/session3/48#beat8",
+        "positive": "drummer7/session3/49#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.017529690727263337
+      },
+      {
+        "anchor": "drummer7/session3/64#beat12",
+        "cap2_margin": -0.007777613071408149,
+        "midi_margin": 0.26754385964912275,
+        "negative": "drummer7/session3/48#beat12",
+        "positive": "drummer7/session3/49#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0075624974864580904
+      },
+      {
+        "anchor": "drummer7/session3/64#beat12",
+        "cap2_margin": -0.011439597573398868,
+        "midi_margin": 0.26754385964912275,
+        "negative": "drummer7/session3/48#beat4",
+        "positive": "drummer7/session3/49#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.011124328471812679
+      },
+      {
+        "anchor": "drummer7/session3/64#beat16",
+        "cap2_margin": -0.028718837141618398,
+        "midi_margin": 0.6,
+        "negative": "drummer7/session3/48#beat16",
+        "positive": "drummer7/session3/49#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.020222798342884193
+      },
+      {
+        "anchor": "drummer7/session3/64#beat16",
+        "cap2_margin": -0.025329236468327142,
+        "midi_margin": 0.6,
+        "negative": "drummer7/session3/48#beat8",
+        "positive": "drummer7/session3/49#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0175023068224389
+      },
+      {
+        "anchor": "drummer7/session3/64#beat16",
+        "cap2_margin": -0.028947199509387764,
+        "midi_margin": 0.48235294117647054,
+        "negative": "drummer7/session3/48#beat16",
+        "positive": "drummer7/session3/49#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.020935225966933545
+      },
+      {
+        "anchor": "drummer7/session3/64#beat16",
+        "cap2_margin": -0.025557598836096502,
+        "midi_margin": 0.48235294117647054,
+        "negative": "drummer7/session3/48#beat8",
+        "positive": "drummer7/session3/49#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.018214734446488245
+      },
+      {
+        "anchor": "drummer7/session2/102#beat4",
+        "cap2_margin": -0.02291320706494294,
+        "midi_margin": 0.45238095238095244,
+        "negative": "drummer7/session2/105#beat4",
+        "positive": "drummer7/session2/103#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.02016253433809493
+      },
+      {
+        "anchor": "drummer7/session2/102#beat4",
+        "cap2_margin": -0.013544800760024928,
+        "midi_margin": 0.45238095238095244,
+        "negative": "drummer7/session2/105#beat8",
+        "positive": "drummer7/session2/103#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.010458026547643877
+      },
+      {
+        "anchor": "drummer7/session2/102#beat4",
+        "cap2_margin": -0.022963988769929132,
+        "midi_margin": 0.30952380952380965,
+        "negative": "drummer7/session2/105#beat4",
+        "positive": "drummer7/session2/103#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.020271343713063675
+      },
+      {
+        "anchor": "drummer7/session2/102#beat4",
+        "cap2_margin": -0.013595582465011113,
+        "midi_margin": 0.30952380952380965,
+        "negative": "drummer7/session2/105#beat8",
+        "positive": "drummer7/session2/103#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.010566835922612629
+      },
+      {
+        "anchor": "drummer7/session2/102#beat8",
+        "cap2_margin": -0.013587317017564965,
+        "midi_margin": 0.319078947368421,
+        "negative": "drummer7/session2/105#beat8",
+        "positive": "drummer7/session2/103#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.010607338599746035
+      },
+      {
+        "anchor": "drummer7/session2/102#beat8",
+        "cap2_margin": -0.007991504712347242,
+        "midi_margin": 0.29323308270676696,
+        "negative": "drummer7/session2/103#beat4",
+        "positive": "drummer7/session2/105#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.007391100679494858
+      },
+      {
+        "anchor": "drummer7/session2/102#beat8",
+        "cap2_margin": -0.015682927641343748,
+        "midi_margin": 0.256578947368421,
+        "negative": "drummer7/session2/105#beat8",
+        "positive": "drummer7/session2/103#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.012022101142256296
+      },
+      {
+        "anchor": "drummer7/session2/102#beat8",
+        "cap2_margin": -0.00653588987296474,
+        "midi_margin": 0.22600619195046445,
+        "negative": "drummer7/session2/103#beat4",
+        "positive": "drummer7/session2/105#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.006151724942302718
+      },
+      {
+        "anchor": "drummer7/session2/102#beat12",
+        "cap2_margin": -0.008936252832710875,
+        "midi_margin": 0.30952380952380965,
+        "negative": "drummer7/session2/105#beat4",
+        "positive": "drummer7/session2/103#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.00980257866667944
+      },
+      {
+        "anchor": "drummer7/session2/102#beat12",
+        "cap2_margin": -0.009429446505268418,
+        "midi_margin": 0.2666666666666667,
+        "negative": "drummer7/session2/105#beat4",
+        "positive": "drummer7/session2/103#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.010086328732450413
+      },
+      {
+        "anchor": "drummer7/session2/102#beat12",
+        "cap2_margin": -0.0001023824184746791,
+        "midi_margin": 0.23109243697478998,
+        "negative": "drummer7/session2/105#beat8",
+        "positive": "drummer7/session2/103#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0010684966583233153
+      },
+      {
+        "anchor": "drummer7/session2/102#beat12",
+        "cap2_margin": -0.009595934382372924,
+        "midi_margin": 0.22916666666666674,
+        "negative": "drummer7/session2/105#beat4",
+        "positive": "drummer7/session2/103#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.010141244424657272
+      },
+      {
+        "anchor": "drummer7/session2/102#beat16",
+        "cap2_margin": -0.009420607832414395,
+        "midi_margin": 0.3308823529411764,
+        "negative": "drummer7/session2/105#beat4",
+        "positive": "drummer7/session2/103#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.00968937184806902
+      },
+      {
+        "anchor": "drummer7/session2/102#beat16",
+        "cap2_margin": -0.00711319514167676,
+        "midi_margin": 0.2941176470588235,
+        "negative": "drummer7/session2/105#beat4",
+        "positive": "drummer7/session2/103#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.008219572410223214
+      },
+      {
+        "anchor": "drummer7/session2/102#beat16",
+        "cap2_margin": -0.005199137962867838,
+        "midi_margin": 0.2683823529411764,
+        "negative": "drummer7/session2/105#beat4",
+        "positive": "drummer7/session2/103#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.007297366980832021
+      },
+      {
+        "anchor": "drummer7/session2/102#beat16",
+        "cap2_margin": 0.0005117291065483422,
+        "midi_margin": 0.256578947368421,
+        "negative": "drummer7/session2/105#beat8",
+        "positive": "drummer7/session2/103#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 7.909924603976821e-05
+      },
+      {
+        "anchor": "drummer7/session2/105#beat4",
+        "cap2_margin": 0.01328455825575228,
+        "midi_margin": 0.2313725490196078,
+        "negative": "drummer7/session2/103#beat4",
+        "positive": "drummer7/session2/102#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.007272850194522106
+      },
+      {
+        "anchor": "drummer7/session2/105#beat4",
+        "cap2_margin": -0.0025868979582735836,
+        "midi_margin": 0.2058823529411764,
+        "negative": "drummer7/session2/102#beat16",
+        "positive": "drummer7/session2/103#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0011019600541450174
+      },
+      {
+        "anchor": "drummer7/session2/105#beat4",
+        "cap2_margin": -0.0036629098073769992,
+        "midi_margin": 0.16666666666666674,
+        "negative": "drummer7/session2/102#beat12",
+        "positive": "drummer7/session2/103#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0016542311494573332
+      },
+      {
+        "anchor": "drummer7/session2/105#beat4",
+        "cap2_margin": -0.011615532361791164,
+        "midi_margin": 0.16666666666666674,
+        "negative": "drummer7/session2/102#beat4",
+        "positive": "drummer7/session2/103#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.009624828755953833
+      },
+      {
+        "anchor": "drummer7/session2/105#beat8",
+        "cap2_margin": -0.003929467856301094,
+        "midi_margin": 0.22916666666666674,
+        "negative": "drummer7/session2/102#beat4",
+        "positive": "drummer7/session2/103#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.004024913999807958
+      },
+      {
+        "anchor": "drummer7/session2/105#beat8",
+        "cap2_margin": 0.005663097181261209,
+        "midi_margin": 0.19407894736842102,
+        "negative": "drummer7/session2/102#beat16",
+        "positive": "drummer7/session2/103#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.0045619180056585985
+      },
+      {
+        "anchor": "drummer7/session2/105#beat8",
+        "cap2_margin": -0.0064804069797672744,
+        "midi_margin": 0.19407894736842102,
+        "negative": "drummer7/session2/102#beat8",
+        "positive": "drummer7/session2/103#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.004548710631082219
+      },
+      {
+        "anchor": "drummer7/session2/105#beat8",
+        "cap2_margin": -0.002501737643747438,
+        "midi_margin": 0.16666666666666674,
+        "negative": "drummer7/session2/102#beat4",
+        "positive": "drummer7/session2/103#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0028795254898367284
+      },
+      {
+        "anchor": "drummer7/session2/105#beat12",
+        "cap2_margin": -0.009539646015719508,
+        "midi_margin": 0.39915966386554624,
+        "negative": "drummer7/session2/102#beat12",
+        "positive": "drummer7/session2/103#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.006099562695279765
+      },
+      {
+        "anchor": "drummer7/session2/105#beat12",
+        "cap2_margin": -0.0011548769687710386,
+        "midi_margin": 0.39915966386554624,
+        "negative": "drummer7/session2/102#beat4",
+        "positive": "drummer7/session2/103#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.001770521506918441
+      },
+      {
+        "anchor": "drummer7/session2/105#beat12",
+        "cap2_margin": -0.01113530606467052,
+        "midi_margin": 0.373015873015873,
+        "negative": "drummer7/session2/102#beat16",
+        "positive": "drummer7/session2/103#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.00756479844609249
+      },
+      {
+        "anchor": "drummer7/session2/105#beat12",
+        "cap2_margin": -0.009905088282270246,
+        "midi_margin": 0.32773109243697474,
+        "negative": "drummer7/session2/102#beat12",
+        "positive": "drummer7/session2/103#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.006448171453709201
+      },
+      {
+        "anchor": "drummer7/session2/105#beat16",
+        "cap2_margin": -0.010623744937037233,
+        "midi_margin": 0.25,
+        "negative": "drummer7/session2/102#beat16",
+        "positive": "drummer7/session2/103#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.007390340681561401
+      },
+      {
+        "anchor": "drummer7/session2/105#beat16",
+        "cap2_margin": -0.012013708315873797,
+        "midi_margin": 0.1923076923076923,
+        "negative": "drummer7/session2/102#beat16",
+        "positive": "drummer7/session2/103#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.008215927199819813
+      },
+      {
+        "anchor": "drummer7/session2/105#beat16",
+        "cap2_margin": -0.002881848669535698,
+        "midi_margin": 0.18095238095238098,
+        "negative": "drummer7/session2/103#beat4",
+        "positive": "drummer7/session2/102#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.003862090899201918
+      },
+      {
+        "anchor": "drummer7/session2/105#beat16",
+        "cap2_margin": -0.00981133638709005,
+        "midi_margin": 0.1785714285714286,
+        "negative": "drummer7/session2/102#beat12",
+        "positive": "drummer7/session2/103#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.006611543550923133
+      },
+      {
+        "anchor": "drummer7/session2/103#beat4",
+        "cap2_margin": -0.013445246545966454,
+        "midi_margin": 0.5504201680672268,
+        "negative": "drummer7/session2/105#beat4",
+        "positive": "drummer7/session2/102#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.014321963373128663
+      },
+      {
+        "anchor": "drummer7/session2/103#beat4",
+        "cap2_margin": -0.009597960426333799,
+        "midi_margin": 0.4699248120300752,
+        "negative": "drummer7/session2/105#beat8",
+        "positive": "drummer7/session2/102#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.008885747051344473
+      },
+      {
+        "anchor": "drummer7/session2/103#beat4",
+        "cap2_margin": -0.0017962228775402868,
+        "midi_margin": 0.2857142857142857,
+        "negative": "drummer7/session2/105#beat12",
+        "positive": "drummer7/session2/102#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0015689407509109302
+      },
+      {
+        "anchor": "drummer7/session2/103#beat4",
+        "cap2_margin": 0.002073050549411536,
+        "midi_margin": 0.2523809523809524,
+        "negative": "drummer7/session2/105#beat16",
+        "positive": "drummer7/session2/102#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.0008354150411663541
+      },
+      {
+        "anchor": "drummer7/session2/103#beat8",
+        "cap2_margin": -0.008838429151214456,
+        "midi_margin": 0.2857142857142857,
+        "negative": "drummer7/session2/105#beat4",
+        "positive": "drummer7/session2/102#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.009958734280632257
+      },
+      {
+        "anchor": "drummer7/session2/103#beat8",
+        "cap2_margin": -0.01491354253401855,
+        "midi_margin": 0.2857142857142857,
+        "negative": "drummer7/session2/105#beat4",
+        "positive": "drummer7/session2/102#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.012456901720519994
+      },
+      {
+        "anchor": "drummer7/session2/103#beat8",
+        "cap2_margin": -0.01634735677339121,
+        "midi_margin": 0.2232142857142857,
+        "negative": "drummer7/session2/102#beat16",
+        "positive": "drummer7/session2/105#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.01068626990702731
+      },
+      {
+        "anchor": "drummer7/session2/103#beat8",
+        "cap2_margin": -0.0025628488794322162,
+        "midi_margin": 0.2232142857142857,
+        "negative": "drummer7/session2/102#beat8",
+        "positive": "drummer7/session2/105#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0016408187085750984
+      },
+      {
+        "anchor": "drummer7/session2/103#beat12",
+        "cap2_margin": -0.006727614225088599,
+        "midi_margin": 0.3660714285714286,
+        "negative": "drummer7/session2/102#beat12",
+        "positive": "drummer7/session2/105#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.004325758194038219
+      },
+      {
+        "anchor": "drummer7/session2/103#beat12",
+        "cap2_margin": -0.006790382251450843,
+        "midi_margin": 0.3660714285714286,
+        "negative": "drummer7/session2/102#beat4",
+        "positive": "drummer7/session2/105#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.005439861423545259
+      },
+      {
+        "anchor": "drummer7/session2/103#beat12",
+        "cap2_margin": -0.008134341616681348,
+        "midi_margin": 0.3403361344537815,
+        "negative": "drummer7/session2/102#beat16",
+        "positive": "drummer7/session2/105#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.00569515911315996
+      },
+      {
+        "anchor": "drummer7/session2/103#beat12",
+        "cap2_margin": -0.0038713869628588847,
+        "midi_margin": 0.2410714285714286,
+        "negative": "drummer7/session2/102#beat8",
+        "positive": "drummer7/session2/105#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0026495504662691666
+      },
+      {
+        "anchor": "drummer7/session2/103#beat16",
+        "cap2_margin": -0.007259544368743842,
+        "midi_margin": 0.2571428571428571,
+        "negative": "drummer7/session2/102#beat12",
+        "positive": "drummer7/session2/105#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.004729282644674516
+      },
+      {
+        "anchor": "drummer7/session2/103#beat16",
+        "cap2_margin": -0.004267863390196763,
+        "midi_margin": 0.2571428571428571,
+        "negative": "drummer7/session2/102#beat4",
+        "positive": "drummer7/session2/105#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.003977128123116078
+      },
+      {
+        "anchor": "drummer7/session2/103#beat16",
+        "cap2_margin": -0.006192371192494451,
+        "midi_margin": 0.2321428571428571,
+        "negative": "drummer7/session2/102#beat16",
+        "positive": "drummer7/session2/105#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.004573968433743592
+      },
+      {
+        "anchor": "drummer7/session2/103#beat16",
+        "cap2_margin": -0.0021412186056308457,
+        "midi_margin": 0.2321428571428571,
+        "negative": "drummer7/session2/102#beat8",
+        "positive": "drummer7/session2/105#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0015833966821883461
+      },
+      {
+        "anchor": "drummer7/session2/33#beat4",
+        "cap2_margin": -0.009030714992300308,
+        "midi_margin": 0.20727272727272728,
+        "negative": "drummer7/session2/93#beat16",
+        "positive": "drummer7/session2/29#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.006121150949965208
+      },
+      {
+        "anchor": "drummer7/session2/33#beat4",
+        "cap2_margin": -0.011331666622541668,
+        "midi_margin": 0.18881118881118886,
+        "negative": "drummer7/session2/93#beat12",
+        "positive": "drummer7/session2/29#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.012273375240758916
+      },
+      {
+        "anchor": "drummer7/session2/33#beat4",
+        "cap2_margin": -0.02182185172952062,
+        "midi_margin": 0.17230769230769227,
+        "negative": "drummer7/session2/93#beat16",
+        "positive": "drummer7/session2/29#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.014955859286380314
+      },
+      {
+        "anchor": "drummer7/session2/33#beat4",
+        "cap2_margin": -0.02102106068816056,
+        "midi_margin": 0.1558441558441559,
+        "negative": "drummer7/session2/93#beat8",
+        "positive": "drummer7/session2/29#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.015608554574547191
+      },
+      {
+        "anchor": "drummer7/session2/33#beat8",
+        "cap2_margin": -0.015985173910465857,
+        "midi_margin": 0.20727272727272728,
+        "negative": "drummer7/session2/93#beat16",
+        "positive": "drummer7/session2/29#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.011341150796414727
+      },
+      {
+        "anchor": "drummer7/session2/33#beat8",
+        "cap2_margin": -0.020823199624172256,
+        "midi_margin": 0.18881118881118886,
+        "negative": "drummer7/session2/93#beat12",
+        "positive": "drummer7/session2/29#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.01904578563916717
+      },
+      {
+        "anchor": "drummer7/session2/33#beat8",
+        "cap2_margin": -0.023651046151944556,
+        "midi_margin": 0.17230769230769227,
+        "negative": "drummer7/session2/93#beat16",
+        "positive": "drummer7/session2/29#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.016354390099358237
+      },
+      {
+        "anchor": "drummer7/session2/33#beat8",
+        "cap2_margin": -0.02619340552813915,
+        "midi_margin": 0.1558441558441559,
+        "negative": "drummer7/session2/93#beat8",
+        "positive": "drummer7/session2/29#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.019329980294003575
+      },
+      {
+        "anchor": "drummer7/session2/33#beat12",
+        "cap2_margin": -0.010856608344797437,
+        "midi_margin": 0.21272727272727265,
+        "negative": "drummer7/session2/93#beat16",
+        "positive": "drummer7/session2/29#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.00863852577304221
+      },
+      {
+        "anchor": "drummer7/session2/33#beat12",
+        "cap2_margin": -0.012190165039741616,
+        "midi_margin": 0.19580419580419584,
+        "negative": "drummer7/session2/93#beat12",
+        "positive": "drummer7/session2/29#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.014445553737450642
+      },
+      {
+        "anchor": "drummer7/session2/33#beat12",
+        "cap2_margin": -0.023643561002618895,
+        "midi_margin": 0.17076923076923067,
+        "negative": "drummer7/session2/93#beat16",
+        "positive": "drummer7/session2/29#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.016464319291322374
+      },
+      {
+        "anchor": "drummer7/session2/33#beat12",
+        "cap2_margin": -0.022138819995503163,
+        "midi_margin": 0.1655844155844156,
+        "negative": "drummer7/session2/93#beat8",
+        "positive": "drummer7/session2/29#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.01656947294384488
+      },
+      {
+        "anchor": "drummer7/session2/33#beat16",
+        "cap2_margin": -0.017326875033066524,
+        "midi_margin": 0.20727272727272728,
+        "negative": "drummer7/session2/93#beat16",
+        "positive": "drummer7/session2/29#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.011962645001244885
+      },
+      {
+        "anchor": "drummer7/session2/33#beat16",
+        "cap2_margin": -0.022024759533456967,
+        "midi_margin": 0.18881118881118886,
+        "negative": "drummer7/session2/93#beat12",
+        "positive": "drummer7/session2/29#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.019795445662827538
+      },
+      {
+        "anchor": "drummer7/session2/33#beat16",
+        "cap2_margin": -0.024826910723794417,
+        "midi_margin": 0.17230769230769227,
+        "negative": "drummer7/session2/93#beat16",
+        "positive": "drummer7/session2/29#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.017073348076470957
+      },
+      {
+        "anchor": "drummer7/session2/33#beat16",
+        "cap2_margin": -0.026863972472157122,
+        "midi_margin": 0.1558441558441559,
+        "negative": "drummer7/session2/93#beat8",
+        "positive": "drummer7/session2/29#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.019728320591461356
+      },
+      {
+        "anchor": "drummer7/session2/29#beat4",
+        "cap2_margin": -0.01990316775600793,
+        "midi_margin": 0.20033670033670037,
+        "negative": "drummer7/session2/93#beat12",
+        "positive": "drummer7/session2/33#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.019581038883660157
+      },
+      {
+        "anchor": "drummer7/session2/29#beat4",
+        "cap2_margin": -0.0018979561210096625,
+        "midi_margin": 0.1645768025078369,
+        "negative": "drummer7/session2/93#beat8",
+        "positive": "drummer7/session2/33#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0036199401033493346
+      },
+      {
+        "anchor": "drummer7/session2/29#beat4",
+        "cap2_margin": -0.02399400498041577,
+        "midi_margin": 0.15488215488215495,
+        "negative": "drummer7/session2/93#beat12",
+        "positive": "drummer7/session2/33#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.02205139597105431
+      },
+      {
+        "anchor": "drummer7/session2/29#beat4",
+        "cap2_margin": -0.023751605052140655,
+        "midi_margin": 0.15488215488215495,
+        "negative": "drummer7/session2/93#beat12",
+        "positive": "drummer7/session2/33#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.021540862971282198
+      },
+      {
+        "anchor": "drummer7/session2/29#beat8",
+        "cap2_margin": -0.0003822920508721262,
+        "midi_margin": 0.23426573426573427,
+        "negative": "drummer7/session2/93#beat16",
+        "positive": "drummer7/session2/33#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.001788212525468789
+      },
+      {
+        "anchor": "drummer7/session2/29#beat8",
+        "cap2_margin": -0.02142097304746842,
+        "midi_margin": 0.21717171717171713,
+        "negative": "drummer7/session2/93#beat12",
+        "positive": "drummer7/session2/33#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.021568616013947883
+      },
+      {
+        "anchor": "drummer7/session2/29#beat8",
+        "cap2_margin": -0.006918047867604112,
+        "midi_margin": 0.18881118881118886,
+        "negative": "drummer7/session2/93#beat16",
+        "positive": "drummer7/session2/33#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.005469667816471815
+      },
+      {
+        "anchor": "drummer7/session2/29#beat8",
+        "cap2_margin": -0.004030467513810853,
+        "midi_margin": 0.18881118881118886,
+        "negative": "drummer7/session2/93#beat16",
+        "positive": "drummer7/session2/33#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0033576168594727975
+      },
+      {
+        "anchor": "drummer7/session2/29#beat12",
+        "cap2_margin": -0.022450212426447687,
+        "midi_margin": 0.18238213399503722,
+        "negative": "drummer7/session2/93#beat12",
+        "positive": "drummer7/session2/33#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.020940518026344182
+      },
+      {
+        "anchor": "drummer7/session3/119#beat4",
+        "cap2_margin": -0.045722246953822966,
+        "midi_margin": 0.5750000000000001,
+        "negative": "drummer7/session2/14#beat12",
+        "positive": "drummer7/session3/117#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.03161762062705206
+      },
+      {
+        "anchor": "drummer7/session3/119#beat4",
+        "cap2_margin": -0.044823904782824435,
+        "midi_margin": 0.5623188405797102,
+        "negative": "drummer7/session2/14#beat12",
+        "positive": "drummer7/session3/117#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.030950534900317066
+      },
+      {
+        "anchor": "drummer7/session3/119#beat4",
+        "cap2_margin": -0.04337130595870514,
+        "midi_margin": 0.5297619047619048,
+        "negative": "drummer7/session2/14#beat4",
+        "positive": "drummer7/session3/117#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.03077628433789953
+      },
+      {
+        "anchor": "drummer7/session3/119#beat4",
+        "cap2_margin": -0.017868541057869218,
+        "midi_margin": 0.5231481481481483,
+        "negative": "drummer7/session2/14#beat8",
+        "positive": "drummer7/session3/117#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.01446543248789898
+      },
+      {
+        "anchor": "drummer7/session3/119#beat8",
+        "cap2_margin": -0.04334189109599111,
+        "midi_margin": 0.6848484848484849,
+        "negative": "drummer7/session2/14#beat4",
+        "positive": "drummer7/session3/117#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.03141311527761852
+      },
+      {
+        "anchor": "drummer7/session3/119#beat8",
+        "cap2_margin": -0.04561088717921445,
+        "midi_margin": 0.6515151515151516,
+        "negative": "drummer7/session2/14#beat12",
+        "positive": "drummer7/session3/117#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.032185403189844204
+      },
+      {
+        "anchor": "drummer7/session3/119#beat8",
+        "cap2_margin": -0.01495690767101376,
+        "midi_margin": 0.6396103896103896,
+        "negative": "drummer7/session2/14#beat8",
+        "positive": "drummer7/session3/117#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.012586041625784927
+      },
+      {
+        "anchor": "drummer7/session3/119#beat8",
+        "cap2_margin": -0.02472449312072044,
+        "midi_margin": 0.6329966329966331,
+        "negative": "drummer7/session2/14#beat16",
+        "positive": "drummer7/session3/117#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.019540860769910587
+      },
+      {
+        "anchor": "drummer7/session3/119#beat12",
+        "cap2_margin": -0.013634150536546479,
+        "midi_margin": 0.3718518518518519,
+        "negative": "drummer7/session2/14#beat8",
+        "positive": "drummer7/session3/117#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.011036859955187599
+      },
+      {
+        "anchor": "drummer7/session3/119#beat12",
+        "cap2_margin": -0.0019363446301729377,
+        "midi_margin": 0.32000000000000006,
+        "negative": "drummer7/session2/14#beat16",
+        "positive": "drummer7/session3/117#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.00457712900756725
+      },
+      {
+        "anchor": "drummer7/session3/119#beat12",
+        "cap2_margin": -0.002182479528834874,
+        "midi_margin": 0.2977777777777778,
+        "negative": "drummer7/session2/14#beat12",
+        "positive": "drummer7/session3/117#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0034974347809222997
+      },
+      {
+        "anchor": "drummer7/session3/119#beat12",
+        "cap2_margin": -0.0017646069614880328,
+        "midi_margin": 0.2892307692307692,
+        "negative": "drummer7/session2/14#beat4",
+        "positive": "drummer7/session3/117#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0037849665813930455
+      },
+      {
+        "anchor": "drummer7/session3/119#beat16",
+        "cap2_margin": -0.043075785769657496,
+        "midi_margin": 0.697054698457223,
+        "negative": "drummer7/session2/14#beat12",
+        "positive": "drummer7/session3/117#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0297852111964321
+      },
+      {
+        "anchor": "drummer7/session3/119#beat16",
+        "cap2_margin": -0.04021797286906113,
+        "midi_margin": 0.6927536231884058,
+        "negative": "drummer7/session2/14#beat4",
+        "positive": "drummer7/session3/117#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.02843116855731992
+      },
+      {
+        "anchor": "drummer7/session3/119#beat16",
+        "cap2_margin": -0.009389154887370585,
+        "midi_margin": 0.6475155279503105,
+        "negative": "drummer7/session2/14#beat8",
+        "positive": "drummer7/session3/117#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.008014999436002125
+      },
+      {
+        "anchor": "drummer7/session3/119#beat16",
+        "cap2_margin": -0.0206699225529168,
+        "midi_margin": 0.640901771336554,
+        "negative": "drummer7/session2/14#beat16",
+        "positive": "drummer7/session3/117#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.015721636964275188
+      },
+      {
+        "anchor": "drummer7/session3/117#beat4",
+        "cap2_margin": -0.03393567412485863,
+        "midi_margin": 0.28260869565217395,
+        "negative": "drummer7/session2/14#beat4",
+        "positive": "drummer7/session3/119#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.02530504595613277
+      },
+      {
+        "anchor": "drummer7/session3/117#beat4",
+        "cap2_margin": -0.013871997307192026,
+        "midi_margin": 0.26190476190476186,
+        "negative": "drummer7/session2/14#beat16",
+        "positive": "drummer7/session3/119#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.012417007827737905
+      },
+      {
+        "anchor": "drummer7/session3/117#beat4",
+        "cap2_margin": -0.03384021625655616,
+        "midi_margin": 0.23913043478260865,
+        "negative": "drummer7/session2/14#beat12",
+        "positive": "drummer7/session3/119#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.024447878257125688
+      },
+      {
+        "anchor": "drummer7/session3/117#beat4",
+        "cap2_margin": -0.015108734525105486,
+        "midi_margin": 0.2142857142857143,
+        "negative": "drummer7/session2/14#beat8",
+        "positive": "drummer7/session3/119#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.01285314999785183
+      },
+      {
+        "anchor": "drummer7/session3/117#beat8",
+        "cap2_margin": -0.03541619565598049,
+        "midi_margin": 0.7323369565217391,
+        "negative": "drummer7/session2/14#beat12",
+        "positive": "drummer7/session3/119#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.024717258062452747
+      },
+      {
+        "anchor": "drummer7/session3/117#beat8",
+        "cap2_margin": -0.033887913626073914,
+        "midi_margin": 0.729312762973352,
+        "negative": "drummer7/session2/14#beat4",
+        "positive": "drummer7/session3/119#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.024235821235229993
+      },
+      {
+        "anchor": "drummer7/session3/117#beat8",
+        "cap2_margin": -0.012152846709834377,
+        "midi_margin": 0.6881559220389805,
+        "negative": "drummer7/session2/14#beat8",
+        "positive": "drummer7/session3/119#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.010298812457673279
+      },
+      {
+        "anchor": "drummer7/session3/117#beat8",
+        "cap2_margin": -0.01841612781712893,
+        "midi_margin": 0.6832298136645963,
+        "negative": "drummer7/session2/14#beat16",
+        "positive": "drummer7/session3/119#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.01490805034450539
+      },
+      {
+        "anchor": "drummer7/session3/117#beat12",
+        "cap2_margin": -0.04462893855480337,
+        "midi_margin": 0.6396103896103896,
+        "negative": "drummer7/session2/14#beat12",
+        "positive": "drummer7/session3/119#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.03176427336520102
+      },
+      {
+        "anchor": "drummer7/session3/117#beat12",
+        "cap2_margin": -0.043604879893769065,
+        "midi_margin": 0.6329966329966331,
+        "negative": "drummer7/session2/14#beat4",
+        "positive": "drummer7/session3/119#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0316969320926465
+      },
+      {
+        "anchor": "drummer7/session3/117#beat12",
+        "cap2_margin": -0.014517757144775292,
+        "midi_margin": 0.6258741258741259,
+        "negative": "drummer7/session2/14#beat8",
+        "positive": "drummer7/session3/119#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.012433618547298561
+      },
+      {
+        "anchor": "drummer7/session3/117#beat12",
+        "cap2_margin": -0.02481786696951602,
+        "midi_margin": 0.6181818181818183,
+        "negative": "drummer7/session2/14#beat16",
+        "positive": "drummer7/session3/119#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.01993849194252687
+      },
+      {
+        "anchor": "drummer7/session2/49#beat4",
+        "cap2_margin": -0.018710793327776816,
+        "midi_margin": 0.16600790513833985,
+        "negative": "drummer7/session2/46#beat16",
+        "positive": "drummer7/session2/53#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.013775996891161539
+      },
+      {
+        "anchor": "drummer7/session2/53#beat4",
+        "cap2_margin": -0.005714871841278262,
+        "midi_margin": 0.18608695652173912,
+        "negative": "drummer7/session2/49#beat16",
+        "positive": "drummer7/session2/46#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.005196517137922535
+      },
+      {
+        "anchor": "drummer7/session2/53#beat4",
+        "cap2_margin": 0.009018497197066978,
+        "midi_margin": 0.17224080267558528,
+        "negative": "drummer7/session2/49#beat16",
+        "positive": "drummer7/session2/46#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.00960617986991502
+      },
+      {
+        "anchor": "drummer7/session2/53#beat4",
+        "cap2_margin": -0.012789566117583973,
+        "midi_margin": 0.1594202898550724,
+        "negative": "drummer7/session2/49#beat16",
+        "positive": "drummer7/session2/46#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.010811027185852412
+      },
+      {
+        "anchor": "drummer7/session2/53#beat8",
+        "cap2_margin": -0.009723396157250931,
+        "midi_margin": 0.4818181818181818,
+        "negative": "drummer7/session2/49#beat16",
+        "positive": "drummer7/session2/46#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0062323659823307195
+      },
+      {
+        "anchor": "drummer7/session2/53#beat8",
+        "cap2_margin": -0.0033443543782364716,
+        "midi_margin": 0.4521739130434783,
+        "negative": "drummer7/session2/49#beat16",
+        "positive": "drummer7/session2/46#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0006366631898257562
+      },
+      {
+        "anchor": "drummer7/session2/53#beat8",
+        "cap2_margin": -0.003792238443350791,
+        "midi_margin": 0.390909090909091,
+        "negative": "drummer7/session2/49#beat16",
+        "positive": "drummer7/session2/46#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.001744242449912225
+      },
+      {
+        "anchor": "drummer7/session2/53#beat8",
+        "cap2_margin": -0.006652608491927633,
+        "midi_margin": 0.3618181818181817,
+        "negative": "drummer7/session2/49#beat8",
+        "positive": "drummer7/session2/46#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.004096721569943504
+      },
+      {
+        "anchor": "drummer7/session2/53#beat12",
+        "cap2_margin": -0.01486255526278723,
+        "midi_margin": 0.4894179894179894,
+        "negative": "drummer7/session2/49#beat16",
+        "positive": "drummer7/session2/46#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.01230169515953686
+      },
+      {
+        "anchor": "drummer7/session2/53#beat12",
+        "cap2_margin": -0.012501760951819745,
+        "midi_margin": 0.40740740740740744,
+        "negative": "drummer7/session2/49#beat12",
+        "positive": "drummer7/session2/46#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.010630276290756788
+      },
+      {
+        "anchor": "drummer7/session2/53#beat12",
+        "cap2_margin": -0.015029341366654014,
+        "midi_margin": 0.40740740740740744,
+        "negative": "drummer7/session2/49#beat4",
+        "positive": "drummer7/session2/46#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.012812570686866715
+      },
+      {
+        "anchor": "drummer7/session2/53#beat12",
+        "cap2_margin": -0.014966898298770315,
+        "midi_margin": 0.3822751322751323,
+        "negative": "drummer7/session2/49#beat8",
+        "positive": "drummer7/session2/46#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.012780418160490945
+      },
+      {
+        "anchor": "drummer7/session2/53#beat16",
+        "cap2_margin": -0.004669267873320475,
+        "midi_margin": 0.23361823361823364,
+        "negative": "drummer7/session2/49#beat16",
+        "positive": "drummer7/session2/46#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.002675954442484155
+      },
+      {
+        "anchor": "drummer7/session2/53#beat16",
+        "cap2_margin": 0.005355110156454682,
+        "midi_margin": 0.20717592592592593,
+        "negative": "drummer7/session2/49#beat16",
+        "positive": "drummer7/session2/46#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.006481502365205624
+      },
+      {
+        "anchor": "drummer7/session2/53#beat16",
+        "cap2_margin": 0.0024156429451070265,
+        "midi_margin": 0.20178799489144317,
+        "negative": "drummer7/session2/49#beat16",
+        "positive": "drummer7/session2/46#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.003079352846912061
+      },
+      {
+        "anchor": "drummer7/session2/53#beat16",
+        "cap2_margin": 0.004898139464854249,
+        "midi_margin": 0.16730523627075355,
+        "negative": "drummer7/session2/49#beat16",
+        "positive": "drummer7/session2/46#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.005820679346867476
+      },
+      {
+        "anchor": "drummer7/session2/46#beat4",
+        "cap2_margin": -0.0026216698896017556,
+        "midi_margin": 0.47976011994003,
+        "negative": "drummer7/session2/49#beat16",
+        "positive": "drummer7/session2/53#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.001652948156749656
+      },
+      {
+        "anchor": "drummer7/session2/46#beat4",
+        "cap2_margin": -0.010615955409434217,
+        "midi_margin": 0.40217391304347827,
+        "negative": "drummer7/session2/49#beat4",
+        "positive": "drummer7/session2/53#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.012316905413383056
+      },
+      {
+        "anchor": "drummer7/session2/46#beat4",
+        "cap2_margin": -0.003481785992256524,
+        "midi_margin": 0.37631184407796103,
+        "negative": "drummer7/session2/49#beat8",
+        "positive": "drummer7/session2/53#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0034594404165771745
+      },
+      {
+        "anchor": "drummer7/session2/46#beat4",
+        "cap2_margin": -0.001155328314752821,
+        "midi_margin": 0.355877616747182,
+        "negative": "drummer7/session2/49#beat12",
+        "positive": "drummer7/session2/53#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0016927005268719238
+      },
+      {
+        "anchor": "drummer7/session2/46#beat8",
+        "cap2_margin": -0.005449344601710635,
+        "midi_margin": 0.4427609427609428,
+        "negative": "drummer7/session2/49#beat16",
+        "positive": "drummer7/session2/53#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.004367033523491597
+      },
+      {
+        "anchor": "drummer7/session2/46#beat8",
+        "cap2_margin": -0.0013893427384867264,
+        "midi_margin": 0.3601398601398601,
+        "negative": "drummer7/session2/49#beat4",
+        "positive": "drummer7/session2/53#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.001329869501192956
+      },
+      {
+        "anchor": "drummer7/session2/46#beat8",
+        "cap2_margin": -0.001508097329772396,
+        "midi_margin": 0.33164983164983164,
+        "negative": "drummer7/session2/49#beat8",
+        "positive": "drummer7/session2/53#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.002006318552823167
+      },
+      {
+        "anchor": "drummer7/session2/46#beat8",
+        "cap2_margin": 0.0004450957576995312,
+        "midi_margin": 0.3109090909090909,
+        "negative": "drummer7/session2/49#beat12",
+        "positive": "drummer7/session2/53#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0006632032032615335
+      },
+      {
+        "anchor": "drummer7/session2/46#beat12",
+        "cap2_margin": -0.007024844099166447,
+        "midi_margin": 0.5032467532467532,
+        "negative": "drummer7/session2/49#beat16",
+        "positive": "drummer7/session2/53#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.004986122469183143
+      },
+      {
+        "anchor": "drummer7/session2/46#beat12",
+        "cap2_margin": -0.0031065101140333017,
+        "midi_margin": 0.42255892255892247,
+        "negative": "drummer7/session2/49#beat4",
+        "positive": "drummer7/session2/53#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.002697921130846097
+      },
+      {
+        "anchor": "drummer7/session2/46#beat12",
+        "cap2_margin": -0.007044842322352889,
+        "midi_margin": 0.39610389610389607,
+        "negative": "drummer7/session2/49#beat8",
+        "positive": "drummer7/session2/53#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.005720076863627329
+      },
+      {
+        "anchor": "drummer7/session2/46#beat12",
+        "cap2_margin": -0.004942593099504684,
+        "midi_margin": 0.37412587412587406,
+        "negative": "drummer7/session2/49#beat12",
+        "positive": "drummer7/session2/53#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0045504269397558805
+      },
+      {
+        "anchor": "drummer7/session2/46#beat16",
+        "cap2_margin": -0.006384629929342603,
+        "midi_margin": 0.5521885521885522,
+        "negative": "drummer7/session2/49#beat16",
+        "positive": "drummer7/session2/53#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0073011235758935105
+      },
+      {
+        "anchor": "drummer7/session2/46#beat16",
+        "cap2_margin": -0.008871532064874708,
+        "midi_margin": 0.5218855218855218,
+        "negative": "drummer7/session2/49#beat4",
+        "positive": "drummer7/session2/53#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.009189769389033984
+      },
+      {
+        "anchor": "drummer7/session2/46#beat16",
+        "cap2_margin": -0.004398001825927566,
+        "midi_margin": 0.4849537037037037,
+        "negative": "drummer7/session2/49#beat12",
+        "positive": "drummer7/session2/53#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.005878429019786259
+      },
+      {
+        "anchor": "drummer7/session2/46#beat16",
+        "cap2_margin": -0.003793767408733482,
+        "midi_margin": 0.4612794612794613,
+        "negative": "drummer7/session2/49#beat8",
+        "positive": "drummer7/session2/53#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.0058130779143768345
+      },
+      {
+        "anchor": "drummer7/session3/130#beat8",
+        "cap2_margin": -0.03076320978598005,
+        "midi_margin": 0.30219780219780223,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/eval_session/2#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.025424432663262105
+      },
+      {
+        "anchor": "drummer7/session3/130#beat8",
+        "cap2_margin": -0.028814634925341504,
+        "midi_margin": 0.30219780219780223,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/eval_session/2#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.02397095747346092
+      },
+      {
+        "anchor": "drummer7/session3/130#beat8",
+        "cap2_margin": -0.02859304677579555,
+        "midi_margin": 0.30219780219780223,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/eval_session/2#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.022787203080628513
+      },
+      {
+        "anchor": "drummer7/session3/130#beat8",
+        "cap2_margin": -0.029333512709161493,
+        "midi_margin": 0.23076923076923084,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/eval_session/2#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.02406725370773089
+      },
+      {
+        "anchor": "drummer7/session3/130#beat12",
+        "cap2_margin": -0.008486587810063638,
+        "midi_margin": 0.2777777777777778,
+        "negative": "drummer7/eval_session/2#beat4",
+        "positive": "drummer7/session3/131#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.006146090870138109
+      },
+      {
+        "anchor": "drummer7/session3/130#beat12",
+        "cap2_margin": -0.005641669486382165,
+        "midi_margin": 0.23076923076923084,
+        "negative": "drummer7/eval_session/2#beat12",
+        "positive": "drummer7/session3/131#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.003850536459484094
+      },
+      {
+        "anchor": "drummer7/session3/130#beat12",
+        "cap2_margin": -0.01140248368517027,
+        "midi_margin": 0.23076923076923084,
+        "negative": "drummer7/eval_session/2#beat16",
+        "positive": "drummer7/session3/131#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.007629326948612165
+      },
+      {
+        "anchor": "drummer7/session3/130#beat12",
+        "cap2_margin": -0.010167609531964824,
+        "midi_margin": 0.23076923076923084,
+        "negative": "drummer7/eval_session/2#beat8",
+        "positive": "drummer7/session3/131#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.007617196543289054
+      },
+      {
+        "anchor": "drummer7/session3/130#beat16",
+        "cap2_margin": -0.040658113314538294,
+        "midi_margin": 0.293040293040293,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/eval_session/2#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.031712762710717615
+      },
+      {
+        "anchor": "drummer7/session3/130#beat16",
+        "cap2_margin": -0.04334301754623528,
+        "midi_margin": 0.293040293040293,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/eval_session/2#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.03340700313245873
+      },
+      {
+        "anchor": "drummer7/session3/130#beat16",
+        "cap2_margin": -0.04190155756785274,
+        "midi_margin": 0.293040293040293,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/eval_session/2#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.03165499338506103
+      },
+      {
+        "anchor": "drummer7/session3/130#beat16",
+        "cap2_margin": -0.04143996028567031,
+        "midi_margin": 0.22377622377622375,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/eval_session/2#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.03207907078538779
+      },
+      {
+        "anchor": "drummer7/session3/131#beat4",
+        "cap2_margin": -0.030427279584912894,
+        "midi_margin": 0.32367149758454095,
+        "negative": "drummer7/eval_session/2#beat12",
+        "positive": "drummer7/session3/130#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.02233928139332641
+      },
+      {
+        "anchor": "drummer7/session3/131#beat4",
+        "cap2_margin": -0.03568181388247949,
+        "midi_margin": 0.32367149758454095,
+        "negative": "drummer7/eval_session/2#beat16",
+        "positive": "drummer7/session3/130#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.025988805137616026
+      },
+      {
+        "anchor": "drummer7/session3/131#beat4",
+        "cap2_margin": -0.029755000226394615,
+        "midi_margin": 0.32367149758454095,
+        "negative": "drummer7/eval_session/2#beat4",
+        "positive": "drummer7/session3/130#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.022335455215076593
+      },
+      {
+        "anchor": "drummer7/session3/131#beat4",
+        "cap2_margin": -0.032011836789912464,
+        "midi_margin": 0.32367149758454095,
+        "negative": "drummer7/eval_session/2#beat8",
+        "positive": "drummer7/session3/130#beat12",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.023446053255571062
+      },
+      {
+        "anchor": "drummer7/session3/131#beat16",
+        "cap2_margin": 0.006352125686995837,
+        "midi_margin": 0.2500000000000001,
+        "negative": "drummer7/eval_session/2#beat4",
+        "positive": "drummer7/session3/130#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.003700314867702151
+      },
+      {
+        "anchor": "drummer7/session3/131#beat16",
+        "cap2_margin": 0.003620692408541703,
+        "midi_margin": 0.1987179487179488,
+        "negative": "drummer7/eval_session/2#beat12",
+        "positive": "drummer7/session3/130#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.001744408236649565
+      },
+      {
+        "anchor": "drummer7/session3/131#beat16",
+        "cap2_margin": 0.004115497473563854,
+        "midi_margin": 0.1987179487179488,
+        "negative": "drummer7/eval_session/2#beat16",
+        "positive": "drummer7/session3/130#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.002047351808469682
+      },
+      {
+        "anchor": "drummer7/session3/131#beat16",
+        "cap2_margin": 0.003449764106169242,
+        "midi_margin": 0.1987179487179488,
+        "negative": "drummer7/eval_session/2#beat8",
+        "positive": "drummer7/session3/130#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.0012733069553338165
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat4",
+        "cap2_margin": -0.03306253879353373,
+        "midi_margin": 0.38888888888888884,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/session3/130#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.02675077239904167
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat4",
+        "cap2_margin": -0.03488149017922145,
+        "midi_margin": 0.3434343434343434,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/session3/130#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.028444420085759193
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat4",
+        "cap2_margin": -0.004127458290092076,
+        "midi_margin": 0.23504273504273498,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/session3/130#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.006159024267268696
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat4",
+        "cap2_margin": 0.004086938201879568,
+        "midi_margin": 0.17999999999999994,
+        "negative": "drummer7/session3/131#beat8",
+        "positive": "drummer7/session3/130#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.0035048871158826125
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat8",
+        "cap2_margin": -0.03457890942368563,
+        "midi_margin": 0.46031746031746024,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/session3/130#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.026581319812433755
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat8",
+        "cap2_margin": -0.037599924024921724,
+        "midi_margin": 0.4126984126984127,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/session3/130#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.029130940725926896
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat8",
+        "cap2_margin": 0.0012090319556613978,
+        "midi_margin": 0.25142857142857133,
+        "negative": "drummer7/session3/131#beat8",
+        "positive": "drummer7/session3/130#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.0014705257361960719
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat8",
+        "cap2_margin": -0.004069211243187425,
+        "midi_margin": 0.23504273504273498,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/session3/130#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.005146263662690526
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat12",
+        "cap2_margin": -0.03516451522887058,
+        "midi_margin": 0.46031746031746024,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/session3/130#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.02811177753282269
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat12",
+        "cap2_margin": -0.034771922566607716,
+        "midi_margin": 0.4126984126984127,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/session3/130#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.028081938189338827
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat12",
+        "cap2_margin": 7.222016435268029e-05,
+        "midi_margin": 0.25142857142857133,
+        "negative": "drummer7/session3/131#beat8",
+        "positive": "drummer7/session3/130#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.00034953736078484316
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat12",
+        "cap2_margin": -0.0035309826960875836,
+        "midi_margin": 0.23504273504273498,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/session3/130#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.005532984042769338
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat16",
+        "cap2_margin": -0.03847047466579863,
+        "midi_margin": 0.46031746031746024,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/session3/130#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.030307826087311123
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat16",
+        "cap2_margin": -0.0427113610958713,
+        "midi_margin": 0.4126984126984127,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/session3/130#beat16",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.03342570235536956
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat16",
+        "cap2_margin": 0.0008550913016536635,
+        "midi_margin": 0.25142857142857133,
+        "negative": "drummer7/session3/131#beat8",
+        "positive": "drummer7/session3/130#beat8",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": 0.0007628435634077825
+      },
+      {
+        "anchor": "drummer7/eval_session/2#beat16",
+        "cap2_margin": -0.007901610222570523,
+        "midi_margin": 0.23504273504273498,
+        "negative": "drummer7/session3/131#beat4",
+        "positive": "drummer7/session3/130#beat4",
+        "source": "performed-midi-9drums-16phase-binary-jaccard.v1",
+        "split": "validation",
+        "uniform_margin": -0.008542952360952134
+      }
+    ],
+    "uniform": {
+      "accuracy": 0.9190283400809717,
+      "comparisons": 247,
+      "correct": 227,
+      "incorrect": 20,
+      "ties": 0
+    }
+  }
+}
