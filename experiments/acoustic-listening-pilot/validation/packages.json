@@ -1,0 +1,19 @@
+{
+  "audio_format": "WAVE IEEE_FLOAT32",
+  "checked_role_mappings": 84,
+  "cpu_seconds": 2.621076,
+  "frozen_sha256": "e71e19c176576cb310f355ef5482a1bab6a71d3c4af7aa9d1492e085d48f22a7",
+  "html_sha256": {
+    "listener-1.html": "136bf5387b632f66bf0ae396ab2a168ab7952702c632d232064a37ecddc179ff",
+    "listener-2.html": "7272a8a7910032f19acdcaf289fad1d747eca15a12465da1264eca73a0e80aa2"
+  },
+  "human_evaluation": "NOT RUN",
+  "human_responses_created": 0,
+  "metadata": "No identifying fields in presentation, script or WAV chunks",
+  "peak_rss_mib": 525.30859375,
+  "private_packages": 2,
+  "source_and_evidence_preflight": "PASS",
+  "status": "PASS",
+  "wall_seconds": 3.1826562189962715,
+  "windows": 10
+}

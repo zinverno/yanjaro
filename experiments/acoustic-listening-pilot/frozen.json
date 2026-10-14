@@ -1,0 +1,2213 @@
+{
+  "base_head": "35aecde3311fa302e0ac1548d9c53f336ed9c928",
+  "cases": [
+    {
+      "anchor": "u01",
+      "candidates": [
+        "s02",
+        "s03"
+      ],
+      "case_id": "c01",
+      "category": "small_margin",
+      "frozen_pairs": {
+        "s02": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.008852637643133154,
+              "energy": 0.009692938554672813,
+              "intervals": 0.0880498840934707,
+              "periodicity_0": 0.035301729345130095,
+              "periodicity_1": 0.041190289637106636,
+              "periodicity_2": 0.17313382457432872,
+              "periodicity_3": 0.42836053932838425,
+              "tempo": null,
+              "timbre": 0.017197422456386512
+            },
+            "common_distance": 0.03856335561011325,
+            "common_units": 36,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.009692938554672813,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.002423234638668203
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.08879970581928043,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.022199926454820103
+              },
+              "tempo": {
+                "coverage": 0.0,
+                "distance": null,
+                "status": "MISSING",
+                "weighted_contribution": null
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.017197422456386512,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.004299355614096628
+              }
+            },
+            "conditional_score": 96.14366443898868,
+            "coverage": 0.75,
+            "coverage_mask": "111111011",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "s02",
+            "missing": {
+              "tempo": [
+                "u01"
+              ]
+            },
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {
+              "tempo": {
+                "u01": "NO_QUALIFYING_TEMPO_PEAK"
+              }
+            },
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 2,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.028922516707584937
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.0022131594107832886,
+              "intervals": 0.022012471023367675,
+              "periodicity": 0.04237414893030936,
+              "tempo": 0.125
+            },
+            "distance": 0.19159977936446032,
+            "id": "s02",
+            "quality": "UNVALIDATED",
+            "score": 80.84002206355396,
+            "unknown_tempo": true
+          }
+        },
+        "s03": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.0028813612197848837,
+              "energy": 0.01045773354440137,
+              "intervals": 0.21475549878664263,
+              "periodicity_0": 0.07090489064792724,
+              "periodicity_1": 0.07796905319128718,
+              "periodicity_2": 0.031177347986861965,
+              "periodicity_3": 0.11590216174652813,
+              "tempo": null,
+              "timbre": 0.005376664330613129
+            },
+            "common_distance": 0.037680935224958016,
+            "common_units": 36,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.01045773354440137,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0026144333861003424
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.09720840779985955,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.024302101949964884
+              },
+              "tempo": {
+                "coverage": 0.0,
+                "distance": null,
+                "status": "MISSING",
+                "weighted_contribution": null
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.005376664330613128,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0013441660826532822
+              }
+            },
+            "conditional_score": 96.2319064775042,
+            "coverage": 0.75,
+            "coverage_mask": "111111011",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "s03",
+            "missing": {
+              "tempo": [
+                "u01"
+              ]
+            },
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {
+              "tempo": {
+                "u01": "NO_QUALIFYING_TEMPO_PEAK"
+              }
+            },
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 1,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.02826070141871851
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.0007203403049462209,
+              "intervals": 0.05368887469666066,
+              "periodicity": 0.018497090848287785,
+              "tempo": 0.125
+            },
+            "distance": 0.19790630584989466,
+            "id": "s03",
+            "quality": "UNVALIDATED",
+            "score": 80.20936941501053,
+            "unknown_tempo": true
+          }
+        }
+      },
+      "selection_metric": [
+        0.0008824203851552359
+      ]
+    },
+    {
+      "anchor": "o02",
+      "candidates": [
+        "o01",
+        "u02"
+      ],
+      "case_id": "c02",
+      "category": "small_margin",
+      "frozen_pairs": {
+        "o01": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.061972292799908846,
+              "energy": 0.011705378001218918,
+              "intervals": 0.29925142164584123,
+              "periodicity_0": 0.26372267661368765,
+              "periodicity_1": 0.23251920598406559,
+              "periodicity_2": 0.3976741682985183,
+              "periodicity_3": 0.40597230347182367,
+              "tempo": 0.6952945609256954,
+              "timbre": 0.006047145223690566
+            },
+            "common_distance": 0.2354447546241324,
+            "common_units": 48,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.011705378001218918,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0029263445003047295
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.22873193434592462,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.057182983586481155
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.6952945609256954,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.17382364023142385
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.006047145223690566,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0015117863059226416
+              }
+            },
+            "conditional_score": 76.45552453758675,
+            "coverage": 1.0,
+            "coverage_mask": "111111111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "o01",
+            "missing": {},
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {},
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 1,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.2354447546241324
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.015493073199977211,
+              "intervals": 0.07481285541146031,
+              "periodicity": 0.08124302214800595,
+              "tempo": 0.17382364023142385
+            },
+            "distance": 0.3453725909908673,
+            "id": "o01",
+            "quality": "UNVALIDATED",
+            "score": 65.46274090091326,
+            "unknown_tempo": false
+          }
+        },
+        "u02": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.09898007076272969,
+              "energy": 0.015050720743650457,
+              "intervals": 0.49118185559815014,
+              "periodicity_0": 0.27307363919790945,
+              "periodicity_1": 0.21473110520363872,
+              "periodicity_2": 0.4883161539791345,
+              "periodicity_3": 0.7145501657269715,
+              "tempo": 0.6056947602442312,
+              "timbre": 0.008246492642042974
+            },
+            "common_distance": 0.2416504677731306,
+            "common_units": 48,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.015050720743650457,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0037626801859126143
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.3376098974625978,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.08440247436564945
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.6056947602442312,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.1514236900610578
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.008246492642042974,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0020616231605107434
+              }
+            },
+            "conditional_score": 75.83495322268693,
+            "coverage": 1.0,
+            "coverage_mask": "111111111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "u02",
+            "missing": {},
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {},
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 2,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.2416504677731306
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.024745017690682422,
+              "intervals": 0.12279546389953754,
+              "periodicity": 0.1056669415067284,
+              "tempo": 0.1514236900610578
+            },
+            "distance": 0.40463111315800615,
+            "id": "u02",
+            "quality": "UNVALIDATED",
+            "score": 59.53688868419938,
+            "unknown_tempo": false
+          }
+        }
+      },
+      "selection_metric": [
+        0.006205713148998204
+      ]
+    },
+    {
+      "anchor": "u01",
+      "candidates": [
+        "s01",
+        "s03"
+      ],
+      "case_id": "c03",
+      "category": "unknown_tempo",
+      "frozen_pairs": {
+        "s01": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.005553078541478851,
+              "energy": 0.011319741802229022,
+              "intervals": 0.17365674153310065,
+              "periodicity_0": 0.037853089349147204,
+              "periodicity_1": 0.06202646229476154,
+              "periodicity_2": 0.24218815631601065,
+              "periodicity_3": 0.22621349226085247,
+              "tempo": null,
+              "timbre": 0.014666066560979274
+            },
+            "common_distance": 0.0443597272465997,
+            "common_units": 36,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.011319741802229022,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0028299354505572556
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.10709337337659082,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.026773343344147705
+              },
+              "tempo": {
+                "coverage": 0.0,
+                "distance": null,
+                "status": "MISSING",
+                "weighted_contribution": null
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.014666066560979274,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0036665166402448184
+              }
+            },
+            "conditional_score": 95.56402727534004,
+            "coverage": 0.75,
+            "coverage_mask": "111111011",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "s01",
+            "missing": {
+              "tempo": [
+                "u01"
+              ]
+            },
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {
+              "tempo": {
+                "u01": "NO_QUALIFYING_TEMPO_PEAK"
+              }
+            },
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 3,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.033269795434949775
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.0013882696353697127,
+              "intervals": 0.04341418538327516,
+              "periodicity": 0.035517575013798236,
+              "tempo": 0.125
+            },
+            "distance": 0.20532003003244312,
+            "id": "s01",
+            "quality": "UNVALIDATED",
+            "score": 79.46799699675569,
+            "unknown_tempo": true
+          }
+        },
+        "s03": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.0028813612197848837,
+              "energy": 0.01045773354440137,
+              "intervals": 0.21475549878664263,
+              "periodicity_0": 0.07090489064792724,
+              "periodicity_1": 0.07796905319128718,
+              "periodicity_2": 0.031177347986861965,
+              "periodicity_3": 0.11590216174652813,
+              "tempo": null,
+              "timbre": 0.005376664330613129
+            },
+            "common_distance": 0.037680935224958016,
+            "common_units": 36,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.01045773354440137,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0026144333861003424
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.09720840779985955,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.024302101949964884
+              },
+              "tempo": {
+                "coverage": 0.0,
+                "distance": null,
+                "status": "MISSING",
+                "weighted_contribution": null
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.005376664330613128,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0013441660826532822
+              }
+            },
+            "conditional_score": 96.2319064775042,
+            "coverage": 0.75,
+            "coverage_mask": "111111011",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "s03",
+            "missing": {
+              "tempo": [
+                "u01"
+              ]
+            },
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {
+              "tempo": {
+                "u01": "NO_QUALIFYING_TEMPO_PEAK"
+              }
+            },
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 1,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.02826070141871851
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.0007203403049462209,
+              "intervals": 0.05368887469666066,
+              "periodicity": 0.018497090848287785,
+              "tempo": 0.125
+            },
+            "distance": 0.19790630584989466,
+            "id": "s03",
+            "quality": "UNVALIDATED",
+            "score": 80.20936941501053,
+            "unknown_tempo": true
+          }
+        }
+      },
+      "selection_metric": [
+        0
+      ]
+    },
+    {
+      "anchor": "o01",
+      "candidates": [
+        "s01",
+        "u01"
+      ],
+      "case_id": "c04",
+      "category": "unknown_tempo",
+      "frozen_pairs": {
+        "s01": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.03390695814627187,
+              "energy": 0.011876418295120306,
+              "intervals": 0.4728256599142938,
+              "periodicity_0": 0.05305353408368703,
+              "periodicity_1": 0.07969045028459837,
+              "periodicity_2": 0.2850475366769555,
+              "periodicity_3": 0.2774029397823551,
+              "tempo": 0.4363278647522625,
+              "timbre": 0.006773051478853755
+            },
+            "common_distance": 0.1704552697371812,
+            "common_units": 48,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.011876418295120308,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0029691045737800766
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.22684374442248822,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.05671093610562205
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.43632786475226243,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.10908196618806562
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.006773051478853755,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0016932628697134387
+              }
+            },
+            "conditional_score": 82.95447302628189,
+            "coverage": 1.0,
+            "coverage_mask": "111111111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "s01",
+            "missing": {},
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {},
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 1,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.1704552697371812
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.008476739536567968,
+              "intervals": 0.11820641497857345,
+              "periodicity": 0.04344965380172475,
+              "tempo": 0.10908196618806562
+            },
+            "distance": 0.2792147745049318,
+            "id": "s01",
+            "quality": "UNVALIDATED",
+            "score": 72.07852254950681,
+            "unknown_tempo": false
+          }
+        },
+        "u01": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.02835387960479302,
+              "energy": 0.012692945117367809,
+              "intervals": 0.5218497601367424,
+              "periodicity_0": 0.05806147704794537,
+              "periodicity_1": 0.06736001000141256,
+              "periodicity_2": 0.22757644779503908,
+              "periodicity_3": 0.2174805417870453,
+              "tempo": null,
+              "timbre": 0.012044834082313534
+            },
+            "common_distance": 0.08522628849982666,
+            "common_units": 36,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.012692945117367809,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.003173236279341952
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.23094108629979868,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.05773527157494966
+              },
+              "tempo": {
+                "coverage": 0.0,
+                "distance": null,
+                "status": "MISSING",
+                "weighted_contribution": null
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.012044834082313534,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0030112085205783834
+              }
+            },
+            "conditional_score": 91.47737115001733,
+            "coverage": 0.75,
+            "coverage_mask": "111111011",
+            "coverage_tier": 3,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "u01",
+            "missing": {
+              "tempo": [
+                "u01"
+              ]
+            },
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {
+              "tempo": {
+                "u01": "NO_QUALIFYING_TEMPO_PEAK"
+              }
+            },
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 9,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.06391971637487
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.007088469901198255,
+              "intervals": 0.1304624400341856,
+              "periodicity": 0.03565490478946515,
+              "tempo": 0.125
+            },
+            "distance": 0.298205814724849,
+            "id": "u01",
+            "quality": "UNVALIDATED",
+            "score": 70.1794185275151,
+            "unknown_tempo": true
+          }
+        }
+      },
+      "selection_metric": [
+        8
+      ]
+    },
+    {
+      "anchor": "s04",
+      "candidates": [
+        "o01",
+        "s01"
+      ],
+      "case_id": "c05",
+      "category": "partial_features",
+      "frozen_pairs": {
+        "o01": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.09871542650407322,
+              "energy": 0.0062783150502564,
+              "intervals": 0.6168180122012373,
+              "periodicity_0": 0.14554173794329206,
+              "periodicity_1": 0.3853642563540321,
+              "periodicity_2": 0.545005302098955,
+              "periodicity_3": null,
+              "tempo": 0.804048599760012,
+              "timbre": 0.01112668985957613
+            },
+            "common_distance": 0.2935210278139501,
+            "common_units": 47,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.0062783150502564,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0015695787625641
+              },
+              "rhythm": {
+                "coverage": 0.9166666666666666,
+                "distance": 0.3580040955652292,
+                "status": "PARTIAL",
+                "weighted_contribution": 0.08204260523369836
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.8040485997600119,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.201012149940003
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.01112668985957613,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0027816724648940323
+              }
+            },
+            "conditional_score": 70.64789721860498,
+            "coverage": 0.9791666666666666,
+            "coverage_mask": "111011111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "o01",
+            "missing": {
+              "periodicity_3": [
+                "s04"
+              ]
+            },
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {
+              "periodicity_3": {
+                "s04": "NO_HISTOGRAM_MASS"
+              }
+            },
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 2,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.2874060064011595
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.024678856626018306,
+              "intervals": 0.15420450305030933,
+              "periodicity": 0.09849445602476745,
+              "tempo": 0.201012149940003
+            },
+            "distance": 0.4783899656410981,
+            "id": "o01",
+            "quality": "UNVALIDATED",
+            "score": 52.16100343589019,
+            "unknown_tempo": false
+          }
+        },
+        "s01": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.1326223846503451,
+              "energy": 0.012968723364736548,
+              "intervals": 0.5598348817039669,
+              "periodicity_0": 0.13551411032131624,
+              "periodicity_1": 0.3617463738493229,
+              "periodicity_2": 0.5480347171923824,
+              "periodicity_3": null,
+              "tempo": 0.5596178956697601,
+              "timbre": 0.011753015417234886
+            },
+            "common_distance": 0.23036595489789463,
+            "common_units": 47,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.012968723364736548,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.003242180841184137
+              },
+              "rhythm": {
+                "coverage": 0.9166666666666666,
+                "distance": 0.3468294787982063,
+                "status": "PARTIAL",
+                "weighted_contribution": 0.07948175555792228
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.5596178956697601,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.13990447391744001
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.011753015417234886,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0029382538543087215
+              }
+            },
+            "conditional_score": 76.96340451021054,
+            "coverage": 0.9791666666666666,
+            "coverage_mask": "111011111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "s01",
+            "missing": {
+              "periodicity_3": [
+                "s04"
+              ]
+            },
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {
+              "periodicity_3": {
+                "s04": "NO_HISTOGRAM_MASS"
+              }
+            },
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 1,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.22556666417085516
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.03315559616258627,
+              "intervals": 0.13995872042599172,
+              "periodicity": 0.09658095008518885,
+              "tempo": 0.13990447391744001
+            },
+            "distance": 0.40959974059120685,
+            "id": "s01",
+            "quality": "UNVALIDATED",
+            "score": 59.04002594087932,
+            "unknown_tempo": false
+          }
+        }
+      },
+      "selection_metric": [
+        0
+      ]
+    },
+    {
+      "anchor": "o03",
+      "candidates": [
+        "o01",
+        "s04"
+      ],
+      "case_id": "c06",
+      "category": "partial_features",
+      "frozen_pairs": {
+        "o01": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.0016983345760083757,
+              "energy": 0.01137559715819849,
+              "intervals": 0.42522715074958917,
+              "periodicity_0": 0.11995634279699241,
+              "periodicity_1": 0.10726939149976181,
+              "periodicity_2": 0.16338662400408527,
+              "periodicity_3": 0.21695387781745698,
+              "tempo": 0.5821679547551554,
+              "timbre": 0.011134256926121537
+            },
+            "common_distance": 0.19940420590613314,
+            "common_units": 48,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.01137559715819849,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0028438992895496226
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.19293901478505723,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0482347536962643
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.5821679547551554,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.14554198868878884
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.011134256926121537,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0027835642315303844
+              }
+            },
+            "conditional_score": 80.05957940938669,
+            "coverage": 1.0,
+            "coverage_mask": "111111111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "o01",
+            "missing": {},
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {},
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 1,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.19940420590613314
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.0004245836440020939,
+              "intervals": 0.10630678768739729,
+              "periodicity": 0.03797288975739353,
+              "tempo": 0.14554198868878884
+            },
+            "distance": 0.29024624977758173,
+            "id": "o01",
+            "quality": "UNVALIDATED",
+            "score": 70.97537502224182,
+            "unknown_tempo": false
+          }
+        },
+        "s04": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.09732180634629883,
+              "energy": 0.012558359898724657,
+              "intervals": 0.6208899494596142,
+              "periodicity_0": 0.18235065950012816,
+              "periodicity_1": 0.3646547326260607,
+              "periodicity_2": 0.5138898251332339,
+              "periodicity_3": null,
+              "tempo": 0.9057593768482289,
+              "timbre": 0.008277671035141466
+            },
+            "common_distance": 0.3202741943376216,
+            "common_units": 47,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.012558359898724657,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0031395899746811643
+              },
+              "rhythm": {
+                "coverage": 0.9166666666666666,
+                "distance": 0.3576129309530068,
+                "status": "PARTIAL",
+                "weighted_contribution": 0.08195296334339738
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.9057593768482289,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.22643984421205723
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.008277671035141466,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0020694177587853666
+              }
+            },
+            "conditional_score": 67.97258056623784,
+            "coverage": 0.9791666666666666,
+            "coverage_mask": "111011111",
+            "coverage_tier": 2,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "s04",
+            "missing": {
+              "periodicity_3": [
+                "s04"
+              ]
+            },
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {
+              "periodicity_3": {
+                "s04": "NO_HISTOGRAM_MASS"
+              }
+            },
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 8,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.31360181528892117
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.02433045158657471,
+              "intervals": 0.15522248736490354,
+              "periodicity": 0.09755595107871393,
+              "tempo": 0.22643984421205723
+            },
+            "distance": 0.5035487342422494,
+            "id": "s04",
+            "quality": "UNVALIDATED",
+            "score": 49.64512657577506,
+            "unknown_tempo": false
+          }
+        }
+      },
+      "selection_metric": [
+        7
+      ]
+    },
+    {
+      "anchor": "s01",
+      "candidates": [
+        "o01",
+        "s02"
+      ],
+      "case_id": "c07",
+      "category": "tempo_timbre_energy",
+      "frozen_pairs": {
+        "o01": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.03390695814627187,
+              "energy": 0.011876418295120306,
+              "intervals": 0.4728256599142938,
+              "periodicity_0": 0.05305353408368703,
+              "periodicity_1": 0.07969045028459837,
+              "periodicity_2": 0.2850475366769555,
+              "periodicity_3": 0.2774029397823551,
+              "tempo": 0.4363278647522625,
+              "timbre": 0.006773051478853755
+            },
+            "common_distance": 0.1704552697371812,
+            "common_units": 48,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.011876418295120308,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0029691045737800766
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.22684374442248822,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.05671093610562205
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.43632786475226243,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.10908196618806562
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.006773051478853755,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0016932628697134387
+              }
+            },
+            "conditional_score": 82.95447302628189,
+            "coverage": 1.0,
+            "coverage_mask": "111111111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "o01",
+            "missing": {},
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {},
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 1,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.1704552697371812
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.008476739536567968,
+              "intervals": 0.11820641497857345,
+              "periodicity": 0.04344965380172475,
+              "tempo": 0.10908196618806562
+            },
+            "distance": 0.2792147745049318,
+            "id": "o01",
+            "quality": "UNVALIDATED",
+            "score": 72.07852254950681,
+            "unknown_tempo": false
+          }
+        },
+        "s02": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.0032995591016543036,
+              "energy": 0.004324783615626607,
+              "intervals": 0.19317617244153285,
+              "periodicity_0": 0.028070991502343334,
+              "periodicity_1": 0.0686789153171166,
+              "periodicity_2": 0.2330739315983515,
+              "periodicity_3": 0.39335672343162903,
+              "tempo": 0.5911132814959397,
+              "timbre": 0.006495801741118671
+            },
+            "common_distance": 0.18192270604696684,
+            "common_units": 48,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.004324783615626607,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0010811959039066519
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.1257569573351824,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0314392393337956
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.5911132814959397,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.14777832037398492
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.0064958017411186715,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0016239504352796677
+              }
+            },
+            "conditional_score": 81.80772939530331,
+            "coverage": 1.0,
+            "coverage_mask": "111111111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "s02",
+            "missing": {},
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {},
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 2,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.18192270604696684
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.0008248897754135759,
+              "intervals": 0.04829404311038321,
+              "periodicity": 0.04519878511559003,
+              "tempo": 0.14777832037398492
+            },
+            "distance": 0.24209603837537175,
+            "id": "s02",
+            "quality": "UNVALIDATED",
+            "score": 75.79039616246283,
+            "unknown_tempo": false
+          }
+        }
+      },
+      "selection_metric": [
+        0.5911132814959397,
+        -0.003914442208614392
+      ]
+    },
+    {
+      "anchor": "s02",
+      "candidates": [
+        "o01",
+        "s01"
+      ],
+      "case_id": "c08",
+      "category": "tempo_timbre_energy",
+      "frozen_pairs": {
+        "o01": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.037206517247926174,
+              "energy": 0.010132624925654001,
+              "intervals": 0.5355586601160475,
+              "periodicity_0": 0.05355517497830687,
+              "periodicity_1": 0.06385895243263136,
+              "periodicity_2": 0.22935844546201764,
+              "periodicity_3": 0.43665538153593125,
+              "tempo": 0.5580943070242329,
+              "timbre": 0.007955662431842233
+            },
+            "common_distance": 0.2080974957592819,
+            "common_units": 48,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.010132624925654001,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0025331562314135003
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.25620738865539844,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.06405184716384961
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.5580943070242329,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.13952357675605823
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.007955662431842233,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.001988915607960558
+              }
+            },
+            "conditional_score": 79.1902504240718,
+            "coverage": 1.0,
+            "coverage_mask": "111111111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "o01",
+            "missing": {},
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {},
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 2,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.2080974957592819
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.009301629311981544,
+              "intervals": 0.13388966502901187,
+              "periodicity": 0.048964247150555446,
+              "tempo": 0.13952357675605823
+            },
+            "distance": 0.3316791182476071,
+            "id": "o01",
+            "quality": "UNVALIDATED",
+            "score": 66.83208817523929,
+            "unknown_tempo": false
+          }
+        },
+        "s01": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.0032995591016543036,
+              "energy": 0.004324783615626607,
+              "intervals": 0.19317617244153285,
+              "periodicity_0": 0.028070991502343334,
+              "periodicity_1": 0.0686789153171166,
+              "periodicity_2": 0.2330739315983515,
+              "periodicity_3": 0.39335672343162903,
+              "tempo": 0.5911132814959397,
+              "timbre": 0.006495801741118671
+            },
+            "common_distance": 0.18192270604696684,
+            "common_units": 48,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.004324783615626607,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0010811959039066519
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.1257569573351824,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0314392393337956
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.5911132814959397,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.14777832037398492
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.0064958017411186715,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0016239504352796677
+              }
+            },
+            "conditional_score": 81.80772939530331,
+            "coverage": 1.0,
+            "coverage_mask": "111111111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "s01",
+            "missing": {},
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {},
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 1,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.18192270604696684
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.0008248897754135759,
+              "intervals": 0.04829404311038321,
+              "periodicity": 0.04519878511559003,
+              "tempo": 0.14777832037398492
+            },
+            "distance": 0.24209603837537175,
+            "id": "s01",
+            "quality": "UNVALIDATED",
+            "score": 75.79039616246283,
+            "unknown_tempo": false
+          }
+        }
+      },
+      "selection_metric": [
+        0.5911132814959397,
+        -0.003633851000375478
+      ]
+    },
+    {
+      "anchor": "s03",
+      "candidates": [
+        "o04",
+        "s01"
+      ],
+      "case_id": "c09",
+      "category": "rhythm_tempo",
+      "frozen_pairs": {
+        "o04": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.024462422671469863,
+              "energy": 0.020740414232433634,
+              "intervals": 0.23140450737429286,
+              "periodicity_0": 0.24095818081806517,
+              "periodicity_1": 0.18061374818435655,
+              "periodicity_2": 0.20827137288691835,
+              "periodicity_3": 0.5047241483692075,
+              "tempo": 0.6452616934096608,
+              "timbre": 0.013285962590225698
+            },
+            "common_distance": 0.21478108360894665,
+            "common_units": 48,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.020740414232433634,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.005185103558108408
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.17983626420346654,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.04495906605086663
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.6452616934096608,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.1613154233524152
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.013285962590225698,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0033214906475564246
+              }
+            },
+            "conditional_score": 78.52189163910533,
+            "coverage": 1.0,
+            "coverage_mask": "111111111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "o04",
+            "missing": {},
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {},
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 1,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.21478108360894665
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.006115605667867466,
+              "intervals": 0.057851126843573214,
+              "periodicity": 0.07091046564115921,
+              "tempo": 0.1613154233524152
+            },
+            "distance": 0.2961926215050151,
+            "id": "o04",
+            "quality": "UNVALIDATED",
+            "score": 70.3807378494985,
+            "unknown_tempo": false
+          }
+        },
+        "s01": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.005129435039828378,
+              "energy": 0.0075841378169394956,
+              "intervals": 0.1323614477122743,
+              "periodicity_0": 0.06462018869668874,
+              "periodicity_1": 0.08587821281776346,
+              "periodicity_2": 0.24436781942607483,
+              "periodicity_3": 0.23207940542501007,
+              "tempo": 0.9147410079021091,
+              "timbre": 0.010704866087191256
+            },
+            "common_distance": 0.2577764437301839,
+            "common_units": 48,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.0075841378169394956,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0018960344542348739
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.09807576311449566,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.02451894077862391
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.9147410079021091,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.22868525197552728
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.010704866087191256,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.002676216521797814
+              }
+            },
+            "conditional_score": 74.22235562698161,
+            "coverage": 1.0,
+            "coverage_mask": "111111111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "s01",
+            "missing": {},
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {},
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 3,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.2577764437301839
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.0012823587599570946,
+              "intervals": 0.03309036192806857,
+              "periodicity": 0.03918410164784607,
+              "tempo": 0.22868525197552728
+            },
+            "distance": 0.302242074311399,
+            "id": "s01",
+            "quality": "UNVALIDATED",
+            "score": 69.77579256886011,
+            "unknown_tempo": false
+          }
+        }
+      },
+      "selection_metric": [
+        0.09807576311449566,
+        -0.26947931449244833
+      ]
+    },
+    {
+      "anchor": "u02",
+      "candidates": [
+        "o02",
+        "s02"
+      ],
+      "case_id": "c10",
+      "category": "rhythm_tempo",
+      "frozen_pairs": {
+        "o02": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.09898007076272969,
+              "energy": 0.015050720743650457,
+              "intervals": 0.49118185559815014,
+              "periodicity_0": 0.27307363919790945,
+              "periodicity_1": 0.21473110520363872,
+              "periodicity_2": 0.4883161539791345,
+              "periodicity_3": 0.7145501657269715,
+              "tempo": 0.6056947602442312,
+              "timbre": 0.008246492642042974
+            },
+            "common_distance": 0.2416504677731306,
+            "common_units": 48,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.015050720743650457,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0037626801859126143
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.3376098974625978,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.08440247436564945
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.6056947602442312,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.1514236900610578
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.008246492642042974,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0020616231605107434
+              }
+            },
+            "conditional_score": 75.83495322268693,
+            "coverage": 1.0,
+            "coverage_mask": "111111111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "o02",
+            "missing": {},
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {},
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 2,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.2416504677731306
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.024745017690682422,
+              "intervals": 0.12279546389953754,
+              "periodicity": 0.1056669415067284,
+              "tempo": 0.1514236900610578
+            },
+            "distance": 0.40463111315800615,
+            "id": "o02",
+            "quality": "UNVALIDATED",
+            "score": 59.53688868419938,
+            "unknown_tempo": false
+          }
+        },
+        "s02": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.0006242711999990269,
+              "energy": 0.008835967746784155,
+              "intervals": 0.10473769182060247,
+              "periodicity_0": 0.053847072859356554,
+              "periodicity_1": 0.03350777491401003,
+              "periodicity_2": 0.29954642224901495,
+              "periodicity_3": 0.5924413505634618,
+              "tempo": 0.777965072394882,
+              "timbre": 0.009155581869308815
+            },
+            "common_distance": 0.22817229034999895,
+            "common_units": 48,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.008835967746784155,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.002208991936696039
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.11673253938902078,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.029183134847255193
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.777965072394882,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.1944912680987205
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.009155581869308815,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.002288895467327204
+              }
+            },
+            "conditional_score": 77.1827709650001,
+            "coverage": 1.0,
+            "coverage_mask": "111111111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "s02",
+            "missing": {},
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {},
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 1,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.22817229034999895
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.00015606779999975673,
+              "intervals": 0.026184422955150617,
+              "periodicity": 0.06120891378661521,
+              "tempo": 0.1944912680987205
+            },
+            "distance": 0.2820406726404861,
+            "id": "s02",
+            "quality": "UNVALIDATED",
+            "score": 71.7959327359514,
+            "unknown_tempo": false
+          }
+        }
+      },
+      "selection_metric": [
+        0.11673253938902078,
+        -0.1722703121506508
+      ]
+    },
+    {
+      "anchor": "o04",
+      "candidates": [
+        "s03",
+        "u01"
+      ],
+      "case_id": "c11",
+      "category": "rank_disagreement",
+      "frozen_pairs": {
+        "s03": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.024462422671469863,
+              "energy": 0.020740414232433634,
+              "intervals": 0.23140450737429286,
+              "periodicity_0": 0.24095818081806517,
+              "periodicity_1": 0.18061374818435655,
+              "periodicity_2": 0.20827137288691835,
+              "periodicity_3": 0.5047241483692075,
+              "tempo": 0.6452616934096608,
+              "timbre": 0.013285962590225698
+            },
+            "common_distance": 0.21478108360894665,
+            "common_units": 48,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.020740414232433634,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.005185103558108408
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.17983626420346654,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.04495906605086663
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.6452616934096608,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.1613154233524152
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.013285962590225698,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0033214906475564246
+              }
+            },
+            "conditional_score": 78.52189163910533,
+            "coverage": 1.0,
+            "coverage_mask": "111111111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "s03",
+            "missing": {},
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {},
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 1,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.21478108360894665
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.006115605667867466,
+              "intervals": 0.057851126843573214,
+              "periodicity": 0.07091046564115921,
+              "tempo": 0.1613154233524152
+            },
+            "distance": 0.2961926215050151,
+            "id": "s03",
+            "quality": "UNVALIDATED",
+            "score": 70.3807378494985,
+            "unknown_tempo": false
+          }
+        },
+        "u01": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.02403877916981939,
+              "energy": 0.028139484041755158,
+              "intervals": 0.28028033761357385,
+              "periodicity_0": 0.20147841041793765,
+              "periodicity_1": 0.17401094850706847,
+              "periodicity_2": 0.20831536547820936,
+              "periodicity_3": 0.5129297924946458,
+              "tempo": null,
+              "timbre": 0.015225705964821448
+            },
+            "common_distance": 0.07873314622528758,
+            "common_units": 36,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.028139484041755158,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.007034871010438789
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.1928342486692862,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.04820856216732154
+              },
+              "tempo": {
+                "coverage": 0.0,
+                "distance": null,
+                "status": "MISSING",
+                "weighted_contribution": null
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.015225705964821446,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.003806426491205362
+              }
+            },
+            "conditional_score": 92.12668537747123,
+            "coverage": 0.75,
+            "coverage_mask": "111111011",
+            "coverage_tier": 3,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "u01",
+            "missing": {
+              "tempo": [
+                "u01"
+              ]
+            },
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {
+              "tempo": {
+                "u01": "NO_QUALIFYING_TEMPO_PEAK"
+              }
+            },
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 9,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.05904985966896569
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.006009694792454848,
+              "intervals": 0.07007008440339346,
+              "periodicity": 0.06854590730611633,
+              "tempo": 0.125
+            },
+            "distance": 0.2696256865019646,
+            "id": "u01",
+            "quality": "UNVALIDATED",
+            "score": 73.03743134980354,
+            "unknown_tempo": true
+          }
+        }
+      },
+      "selection_metric": [
+        -9
+      ]
+    },
+    {
+      "anchor": "s01",
+      "candidates": [
+        "o01",
+        "u01"
+      ],
+      "case_id": "c12",
+      "category": "rank_disagreement",
+      "frozen_pairs": {
+        "o01": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.03390695814627187,
+              "energy": 0.011876418295120306,
+              "intervals": 0.4728256599142938,
+              "periodicity_0": 0.05305353408368703,
+              "periodicity_1": 0.07969045028459837,
+              "periodicity_2": 0.2850475366769555,
+              "periodicity_3": 0.2774029397823551,
+              "tempo": 0.4363278647522625,
+              "timbre": 0.006773051478853755
+            },
+            "common_distance": 0.1704552697371812,
+            "common_units": 48,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.011876418295120308,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0029691045737800766
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.22684374442248822,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.05671093610562205
+              },
+              "tempo": {
+                "coverage": 1.0,
+                "distance": 0.43632786475226243,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.10908196618806562
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.006773051478853755,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0016932628697134387
+              }
+            },
+            "conditional_score": 82.95447302628189,
+            "coverage": 1.0,
+            "coverage_mask": "111111111",
+            "coverage_tier": 1,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "o01",
+            "missing": {},
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {},
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 1,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.1704552697371812
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.008476739536567968,
+              "intervals": 0.11820641497857345,
+              "periodicity": 0.04344965380172475,
+              "tempo": 0.10908196618806562
+            },
+            "distance": 0.2792147745049318,
+            "id": "o01",
+            "quality": "UNVALIDATED",
+            "score": 72.07852254950681,
+            "unknown_tempo": false
+          }
+        },
+        "u01": {
+          "acoustic_v1": {
+            "atomic_distances": {
+              "density": 0.005553078541478851,
+              "energy": 0.011319741802229022,
+              "intervals": 0.17365674153310065,
+              "periodicity_0": 0.037853089349147204,
+              "periodicity_1": 0.06202646229476154,
+              "periodicity_2": 0.24218815631601065,
+              "periodicity_3": 0.22621349226085247,
+              "tempo": null,
+              "timbre": 0.014666066560979274
+            },
+            "common_distance": 0.0443597272465997,
+            "common_units": 36,
+            "components": {
+              "energy": {
+                "coverage": 1.0,
+                "distance": 0.011319741802229022,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0028299354505572556
+              },
+              "rhythm": {
+                "coverage": 1.0,
+                "distance": 0.10709337337659082,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.026773343344147705
+              },
+              "tempo": {
+                "coverage": 0.0,
+                "distance": null,
+                "status": "MISSING",
+                "weighted_contribution": null
+              },
+              "timbre": {
+                "coverage": 1.0,
+                "distance": 0.014666066560979274,
+                "status": "AVAILABLE_UNVERIFIED",
+                "weighted_contribution": 0.0036665166402448184
+              }
+            },
+            "conditional_score": 95.56402727534004,
+            "coverage": 0.75,
+            "coverage_mask": "111111011",
+            "coverage_tier": 3,
+            "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+            "id": "u01",
+            "missing": {
+              "tempo": [
+                "u01"
+              ]
+            },
+            "missing_policy": "common-mask-coverage-first.v1",
+            "missing_reasons": {
+              "tempo": {
+                "u01": "NO_QUALIFYING_TEMPO_PEAK"
+              }
+            },
+            "profile": "acoustic",
+            "quality": "UNVALIDATED",
+            "rank": 9,
+            "status": "COMPARABLE",
+            "total_units": 48,
+            "weighted_numerator": 0.033269795434949775
+          },
+          "pi_v1": {
+            "contributions": {
+              "density": 0.0013882696353697127,
+              "intervals": 0.04341418538327516,
+              "periodicity": 0.035517575013798236,
+              "tempo": 0.125
+            },
+            "distance": 0.20532003003244312,
+            "id": "u01",
+            "quality": "UNVALIDATED",
+            "score": 79.46799699675569,
+            "unknown_tempo": true
+          }
+        }
+      },
+      "selection_metric": [
+        -10
+      ]
+    }
+  ],
+  "ground_truth": null,
+  "human_evaluation": "NOT RUN",
+  "input_sha256": {
+    "acoustic-retrieval-v1/frozen.json": "3b5cb3211bdcc134e9ce495dd2156b4977d11fe6d4d349eb34b7bf53f757262d",
+    "acoustic-retrieval-v1/index.json": "4c8c0c2f18e47b016a4521cc1eb0f8a7a11d3f3cbd9afb303a36ea2444086a61",
+    "acoustic-retrieval-v1/repeat-extraction.json": "a349713f41a298a1af8224fcbbbccd93289b374689e34ec16e8009673dfd5240",
+    "acoustic-retrieval-v1/retrieval.json": "ee38e1ec35c1926849a84a095bb26259101141f8d1bb3ecdb9c4021e7de086e8",
+    "rhythm-pi-v1/frozen.json": "f1a31f7ac9b539bbb9d16830cffe4a2ab8cbcc457a37afcfcb03e91a6fcf070b",
+    "rhythm-pi-v1/index.json": "e5b4bc2d890b8d6dbea7353b8a9de87292ec761219aacf6f04f315b261b8ae87",
+    "rhythm-pi-v1/retrieval.json": "3850f507b4f88731317ff9fd457abbfd50f088b6e126caa9e8e1286e3a62f15a"
+  },
+  "limitations": [
+    "10 recordings",
+    "3 author groups",
+    "dependent selected comparisons",
+    "15 second excerpts",
+    "no independent acoustic labels yet"
+  ],
+  "manifest_sha256": "24ce999d2b1175640ad4ae73e0d1c487a8fa80cc2ca5581819f391e0a29a0b1e",
+  "protocol_sha256": "8068b0f06a78842d8619ccfd2a6d4944460956b5f8bf0869946d685373e4d01e",
+  "schedules": {
+    "1": [
+      {
+        "A": "u01",
+        "B": "s01",
+        "X": "o01",
+        "case_id": "c04",
+        "repeat": false,
+        "token": "8cf320ee90aec5647da83354"
+      },
+      {
+        "A": "s02",
+        "B": "s03",
+        "X": "u01",
+        "case_id": "c01",
+        "repeat": false,
+        "token": "2d371fe20646a86aa9569194"
+      },
+      {
+        "A": "s01",
+        "B": "o01",
+        "X": "s04",
+        "case_id": "c05",
+        "repeat": false,
+        "token": "afebf48e154a090574b6a69d"
+      },
+      {
+        "A": "u01",
+        "B": "s03",
+        "X": "o04",
+        "case_id": "c11",
+        "repeat": false,
+        "token": "aaf4a5b8423411f42d4863bd"
+      },
+      {
+        "A": "o02",
+        "B": "s02",
+        "X": "u02",
+        "case_id": "c10",
+        "repeat": false,
+        "token": "71f210b7ed294c71f27a946a"
+      },
+      {
+        "A": "o04",
+        "B": "s01",
+        "X": "s03",
+        "case_id": "c09",
+        "repeat": false,
+        "token": "edd95c75d9e26006d679e39a"
+      },
+      {
+        "A": "s01",
+        "B": "s03",
+        "X": "u01",
+        "case_id": "c03",
+        "repeat": false,
+        "token": "cbdfc13cd177d0a383c6e47d"
+      },
+      {
+        "A": "s03",
+        "B": "u01",
+        "X": "o04",
+        "case_id": "c11",
+        "repeat": true,
+        "token": "65bf6e0fdb63c7a03237a2e9"
+      },
+      {
+        "A": "o01",
+        "B": "s02",
+        "X": "s01",
+        "case_id": "c07",
+        "repeat": false,
+        "token": "51a360fa5b36835731ec7dff"
+      },
+      {
+        "A": "u01",
+        "B": "o01",
+        "X": "s01",
+        "case_id": "c12",
+        "repeat": false,
+        "token": "df558cbaa784a0f49417fbd8"
+      },
+      {
+        "A": "s01",
+        "B": "o01",
+        "X": "s02",
+        "case_id": "c08",
+        "repeat": false,
+        "token": "0220d82e537b1eecb4b2c1f2"
+      },
+      {
+        "A": "o01",
+        "B": "u02",
+        "X": "o02",
+        "case_id": "c02",
+        "repeat": false,
+        "token": "2b679d6eb8e6d3e46e61b632"
+      },
+      {
+        "A": "s02",
+        "B": "o01",
+        "X": "s01",
+        "case_id": "c07",
+        "repeat": true,
+        "token": "8ad98033458054805df85b20"
+      },
+      {
+        "A": "s04",
+        "B": "o01",
+        "X": "o03",
+        "case_id": "c06",
+        "repeat": false,
+        "token": "2cae59fc7e036b505429e321"
+      }
+    ],
+    "2": [
+      {
+        "A": "s01",
+        "B": "o04",
+        "X": "s03",
+        "case_id": "c09",
+        "repeat": false,
+        "token": "e35f028e170ef61afb5d6b61"
+      },
+      {
+        "A": "s01",
+        "B": "u01",
+        "X": "o01",
+        "case_id": "c04",
+        "repeat": false,
+        "token": "8f905ba1fff05d128b6728b0"
+      },
+      {
+        "A": "s03",
+        "B": "s02",
+        "X": "u01",
+        "case_id": "c01",
+        "repeat": false,
+        "token": "3a77af1e9da2ff59af8a4c04"
+      },
+      {
+        "A": "o01",
+        "B": "u01",
+        "X": "s01",
+        "case_id": "c12",
+        "repeat": false,
+        "token": "3ccf0f7a133f2e30cc1a7171"
+      },
+      {
+        "A": "o01",
+        "B": "s01",
+        "X": "s02",
+        "case_id": "c08",
+        "repeat": false,
+        "token": "b66b029ba7dfc2373123ed8c"
+      },
+      {
+        "A": "s03",
+        "B": "u01",
+        "X": "o04",
+        "case_id": "c11",
+        "repeat": false,
+        "token": "fb9a66fa1ce82f8329e0f2bf"
+      },
+      {
+        "A": "o01",
+        "B": "s01",
+        "X": "s04",
+        "case_id": "c05",
+        "repeat": false,
+        "token": "67a5ae59a131b08999f99d9c"
+      },
+      {
+        "A": "s02",
+        "B": "o01",
+        "X": "s01",
+        "case_id": "c07",
+        "repeat": false,
+        "token": "0b7fdffc879d3efad227ab98"
+      },
+      {
+        "A": "u02",
+        "B": "o01",
+        "X": "o02",
+        "case_id": "c02",
+        "repeat": false,
+        "token": "fe5db1cb7d20589c23579113"
+      },
+      {
+        "A": "o01",
+        "B": "s04",
+        "X": "o03",
+        "case_id": "c06",
+        "repeat": false,
+        "token": "2a2d3af9418d8ec20c229aea"
+      },
+      {
+        "A": "s03",
+        "B": "s01",
+        "X": "u01",
+        "case_id": "c03",
+        "repeat": false,
+        "token": "92e6ffae524363a9341c2baf"
+      },
+      {
+        "A": "o01",
+        "B": "s02",
+        "X": "s01",
+        "case_id": "c07",
+        "repeat": true,
+        "token": "5966bacd66994f3f3e6f4439"
+      },
+      {
+        "A": "s02",
+        "B": "o02",
+        "X": "u02",
+        "case_id": "c10",
+        "repeat": false,
+        "token": "715ba0a7e24f9fb06e4b9302"
+      },
+      {
+        "A": "u01",
+        "B": "s03",
+        "X": "o04",
+        "case_id": "c11",
+        "repeat": true,
+        "token": "26328f8a67fd7c8712fbbea1"
+      }
+    ]
+  },
+  "schema": "yanjaro.acoustic-listening.v1",
+  "seed": 2026101401
+}

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-__SCRIPT_SHA__'; style-src 'unsafe-inline'; media-src blob:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer"><title>Локальное сравнение звучания</title>
+<style>
+:root{color-scheme:light dark;font:18px/1.55 system-ui,sans-serif}body{margin:0;background:#121b24;color:#edf3f8}
+main{max-width:800px;margin:2rem auto;padding:0 1.2rem 3rem}h1{font-size:1.65rem;line-height:1.25}h2{font-size:1.2rem}
+button,select{font:inherit;padding:.65rem .9rem;border:1px solid #8da4bb;border-radius:.4rem;background:#213346;color:inherit}
+button{cursor:pointer}button:hover{background:#304b66}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #79d8f9;outline-offset:3px}
+button:disabled{opacity:.5;cursor:default}.row{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;margin:1rem 0}
+fieldset{border:1px solid #587085;border-radius:.5rem;padding:1rem;margin:1.2rem 0}legend{padding:0 .5rem}
+.answer{display:block;padding:.6rem;border-radius:.3rem}.answer:hover{background:#213346}input[type=radio]{margin-right:.7rem;width:1.2rem;height:1.2rem}
+select{display:block;max-width:100%;width:100%;margin:.4rem 0 1rem}audio{width:100%;margin:.4rem 0 1rem}
+.note{color:#c1d0df;font-size:.95rem}.status{min-height:1.6rem;color:#a1e8ba}.error{color:#ffb9ad}
+[hidden]{display:none!important}label{cursor:pointer}hr{border:0;border-top:1px solid #587085;margin:1.6rem 0}
+</style></head><body><main>
+<h1>Сравнение звучания</h1>
+<section id="intro">
+<p>14 коротких сравнений. В каждом прослушайте исходный фрагмент X и варианты A и B.
+Оценивайте сходство звучания, а не то, какая музыка вам больше нравится.</p>
+<p>Все фрагменты длятся 15 секунд. Сохраняйте одинаковую громкость и устройство воспроизведения.
+Можно слушать повторно, пропускать вопросы и делать перерывы.</p>
+<p class="note">Участие добровольное. Эта страница работает без интернета. Ответы сохраняются только
+в этом браузере; имя не требуется. Для переноса или резервной копии используйте экспорт JSON.
+Каждый слушатель должен открыть отдельную выданную ему страницу, без обсуждения ответов.
+Не открывайте одновременно несколько вкладок с этой страницей.</p>
+<button id="start">Начать / продолжить</button>
+</section>
+<section id="study" hidden>
+<p id="progress" aria-live="polite"></p>
+<h2>Какой вариант акустически ближе к исходной композиции по совокупности ритма, темпа, тембра и энергии?</h2>
+<div class="row" aria-label="Фрагменты"><button data-play="X">Слушать X</button><button data-play="A">Слушать A</button><button data-play="B">Слушать B</button></div>
+<p id="playing" aria-live="polite">Выберите фрагмент.</p>
+<audio id="player" controls preload="none" aria-label="Воспроизведение выбранного фрагмента"></audio>
+<fieldset id="choices"><legend>Ваш ответ</legend>
+<label class="answer"><input type="radio" name="choice" value="A">A</label>
+<label class="answer"><input type="radio" name="choice" value="B">B</label>
+<label class="answer"><input type="radio" name="choice" value="tie">Примерно одинаково</label>
+<label class="answer"><input type="radio" name="choice" value="neither">Ни один</label>
+<label class="answer"><input type="radio" name="choice" value="uncertain">Не уверен</label>
+</fieldset>
+<label for="aspect">Какой аспект сильнее повлиял на выбор? Необязательно.</label>
+<select id="aspect"><option value="">Не указывать</option><option value="rhythm">Ритмический рисунок</option><option value="tempo">Темп</option><option value="timbre">Тембр / характер звука</option><option value="energy">Энергия / динамика</option><option value="combination">Сочетание аспектов</option></select>
+<label for="confidence">Уверенность в ответе. Необязательно.</label>
+<select id="confidence"><option value="">Не указывать</option><option value="1">1 — низкая</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5 — высокая</option></select>
+<div class="row"><button id="previous">Назад</button><button id="next">Далее / пропустить</button><button id="clear">Убрать ответ</button></div>
+<p id="finished" hidden>Все сравнения отвечены. Можно проверить ответы или экспортировать их.
+Передайте организатору только JSON или CSV, если хотите включить ответы в анализ.</p>
+</section>
+<p id="status" class="status" role="status"></p>
+<hr><div class="row"><button id="json">Экспорт JSON</button><button id="csv">Экспорт CSV</button><button id="restore">Восстановить JSON</button></div>
+<input id="import" type="file" accept=".json,application/json" hidden>
+<button id="withdraw">Удалить ответы из браузера</button>
+<p class="note">Экспорт добровольный, автоматической отправки нет. Очистка браузера может удалить
+прогресс. Скачанные копии удаляются отдельно. Не пересылайте эту страницу: в ней находится локальное аудио.</p>
+<noscript>Для локального проигрывателя и сохранения ответов нужен JavaScript.</noscript>
+</main><script>__SCRIPT__</script></body></html>

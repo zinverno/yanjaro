@@ -1,0 +1,31 @@
+{
+  "answered_unique_presentations": 0,
+  "between_reviewers": [],
+  "descriptive_totals": {
+    "agreement": {
+      "acoustic_v1": {
+        "eligible": 0,
+        "matches": 0
+      },
+      "pi_v1": {
+        "eligible": 0,
+        "matches": 0
+      }
+    },
+    "cases": 0,
+    "counts": {}
+  },
+  "limitations": [
+    "10 recordings",
+    "3 author groups",
+    "dependent selected comparisons",
+    "15 second excerpts",
+    "no independent acoustic labels yet"
+  ],
+  "population_accuracy": "NOT RUN",
+  "recall_at_k": "NOT RUN",
+  "reviewers": [],
+  "schema": "yanjaro.acoustic-listening.v1",
+  "status": "NOT RUN",
+  "training": "NOT RUN"
+}
