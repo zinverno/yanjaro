@@ -12,7 +12,7 @@ import zipfile
 
 import numpy as np
 
-from acoustic_similarity.cap2 import (ARTIFACT, BASE_HEAD, BUNDLE_LIMIT, BoundedSource, INPUT_BYTES, LIMIT,
+from acoustic_similarity.cap2 import (ARTIFACT, AUTHORIZATION, BASE_HEAD, BUNDLE_LIMIT, BoundedSource, INPUT_BYTES, LIMIT,
     LOG_DOWNLOAD_LIMIT, NoRedirect, PLAN, RESERVE, RUN_NUMBER, SOURCE_BYTES, bundle, counts, guard,
     inputs, preflight, run, score, validate_annotations)
 from acoustic_similarity.data import write_new
@@ -119,14 +119,15 @@ class Cap2Tests(unittest.TestCase):
                     response.read.assert_not_called()
 
     def test_one_run_number_attempt_parent_and_pr_only(self):
-        env = {'GITHUB_ACTIONS': 'true', 'GITHUB_RUN_NUMBER': RUN_NUMBER, 'GITHUB_RUN_ATTEMPT': '1',
+        env = {'CAP2_AUTHORIZATION': AUTHORIZATION, 'GITHUB_ACTIONS': 'true', 'GITHUB_RUN_NUMBER': RUN_NUMBER, 'GITHUB_RUN_ATTEMPT': '1',
                'GITHUB_JOB': 'cap2-pilot', 'GITHUB_REPOSITORY': 'zinverno/yanjaro', 'GITHUB_EVENT_NAME': 'pull_request',
                'GITHUB_WORKFLOW_REF': 'zinverno/yanjaro/.github/workflows/acoustic-similarity.yml@refs/pull/10/merge',
                'SOURCE_COMMIT': 'a'*40, 'OPENBLAS_NUM_THREADS': '2', 'OMP_NUM_THREADS': '2', 'NUMBA_NUM_THREADS': '2'}
         event = {'number': 10, 'action': 'synchronize', 'pull_request': {'head': {'repo': {'full_name': 'zinverno/yanjaro'},
                    'ref': 'experiment/acoustic-similarity-v01', 'sha': 'a'*40}}}
         guard(env, event, 'a'*40, BASE_HEAD)
-        for key, value in [('GITHUB_RUN_NUMBER', '6'), ('GITHUB_RUN_ATTEMPT', '2'), ('GITHUB_JOB', 'tests'), ('OMP_NUM_THREADS', '4')]:
+        for key, value in [('GITHUB_RUN_NUMBER', '5'), ('GITHUB_RUN_NUMBER', '10'), ('CAP2_AUTHORIZATION', ''),
+                           ('GITHUB_RUN_ATTEMPT', '2'), ('GITHUB_JOB', 'tests'), ('OMP_NUM_THREADS', '4')]:
             with self.assertRaises(ValueError): guard({**env, key:value}, event, 'a'*40, BASE_HEAD)
         with self.assertRaises(ValueError): guard(env, event, 'a'*40, 'b'*40)
         with self.assertRaises(ValueError): guard(env, {**event, 'number': 11}, 'a'*40, BASE_HEAD)
@@ -147,7 +148,7 @@ class Cap2Tests(unittest.TestCase):
     def test_workflow_limit_and_single_use_guard_are_consistent(self):
         workflow = (ROOT.parents[1]/'.github/workflows/acoustic-similarity.yml').read_text()
         block = workflow.split('  cap2-pilot:', 1)[1]
-        self.assertTrue('github.run_number == 5 && github.run_attempt == 1' in block or
+        self.assertTrue(f'github.run_number == {RUN_NUMBER} && github.run_attempt == 1' in block or
                         'if: ${{ false }}' in block)
         for value in ('timeout-minutes: 10', 'ulimit -v 4194304', 'ulimit -t 600',
                       '--retries 0', 'timeout --kill-after=10s 540s', '--depth=2'):

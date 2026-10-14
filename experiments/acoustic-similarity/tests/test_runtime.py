@@ -1,9 +1,9 @@
-"""The runtime fix must not enable or reauthorize the consumed experiment."""
+"""Pinned runtime and fresh authorization must never revive the historical run."""
 from pathlib import Path
 import re
 import unittest
 
-from acoustic_similarity.cap2 import BASE_HEAD, RUN_NUMBER
+from acoustic_similarity.cap2 import AUTHORIZATION, BASE_HEAD, OUTPUT, RUN_NUMBER
 
 ROOT = Path(__file__).parents[1]
 SETUP = "actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065"
@@ -16,7 +16,7 @@ class RuntimeWorkflowTests(unittest.TestCase):
         cls.jobs = dict(re.findall(r"^  ([\w-]+):\n(.*?)(?=^  [\w-]+:\n|\Z)", workflow,
                                    flags=re.M | re.S))
 
-    def test_same_pinned_runtime_in_smoke_tests_and_disabled_cap2(self):
+    def test_same_pinned_runtime_in_smoke_tests_and_cap2(self):
         for name in ("tests", "runtime-smoke", "cap2-pilot"):
             block = self.jobs[name]
             self.assertIn(SETUP, block)
@@ -35,12 +35,17 @@ class RuntimeWorkflowTests(unittest.TestCase):
         self.assertNotRegex(block, r"acoustic_similarity\.(cap2|rhythm) run\b")
         self.assertNotIn("datasets/", block)
 
-    def test_training_disabled_and_historical_guards_unchanged(self):
-        for name in ("cap2-pilot", "groove-pilot"):
-            self.assertIn("if: ${{ false }}", self.jobs[name])
-        self.assertEqual(RUN_NUMBER, "5")
-        self.assertEqual(BASE_HEAD, "15e911d829a6f3683129de2bfcac37e47f55e995")
-        self.assertIn(BASE_HEAD, self.jobs["cap2-pilot"])
+    def test_fresh_one_shot_guards_and_historical_job_disabled(self):
+        self.assertIn("if: ${{ false }}", self.jobs["groove-pilot"])
+        self.assertEqual(RUN_NUMBER, "9")
+        self.assertEqual(BASE_HEAD, "0d8955f1788521f6458a64ceea3ba7db8e09b9ba")
+        self.assertEqual(AUTHORIZATION, "cap2-2026-10-14-v2")
+        self.assertEqual(OUTPUT, "runs/groove-cap2-v2")
+        block = self.jobs["cap2-pilot"]
+        self.assertIn(BASE_HEAD, block)
+        self.assertIn(AUTHORIZATION, block)
+        self.assertTrue('if: ${{ false }}' in block or
+                        f'github.run_number == {RUN_NUMBER} && github.run_attempt == 1' in block)
 
 
 if __name__ == "__main__":

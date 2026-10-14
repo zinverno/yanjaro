@@ -28,9 +28,11 @@ from .rhythm import (FEATURE_SCHEMA, TARGET_SCHEMA, SCHEMA, WINDOW_BEATS,
                      contrastive_arrays, make_triplets, midi_events, midi_target,
                      rhythm_features, validate_dataset)
 
-BASE_HEAD = "15e911d829a6f3683129de2bfcac37e47f55e995"
+BASE_HEAD = "0d8955f1788521f6458a64ceea3ba7db8e09b9ba"
 PLAN_SHA = "3b1167534a85af7b043b792db8b1b2160b2d3c48aad33803d518510ce3c2d346"
-RUN_NUMBER = "5"
+RUN_NUMBER = "9"
+AUTHORIZATION = "cap2-2026-10-14-v2"
+OUTPUT = "runs/groove-cap2-v2"
 LIMIT = 42 * 1024**2
 RESERVE = 2 * 1024**2
 INPUT_BYTES = 382152
@@ -249,7 +251,8 @@ def score(dataset, split, weights):
 
 
 def guard(env, event, head, parent):
-    require(env.get("GITHUB_ACTIONS") == "true" and env.get("GITHUB_RUN_NUMBER") == RUN_NUMBER and
+    require(env.get("CAP2_AUTHORIZATION") == AUTHORIZATION and
+            env.get("GITHUB_ACTIONS") == "true" and env.get("GITHUB_RUN_NUMBER") == RUN_NUMBER and
             env.get("GITHUB_RUN_ATTEMPT") == "1" and env.get("GITHUB_JOB") == "cap2-pilot" and
             env.get("GITHUB_REPOSITORY") == "zinverno/yanjaro" and env.get("GITHUB_EVENT_NAME") == "pull_request" and
             env.get("GITHUB_WORKFLOW_REF", "").startswith("zinverno/yanjaro/.github/workflows/acoustic-similarity.yml@"),
@@ -300,7 +303,7 @@ def run():
     signal.signal(signal.SIGTERM, deadline)
     signal.signal(signal.SIGXCPU, deadline)
     resource.setrlimit(resource.RLIMIT_CPU, (590, 600))
-    output = ROOT / "runs/groove-cap2-v1"
+    output = ROOT / OUTPUT
     output.mkdir(parents=True, exist_ok=False)
     started, cpu_started = time.monotonic(), time.process_time()
     status = {"stage": "inputs", "status": "STARTED", "training_calls": 0, "test_evaluations": 0}
@@ -343,6 +346,7 @@ def run():
                    "old_test": "NOT RUN; previous drummer8 unchanged", "quality": "PASS on this cohort only" if test["delta_accuracy"] > 0 else "FAIL: no improvement",
                    "population_improvement": "NOT ESTABLISHED: one performer, three connected originals"})
         write_new(output / "provenance.json", {"plan": plan, "plan_sha256": PLAN_SHA, "original_artifact_integrity": integrity,
+                   "authorization_id": AUTHORIZATION, "output_binding": OUTPUT,
                    "new_originals": originals, "midi_sources": annotations["members"], "audio_hash_overlap": "PASS",
                    "training_uses_only_original_332_triplets": True, "old_test_used": False,
                    "acquisition": client.snapshot(), "authorization": "User explicitly authorized one cap2 run under 42 MiB, 10 minutes, CPU only",
@@ -359,6 +363,10 @@ def run():
                   "user_cpu_seconds": resource.getrusage(resource.RUSAGE_SELF).ru_utime,
                   "system_cpu_seconds": resource.getrusage(resource.RUSAGE_SELF).ru_stime, "fit_seconds": fit_seconds,
                   "peak_rss_mib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024,
+                  "peak_virtual_mib": int(next(line.split()[1] for line in Path("/proc/self/status").read_text().splitlines()
+                                               if line.startswith("VmPeak:")))/1024,
+                  "virtual_memory_limit_bytes": resource.getrlimit(resource.RLIMIT_AS)[0],
+                  "cpu_limit_seconds": resource.getrlimit(resource.RLIMIT_CPU),
                   "received_source_bytes": client.received if client else 0, "input_artifact_bytes_charged": INPUT_BYTES,
                   "reserved_transport_output_bytes": RESERVE, "transfer_limit_bytes": LIMIT,
                   "bundle_limit_bytes": BUNDLE_LIMIT, "log_download_limit_bytes": LOG_DOWNLOAD_LIMIT,

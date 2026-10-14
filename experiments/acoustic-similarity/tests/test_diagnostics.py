@@ -137,7 +137,8 @@ class DiagnosticsTests(unittest.TestCase):
         self.assertGreater(probe['results'][-1]['flux_l2'], 1.)
 
     def test_ablation_mixtures_keep_uniform_endpoint_and_bound(self):
-        X, _ = contrastive_arrays(self.dev, 'train')
+        # Cap2's only real fit belongs to the explicitly authorized experiment job.
+        X, _ = contrastive_arrays(dataset_fixture(), 'train')
         uniform = ablation_weights('uniform', X)
         original = ablation_weights('original', X)
         np.testing.assert_allclose(ablation_weights('mix_0.1', X), .9*uniform+.1*original)
