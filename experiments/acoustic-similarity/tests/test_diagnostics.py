@@ -63,16 +63,22 @@ class DiagnosticsTests(unittest.TestCase):
     def setUpClass(cls):
         cls.dev, cls.weights, cls.integrity, _, _ = load_archive(ROOT / "validation/groove-cpu-v1/artifacts.zip")
 
-    def test_archive_provenance_and_reproduction(self):
+    def test_archive_provenance_and_frozen_training_shape(self):
         self.assertEqual(self.integrity['archive_sha256'], ARTIFACT_SHA)
         self.assertEqual(self.integrity['members_sha256']['model.json'],
                          '9cfa22a9adc22b6990d3a01200a4d9d5fe2dcba469ea97fe45b5bfcff7a9b147')
         X, _ = contrastive_arrays(self.dev, 'train')
-        np.testing.assert_allclose(fit_head(X, np.zeros(len(X)))[0], self.weights, atol=1e-12, rtol=0)
+        self.assertEqual(X.shape, (332,128))
         with tempfile.NamedTemporaryFile() as f:
             f.write(b'changed archive'); f.flush()
             with self.assertRaisesRegex(ValueError, 'SHA-256'):
                 load_archive(f.name)
+
+    def test_optimizer_reproduction_uses_only_synthetic_data(self):
+        # Real refits are not authorized in the v2 diagnostics or their CI.
+        X = np.tile([-1., 1.], (8,1))
+        np.testing.assert_allclose(fit_head(X,np.zeros(8),regularization=0)[0],
+                                   [0.9092259396791949, 0.09077406032080508],atol=1e-12,rtol=0)
 
     def test_old_test_and_validation_cannot_enter_cv_training(self):
         dataset = dataset_fixture()

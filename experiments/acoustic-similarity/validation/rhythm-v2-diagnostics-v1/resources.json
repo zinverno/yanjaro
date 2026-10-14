@@ -1,0 +1,9 @@
+{
+  "cpu_seconds": 10.266872226,
+  "feature_schema": "audio-attacks-softphase16-circularac64-equalblocks.v2",
+  "held_out_evaluations": 0,
+  "network_bytes": 0,
+  "peak_rss_mib": 331.6953125,
+  "real_fits": 0,
+  "wall_seconds": 10.587955252995016
+}

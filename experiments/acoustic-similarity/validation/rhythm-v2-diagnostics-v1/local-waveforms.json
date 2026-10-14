@@ -1,0 +1,248 @@
+{
+  "audio_published": false,
+  "kind": "REAL LOCAL WAVEFORM DIAGNOSTICS; NOT TRAIN/VALIDATION QUALITY",
+  "new_audio_download_bytes": 0,
+  "records": [
+    {
+      "analyzed_seconds": 15.0,
+      "artist_ids": [
+        "spring-spring"
+      ],
+      "attribution": "Jazz \u2014 Spring Spring / Julie Damsgaard",
+      "audio_sha256": "97f967ff80cc68befdd3b8b195e18219e740cf7036ce8d38d9196765f4e59592",
+      "candidate_attacks": 314,
+      "evidence_sha256": "1dfc67fb22a3b9532ae335d11b58444198f42dd94fb54c1a9fd907ab1f65c877",
+      "frame_to_refined_seconds": {
+        "max": 0.015011337868480634,
+        "mean": 0.007048326761702617,
+        "min": -0.0008843537414966463
+      },
+      "id": "s01",
+      "license": "CC0-1.0",
+      "onset_precision_recall": "NOT RUN: no independent onset labels",
+      "original_bytes": 1369162,
+      "original_duration_seconds": 72.0,
+      "phase_sensitive_features": "NOT RUN: no verified bar phase/tempo uncertainty",
+      "sample_rate": 44100,
+      "source_url": "https://opengameart.org/content/jazz-1",
+      "wall_seconds": 1.0220119220030028
+    },
+    {
+      "analyzed_seconds": 15.0,
+      "artist_ids": [
+        "spring-spring"
+      ],
+      "attribution": "(Basically not) Fusion Jazz \u2014 Spring Spring / Julie Damsgaard",
+      "audio_sha256": "645f7cd6ef7a56b22fe394ff006dae17348cf70c72aa9e2a9b4d7f70b2804af4",
+      "candidate_attacks": 317,
+      "evidence_sha256": "839b1983023b09bc900026fcfed1e22e3ffdc8b43f4113e218bf266dea8f38b6",
+      "frame_to_refined_seconds": {
+        "max": 0.015000000000000568,
+        "mean": 0.005015707150368071,
+        "min": -0.0010000000000012221
+      },
+      "id": "s02",
+      "license": "CC0-1.0",
+      "onset_precision_recall": "NOT RUN: no independent onset labels",
+      "original_bytes": 4643715,
+      "original_duration_seconds": 246.38783333333333,
+      "phase_sensitive_features": "NOT RUN: no verified bar phase/tempo uncertainty",
+      "sample_rate": 48000,
+      "source_url": "https://opengameart.org/content/basically-not-fusion-jazz",
+      "wall_seconds": 0.9525720909878146
+    },
+    {
+      "analyzed_seconds": 15.0,
+      "artist_ids": [
+        "spring-spring"
+      ],
+      "attribution": "Courtroom \u2014 Spring Spring / Julie Damsgaard",
+      "audio_sha256": "5ffd37d0a907c80324a51419544b5cdcb69781cc4642d9f79cff3e2ffee4a556",
+      "candidate_attacks": 301,
+      "evidence_sha256": "9b71d67c2623b033877ba9097955b4cebd196f82bb67ffcbd9a369d74c31e3e5",
+      "frame_to_refined_seconds": {
+        "max": 0.01501133786848069,
+        "mean": 0.006462585034013711,
+        "min": -0.0009523809523805937
+      },
+      "id": "s03",
+      "license": "CC0-1.0",
+      "onset_precision_recall": "NOT RUN: no independent onset labels",
+      "original_bytes": 2666730,
+      "original_duration_seconds": 109.71428571428571,
+      "phase_sensitive_features": "NOT RUN: no verified bar phase/tempo uncertainty",
+      "sample_rate": 44100,
+      "source_url": "https://opengameart.org/content/courtroom-and-judgement",
+      "wall_seconds": 1.0021951610106044
+    },
+    {
+      "analyzed_seconds": 15.0,
+      "artist_ids": [
+        "spring-spring"
+      ],
+      "attribution": "Kingdom of a Million Elephants under a White Parasol \u2014 Spring Spring / Julie Damsgaard",
+      "audio_sha256": "2c138c24ecd6f3af12393e71f0a29ff2c38df0913cba222c62636d70bd445e5c",
+      "candidate_attacks": 151,
+      "evidence_sha256": "822e5cd01037bdf50b89e54016c1c7b8bb7b70d65b4cc6e91a4e53052241c5fb",
+      "frame_to_refined_seconds": {
+        "max": 0.014807256235828348,
+        "mean": 0.006392155096034086,
+        "min": -0.000725623582765067
+      },
+      "id": "s04",
+      "license": "CC0-1.0",
+      "onset_precision_recall": "NOT RUN: no independent onset labels",
+      "original_bytes": 2251234,
+      "original_duration_seconds": 92.57142857142857,
+      "phase_sensitive_features": "NOT RUN: no verified bar phase/tempo uncertainty",
+      "sample_rate": 44100,
+      "source_url": "https://opengameart.org/content/kingdom-of-a-million-elephants-under-a-white-parasol",
+      "wall_seconds": 0.966182806994766
+    },
+    {
+      "analyzed_seconds": 15.0,
+      "artist_ids": [
+        "joth"
+      ],
+      "attribution": "Funked Up \u2014 Joth",
+      "audio_sha256": "57cd81254a0f4e068535c5421f93b586514332ad2377f81aea190dd91659fff3",
+      "candidate_attacks": 256,
+      "evidence_sha256": "4a6ddf59a47131270f69f13c92b86a01865fdfa6e2dfa7bbeda1f15a63c853a5",
+      "frame_to_refined_seconds": {
+        "max": 0.015011337868480634,
+        "mean": 0.005908446712018211,
+        "min": -0.0009977324263035214
+      },
+      "id": "o01",
+      "license": "CC0-1.0",
+      "onset_precision_recall": "NOT RUN: no independent onset labels",
+      "original_bytes": 1329549,
+      "original_duration_seconds": 66.53462585034013,
+      "phase_sensitive_features": "NOT RUN: no verified bar phase/tempo uncertainty",
+      "sample_rate": 44100,
+      "source_url": "https://opengameart.org/content/funked-up",
+      "wall_seconds": 0.8356521170062479
+    },
+    {
+      "analyzed_seconds": 15.0,
+      "artist_ids": [
+        "joth"
+      ],
+      "attribution": "Bossa Nova \u2014 Joth",
+      "audio_sha256": "0ee835fd279ac5fa15f9346744cbafc2ba800c1c0671b78ca9abe2b4353402f7",
+      "candidate_attacks": 185,
+      "evidence_sha256": "482052df55731bedeb2e687db76f926cbaa9c2f178f9b3ff26e15bb7984213c6",
+      "frame_to_refined_seconds": {
+        "max": 0.015011337868481078,
+        "mean": 0.006369430655144975,
+        "min": -0.0008843537414957581
+      },
+      "id": "o02",
+      "license": "CC0-1.0",
+      "onset_precision_recall": "NOT RUN: no independent onset labels",
+      "original_bytes": 1196325,
+      "original_duration_seconds": 59.86768707482993,
+      "phase_sensitive_features": "NOT RUN: no verified bar phase/tempo uncertainty",
+      "sample_rate": 44100,
+      "source_url": "https://opengameart.org/content/bossa-nova",
+      "wall_seconds": 0.8117817330057733
+    },
+    {
+      "analyzed_seconds": 15.0,
+      "artist_ids": [
+        "joth"
+      ],
+      "attribution": "8Bit Title Screen \u2014 Joth",
+      "audio_sha256": "0fd7f99ae046278959645889f9bb0970a0430381ee1bd2e7a68c5f41438b29d8",
+      "candidate_attacks": 251,
+      "evidence_sha256": "9333efd2bbeb78daad4089ba034048d67d6b0550a282e649520d2887ef15fed8",
+      "frame_to_refined_seconds": {
+        "max": 0.015011337868480634,
+        "mean": 0.005977992790741787,
+        "min": -0.000929705215419574
+      },
+      "id": "o03",
+      "license": "CC0-1.0",
+      "onset_precision_recall": "NOT RUN: no independent onset labels",
+      "original_bytes": 356018,
+      "original_duration_seconds": 22.24893424036281,
+      "phase_sensitive_features": "NOT RUN: no verified bar phase/tempo uncertainty",
+      "sample_rate": 44100,
+      "source_url": "https://opengameart.org/content/8bit-title-screen",
+      "wall_seconds": 0.7852862990112044
+    },
+    {
+      "analyzed_seconds": 15.0,
+      "artist_ids": [
+        "joth"
+      ],
+      "attribution": "Fantasy Orchestral Theme \u2014 Joth",
+      "audio_sha256": "add1de5eae0771c4ce5b3782a6eae9c01f321d32446421691426587000e50cdc",
+      "candidate_attacks": 263,
+      "evidence_sha256": "a9a0c8e2360f08507abfa01217c97766435ab70ecd65b768f949bef91d81444c",
+      "frame_to_refined_seconds": {
+        "max": 0.01501133786848019,
+        "mean": 0.005928023934542185,
+        "min": -0.0009750566893425017
+      },
+      "id": "o04",
+      "license": "CC0-1.0",
+      "onset_precision_recall": "NOT RUN: no independent onset labels",
+      "original_bytes": 3837827,
+      "original_duration_seconds": 192.05639455782313,
+      "phase_sensitive_features": "NOT RUN: no verified bar phase/tempo uncertainty",
+      "sample_rate": 44100,
+      "source_url": "https://opengameart.org/content/fantasy-orchestral-theme",
+      "wall_seconds": 0.9624845590151381
+    },
+    {
+      "analyzed_seconds": 15.0,
+      "artist_ids": [
+        "juhani-junkala"
+      ],
+      "attribution": "Epic Boss Battle \u2014 Juhani Junkala / SubspaceAudio",
+      "audio_sha256": "35f75b4381dfbb053992876f7dfc567d9fd959d61b73954d5b1cd519753e7df1",
+      "candidate_attacks": 295,
+      "evidence_sha256": "674f38633eb6c25baccc7520bb93f2b8a52016b5d6ef24569c8af742ff2fff73",
+      "frame_to_refined_seconds": {
+        "max": 0.014965986394557262,
+        "mean": 0.006585572081940199,
+        "min": -0.0009977324263037435
+      },
+      "id": "u01",
+      "license": "CC0-1.0",
+      "onset_precision_recall": "NOT RUN: no independent onset labels",
+      "original_bytes": 21773152,
+      "original_duration_seconds": 123.42859410430839,
+      "phase_sensitive_features": "NOT RUN: no verified bar phase/tempo uncertainty",
+      "sample_rate": 44100,
+      "source_url": "https://opengameart.org/content/boss-battle-music",
+      "wall_seconds": 1.0815589539997745
+    },
+    {
+      "analyzed_seconds": 15.0,
+      "artist_ids": [
+        "juhani-junkala"
+      ],
+      "attribution": "JRPG Theme \u2014 Juhani Junkala / SubspaceAudio",
+      "audio_sha256": "a56babeb77e69bd3cf3c9db837c28b08a2f6b33925363b4270e604fda05bbf05",
+      "candidate_attacks": 318,
+      "evidence_sha256": "d21669978ba77910b49adfc922920e03aa961d9ddaeb161e6575e1da073423e9",
+      "frame_to_refined_seconds": {
+        "max": 0.015011337868480717,
+        "mean": 0.005861749311884091,
+        "min": -0.0009977324263044096
+      },
+      "id": "u02",
+      "license": "CC0-1.0",
+      "onset_precision_recall": "NOT RUN: no independent onset labels",
+      "original_bytes": 17549612,
+      "original_duration_seconds": 99.48569160997732,
+      "phase_sensitive_features": "NOT RUN: no verified bar phase/tempo uncertainty",
+      "sample_rate": 44100,
+      "source_url": "https://opengameart.org/content/jrpg-trailer-theme",
+      "wall_seconds": 0.9649081210081931
+    }
+  ],
+  "rights_and_hashes": "PASS"
+}

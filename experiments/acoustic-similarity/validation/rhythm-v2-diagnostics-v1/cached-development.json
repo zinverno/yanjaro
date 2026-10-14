@@ -1,0 +1,515 @@
+{
+  "held_out_evaluation": "NOT RUN",
+  "input_sha256": "72a1f4505afcc095d3ffaddd3cdc354cc1718c08861313fd91bfb6788b7fc79e",
+  "kind": "CACHE-ONLY DIAGNOSTIC; NOT RE-EXTRACTED V2",
+  "learned_v2": "NOT RUN; not authorized",
+  "splits": {
+    "train": {
+      "audio_midi_zero_shift_correlation": {
+        "max": 0.983541034500205,
+        "mean": 0.6477909995670045,
+        "min": -0.06023957329846612
+      },
+      "audio_phase_mass_mean": [
+        0.12379425264206313,
+        0.01935234127296297,
+        0.037031542577566,
+        0.03464756130214156,
+        0.14527096591758373,
+        0.02780027058184246,
+        0.05007737095797263,
+        0.03829319140279238,
+        0.08814506046257868,
+        0.03818149959075861,
+        0.06500324170377654,
+        0.04039929678130551,
+        0.16129252855897158,
+        0.03340749196155222,
+        0.054757969617767896,
+        0.04254541466836412
+      ],
+      "bars": 140,
+      "block_norms": {
+        "ac": {
+          "max": 1.0065273347584478,
+          "mean": 0.5746892426329194,
+          "min": 0.3151283781757834
+        },
+        "flux": {
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 1.9999999999999998
+        }
+      },
+      "cached_equal_blocks_uniform": {
+        "accuracy": 0.7981927710843374,
+        "correct": 265,
+        "incorrect": 67,
+        "n": 332,
+        "ties": 0
+      },
+      "components": [
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 0.8125,
+            "correct": 26,
+            "incorrect": 6,
+            "n": 32,
+            "ties": 0
+          },
+          "component": "drummer1/eval_session/4",
+          "v1_uniform": {
+            "accuracy": 0.875,
+            "correct": 28,
+            "incorrect": 4,
+            "n": 32,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 1.0,
+            "correct": 16,
+            "incorrect": 0,
+            "n": 16,
+            "ties": 0
+          },
+          "component": "drummer10/session1/6",
+          "v1_uniform": {
+            "accuracy": 1.0,
+            "correct": 16,
+            "incorrect": 0,
+            "n": 16,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 0.28125,
+            "correct": 9,
+            "incorrect": 23,
+            "n": 32,
+            "ties": 0
+          },
+          "component": "drummer3/session1/10",
+          "v1_uniform": {
+            "accuracy": 0.09375,
+            "correct": 3,
+            "incorrect": 29,
+            "n": 32,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 1.0,
+            "correct": 20,
+            "incorrect": 0,
+            "n": 20,
+            "ties": 0
+          },
+          "component": "drummer3/session1/14",
+          "v1_uniform": {
+            "accuracy": 1.0,
+            "correct": 20,
+            "incorrect": 0,
+            "n": 20,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 1.0,
+            "correct": 32,
+            "incorrect": 0,
+            "n": 32,
+            "ties": 0
+          },
+          "component": "drummer3/session2/10",
+          "v1_uniform": {
+            "accuracy": 0.9375,
+            "correct": 30,
+            "incorrect": 2,
+            "n": 32,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 0.625,
+            "correct": 10,
+            "incorrect": 6,
+            "n": 16,
+            "ties": 0
+          },
+          "component": "drummer3/session2/22",
+          "v1_uniform": {
+            "accuracy": 0.6875,
+            "correct": 11,
+            "incorrect": 5,
+            "n": 16,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 0.7777777777777778,
+            "correct": 21,
+            "incorrect": 6,
+            "n": 27,
+            "ties": 0
+          },
+          "component": "drummer3/session2/40",
+          "v1_uniform": {
+            "accuracy": 0.6666666666666666,
+            "correct": 18,
+            "incorrect": 9,
+            "n": 27,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 0.75,
+            "correct": 15,
+            "incorrect": 5,
+            "n": 20,
+            "ties": 0
+          },
+          "component": "drummer5/eval_session/2",
+          "v1_uniform": {
+            "accuracy": 0.8,
+            "correct": 16,
+            "incorrect": 4,
+            "n": 20,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 0.6875,
+            "correct": 22,
+            "incorrect": 10,
+            "n": 32,
+            "ties": 0
+          },
+          "component": "drummer5/session2/19",
+          "v1_uniform": {
+            "accuracy": 0.0625,
+            "correct": 2,
+            "incorrect": 30,
+            "n": 32,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 0.8,
+            "correct": 36,
+            "incorrect": 9,
+            "n": 45,
+            "ties": 0
+          },
+          "component": "drummer9/session1/1",
+          "v1_uniform": {
+            "accuracy": 0.7777777777777778,
+            "correct": 35,
+            "incorrect": 10,
+            "n": 45,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 0.9285714285714286,
+            "correct": 26,
+            "incorrect": 2,
+            "n": 28,
+            "ties": 0
+          },
+          "component": "drummer9/session1/15",
+          "v1_uniform": {
+            "accuracy": 1.0,
+            "correct": 28,
+            "incorrect": 0,
+            "n": 28,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 1.0,
+            "correct": 32,
+            "incorrect": 0,
+            "n": 32,
+            "ties": 0
+          },
+          "component": "drummer9/session1/26",
+          "v1_uniform": {
+            "accuracy": 1.0,
+            "correct": 32,
+            "incorrect": 0,
+            "n": 32,
+            "ties": 0
+          }
+        }
+      ],
+      "correct_to_incorrect": 11,
+      "delta_percentage_points": 7.831325301204828,
+      "diagnostic_best_shift_histogram": {
+        "0": 103,
+        "2": 5,
+        "3": 2,
+        "4": 6,
+        "6": 2,
+        "7": 1,
+        "8": 8,
+        "10": 3,
+        "11": 2,
+        "12": 5,
+        "13": 1,
+        "14": 2
+      },
+      "incorrect_to_correct": 37,
+      "midi_phase_occupancy_mean": [
+        0.9,
+        0.36428571428571427,
+        0.8,
+        0.5714285714285714,
+        0.9714285714285714,
+        0.32857142857142857,
+        0.8071428571428572,
+        0.6,
+        0.9928571428571429,
+        0.6285714285714286,
+        0.7857142857142857,
+        0.5857142857142857,
+        0.9714285714285714,
+        0.42857142857142855,
+        0.7642857142857142,
+        0.5428571428571428
+      ],
+      "originals": 36,
+      "same_temporal_occupancy_different_drum_target_pairs": 61,
+      "shift_warning": "Diagnostic upper bound only; not an inferred alignment or correction",
+      "v1_uniform": {
+        "accuracy": 0.7198795180722891,
+        "correct": 239,
+        "incorrect": 93,
+        "n": 332,
+        "ties": 0
+      }
+    },
+    "validation": {
+      "audio_midi_zero_shift_correlation": {
+        "max": 0.9457829384621286,
+        "mean": 0.5644947443224582,
+        "min": -0.2202342069025395
+      },
+      "audio_phase_mass_mean": [
+        0.10831206584355951,
+        0.014328419186949735,
+        0.0538177655182931,
+        0.014842363353839065,
+        0.20766557110039893,
+        0.030935911546807103,
+        0.04675130990935855,
+        0.02261048451422926,
+        0.08184348429585482,
+        0.021712263924596988,
+        0.06180418036122496,
+        0.02084811835640838,
+        0.219127468845678,
+        0.032997276913249975,
+        0.04308836550000868,
+        0.01931495082954316
+      ],
+      "bars": 84,
+      "block_norms": {
+        "ac": {
+          "max": 0.9708488235573176,
+          "mean": 0.5443972262344368,
+          "min": 0.2586553235171624
+        },
+        "flux": {
+          "max": 2.0,
+          "mean": 2.0,
+          "min": 1.9999999999999998
+        }
+      },
+      "cached_equal_blocks_uniform": {
+        "accuracy": 0.8825910931174089,
+        "correct": 218,
+        "incorrect": 29,
+        "n": 247,
+        "ties": 0
+      },
+      "components": [
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 0.8333333333333334,
+            "correct": 30,
+            "incorrect": 6,
+            "n": 36,
+            "ties": 0
+          },
+          "component": "drummer7/eval_session/2",
+          "v1_uniform": {
+            "accuracy": 0.7777777777777778,
+            "correct": 28,
+            "incorrect": 8,
+            "n": 36,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 0.75,
+            "correct": 30,
+            "incorrect": 10,
+            "n": 40,
+            "ties": 0
+          },
+          "component": "drummer7/session1/22",
+          "v1_uniform": {
+            "accuracy": 0.9,
+            "correct": 36,
+            "incorrect": 4,
+            "n": 40,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 0.9166666666666666,
+            "correct": 44,
+            "incorrect": 4,
+            "n": 48,
+            "ties": 0
+          },
+          "component": "drummer7/session2/102",
+          "v1_uniform": {
+            "accuracy": 0.9166666666666666,
+            "correct": 44,
+            "incorrect": 4,
+            "n": 48,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 1.0,
+            "correct": 28,
+            "incorrect": 0,
+            "n": 28,
+            "ties": 0
+          },
+          "component": "drummer7/session2/14",
+          "v1_uniform": {
+            "accuracy": 1.0,
+            "correct": 28,
+            "incorrect": 0,
+            "n": 28,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 1.0,
+            "correct": 25,
+            "incorrect": 0,
+            "n": 25,
+            "ties": 0
+          },
+          "component": "drummer7/session2/29",
+          "v1_uniform": {
+            "accuracy": 1.0,
+            "correct": 25,
+            "incorrect": 0,
+            "n": 25,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 0.75,
+            "correct": 24,
+            "incorrect": 8,
+            "n": 32,
+            "ties": 0
+          },
+          "component": "drummer7/session2/46",
+          "v1_uniform": {
+            "accuracy": 0.875,
+            "correct": 28,
+            "incorrect": 4,
+            "n": 32,
+            "ties": 0
+          }
+        },
+        {
+          "cached_equal_blocks_uniform": {
+            "accuracy": 0.9736842105263158,
+            "correct": 37,
+            "incorrect": 1,
+            "n": 38,
+            "ties": 0
+          },
+          "component": "drummer7/session3/48",
+          "v1_uniform": {
+            "accuracy": 1.0,
+            "correct": 38,
+            "incorrect": 0,
+            "n": 38,
+            "ties": 0
+          }
+        }
+      ],
+      "correct_to_incorrect": 12,
+      "delta_percentage_points": -3.6437246963562764,
+      "diagnostic_best_shift_histogram": {
+        "0": 56,
+        "1": 2,
+        "2": 1,
+        "4": 2,
+        "5": 3,
+        "6": 5,
+        "8": 1,
+        "10": 6,
+        "12": 6,
+        "13": 1,
+        "14": 1
+      },
+      "incorrect_to_correct": 3,
+      "midi_phase_occupancy_mean": [
+        0.9523809523809523,
+        0.4642857142857143,
+        0.8928571428571429,
+        0.42857142857142855,
+        0.9880952380952381,
+        0.38095238095238093,
+        0.9523809523809523,
+        0.7142857142857143,
+        0.9761904761904762,
+        0.7380952380952381,
+        0.9523809523809523,
+        0.44047619047619047,
+        1.0,
+        0.4880952380952381,
+        0.8928571428571429,
+        0.6309523809523809
+      ],
+      "originals": 21,
+      "same_temporal_occupancy_different_drum_target_pairs": 65,
+      "shift_warning": "Diagnostic upper bound only; not an inferred alignment or correction",
+      "v1_uniform": {
+        "accuracy": 0.9190283400809717,
+        "correct": 227,
+        "incorrect": 20,
+        "n": 247,
+        "ties": 0
+      }
+    }
+  },
+  "true_v2_uniform_comparison": "NOT RUN: original GMD WAV unavailable locally"
+}

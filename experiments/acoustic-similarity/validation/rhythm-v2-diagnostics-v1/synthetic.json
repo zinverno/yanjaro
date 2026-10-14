@@ -1,0 +1,446 @@
+{
+  "all_sixteenth_phases": [
+    {
+      "known_phase": 0,
+      "v1_argmax_phases": null,
+      "v1_flux_norm": 0.0,
+      "v2_argmax_phases": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "v2_samples": [
+        0
+      ]
+    },
+    {
+      "known_phase": 1,
+      "v1_argmax_phases": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "v1_flux_norm": 2.0,
+      "v2_argmax_phases": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "v2_samples": [
+        2000
+      ]
+    },
+    {
+      "known_phase": 2,
+      "v1_argmax_phases": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "v1_flux_norm": 2.0,
+      "v2_argmax_phases": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "v2_samples": [
+        4000
+      ]
+    },
+    {
+      "known_phase": 3,
+      "v1_argmax_phases": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "v1_flux_norm": 2.0,
+      "v2_argmax_phases": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "v2_samples": [
+        6000
+      ]
+    },
+    {
+      "known_phase": 4,
+      "v1_argmax_phases": [
+        4,
+        4,
+        4,
+        4
+      ],
+      "v1_flux_norm": 2.0,
+      "v2_argmax_phases": [
+        4,
+        4,
+        4,
+        4
+      ],
+      "v2_samples": [
+        8000
+      ]
+    },
+    {
+      "known_phase": 5,
+      "v1_argmax_phases": [
+        5,
+        5,
+        5,
+        5
+      ],
+      "v1_flux_norm": 2.0,
+      "v2_argmax_phases": [
+        5,
+        5,
+        5,
+        5
+      ],
+      "v2_samples": [
+        10000
+      ]
+    },
+    {
+      "known_phase": 6,
+      "v1_argmax_phases": [
+        6,
+        6,
+        6,
+        6
+      ],
+      "v1_flux_norm": 2.0,
+      "v2_argmax_phases": [
+        6,
+        6,
+        6,
+        6
+      ],
+      "v2_samples": [
+        12000
+      ]
+    },
+    {
+      "known_phase": 7,
+      "v1_argmax_phases": [
+        7,
+        7,
+        7,
+        7
+      ],
+      "v1_flux_norm": 2.0,
+      "v2_argmax_phases": [
+        7,
+        7,
+        7,
+        7
+      ],
+      "v2_samples": [
+        14000
+      ]
+    },
+    {
+      "known_phase": 8,
+      "v1_argmax_phases": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "v1_flux_norm": 2.0,
+      "v2_argmax_phases": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "v2_samples": [
+        16000
+      ]
+    },
+    {
+      "known_phase": 9,
+      "v1_argmax_phases": [
+        9,
+        9,
+        9,
+        9
+      ],
+      "v1_flux_norm": 2.0,
+      "v2_argmax_phases": [
+        9,
+        9,
+        9,
+        9
+      ],
+      "v2_samples": [
+        18000
+      ]
+    },
+    {
+      "known_phase": 10,
+      "v1_argmax_phases": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "v1_flux_norm": 2.0,
+      "v2_argmax_phases": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "v2_samples": [
+        20000
+      ]
+    },
+    {
+      "known_phase": 11,
+      "v1_argmax_phases": [
+        11,
+        11,
+        11,
+        11
+      ],
+      "v1_flux_norm": 2.0,
+      "v2_argmax_phases": [
+        11,
+        11,
+        11,
+        11
+      ],
+      "v2_samples": [
+        22000
+      ]
+    },
+    {
+      "known_phase": 12,
+      "v1_argmax_phases": [
+        12,
+        12,
+        12,
+        12
+      ],
+      "v1_flux_norm": 2.0,
+      "v2_argmax_phases": [
+        12,
+        12,
+        12,
+        12
+      ],
+      "v2_samples": [
+        24000
+      ]
+    },
+    {
+      "known_phase": 13,
+      "v1_argmax_phases": [
+        13,
+        13,
+        13,
+        13
+      ],
+      "v1_flux_norm": 2.0,
+      "v2_argmax_phases": [
+        13,
+        13,
+        13,
+        13
+      ],
+      "v2_samples": [
+        26000
+      ]
+    },
+    {
+      "known_phase": 14,
+      "v1_argmax_phases": [
+        14,
+        14,
+        14,
+        14
+      ],
+      "v1_flux_norm": 2.0,
+      "v2_argmax_phases": [
+        14,
+        14,
+        14,
+        14
+      ],
+      "v2_samples": [
+        28000
+      ]
+    },
+    {
+      "known_phase": 15,
+      "v1_argmax_phases": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "v1_flux_norm": 2.0,
+      "v2_argmax_phases": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "v2_samples": [
+        30000
+      ]
+    }
+  ],
+  "independent_jitter": [
+    {
+      "ac_l2": 0.01640145166300375,
+      "bpm": 60,
+      "flux_l2": 0.002839769094154565,
+      "full_l2": 0.01664547701815613,
+      "independent_jitter_ms": 1
+    },
+    {
+      "ac_l2": 0.08172942596987655,
+      "bpm": 60,
+      "flux_l2": 0.014428497376849727,
+      "full_l2": 0.08299325638821078,
+      "independent_jitter_ms": 5
+    },
+    {
+      "ac_l2": 0.16242760324538316,
+      "bpm": 60,
+      "flux_l2": 0.02944362252930281,
+      "full_l2": 0.16507468977310746,
+      "independent_jitter_ms": 10
+    },
+    {
+      "ac_l2": 0.03278059680463082,
+      "bpm": 120,
+      "flux_l2": 0.014855786447104702,
+      "full_l2": 0.03598974739880446,
+      "independent_jitter_ms": 1
+    },
+    {
+      "ac_l2": 0.16242773845492223,
+      "bpm": 120,
+      "flux_l2": 0.03247995769559674,
+      "full_l2": 0.1656433453884833,
+      "independent_jitter_ms": 5
+    },
+    {
+      "ac_l2": 0.31650364664849157,
+      "bpm": 120,
+      "flux_l2": 0.061314042472479874,
+      "full_l2": 0.32238791873472905,
+      "independent_jitter_ms": 10
+    },
+    {
+      "ac_l2": 0.054574840392141506,
+      "bpm": 200,
+      "flux_l2": 0.01671710877302793,
+      "full_l2": 0.05707779716804922,
+      "independent_jitter_ms": 1
+    },
+    {
+      "ac_l2": 0.2667814600125499,
+      "bpm": 200,
+      "flux_l2": 0.05223988728412226,
+      "full_l2": 0.27184803333827073,
+      "independent_jitter_ms": 5
+    },
+    {
+      "ac_l2": 0.5046272775283439,
+      "bpm": 200,
+      "flux_l2": 0.10783460645536165,
+      "full_l2": 0.516020340272601,
+      "independent_jitter_ms": 10
+    },
+    {
+      "ac_l2": 0.07079602823508967,
+      "bpm": 260,
+      "flux_l2": 0.013144678488046523,
+      "full_l2": 0.0720059732690124,
+      "independent_jitter_ms": 1
+    },
+    {
+      "ac_l2": 0.34125360644712194,
+      "bpm": 260,
+      "flux_l2": 0.06685986108863635,
+      "full_l2": 0.3477416640811954,
+      "independent_jitter_ms": 5
+    },
+    {
+      "ac_l2": 0.6163860843598663,
+      "bpm": 260,
+      "flux_l2": 0.14569387341627743,
+      "full_l2": 0.6333707522008942,
+      "independent_jitter_ms": 10
+    }
+  ],
+  "initial_transient": [
+    {
+      "known_sample": 0,
+      "v1_flux_norm": 0.0,
+      "v2_detected_samples": [
+        0
+      ],
+      "v2_flux_norm": 0.7071067811865475
+    },
+    {
+      "known_sample": 1,
+      "v1_flux_norm": 0.0,
+      "v2_detected_samples": [
+        1
+      ],
+      "v2_flux_norm": 0.7071067811865476
+    },
+    {
+      "known_sample": 64,
+      "v1_flux_norm": 0.0,
+      "v2_detected_samples": [
+        64
+      ],
+      "v2_flux_norm": 0.7071067811865476
+    },
+    {
+      "known_sample": 128,
+      "v1_flux_norm": 2.0,
+      "v2_detected_samples": [
+        128
+      ],
+      "v2_flux_norm": 0.7071067811865475
+    },
+    {
+      "known_sample": 8000,
+      "v1_flux_norm": 2.0,
+      "v2_detected_samples": [
+        8000
+      ],
+      "v2_flux_norm": 0.7071067811865475
+    }
+  ],
+  "kind": "CONTROLLED SYNTHETIC SIGNALS; NOT MUSIC QUALITY",
+  "rounding_counterexample": {
+    "bpm": 41,
+    "sr": 8000,
+    "start_beat": 4,
+    "v1_end": 93658,
+    "v2_end": 93659
+  },
+  "v1_stft": {
+    "flux_peak_frame_center_seconds": 0.496,
+    "hop": 128,
+    "known_impulse_seconds": 0.5,
+    "nperseg": 512,
+    "sample_rate": 16000
+  }
+}
