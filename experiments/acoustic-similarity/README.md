@@ -1,3 +1,9 @@
+> **2026-10-14 — выполнен общий Acoustic Similarity Retrieval baseline.**
+> [Top-3 rhythm/tempo/timbre/energy, покрытие и sensitivity](ACOUSTIC_RETRIEVAL_REPORT.md) ·
+> [отдельные schemas и зафиксированная missing-policy](ACOUSTIC_RETRIEVAL_SPEC.md).
+> 10/10 записей, повторное PI/DSP извлечение точно совпало; UNKNOWN — null с отдельным
+> покрытием. u01 больше не универсальный сосед, но tempo доминирует; human quality NOT RUN.
+
 > **2026-10-14 — выполнен phase-independent rhythm retrieval PI-v1.**
 > [Реальный Top-3 для 10/10 CC0-композиций, компоненты и ограничения](RHYTHM_PI_REPORT.md) ·
 > [зафиксированная формула](RHYTHM_PI_SPEC.md) · [независимая оценка, пока NOT RUN](RHYTHM_PI_REVIEW.md).

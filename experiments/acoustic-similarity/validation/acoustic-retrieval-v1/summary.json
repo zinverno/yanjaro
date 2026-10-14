@@ -1,0 +1,9 @@
+{
+  "accuracy": "NOT RUN",
+  "audio_published": false,
+  "independent_acoustic_quality": "NOT RUN",
+  "indexed": 10,
+  "new_audio_download_bytes": 0,
+  "real_training": "NOT RUN",
+  "recall_at_k": "NOT RUN"
+}
