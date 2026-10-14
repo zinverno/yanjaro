@@ -113,9 +113,9 @@ jobs:
           retention-days: 90
 
   cap2-pilot:
-    # Fresh explicit authorization cap2-2026-10-14-v2; historical run is never reused.
-    # A new push changes run_number; a manual rerun changes run_attempt.
-    if: ${{ github.run_number == 9 && github.run_attempt == 1 && github.event.number == 10 && github.event.action == 'synchronize' && github.event.before == '0d8955f1788521f6458a64ceea3ba7db8e09b9ba' }}
+    # cap2-2026-10-14-v2 consumed by run 38535139426 / attempt 1.
+    # No rerun; any further real experiment requires new explicit authorization.
+    if: ${{ false }}
     needs: tests
     runs-on: ubuntu-24.04
     timeout-minutes: 10
