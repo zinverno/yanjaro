@@ -237,6 +237,14 @@ socket audit запрещает сеть. Старый unit test автомат�
 реальных 332 train rows: он заменён synthetic numerical regression; archive/model
 hash checks сохранены. Реальные fits в этом этапе и новом CI не запускаются.
 
+Локально прошли 26 целевых tests. Первый CI на `f3fb459` прошёл обычный test job,
+но runtime-smoke обнаружил недоступность namespace `scripts` при script launch.
+Тест теперь загружает audit по явному пути через `runpy`, не зависит от cwd в
+`sys.path` и не пропускает проверки. Два его теста отдельно прошли без checkout
+root в import path. Измерительные JSON и code hashes в provenance относятся к
+исходному measurement snapshot `f3fb459`; extractor и audit не менялись при fix.
+Состояние полного CI итогового HEAD фиксируется в PR #10.
+
 Полное сравнение re-extracted v1/v2 требует разрешённых оригинальных train/validation
 WAV с проверкой MIDI/audio offset и независимой разметкой начала такта. Затем нужно
 зафиксировать extraction failures/coverage и сравнивать обе модели на одних

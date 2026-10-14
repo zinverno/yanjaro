@@ -1,9 +1,13 @@
 """Cache audits must remain development-only and never refit a model."""
 import unittest
+from pathlib import Path
+from runpy import run_path
 from unittest.mock import patch
 
 from acoustic_similarity.diagnostics import development_only
-from scripts.rhythm_v2_audit import analyze_cache
+
+# Script-launched smoke has scripts/, not the checkout root, on sys.path.
+analyze_cache = run_path(str(Path(__file__).parents[1]/'scripts/rhythm_v2_audit.py'))['analyze_cache']
 from test_rhythm import dataset_fixture
 
 
