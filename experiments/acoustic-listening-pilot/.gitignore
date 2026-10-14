@@ -1,0 +1,10 @@
+# No stimuli or participant responses belong in the repository.
+*.wav
+*.mp3
+*.ogg
+listener-*.html
+organizer-key.json
+listening-*.json
+listening-*.csv
+private/
+responses/

@@ -1,0 +1,52 @@
+{
+  "browser": "BLOCKED: sandbox shutdown syscall Operation not permitted; not an application test failure",
+  "compute_threads": 2,
+  "human_evaluation": "NOT RUN",
+  "new_audio_download_bytes": 0,
+  "new_dependency_download_bytes": 0,
+  "peak_child_rss_mib": 638.59765625,
+  "real_human_answers_created": 0,
+  "repeated_preparation_identical_html_and_clips": true,
+  "scope": "Final preparation and validation batch; earlier development checks not included",
+  "status": "PASS",
+  "steps": [
+    {
+      "cpu_seconds": 3.550567,
+      "stage": "prepare",
+      "status": "PASS",
+      "wall_seconds": 3.672493816993665
+    },
+    {
+      "cpu_seconds": 0.12796699999999994,
+      "stage": "python_contracts",
+      "status": "PASS",
+      "wall_seconds": 0.16113424900686368
+    },
+    {
+      "cpu_seconds": 0.10178999999999983,
+      "stage": "javascript_contracts",
+      "status": "PASS",
+      "wall_seconds": 0.13834011598373763
+    },
+    {
+      "cpu_seconds": 0.0488360000000001,
+      "stage": "ui_transport",
+      "status": "PASS",
+      "wall_seconds": 0.04668793300515972
+    },
+    {
+      "cpu_seconds": 2.641107,
+      "stage": "package_verification",
+      "status": "PASS",
+      "wall_seconds": 3.2443872620060574
+    },
+    {
+      "cpu_seconds": 0.061453999999999454,
+      "stage": "empty_analysis",
+      "status": "PASS",
+      "wall_seconds": 0.15002244399511255
+    }
+  ],
+  "total_cpu_seconds": 6.531720999999999,
+  "total_wall_seconds": 7.413065820990596
+}
