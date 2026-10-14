@@ -1,0 +1,31 @@
+{
+  "schema": "yanjaro.acoustic-similarity.v0.1",
+  "kind": "real",
+  "dataset_id": "REPLACE_WITH_REVIEWED_DATASET_VERSION",
+  "tracks": [
+    {
+      "id": "REPLACE_WITH_RECORDING_ID",
+      "artist_ids": ["REPLACE_WITH_NORMALIZED_ARTIST_GROUP"],
+      "recording_group": "REPLACE_WITH_MASTER_AND_DERIVATIVES_GROUP",
+      "split": "diagnostic",
+      "path": "/private/REPLACE.wav",
+      "sha256": null,
+      "start": 0,
+      "seconds": 15,
+      "rights": {
+        "reviewed": false,
+        "acquisition": false,
+        "analysis": false,
+        "training": false,
+        "remote": false,
+        "license": "",
+        "source_url": "",
+        "attribution": "",
+        "verified_on": "",
+        "scope": "",
+        "evidence_path": "/private/REPLACE-evidence.html",
+        "evidence_sha256": null
+      }
+    }
+  ]
+}

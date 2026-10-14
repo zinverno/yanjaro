@@ -1,0 +1,1350 @@
+{
+  "schema": "yanjaro.gmd-cohort.v1",
+  "dataset": "Groove MIDI Dataset v1.0.0",
+  "license": "CC-BY-4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source_page": "https://magenta.tensorflow.org/datasets/groove",
+  "reviewed_on": "2026-10-11",
+  "attribution": "Google LLC; Jon Gillick, Adam Roberts, Jesse Engel, Douglas Eck, David Bamman (2019), Learning to Groove with Inverse Sequence Transformations. CC BY 4.0. Changes: selected recordings, resampling, bar segmentation and derived rhythm features/targets. No endorsement.",
+  "midi_url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0-midionly.zip",
+  "midi_bytes": 3260318,
+  "midi_sha256": "651cbc524ffb891be1a3e46d89dc82a1cecb09a57c748c7b45b844c4841dcc1e",
+  "audio_url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385",
+  "audio_bytes": 5111599714,
+  "audio_etag": "\"99db7e2a087761a913b2abfb19e86181\"",
+  "full_audio_sha256_published_not_verified": "21559feb2f1c96ca53988fd4d7060b1f2afe1d854fb2a8dcea5ff95cf3cce7e9",
+  "directory_offset": 5111313275,
+  "directory_bytes": 286439,
+  "directory_sha256": "5e6d41b9bdef7b9c951412315330249afe0a39688e010a6740e4ec52f8b63a31",
+  "local_preflight_dataset_bytes": 4417503,
+  "selection": "4/4 beats with >=20 beats +0.5s; nonempty WAV; >=3 originals per drummer/BPM; 3 smallest compressed WAVs/group; groups by compressed size then ID; split budgets 150/80/240 MiB; drummer7 validation, drummer8 test, others train. No acoustic score used.",
+  "records": [
+    {
+      "metadata": {
+        "drummer": "drummer3",
+        "session": "drummer3/session1",
+        "id": "drummer3/session1/20",
+        "style": "rock",
+        "bpm": "120",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer3/session1/20_rock_120_beat_4-4.mid",
+        "audio_filename": "drummer3/session1/20_rock_120_beat_4-4.wav",
+        "duration": "11.739583",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer3/session1/20_rock_120_beat_4-4.wav",
+      "compressed_bytes": 804186,
+      "uncompressed_bytes": 1063696,
+      "crc32": 3291378616
+    },
+    {
+      "metadata": {
+        "drummer": "drummer3",
+        "session": "drummer3/session1",
+        "id": "drummer3/session1/24",
+        "style": "rock",
+        "bpm": "120",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer3/session1/24_rock_120_beat_4-4.mid",
+        "audio_filename": "drummer3/session1/24_rock_120_beat_4-4.wav",
+        "duration": "15.989583",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer3/session1/24_rock_120_beat_4-4.wav",
+      "compressed_bytes": 934637,
+      "uncompressed_bytes": 1417902,
+      "crc32": 4207745522
+    },
+    {
+      "metadata": {
+        "drummer": "drummer3",
+        "session": "drummer3/session1",
+        "id": "drummer3/session1/14",
+        "style": "rock",
+        "bpm": "120",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer3/session1/14_rock_120_beat_4-4.mid",
+        "audio_filename": "drummer3/session1/14_rock_120_beat_4-4.wav",
+        "duration": "24.012500",
+        "split": "test"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer3/session1/14_rock_120_beat_4-4.wav",
+      "compressed_bytes": 978292,
+      "uncompressed_bytes": 2126310,
+      "crc32": 43838144
+    },
+    {
+      "metadata": {
+        "drummer": "drummer3",
+        "session": "drummer3/session1",
+        "id": "drummer3/session1/10",
+        "style": "rock",
+        "bpm": "105",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer3/session1/10_rock_105_beat_4-4.mid",
+        "audio_filename": "drummer3/session1/10_rock_105_beat_4-4.wav",
+        "duration": "13.746439",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer3/session1/10_rock_105_beat_4-4.wav",
+      "compressed_bytes": 927855,
+      "uncompressed_bytes": 1215594,
+      "crc32": 3596843538
+    },
+    {
+      "metadata": {
+        "drummer": "drummer3",
+        "session": "drummer3/session1",
+        "id": "drummer3/session1/5",
+        "style": "rock",
+        "bpm": "105",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer3/session1/5_rock_105_beat_4-4.mid",
+        "audio_filename": "drummer3/session1/5_rock_105_beat_4-4.wav",
+        "duration": "20.513111",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer3/session1/5_rock_105_beat_4-4.wav",
+      "compressed_bytes": 1213331,
+      "uncompressed_bytes": 1822802,
+      "crc32": 2552558217
+    },
+    {
+      "metadata": {
+        "drummer": "drummer3",
+        "session": "drummer3/session1",
+        "id": "drummer3/session1/4",
+        "style": "rock",
+        "bpm": "105",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer3/session1/4_rock_105_beat_4-4.mid",
+        "audio_filename": "drummer3/session1/4_rock_105_beat_4-4.wav",
+        "duration": "25.128590",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer3/session1/4_rock_105_beat_4-4.wav",
+      "compressed_bytes": 1656474,
+      "uncompressed_bytes": 2227614,
+      "crc32": 674919827
+    },
+    {
+      "metadata": {
+        "drummer": "drummer10",
+        "session": "drummer10/session1",
+        "id": "drummer10/session1/7",
+        "style": "jazz/swing",
+        "bpm": "215",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer10/session1/7_jazz-swing_215_beat_4-4.mid",
+        "audio_filename": "drummer10/session1/7_jazz-swing_215_beat_4-4.wav",
+        "duration": "17.923852",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer10/session1/7_jazz-swing_215_beat_4-4.wav",
+      "compressed_bytes": 1246083,
+      "uncompressed_bytes": 1582998,
+      "crc32": 312577428
+    },
+    {
+      "metadata": {
+        "drummer": "drummer10",
+        "session": "drummer10/session1",
+        "id": "drummer10/session1/8",
+        "style": "jazz/swing",
+        "bpm": "215",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer10/session1/8_jazz-swing_215_beat_4-4.mid",
+        "audio_filename": "drummer10/session1/8_jazz-swing_215_beat_4-4.wav",
+        "duration": "19.278504",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer10/session1/8_jazz-swing_215_beat_4-4.wav",
+      "compressed_bytes": 1480075,
+      "uncompressed_bytes": 1780764,
+      "crc32": 238692427
+    },
+    {
+      "metadata": {
+        "drummer": "drummer10",
+        "session": "drummer10/session1",
+        "id": "drummer10/session1/6",
+        "style": "jazz/swing",
+        "bpm": "215",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer10/session1/6_jazz-swing_215_beat_4-4.mid",
+        "audio_filename": "drummer10/session1/6_jazz-swing_215_beat_4-4.wav",
+        "duration": "22.409902",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer10/session1/6_jazz-swing_215_beat_4-4.wav",
+      "compressed_bytes": 1600888,
+      "uncompressed_bytes": 1978446,
+      "crc32": 411777515
+    },
+    {
+      "metadata": {
+        "drummer": "drummer9",
+        "session": "drummer9/session1",
+        "id": "drummer9/session1/15",
+        "style": "rock",
+        "bpm": "120",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer9/session1/15_rock_120_beat_4-4.mid",
+        "audio_filename": "drummer9/session1/15_rock_120_beat_4-4.wav",
+        "duration": "11.839583",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer9/session1/15_rock_120_beat_4-4.wav",
+      "compressed_bytes": 847366,
+      "uncompressed_bytes": 1063744,
+      "crc32": 4213747839
+    },
+    {
+      "metadata": {
+        "drummer": "drummer9",
+        "session": "drummer9/session1",
+        "id": "drummer9/session1/18",
+        "style": "rock",
+        "bpm": "120",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer9/session1/18_rock_120_beat_4-4.mid",
+        "audio_filename": "drummer9/session1/18_rock_120_beat_4-4.wav",
+        "duration": "22.065625",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer9/session1/18_rock_120_beat_4-4.wav",
+      "compressed_bytes": 1448901,
+      "uncompressed_bytes": 1949256,
+      "crc32": 4150439995
+    },
+    {
+      "metadata": {
+        "drummer": "drummer9",
+        "session": "drummer9/session1",
+        "id": "drummer9/session1/22",
+        "style": "rock",
+        "bpm": "120",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer9/session1/22_rock_120_beat_4-4.mid",
+        "audio_filename": "drummer9/session1/22_rock_120_beat_4-4.wav",
+        "duration": "32.046875",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer9/session1/22_rock_120_beat_4-4.wav",
+      "compressed_bytes": 2088908,
+      "uncompressed_bytes": 2834778,
+      "crc32": 3709845651
+    },
+    {
+      "metadata": {
+        "drummer": "drummer9",
+        "session": "drummer9/session1",
+        "id": "drummer9/session1/30",
+        "style": "rock",
+        "bpm": "90",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer9/session1/30_rock_90_beat_4-4.mid",
+        "audio_filename": "drummer9/session1/30_rock_90_beat_4-4.wav",
+        "duration": "18.641676",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer9/session1/30_rock_90_beat_4-4.wav",
+      "compressed_bytes": 1300208,
+      "uncompressed_bytes": 1914156,
+      "crc32": 963852561
+    },
+    {
+      "metadata": {
+        "drummer": "drummer9",
+        "session": "drummer9/session1",
+        "id": "drummer9/session1/28",
+        "style": "rock",
+        "bpm": "90",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer9/session1/28_rock_90_beat_4-4.mid",
+        "audio_filename": "drummer9/session1/28_rock_90_beat_4-4.wav",
+        "duration": "32.043072",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer9/session1/28_rock_90_beat_4-4.wav",
+      "compressed_bytes": 2200259,
+      "uncompressed_bytes": 2834706,
+      "crc32": 1893902176
+    },
+    {
+      "metadata": {
+        "drummer": "drummer9",
+        "session": "drummer9/session1",
+        "id": "drummer9/session1/26",
+        "style": "rock",
+        "bpm": "90",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer9/session1/26_rock_90_beat_4-4.mid",
+        "audio_filename": "drummer9/session1/26_rock_90_beat_4-4.wav",
+        "duration": "34.712517",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer9/session1/26_rock_90_beat_4-4.wav",
+      "compressed_bytes": 2461417,
+      "uncompressed_bytes": 3070844,
+      "crc32": 785845672
+    },
+    {
+      "metadata": {
+        "drummer": "drummer3",
+        "session": "drummer3/session2",
+        "id": "drummer3/session2/17",
+        "style": "rock",
+        "bpm": "100",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer3/session2/17_rock_100_beat_4-4.mid",
+        "audio_filename": "drummer3/session2/17_rock_100_beat_4-4.wav",
+        "duration": "16.852500",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer3/session2/17_rock_100_beat_4-4.wav",
+      "compressed_bytes": 1846343,
+      "uncompressed_bytes": 2970550,
+      "crc32": 94203223
+    },
+    {
+      "metadata": {
+        "drummer": "drummer3",
+        "session": "drummer3/session2",
+        "id": "drummer3/session2/15",
+        "style": "rock",
+        "bpm": "100",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer3/session2/15_rock_100_beat_4-4.mid",
+        "audio_filename": "drummer3/session2/15_rock_100_beat_4-4.wav",
+        "duration": "14.207500",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer3/session2/15_rock_100_beat_4-4.wav",
+      "compressed_bytes": 1962751,
+      "uncompressed_bytes": 2533438,
+      "crc32": 166626334
+    },
+    {
+      "metadata": {
+        "drummer": "drummer3",
+        "session": "drummer3/session2",
+        "id": "drummer3/session2/10",
+        "style": "rock",
+        "bpm": "100",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer3/session2/10_rock_100_beat_4-4.mid",
+        "audio_filename": "drummer3/session2/10_rock_100_beat_4-4.wav",
+        "duration": "21.071250",
+        "split": "test"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer3/session2/10_rock_100_beat_4-4.wav",
+      "compressed_bytes": 2405295,
+      "uncompressed_bytes": 3818950,
+      "crc32": 2845624558
+    },
+    {
+      "metadata": {
+        "drummer": "drummer9",
+        "session": "drummer9/session1",
+        "id": "drummer9/session1/7",
+        "style": "rock",
+        "bpm": "100",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer9/session1/7_rock_100_beat_4-4.mid",
+        "audio_filename": "drummer9/session1/7_rock_100_beat_4-4.wav",
+        "duration": "23.938750",
+        "split": "test"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer9/session1/7_rock_100_beat_4-4.wav",
+      "compressed_bytes": 1620739,
+      "uncompressed_bytes": 2126350,
+      "crc32": 1590113904
+    },
+    {
+      "metadata": {
+        "drummer": "drummer9",
+        "session": "drummer9/session1",
+        "id": "drummer9/session1/2",
+        "style": "rock",
+        "bpm": "100",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer9/session1/2_rock_100_beat_4-4.mid",
+        "audio_filename": "drummer9/session1/2_rock_100_beat_4-4.wav",
+        "duration": "42.692500",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer9/session1/2_rock_100_beat_4-4.wav",
+      "compressed_bytes": 2935252,
+      "uncompressed_bytes": 3813238,
+      "crc32": 484649788
+    },
+    {
+      "metadata": {
+        "drummer": "drummer9",
+        "session": "drummer9/session1",
+        "id": "drummer9/session1/1",
+        "style": "rock",
+        "bpm": "100",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer9/session1/1_rock_100_beat_4-4.mid",
+        "audio_filename": "drummer9/session1/1_rock_100_beat_4-4.wav",
+        "duration": "48.525000",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer9/session1/1_rock_100_beat_4-4.wav",
+      "compressed_bytes": 3070805,
+      "uncompressed_bytes": 4464080,
+      "crc32": 15239492
+    },
+    {
+      "metadata": {
+        "drummer": "drummer3",
+        "session": "drummer3/session2",
+        "id": "drummer3/session2/29",
+        "style": "rock",
+        "bpm": "92",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer3/session2/29_rock_92_beat_4-4.mid",
+        "audio_filename": "drummer3/session2/29_rock_92_beat_4-4.wav",
+        "duration": "14.701089",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer3/session2/29_rock_92_beat_4-4.wav",
+      "compressed_bytes": 2166743,
+      "uncompressed_bytes": 2767688,
+      "crc32": 1183279193
+    },
+    {
+      "metadata": {
+        "drummer": "drummer3",
+        "session": "drummer3/session2",
+        "id": "drummer3/session2/22",
+        "style": "rock",
+        "bpm": "92",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer3/session2/22_rock_92_beat_4-4.mid",
+        "audio_filename": "drummer3/session2/22_rock_92_beat_4-4.wav",
+        "duration": "26.168482",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer3/session2/22_rock_92_beat_4-4.wav",
+      "compressed_bytes": 3873938,
+      "uncompressed_bytes": 5073180,
+      "crc32": 3485389775
+    },
+    {
+      "metadata": {
+        "drummer": "drummer3",
+        "session": "drummer3/session2",
+        "id": "drummer3/session2/37",
+        "style": "rock",
+        "bpm": "92",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer3/session2/37_rock_92_beat_4-4.mid",
+        "audio_filename": "drummer3/session2/37_rock_92_beat_4-4.wav",
+        "duration": "26.225547",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer3/session2/37_rock_92_beat_4-4.wav",
+      "compressed_bytes": 3961898,
+      "uncompressed_bytes": 5073170,
+      "crc32": 1084749946
+    },
+    {
+      "metadata": {
+        "drummer": "drummer3",
+        "session": "drummer3/session2",
+        "id": "drummer3/session2/42",
+        "style": "rock",
+        "bpm": "110",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer3/session2/42_rock_110_beat_4-4.mid",
+        "audio_filename": "drummer3/session2/42_rock_110_beat_4-4.wav",
+        "duration": "19.573880",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer3/session2/42_rock_110_beat_4-4.wav",
+      "compressed_bytes": 2299297,
+      "uncompressed_bytes": 3451822,
+      "crc32": 1215096647
+    },
+    {
+      "metadata": {
+        "drummer": "drummer3",
+        "session": "drummer3/session2",
+        "id": "drummer3/session2/40",
+        "style": "hiphop",
+        "bpm": "110",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer3/session2/40_hiphop_110_beat_4-4.mid",
+        "audio_filename": "drummer3/session2/40_hiphop_110_beat_4-4.wav",
+        "duration": "17.288651",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer3/session2/40_hiphop_110_beat_4-4.wav",
+      "compressed_bytes": 2435166,
+      "uncompressed_bytes": 3086268,
+      "crc32": 2007044391
+    },
+    {
+      "metadata": {
+        "drummer": "drummer3",
+        "session": "drummer3/session2",
+        "id": "drummer3/session2/43",
+        "style": "rock",
+        "bpm": "110",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer3/session2/43_rock_110_beat_4-4.mid",
+        "audio_filename": "drummer3/session2/43_rock_110_beat_4-4.wav",
+        "duration": "43.710264",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer3/session2/43_rock_110_beat_4-4.wav",
+      "compressed_bytes": 5741500,
+      "uncompressed_bytes": 8485224,
+      "crc32": 4104549598
+    },
+    {
+      "metadata": {
+        "drummer": "drummer5",
+        "session": "drummer5/eval_session",
+        "id": "drummer5/eval_session/9",
+        "style": "soul/groove9",
+        "bpm": "105",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer5/eval_session/9_soul-groove9_105_beat_4-4.mid",
+        "audio_filename": "drummer5/eval_session/9_soul-groove9_105_beat_4-4.wav",
+        "duration": "36.646456",
+        "split": "test"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer5/eval_session/9_soul-groove9_105_beat_4-4.wav",
+      "compressed_bytes": 4043026,
+      "uncompressed_bytes": 6465230,
+      "crc32": 3573876914
+    },
+    {
+      "metadata": {
+        "drummer": "drummer5",
+        "session": "drummer5/eval_session",
+        "id": "drummer5/eval_session/2",
+        "style": "funk/groove2",
+        "bpm": "105",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer5/eval_session/2_funk-groove2_105_beat_4-4.mid",
+        "audio_filename": "drummer5/eval_session/2_funk-groove2_105_beat_4-4.wav",
+        "duration": "36.564313",
+        "split": "test"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer5/eval_session/2_funk-groove2_105_beat_4-4.wav",
+      "compressed_bytes": 4280618,
+      "uncompressed_bytes": 6465230,
+      "crc32": 910750773
+    },
+    {
+      "metadata": {
+        "drummer": "drummer5",
+        "session": "drummer5/session2",
+        "id": "drummer5/session2/12",
+        "style": "rock",
+        "bpm": "105",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer5/session2/12_rock_105_beat_4-4.mid",
+        "audio_filename": "drummer5/session2/12_rock_105_beat_4-4.wav",
+        "duration": "130.077479",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer5/session2/12_rock_105_beat_4-4.wav",
+      "compressed_bytes": 17981014,
+      "uncompressed_bytes": 23029476,
+      "crc32": 1599121868
+    },
+    {
+      "metadata": {
+        "drummer": "drummer5",
+        "session": "drummer5/session2",
+        "id": "drummer5/session2/20",
+        "style": "latin/brazilian-ijexa",
+        "bpm": "108",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer5/session2/20_latin-brazilian-ijexa_108_beat_4-4.mid",
+        "audio_filename": "drummer5/session2/20_latin-brazilian-ijexa_108_beat_4-4.wav",
+        "duration": "31.101877",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer5/session2/20_latin-brazilian-ijexa_108_beat_4-4.wav",
+      "compressed_bytes": 4011044,
+      "uncompressed_bytes": 5500152,
+      "crc32": 3244192972
+    },
+    {
+      "metadata": {
+        "drummer": "drummer5",
+        "session": "drummer5/session2",
+        "id": "drummer5/session2/21",
+        "style": "latin/brazilian-ijexa",
+        "bpm": "108",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer5/session2/21_latin-brazilian-ijexa_108_beat_4-4.mid",
+        "audio_filename": "drummer5/session2/21_latin-brazilian-ijexa_108_beat_4-4.wav",
+        "duration": "70.450288",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer5/session2/21_latin-brazilian-ijexa_108_beat_4-4.wav",
+      "compressed_bytes": 10035595,
+      "uncompressed_bytes": 12570216,
+      "crc32": 349408305
+    },
+    {
+      "metadata": {
+        "drummer": "drummer5",
+        "session": "drummer5/session2",
+        "id": "drummer5/session2/19",
+        "style": "latin/brazilian-ijexa",
+        "bpm": "108",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer5/session2/19_latin-brazilian-ijexa_108_beat_4-4.mid",
+        "audio_filename": "drummer5/session2/19_latin-brazilian-ijexa_108_beat_4-4.wav",
+        "duration": "92.421370",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer5/session2/19_latin-brazilian-ijexa_108_beat_4-4.wav",
+      "compressed_bytes": 13168327,
+      "uncompressed_bytes": 16498074,
+      "crc32": 3767731353
+    },
+    {
+      "metadata": {
+        "drummer": "drummer1",
+        "session": "drummer1/eval_session",
+        "id": "drummer1/eval_session/4",
+        "style": "soul/groove4",
+        "bpm": "80",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer1/eval_session/4_soul-groove4_80_beat_4-4.mid",
+        "audio_filename": "drummer1/eval_session/4_soul-groove4_80_beat_4-4.wav",
+        "duration": "47.987500",
+        "split": "test"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer1/eval_session/4_soul-groove4_80_beat_4-4.wav",
+      "compressed_bytes": 6170847,
+      "uncompressed_bytes": 8476140,
+      "crc32": 103299307
+    },
+    {
+      "metadata": {
+        "drummer": "drummer1",
+        "session": "drummer1/session1",
+        "id": "drummer1/session1/1",
+        "style": "funk",
+        "bpm": "80",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer1/session1/1_funk_80_beat_4-4.mid",
+        "audio_filename": "drummer1/session1/1_funk_80_beat_4-4.wav",
+        "duration": "86.704688",
+        "split": "train"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer1/session1/1_funk_80_beat_4-4.wav",
+      "compressed_bytes": 10770761,
+      "uncompressed_bytes": 15371398,
+      "crc32": 3435665365
+    },
+    {
+      "metadata": {
+        "drummer": "drummer1",
+        "session": "drummer1/session1",
+        "id": "drummer1/session1/2",
+        "style": "funk",
+        "bpm": "80",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer1/session1/2_funk_80_beat_4-4.mid",
+        "audio_filename": "drummer1/session1/2_funk_80_beat_4-4.wav",
+        "duration": "86.914062",
+        "split": "validation"
+      },
+      "split": "train",
+      "zip_member": "groove/drummer1/session1/2_funk_80_beat_4-4.wav",
+      "compressed_bytes": 10806653,
+      "uncompressed_bytes": 15373470,
+      "crc32": 831718714
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session1",
+        "id": "drummer7/session1/40",
+        "style": "hiphop",
+        "bpm": "100",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session1/40_hiphop_100_beat_4-4.mid",
+        "audio_filename": "drummer7/session1/40_hiphop_100_beat_4-4.wav",
+        "duration": "16.915000",
+        "split": "train"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session1/40_hiphop_100_beat_4-4.wav",
+      "compressed_bytes": 2138860,
+      "uncompressed_bytes": 3394744,
+      "crc32": 2459824597
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session1",
+        "id": "drummer7/session1/22",
+        "style": "hiphop",
+        "bpm": "100",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session1/22_hiphop_100_beat_4-4.mid",
+        "audio_filename": "drummer7/session1/22_hiphop_100_beat_4-4.wav",
+        "duration": "20.013750",
+        "split": "train"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session1/22_hiphop_100_beat_4-4.wav",
+      "compressed_bytes": 2877363,
+      "uncompressed_bytes": 3792436,
+      "crc32": 2284239237
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session1",
+        "id": "drummer7/session1/39",
+        "style": "hiphop",
+        "bpm": "100",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session1/39_hiphop_100_beat_4-4.mid",
+        "audio_filename": "drummer7/session1/39_hiphop_100_beat_4-4.wav",
+        "duration": "23.966250",
+        "split": "train"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session1/39_hiphop_100_beat_4-4.wav",
+      "compressed_bytes": 2898494,
+      "uncompressed_bytes": 4243146,
+      "crc32": 1405689228
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session3",
+        "id": "drummer7/session3/48",
+        "style": "funk",
+        "bpm": "112",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session3/48_funk_112_beat_4-4.mid",
+        "audio_filename": "drummer7/session3/48_funk_112_beat_4-4.wav",
+        "duration": "12.674100",
+        "split": "train"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session3/48_funk_112_beat_4-4.wav",
+      "compressed_bytes": 1644014,
+      "uncompressed_bytes": 2273226,
+      "crc32": 1375451426
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session3",
+        "id": "drummer7/session3/49",
+        "style": "funk",
+        "bpm": "112",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session3/49_funk_112_beat_4-4.mid",
+        "audio_filename": "drummer7/session3/49_funk_112_beat_4-4.wav",
+        "duration": "33.326991",
+        "split": "train"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session3/49_funk_112_beat_4-4.wav",
+      "compressed_bytes": 4434461,
+      "uncompressed_bytes": 6060610,
+      "crc32": 2313905847
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session3",
+        "id": "drummer7/session3/64",
+        "style": "funk",
+        "bpm": "112",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session3/64_funk_112_beat_4-4.mid",
+        "audio_filename": "drummer7/session3/64_funk_112_beat_4-4.wav",
+        "duration": "34.056901",
+        "split": "train"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session3/64_funk_112_beat_4-4.wav",
+      "compressed_bytes": 4482184,
+      "uncompressed_bytes": 6060610,
+      "crc32": 2783198891
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session2",
+        "id": "drummer7/session2/102",
+        "style": "pop",
+        "bpm": "132",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session2/102_pop_132_beat_4-4.mid",
+        "audio_filename": "drummer7/session2/102_pop_132_beat_4-4.wav",
+        "duration": "12.709268",
+        "split": "validation"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session2/102_pop_132_beat_4-4.wav",
+      "compressed_bytes": 1734222,
+      "uncompressed_bytes": 2250806,
+      "crc32": 2348980482
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session2",
+        "id": "drummer7/session2/105",
+        "style": "pop",
+        "bpm": "132",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session2/105_pop_132_beat_4-4.mid",
+        "audio_filename": "drummer7/session2/105_pop_132_beat_4-4.wav",
+        "duration": "18.890133",
+        "split": "train"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session2/105_pop_132_beat_4-4.wav",
+      "compressed_bytes": 2665124,
+      "uncompressed_bytes": 3516196,
+      "crc32": 1414421898
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session2",
+        "id": "drummer7/session2/103",
+        "style": "pop",
+        "bpm": "132",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session2/103_pop_132_beat_4-4.mid",
+        "audio_filename": "drummer7/session2/103_pop_132_beat_4-4.wav",
+        "duration": "47.055824",
+        "split": "train"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session2/103_pop_132_beat_4-4.wav",
+      "compressed_bytes": 6444520,
+      "uncompressed_bytes": 8356816,
+      "crc32": 1090112884
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session2",
+        "id": "drummer7/session2/33",
+        "style": "rock",
+        "bpm": "75",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session2/33_rock_75_beat_4-4.mid",
+        "audio_filename": "drummer7/session2/33_rock_75_beat_4-4.wav",
+        "duration": "28.788333",
+        "split": "train"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session2/33_rock_75_beat_4-4.wav",
+      "compressed_bytes": 3033384,
+      "uncompressed_bytes": 5091560,
+      "crc32": 1580674682
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session2",
+        "id": "drummer7/session2/29",
+        "style": "rock",
+        "bpm": "75",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session2/29_rock_75_beat_4-4.mid",
+        "audio_filename": "drummer7/session2/29_rock_75_beat_4-4.wav",
+        "duration": "32.011667",
+        "split": "train"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session2/29_rock_75_beat_4-4.wav",
+      "compressed_bytes": 3989602,
+      "uncompressed_bytes": 5657152,
+      "crc32": 3123511758
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session2",
+        "id": "drummer7/session2/93",
+        "style": "hiphop",
+        "bpm": "75",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session2/93_hiphop_75_beat_4-4.mid",
+        "audio_filename": "drummer7/session2/93_hiphop_75_beat_4-4.wav",
+        "duration": "25.693333",
+        "split": "test"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session2/93_hiphop_75_beat_4-4.wav",
+      "compressed_bytes": 4053709,
+      "uncompressed_bytes": 5091558,
+      "crc32": 2024678784
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session3",
+        "id": "drummer7/session3/119",
+        "style": "rock",
+        "bpm": "95",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session3/119_rock_95_beat_4-4.mid",
+        "audio_filename": "drummer7/session3/119_rock_95_beat_4-4.wav",
+        "duration": "20.042107",
+        "split": "train"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session3/119_rock_95_beat_4-4.wav",
+      "compressed_bytes": 2916246,
+      "uncompressed_bytes": 3572896,
+      "crc32": 2545085445
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session3",
+        "id": "drummer7/session3/117",
+        "style": "rock",
+        "bpm": "95",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session3/117_rock_95_beat_4-4.mid",
+        "audio_filename": "drummer7/session3/117_rock_95_beat_4-4.wav",
+        "duration": "22.726318",
+        "split": "test"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session3/117_rock_95_beat_4-4.wav",
+      "compressed_bytes": 3318289,
+      "uncompressed_bytes": 4013010,
+      "crc32": 3570077404
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session2",
+        "id": "drummer7/session2/14",
+        "style": "rock",
+        "bpm": "95",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session2/14_rock_95_beat_4-4.mid",
+        "audio_filename": "drummer7/session2/14_rock_95_beat_4-4.wav",
+        "duration": "37.489477",
+        "split": "validation"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session2/14_rock_95_beat_4-4.wav",
+      "compressed_bytes": 5163077,
+      "uncompressed_bytes": 6727126,
+      "crc32": 1820286025
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session2",
+        "id": "drummer7/session2/49",
+        "style": "rock",
+        "bpm": "135",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session2/49_rock_135_beat_4-4.mid",
+        "audio_filename": "drummer7/session2/49_rock_135_beat_4-4.wav",
+        "duration": "14.342578",
+        "split": "train"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session2/49_rock_135_beat_4-4.wav",
+      "compressed_bytes": 2515227,
+      "uncompressed_bytes": 2829272,
+      "crc32": 849461411
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session2",
+        "id": "drummer7/session2/53",
+        "style": "rock",
+        "bpm": "135",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session2/53_rock_135_beat_4-4.mid",
+        "audio_filename": "drummer7/session2/53_rock_135_beat_4-4.wav",
+        "duration": "28.568490",
+        "split": "test"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session2/53_rock_135_beat_4-4.wav",
+      "compressed_bytes": 4570705,
+      "uncompressed_bytes": 5343102,
+      "crc32": 4187944089
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session2",
+        "id": "drummer7/session2/46",
+        "style": "rock",
+        "bpm": "135",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session2/46_rock_135_beat_4-4.mid",
+        "audio_filename": "drummer7/session2/46_rock_135_beat_4-4.wav",
+        "duration": "30.328673",
+        "split": "validation"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session2/46_rock_135_beat_4-4.wav",
+      "compressed_bytes": 4728096,
+      "uncompressed_bytes": 5657328,
+      "crc32": 3881326473
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session3",
+        "id": "drummer7/session3/130",
+        "style": "soul",
+        "bpm": "105",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session3/130_soul_105_beat_4-4.mid",
+        "audio_filename": "drummer7/session3/130_soul_105_beat_4-4.wav",
+        "duration": "27.389306",
+        "split": "train"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session3/130_soul_105_beat_4-4.wav",
+      "compressed_bytes": 3668406,
+      "uncompressed_bytes": 4831814,
+      "crc32": 2013552352
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/session3",
+        "id": "drummer7/session3/131",
+        "style": "soul",
+        "bpm": "105",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/session3/131_soul_105_beat_4-4.mid",
+        "audio_filename": "drummer7/session3/131_soul_105_beat_4-4.wav",
+        "duration": "31.902405",
+        "split": "train"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/session3/131_soul_105_beat_4-4.wav",
+      "compressed_bytes": 4531378,
+      "uncompressed_bytes": 5641156,
+      "crc32": 2949854867
+    },
+    {
+      "metadata": {
+        "drummer": "drummer7",
+        "session": "drummer7/eval_session",
+        "id": "drummer7/eval_session/2",
+        "style": "funk/groove2",
+        "bpm": "105",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer7/eval_session/2_funk-groove2_105_beat_4-4.mid",
+        "audio_filename": "drummer7/eval_session/2_funk-groove2_105_beat_4-4.wav",
+        "duration": "36.098837",
+        "split": "test"
+      },
+      "split": "validation",
+      "zip_member": "groove/drummer7/eval_session/2_funk-groove2_105_beat_4-4.wav",
+      "compressed_bytes": 4600587,
+      "uncompressed_bytes": 6465228,
+      "crc32": 42204179
+    },
+    {
+      "metadata": {
+        "drummer": "drummer8",
+        "session": "drummer8/session1",
+        "id": "drummer8/session1/3",
+        "style": "hiphop",
+        "bpm": "90",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer8/session1/3_hiphop_90_beat_4-4.mid",
+        "audio_filename": "drummer8/session1/3_hiphop_90_beat_4-4.wav",
+        "duration": "39.356964",
+        "split": "train"
+      },
+      "split": "test",
+      "zip_member": "groove/drummer8/session1/3_hiphop_90_beat_4-4.wav",
+      "compressed_bytes": 5656757,
+      "uncompressed_bytes": 7071198,
+      "crc32": 3630115397
+    },
+    {
+      "metadata": {
+        "drummer": "drummer8",
+        "session": "drummer8/session1",
+        "id": "drummer8/session1/4",
+        "style": "hiphop",
+        "bpm": "90",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer8/session1/4_hiphop_90_beat_4-4.mid",
+        "audio_filename": "drummer8/session1/4_hiphop_90_beat_4-4.wav",
+        "duration": "114.480613",
+        "split": "train"
+      },
+      "split": "test",
+      "zip_member": "groove/drummer8/session1/4_hiphop_90_beat_4-4.wav",
+      "compressed_bytes": 16986431,
+      "uncompressed_bytes": 20268652,
+      "crc32": 3173915750
+    },
+    {
+      "metadata": {
+        "drummer": "drummer8",
+        "session": "drummer8/session1",
+        "id": "drummer8/session1/5",
+        "style": "hiphop",
+        "bpm": "90",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer8/session1/5_hiphop_90_beat_4-4.mid",
+        "audio_filename": "drummer8/session1/5_hiphop_90_beat_4-4.wav",
+        "duration": "127.755619",
+        "split": "train"
+      },
+      "split": "test",
+      "zip_member": "groove/drummer8/session1/5_hiphop_90_beat_4-4.wav",
+      "compressed_bytes": 18054770,
+      "uncompressed_bytes": 22625372,
+      "crc32": 3885840089
+    },
+    {
+      "metadata": {
+        "drummer": "drummer8",
+        "session": "drummer8/eval_session",
+        "id": "drummer8/eval_session/4",
+        "style": "soul/groove4",
+        "bpm": "80",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer8/eval_session/4_soul-groove4_80_beat_4-4.mid",
+        "audio_filename": "drummer8/eval_session/4_soul-groove4_80_beat_4-4.wav",
+        "duration": "47.996875",
+        "split": "test"
+      },
+      "split": "test",
+      "zip_member": "groove/drummer8/eval_session/4_soul-groove4_80_beat_4-4.wav",
+      "compressed_bytes": 5393179,
+      "uncompressed_bytes": 8481248,
+      "crc32": 3286504
+    },
+    {
+      "metadata": {
+        "drummer": "drummer8",
+        "session": "drummer8/session1",
+        "id": "drummer8/session1/7",
+        "style": "funk",
+        "bpm": "80",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer8/session1/7_funk_80_beat_4-4.mid",
+        "audio_filename": "drummer8/session1/7_funk_80_beat_4-4.wav",
+        "duration": "155.762500",
+        "split": "train"
+      },
+      "split": "test",
+      "zip_member": "groove/drummer8/session1/7_funk_80_beat_4-4.wav",
+      "compressed_bytes": 21877746,
+      "uncompressed_bytes": 27574184,
+      "crc32": 3611612692
+    },
+    {
+      "metadata": {
+        "drummer": "drummer8",
+        "session": "drummer8/session1",
+        "id": "drummer8/session1/6",
+        "style": "funk",
+        "bpm": "80",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer8/session1/6_funk_80_beat_4-4.mid",
+        "audio_filename": "drummer8/session1/6_funk_80_beat_4-4.wav",
+        "duration": "167.734375",
+        "split": "train"
+      },
+      "split": "test",
+      "zip_member": "groove/drummer8/session1/6_funk_80_beat_4-4.wav",
+      "compressed_bytes": 23999744,
+      "uncompressed_bytes": 29695174,
+      "crc32": 2989409203
+    },
+    {
+      "metadata": {
+        "drummer": "drummer8",
+        "session": "drummer8/session1",
+        "id": "drummer8/session1/14",
+        "style": "hiphop",
+        "bpm": "94",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer8/session1/14_hiphop_94_beat_4-4.mid",
+        "audio_filename": "drummer8/session1/14_hiphop_94_beat_4-4.wav",
+        "duration": "163.051894",
+        "split": "train"
+      },
+      "split": "test",
+      "zip_member": "groove/drummer8/session1/14_hiphop_94_beat_4-4.wav",
+      "compressed_bytes": 19794756,
+      "uncompressed_bytes": 28883374,
+      "crc32": 1290215230
+    },
+    {
+      "metadata": {
+        "drummer": "drummer8",
+        "session": "drummer8/session1",
+        "id": "drummer8/session1/15",
+        "style": "hiphop",
+        "bpm": "94",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer8/session1/15_hiphop_94_beat_4-4.mid",
+        "audio_filename": "drummer8/session1/15_hiphop_94_beat_4-4.wav",
+        "duration": "183.573175",
+        "split": "train"
+      },
+      "split": "test",
+      "zip_member": "groove/drummer8/session1/15_hiphop_94_beat_4-4.wav",
+      "compressed_bytes": 22310091,
+      "uncompressed_bytes": 32493616,
+      "crc32": 1574825642
+    },
+    {
+      "metadata": {
+        "drummer": "drummer8",
+        "session": "drummer8/session1",
+        "id": "drummer8/session1/26",
+        "style": "afrobeat",
+        "bpm": "94",
+        "beat_type": "beat",
+        "time_signature": "4-4",
+        "midi_filename": "drummer8/session1/26_afrobeat_94_beat_4-4.mid",
+        "audio_filename": "drummer8/session1/26_afrobeat_94_beat_4-4.wav",
+        "duration": "195.545252",
+        "split": "train"
+      },
+      "split": "test",
+      "zip_member": "groove/drummer8/session1/26_afrobeat_94_beat_4-4.wav",
+      "compressed_bytes": 29275846,
+      "uncompressed_bytes": 34743554,
+      "crc32": 3227475044
+    }
+  ],
+  "local_audio_smoke": {
+    "zip_member": "groove/drummer3/session1/20_rock_120_beat_4-4.wav",
+    "range_start": 5095697305,
+    "received_bytes": 805210,
+    "audio_sha256": "967683e2f52ff1f96f1774a5e8c632d2beb25c86a09c4cd31d4a9145188eeba2",
+    "purpose": "one bar feature/decode check; no training"
+  }
+}

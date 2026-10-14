@@ -1,0 +1,17 @@
+{
+  "CAP2_V2_RUN.md": "5f68a46f3fb30de3eab38a22e87b29742e1be00b1de79f24b6ab778896982afe",
+  "README.md": "ade45283e995f49283a0c0b363d569c50e74a7a39f02948bf1e5c0be788aea75",
+  "validation/groove-cap2-v2/acquisition.json": "9688f6866e48964ce96162df077971edcd4493dcfecc3c7aa688f8e0d21b4883",
+  "validation/groove-cap2-v2/artifacts.zip": "6136f79024a45f0fb7e58034fda70ba8da1b1964b8c1d2cfb825749e77f30048",
+  "validation/groove-cap2-v2/authorization.json": "277eaa4229b17fa1f6848de948a1ff6fb218c6b5441155e9aa9c7c68207a15f8",
+  "validation/groove-cap2-v2/execution.json": "a5575d6898d1cac76ff461480446306fa26dba103eb49428ca273bc4b58e8db4",
+  "validation/groove-cap2-v2/hashes.json": "9640c97d085f01ae8a6a3f8e201a2cebe225388c3b15f992d26b95b8ec087f3a",
+  "validation/groove-cap2-v2/log-excerpt.txt": "99cb572a9612347ebb115ceb8cc5e1c40e1c91c94f938b454645b1e26c68ba22",
+  "validation/groove-cap2-v2/metrics.json": "ab010b6d0a93ecdec94bfd53c33633dfdba9bce63a1688027258a69b543cd453",
+  "validation/groove-cap2-v2/model.json": "4709a87f6662d180e8ebf623f803074453c5fed98c921ddf872e2a96e2452be0",
+  "validation/groove-cap2-v2/new-test.json": "8a2a58a56b2dfd5dba06f85371fdd80ec9fb284ecbe300bef0ce7d67a30b0360",
+  "validation/groove-cap2-v2/preflight.json": "f2aac9834b0766da3ca5a04000091b0d9eb2923f13d0a6c1daf589c5acefcb1a",
+  "validation/groove-cap2-v2/provenance.json": "8da48317f2aac9cff3a8971b69824b22d98b5ebbc983e09187c6bc768f7b107f",
+  "validation/groove-cap2-v2/resources.json": "32ce48b22b6fe4f139e7cfa999be309fdd2003e832da6b7af9c50436ca3e3b9a",
+  "validation/groove-cap2-v2/status.json": "a8fddcfd062f2df33f9393d518f7da2c6c6bd3612b803eace6c8a69da813aedb"
+}

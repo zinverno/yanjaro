@@ -1,0 +1,42 @@
+{
+  "new_test": {
+    "by_original": [
+      {
+        "cap2": null,
+        "midi_eligible_bars": 4,
+        "original_id": "drummer6/session2/3",
+        "uniform": null
+      },
+      {
+        "cap2": null,
+        "midi_eligible_bars": 4,
+        "original_id": "drummer6/session3/6",
+        "uniform": null
+      },
+      {
+        "cap2": null,
+        "midi_eligible_bars": 4,
+        "original_id": "drummer6/session3/7",
+        "uniform": null
+      }
+    ],
+    "cap2": null,
+    "component_evaluation": "NOT RUN",
+    "connected_original_components": 1,
+    "delta_accuracy": null,
+    "eligible_bars": 12,
+    "eligible_midi_triplets": 29,
+    "eligible_originals": 3,
+    "evaluated_comparisons": 0,
+    "uniform": null
+  },
+  "old_test": "UNCHANGED; no new evaluation",
+  "quality_improvement": "NOT ESTABLISHED; experiment did not execute",
+  "status": "NOT RUN",
+  "validation": {
+    "cap2": null,
+    "eligible_triplets": 247,
+    "evaluated_comparisons": 0,
+    "uniform": null
+  }
+}

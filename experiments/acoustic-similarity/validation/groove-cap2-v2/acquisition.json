@@ -1,0 +1,87 @@
+{
+  "received_source_bytes": 40834108,
+  "source_budget_bytes": 40834108,
+  "training_artifact_bytes_charged": 382152,
+  "reserved_transport_output_bytes": 2097152,
+  "total_budget_bytes": 44040192,
+  "requests": [
+    {
+      "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0-midionly.zip",
+      "start": null,
+      "requested_bytes": 3260318,
+      "received_bytes": 3260318,
+      "status": "PASS"
+    },
+    {
+      "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385",
+      "start": 5111313275,
+      "requested_bytes": 286439,
+      "received_bytes": 286439,
+      "status": "PASS"
+    },
+    {
+      "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385",
+      "start": 776667538,
+      "requested_bytes": 30,
+      "received_bytes": 30,
+      "status": "PASS"
+    },
+    {
+      "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385",
+      "start": 776667568,
+      "requested_bytes": 47,
+      "received_bytes": 47,
+      "status": "PASS"
+    },
+    {
+      "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385",
+      "start": 776667643,
+      "requested_bytes": 13045110,
+      "received_bytes": 13045110,
+      "status": "PASS"
+    },
+    {
+      "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385",
+      "start": 685042772,
+      "requested_bytes": 30,
+      "received_bytes": 30,
+      "status": "PASS"
+    },
+    {
+      "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385",
+      "start": 685042802,
+      "requested_bytes": 47,
+      "received_bytes": 47,
+      "status": "PASS"
+    },
+    {
+      "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385",
+      "start": 685042877,
+      "requested_bytes": 14298975,
+      "received_bytes": 14298975,
+      "status": "PASS"
+    },
+    {
+      "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385",
+      "start": 716970985,
+      "requested_bytes": 30,
+      "received_bytes": 30,
+      "status": "PASS"
+    },
+    {
+      "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385",
+      "start": 716971015,
+      "requested_bytes": 47,
+      "received_bytes": 47,
+      "status": "PASS"
+    },
+    {
+      "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385",
+      "start": 716971090,
+      "requested_bytes": 9943035,
+      "received_bytes": 9943035,
+      "status": "PASS"
+    }
+  ],
+  "retries": 0
+}

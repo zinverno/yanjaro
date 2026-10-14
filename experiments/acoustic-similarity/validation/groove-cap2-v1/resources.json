@@ -1,0 +1,26 @@
+{
+  "experiment_cpu_seconds": null,
+  "experiment_wall_seconds": null,
+  "git_wire_transfer_bytes": null,
+  "github_job_completed_at": "2026-10-11T11:19:49Z",
+  "github_job_started_at": "2026-10-11T11:19:47Z",
+  "github_job_wall_seconds": 2,
+  "gpu_used": false,
+  "local_preflight_resources": {
+    "cpu_seconds": 0.32607655300000005,
+    "peak_rss_mib": 97.2265625,
+    "source_download_bytes": 0,
+    "wall_seconds": 0.32957960400381126
+  },
+  "measurement_scope": "No dataset fetch or experiment process started. GitHub does not provide CPU/RSS here; null is not zero. Git checkout and dependency traffic are outside the agreed corpus budget; git wire bytes were not measured.",
+  "new_audio_download_bytes": 0,
+  "paid_services_created": false,
+  "peak_rss_mib": null,
+  "reserved_transport_output_bytes": 2097152,
+  "result_model_artifact_bytes": 0,
+  "source_download_bytes": 0,
+  "status": "Runner setup measured; experiment resources NOT RUN",
+  "training_calls": 0,
+  "training_input_artifact_bytes_charged_per_plan": 382152,
+  "transfer_limit_bytes": 44040192
+}

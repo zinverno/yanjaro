@@ -1,0 +1,135 @@
+{
+  "signals": {
+    "repeat_receipts": [
+      {
+        "audio_sha256": "b83feed8bfb3e71e3498325da859dd106811e74ac45651173f6b9bafe6e59124",
+        "dsp_sha256": "753ff1f9d5ecacd700b25349a843aeadc8b40687b424ae94894fae1faba399dd",
+        "id": "a",
+        "pi_sha256": "c7ae7eefa18da28e646515f8f3cd4c2992f4921bba5d5011a47bb92e94facaca",
+        "repeat_equal": true
+      },
+      {
+        "audio_sha256": "0c2a899471fe8f773e9affcf7ac74b1a5fd6b91806e33ba65350cc956da53993",
+        "dsp_sha256": "626528820071e6e7682b79f5c08d7f089562061e6f0a7986245dad8d03aaf062",
+        "id": "b",
+        "pi_sha256": "4d0302680368f3bca3d79f2468c3b3bcb59be4a7f83d149f4c08913849ce8daf",
+        "repeat_equal": true
+      },
+      {
+        "audio_sha256": "bf5e228e3052fe40ad6c81bc906c0e34ecec6d1b1ba53e4cde5e237f4ba5eb3a",
+        "dsp_sha256": "18ef2686e31e4824dc758fb9d1a17d88e33afc5add01fa947bcc3bee65913af9",
+        "id": "c",
+        "pi_sha256": "9ecfb0387d209f1356859d93661791df8ddabc5f6901b1ac71760df7fe87992c",
+        "repeat_equal": true
+      }
+    ],
+    "same_carrier_lower_gain": {
+      "atomic_distances": {
+        "density": 0.0,
+        "energy": 0.02213745621649429,
+        "intervals": 0.0,
+        "periodicity_0": 2.0700329973260306e-16,
+        "periodicity_1": 0.0,
+        "periodicity_2": 1.7812461727708157e-16,
+        "periodicity_3": 1.4641057466193503e-16,
+        "tempo": 0.0,
+        "timbre": 1.4738117212476685e-05
+      },
+      "common_distance": 0.005538048583426703,
+      "common_units": 48,
+      "components": {
+        "energy": {
+          "coverage": 1.0,
+          "distance": 0.02213745621649429,
+          "status": "AVAILABLE_UNVERIFIED",
+          "weighted_contribution": 0.005534364054123573
+        },
+        "rhythm": {
+          "coverage": 1.0,
+          "distance": 4.42948743059683e-17,
+          "status": "AVAILABLE_UNVERIFIED",
+          "weighted_contribution": 1.1073718576492076e-17
+        },
+        "tempo": {
+          "coverage": 1.0,
+          "distance": 0.0,
+          "status": "AVAILABLE_UNVERIFIED",
+          "weighted_contribution": 0.0
+        },
+        "timbre": {
+          "coverage": 1.0,
+          "distance": 1.4738117212476685e-05,
+          "status": "AVAILABLE_UNVERIFIED",
+          "weighted_contribution": 3.6845293031191713e-06
+        }
+      },
+      "conditional_score": 99.44619514165734,
+      "coverage": 1.0,
+      "coverage_mask": "111111111",
+      "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+      "missing": {},
+      "missing_policy": "common-mask-coverage-first.v1",
+      "missing_reasons": {},
+      "profile": "acoustic",
+      "quality": "UNVALIDATED",
+      "status": "COMPARABLE",
+      "total_units": 48,
+      "weighted_numerator": 0.005538048583426703
+    },
+    "same_timing_different_carrier": {
+      "atomic_distances": {
+        "density": 0.0,
+        "energy": 0.0004248721808621619,
+        "intervals": 1.594813855221478e-16,
+        "periodicity_0": 0.05668844822407238,
+        "periodicity_1": 0.05668844822407239,
+        "periodicity_2": 0.056688448224072374,
+        "periodicity_3": 0.05668844822407238,
+        "tempo": 4.415885040048117e-17,
+        "timbre": 0.021796830898429955
+      },
+      "common_distance": 0.010279463121829086,
+      "common_units": 48,
+      "components": {
+        "energy": {
+          "coverage": 1.0,
+          "distance": 0.00042487218086216196,
+          "status": "AVAILABLE_UNVERIFIED",
+          "weighted_contribution": 0.00010621804521554048
+        },
+        "rhythm": {
+          "coverage": 1.0,
+          "distance": 0.01889614940802418,
+          "status": "AVAILABLE_UNVERIFIED",
+          "weighted_contribution": 0.0047240373520060445
+        },
+        "tempo": {
+          "coverage": 1.0,
+          "distance": 4.4158850400481167e-17,
+          "status": "AVAILABLE_UNVERIFIED",
+          "weighted_contribution": 1.1039712600120293e-17
+        },
+        "timbre": {
+          "coverage": 1.0,
+          "distance": 0.021796830898429955,
+          "status": "AVAILABLE_UNVERIFIED",
+          "weighted_contribution": 0.005449207724607489
+        }
+      },
+      "conditional_score": 98.9720536878171,
+      "coverage": 1.0,
+      "coverage_mask": "111111111",
+      "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+      "missing": {},
+      "missing_policy": "common-mask-coverage-first.v1",
+      "missing_reasons": {},
+      "profile": "acoustic",
+      "quality": "UNVALIDATED",
+      "status": "COMPARABLE",
+      "total_units": 48,
+      "weighted_numerator": 0.010279463121829086
+    }
+  },
+  "status": "PASS",
+  "tests": 12
+}

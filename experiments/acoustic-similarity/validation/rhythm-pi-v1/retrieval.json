@@ -1,0 +1,1338 @@
+{
+  "comparison_scope": "Old DSP rhythm component only, uniform weights; rank overlap is NOT accuracy",
+  "dsp_comparison": {
+    "o01": {
+      "common_top3": 2,
+      "dsp_rhythm_top3": [
+        "o03",
+        "u01",
+        "o04"
+      ],
+      "first_second_margin": 0.011031475272649915,
+      "pi_top3": [
+        "s01",
+        "o03",
+        "u01"
+      ]
+    },
+    "o02": {
+      "common_top3": 0,
+      "dsp_rhythm_top3": [
+        "s01",
+        "s04",
+        "s02"
+      ],
+      "first_second_margin": 8.446569527797987e-05,
+      "pi_top3": [
+        "o01",
+        "u01",
+        "u02"
+      ]
+    },
+    "o03": {
+      "common_top3": 2,
+      "dsp_rhythm_top3": [
+        "o01",
+        "u01",
+        "o04"
+      ],
+      "first_second_margin": 0.02061543305472019,
+      "pi_top3": [
+        "u01",
+        "o01",
+        "s01"
+      ]
+    },
+    "o04": {
+      "common_top3": 1,
+      "dsp_rhythm_top3": [
+        "u01",
+        "o01",
+        "o03"
+      ],
+      "first_second_margin": 0.026566935003050463,
+      "pi_top3": [
+        "u01",
+        "s03",
+        "u02"
+      ]
+    },
+    "s01": {
+      "common_top3": 1,
+      "dsp_rhythm_top3": [
+        "s04",
+        "o02",
+        "s02"
+      ],
+      "first_second_margin": 0.03677600834292863,
+      "pi_top3": [
+        "u01",
+        "s02",
+        "o01"
+      ]
+    },
+    "s02": {
+      "common_top3": 2,
+      "dsp_rhythm_top3": [
+        "u02",
+        "o02",
+        "s01"
+      ],
+      "first_second_margin": 0.050496259010911426,
+      "pi_top3": [
+        "u01",
+        "s01",
+        "u02"
+      ]
+    },
+    "s03": {
+      "common_top3": 1,
+      "dsp_rhythm_top3": [
+        "u02",
+        "o04",
+        "s02"
+      ],
+      "first_second_margin": 0.09828631565512042,
+      "pi_top3": [
+        "u01",
+        "o04",
+        "s01"
+      ]
+    },
+    "s04": {
+      "common_top3": 1,
+      "dsp_rhythm_top3": [
+        "s01",
+        "o02",
+        "s02"
+      ],
+      "first_second_margin": 0.004321068327860944,
+      "pi_top3": [
+        "u01",
+        "s01",
+        "o01"
+      ]
+    },
+    "u01": {
+      "common_top3": 0,
+      "dsp_rhythm_top3": [
+        "o03",
+        "o01",
+        "o04"
+      ],
+      "first_second_margin": 0.006306526485434338,
+      "pi_top3": [
+        "s02",
+        "s03",
+        "s01"
+      ]
+    },
+    "u02": {
+      "common_top3": 1,
+      "dsp_rhythm_top3": [
+        "s03",
+        "s02",
+        "o02"
+      ],
+      "first_second_margin": 0.0686730587758626,
+      "pi_top3": [
+        "u01",
+        "s02",
+        "s01"
+      ]
+    }
+  },
+  "maximum_symmetry_error": 0.0,
+  "rankings": {
+    "o01": [
+      {
+        "contributions": {
+          "density": 0.008476739536567968,
+          "intervals": 0.11820641497857345,
+          "periodicity": 0.04344965380172475,
+          "tempo": 0.10908196618806562
+        },
+        "distance": 0.2792147745049318,
+        "id": "s01",
+        "quality": "UNVALIDATED",
+        "score": 72.07852254950681,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.0004245836440020939,
+          "intervals": 0.10630678768739729,
+          "periodicity": 0.03797288975739353,
+          "tempo": 0.14554198868878884
+        },
+        "distance": 0.29024624977758173,
+        "id": "o03",
+        "quality": "UNVALIDATED",
+        "score": 70.97537502224182,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.007088469901198255,
+          "intervals": 0.1304624400341856,
+          "periodicity": 0.03565490478946515,
+          "tempo": 0.125
+        },
+        "distance": 0.298205814724849,
+        "id": "u01",
+        "quality": "UNVALIDATED",
+        "score": 70.1794185275151,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.009301629311981544,
+          "intervals": 0.13388966502901187,
+          "periodicity": 0.048964247150555446,
+          "tempo": 0.13952357675605823
+        },
+        "distance": 0.3316791182476071,
+        "id": "s02",
+        "quality": "UNVALIDATED",
+        "score": 66.83208817523929,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.015493073199977211,
+          "intervals": 0.07481285541146031,
+          "periodicity": 0.08124302214800595,
+          "tempo": 0.17382364023142385
+        },
+        "distance": 0.3453725909908673,
+        "id": "o02",
+        "quality": "UNVALIDATED",
+        "score": 65.46274090091326,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.007194380776610873,
+          "intervals": 0.11217069640218372,
+          "periodicity": 0.04254321360765799,
+          "tempo": 0.231068129684561
+        },
+        "distance": 0.39297642047101355,
+        "id": "s03",
+        "quality": "UNVALIDATED",
+        "score": 60.702357952898645,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.00925194449070521,
+          "intervals": 0.12496642304195166,
+          "periodicity": 0.07170610909773498,
+          "tempo": 0.20049775087377572
+        },
+        "distance": 0.40642222750416757,
+        "id": "u02",
+        "quality": "UNVALIDATED",
+        "score": 59.35777724958324,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.0010787751087434072,
+          "intervals": 0.13825406286859773,
+          "periodicity": 0.08164842699676286,
+          "tempo": 0.23641739640546353
+        },
+        "distance": 0.45739866137956753,
+        "id": "o04",
+        "quality": "UNVALIDATED",
+        "score": 54.26013386204325,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.024678856626018306,
+          "intervals": 0.15420450305030933,
+          "periodicity": 0.09849445602476745,
+          "tempo": 0.201012149940003
+        },
+        "distance": 0.4783899656410981,
+        "id": "s04",
+        "quality": "UNVALIDATED",
+        "score": 52.16100343589019,
+        "unknown_tempo": false
+      }
+    ],
+    "o02": [
+      {
+        "contributions": {
+          "density": 0.015493073199977211,
+          "intervals": 0.07481285541146031,
+          "periodicity": 0.08124302214800595,
+          "tempo": 0.17382364023142385
+        },
+        "distance": 0.3453725909908673,
+        "id": "o01",
+        "quality": "UNVALIDATED",
+        "score": 65.46274090091326,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.022581543101175466,
+          "intervals": 0.1241312024837571,
+          "periodicity": 0.07374431110121271,
+          "tempo": 0.125
+        },
+        "distance": 0.3454570566861453,
+        "id": "u01",
+        "quality": "UNVALIDATED",
+        "score": 65.45429433138548,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.024745017690682422,
+          "intervals": 0.12279546389953754,
+          "periodicity": 0.1056669415067284,
+          "tempo": 0.1514236900610578
+        },
+        "distance": 0.40463111315800615,
+        "id": "u02",
+        "quality": "UNVALIDATED",
+        "score": 59.53688868419938,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.02396981273654518,
+          "intervals": 0.12783043968527788,
+          "periodicity": 0.0794593335906097,
+          "tempo": 0.1903492244906609
+        },
+        "distance": 0.4216088105030937,
+        "id": "s01",
+        "quality": "UNVALIDATED",
+        "score": 57.83911894969063,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.024794702511958755,
+          "intervals": 0.12409221712036216,
+          "periodicity": 0.08226327625558762,
+          "tempo": 0.19198548237164537
+        },
+        "distance": 0.4231356782595539,
+        "id": "s02",
+        "quality": "UNVALIDATED",
+        "score": 57.68643217404461,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.022687453976588084,
+          "intervals": 0.12708978468541854,
+          "periodicity": 0.07461009983970708,
+          "tempo": 0.20420535606959436
+        },
+        "distance": 0.42859269457130805,
+        "id": "s03",
+        "quality": "UNVALIDATED",
+        "score": 57.14073054286919,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.01657184830872062,
+          "intervals": 0.14047925515610704,
+          "periodicity": 0.10963144992364449,
+          "tempo": 0.16859074418937142
+        },
+        "distance": 0.43527329757784355,
+        "id": "o04",
+        "quality": "UNVALIDATED",
+        "score": 56.47267024221565,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.015144668160533614,
+          "intervals": 0.14720224601593276,
+          "periodicity": 0.07685805917722463,
+          "tempo": 0.20026101453305561
+        },
+        "distance": 0.4394659878867466,
+        "id": "o03",
+        "quality": "UNVALIDATED",
+        "score": 56.05340121132534,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.009185783426041094,
+          "intervals": 0.16688227030324962,
+          "periodicity": 0.11222433423134387,
+          "tempo": 0.22269107485254383
+        },
+        "distance": 0.5109834628131784,
+        "id": "s04",
+        "quality": "UNVALIDATED",
+        "score": 48.901653718682155,
+        "unknown_tempo": false
+      }
+    ],
+    "o03": [
+      {
+        "contributions": {
+          "density": 0.007436874940641852,
+          "intervals": 0.11204659288727292,
+          "periodicity": 0.02514734889494678,
+          "tempo": 0.125
+        },
+        "distance": 0.26963081672286154,
+        "id": "u01",
+        "quality": "UNVALIDATED",
+        "score": 73.03691832771383,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.0004245836440020939,
+          "intervals": 0.10630678768739729,
+          "periodicity": 0.03797288975739353,
+          "tempo": 0.14554198868878884
+        },
+        "distance": 0.29024624977758173,
+        "id": "o01",
+        "quality": "UNVALIDATED",
+        "score": 70.97537502224182,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.008825144576011565,
+          "intervals": 0.08423886558869613,
+          "periodicity": 0.04229876393581216,
+          "tempo": 0.16619421982784413
+        },
+        "distance": 0.301556993928364,
+        "id": "s01",
+        "quality": "UNVALIDATED",
+        "score": 69.8443006071636,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.00754278581605447,
+          "intervals": 0.08948371715683949,
+          "periodicity": 0.027312985135106334,
+          "tempo": 0.17994066810353143
+        },
+        "distance": 0.3042801562115317,
+        "id": "s03",
+        "quality": "UNVALIDATED",
+        "score": 69.57198437884684,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.009600349530148808,
+          "intervals": 0.10711444072417649,
+          "periodicity": 0.07159571175167408,
+          "tempo": 0.2164725369424486
+        },
+        "distance": 0.40478303894844797,
+        "id": "u02",
+        "quality": "UNVALIDATED",
+        "score": 59.52169610515521,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.0014271801481870044,
+          "intervals": 0.12231261947076785,
+          "periodicity": 0.07730471572715514,
+          "tempo": 0.20966868899769797
+        },
+        "distance": 0.410713204343808,
+        "id": "o04",
+        "quality": "UNVALIDATED",
+        "score": 58.928679565619206,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.00965003435142514,
+          "intervals": 0.12175057670982298,
+          "periodicity": 0.051859541006926045,
+          "tempo": 0.22836497307357884
+        },
+        "distance": 0.411625125141753,
+        "id": "s02",
+        "quality": "UNVALIDATED",
+        "score": 58.8374874858247,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.015144668160533614,
+          "intervals": 0.14720224601593276,
+          "periodicity": 0.07685805917722463,
+          "tempo": 0.20026101453305561
+        },
+        "distance": 0.4394659878867466,
+        "id": "o02",
+        "quality": "UNVALIDATED",
+        "score": 56.05340121132534,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.02433045158657471,
+          "intervals": 0.15522248736490354,
+          "periodicity": 0.09755595107871393,
+          "tempo": 0.22643984421205723
+        },
+        "distance": 0.5035487342422494,
+        "id": "s04",
+        "quality": "UNVALIDATED",
+        "score": 49.64512657577506,
+        "unknown_tempo": false
+      }
+    ],
+    "o04": [
+      {
+        "contributions": {
+          "density": 0.006009694792454848,
+          "intervals": 0.07007008440339346,
+          "periodicity": 0.06854590730611633,
+          "tempo": 0.125
+        },
+        "distance": 0.2696256865019646,
+        "id": "u01",
+        "quality": "UNVALIDATED",
+        "score": 73.03743134980354,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.006115605667867466,
+          "intervals": 0.057851126843573214,
+          "periodicity": 0.07091046564115921,
+          "tempo": 0.1613154233524152
+        },
+        "distance": 0.2961926215050151,
+        "id": "s03",
+        "quality": "UNVALIDATED",
+        "score": 70.3807378494985,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.008173169381961803,
+          "intervals": 0.05251280799239759,
+          "periodicity": 0.07645094603459655,
+          "tempo": 0.19429789107020323
+        },
+        "distance": 0.3314348144791592,
+        "id": "u02",
+        "quality": "UNVALIDATED",
+        "score": 66.85651855208408,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.00739796442782456,
+          "intervals": 0.060361985299600525,
+          "periodicity": 0.08127558854714473,
+          "tempo": 0.22180457496590594
+        },
+        "distance": 0.3708401132404758,
+        "id": "s01",
+        "quality": "UNVALIDATED",
+        "score": 62.91598867595243,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.008222854203238136,
+          "intervals": 0.06198120131020686,
+          "periodicity": 0.08163378422316586,
+          "tempo": 0.24775500494524533
+        },
+        "distance": 0.3995928446818562,
+        "id": "s02",
+        "quality": "UNVALIDATED",
+        "score": 60.040715531814385,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.0014271801481870044,
+          "intervals": 0.12231261947076785,
+          "periodicity": 0.07730471572715514,
+          "tempo": 0.20966868899769797
+        },
+        "distance": 0.410713204343808,
+        "id": "o03",
+        "quality": "UNVALIDATED",
+        "score": 58.928679565619206,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.01657184830872062,
+          "intervals": 0.14047925515610704,
+          "periodicity": 0.10963144992364449,
+          "tempo": 0.16859074418937142
+        },
+        "distance": 0.43527329757784355,
+        "id": "o02",
+        "quality": "UNVALIDATED",
+        "score": 56.47267024221565,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.0010787751087434072,
+          "intervals": 0.13825406286859773,
+          "periodicity": 0.08164842699676286,
+          "tempo": 0.23641739640546353
+        },
+        "distance": 0.45739866137956753,
+        "id": "o01",
+        "quality": "UNVALIDATED",
+        "score": 54.26013386204325,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.025757631734761713,
+          "intervals": 0.14556549545178973,
+          "periodicity": 0.10909117994198017,
+          "tempo": 0.24996880714872727
+        },
+        "distance": 0.5303831142772589,
+        "id": "s04",
+        "quality": "UNVALIDATED",
+        "score": 46.961688572274106,
+        "unknown_tempo": false
+      }
+    ],
+    "s01": [
+      {
+        "contributions": {
+          "density": 0.0013882696353697127,
+          "intervals": 0.04341418538327516,
+          "periodicity": 0.035517575013798236,
+          "tempo": 0.125
+        },
+        "distance": 0.20532003003244312,
+        "id": "u01",
+        "quality": "UNVALIDATED",
+        "score": 79.46799699675569,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.0008248897754135759,
+          "intervals": 0.04829404311038321,
+          "periodicity": 0.04519878511559003,
+          "tempo": 0.14777832037398492
+        },
+        "distance": 0.24209603837537175,
+        "id": "s02",
+        "quality": "UNVALIDATED",
+        "score": 75.79039616246283,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.008476739536567968,
+          "intervals": 0.11820641497857345,
+          "periodicity": 0.04344965380172475,
+          "tempo": 0.10908196618806562
+        },
+        "distance": 0.2792147745049318,
+        "id": "o01",
+        "quality": "UNVALIDATED",
+        "score": 72.07852254950681,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.008825144576011565,
+          "intervals": 0.08423886558869613,
+          "periodicity": 0.04229876393581216,
+          "tempo": 0.16619421982784413
+        },
+        "distance": 0.301556993928364,
+        "id": "o03",
+        "quality": "UNVALIDATED",
+        "score": 69.8443006071636,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.0012823587599570946,
+          "intervals": 0.03309036192806857,
+          "periodicity": 0.03918410164784607,
+          "tempo": 0.22868525197552728
+        },
+        "distance": 0.302242074311399,
+        "id": "s03",
+        "quality": "UNVALIDATED",
+        "score": 69.77579256886011,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.000775204954137243,
+          "intervals": 0.038956422846346414,
+          "periodicity": 0.06965354380976632,
+          "tempo": 0.21420143884541404
+        },
+        "distance": 0.323586610455664,
+        "id": "u02",
+        "quality": "UNVALIDATED",
+        "score": 67.6413389544336,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.00739796442782456,
+          "intervals": 0.060361985299600525,
+          "periodicity": 0.08127558854714473,
+          "tempo": 0.22180457496590594
+        },
+        "distance": 0.3708401132404758,
+        "id": "o04",
+        "quality": "UNVALIDATED",
+        "score": 62.91598867595243,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.03315559616258627,
+          "intervals": 0.13995872042599172,
+          "periodicity": 0.09658095008518885,
+          "tempo": 0.13990447391744001
+        },
+        "distance": 0.40959974059120685,
+        "id": "s04",
+        "quality": "UNVALIDATED",
+        "score": 59.04002594087932,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.02396981273654518,
+          "intervals": 0.12783043968527788,
+          "periodicity": 0.0794593335906097,
+          "tempo": 0.1903492244906609
+        },
+        "distance": 0.4216088105030937,
+        "id": "o02",
+        "quality": "UNVALIDATED",
+        "score": 57.83911894969063,
+        "unknown_tempo": false
+      }
+    ],
+    "s02": [
+      {
+        "contributions": {
+          "density": 0.0022131594107832886,
+          "intervals": 0.022012471023367675,
+          "periodicity": 0.04237414893030936,
+          "tempo": 0.125
+        },
+        "distance": 0.19159977936446032,
+        "id": "u01",
+        "quality": "UNVALIDATED",
+        "score": 80.84002206355396,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.0008248897754135759,
+          "intervals": 0.04829404311038321,
+          "periodicity": 0.04519878511559003,
+          "tempo": 0.14777832037398492
+        },
+        "distance": 0.24209603837537175,
+        "id": "s01",
+        "quality": "UNVALIDATED",
+        "score": 75.79039616246283,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.00015606779999975673,
+          "intervals": 0.026184422955150617,
+          "periodicity": 0.06120891378661521,
+          "tempo": 0.1944912680987205
+        },
+        "distance": 0.2820406726404861,
+        "id": "u02",
+        "quality": "UNVALIDATED",
+        "score": 71.7959327359514,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.009301629311981544,
+          "intervals": 0.13388966502901187,
+          "periodicity": 0.048964247150555446,
+          "tempo": 0.13952357675605823
+        },
+        "distance": 0.3316791182476071,
+        "id": "o01",
+        "quality": "UNVALIDATED",
+        "score": 66.83208817523929,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.0021072485353706705,
+          "intervals": 0.05638751954865063,
+          "periodicity": 0.04725073291376684,
+          "tempo": 0.23985502347483514
+        },
+        "distance": 0.3456005244726233,
+        "id": "s03",
+        "quality": "UNVALIDATED",
+        "score": 65.43994755273768,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.008222854203238136,
+          "intervals": 0.06198120131020686,
+          "periodicity": 0.08163378422316586,
+          "tempo": 0.24775500494524533
+        },
+        "distance": 0.3995928446818562,
+        "id": "o04",
+        "quality": "UNVALIDATED",
+        "score": 60.040715531814385,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.00965003435142514,
+          "intervals": 0.12175057670982298,
+          "periodicity": 0.051859541006926045,
+          "tempo": 0.22836497307357884
+        },
+        "distance": 0.411625125141753,
+        "id": "o03",
+        "quality": "UNVALIDATED",
+        "score": 58.8374874858247,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.024794702511958755,
+          "intervals": 0.12409221712036216,
+          "periodicity": 0.08226327625558762,
+          "tempo": 0.19198548237164537
+        },
+        "distance": 0.4231356782595539,
+        "id": "o02",
+        "quality": "UNVALIDATED",
+        "score": 57.68643217404461,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.03398048593799985,
+          "intervals": 0.1524751408172295,
+          "periodicity": 0.0968164453448396,
+          "tempo": 0.19735849882627096
+        },
+        "distance": 0.4806305709263399,
+        "id": "s04",
+        "quality": "UNVALIDATED",
+        "score": 51.93694290736601,
+        "unknown_tempo": false
+      }
+    ],
+    "s03": [
+      {
+        "contributions": {
+          "density": 0.0007203403049462209,
+          "intervals": 0.05368887469666066,
+          "periodicity": 0.018497090848287785,
+          "tempo": 0.125
+        },
+        "distance": 0.19790630584989466,
+        "id": "u01",
+        "quality": "UNVALIDATED",
+        "score": 80.20936941501053,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.006115605667867466,
+          "intervals": 0.057851126843573214,
+          "periodicity": 0.07091046564115921,
+          "tempo": 0.1613154233524152
+        },
+        "distance": 0.2961926215050151,
+        "id": "o04",
+        "quality": "UNVALIDATED",
+        "score": 70.3807378494985,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.0012823587599570946,
+          "intervals": 0.03309036192806857,
+          "periodicity": 0.03918410164784607,
+          "tempo": 0.22868525197552728
+        },
+        "distance": 0.302242074311399,
+        "id": "s01",
+        "quality": "UNVALIDATED",
+        "score": 69.77579256886011,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.00754278581605447,
+          "intervals": 0.08948371715683949,
+          "periodicity": 0.027312985135106334,
+          "tempo": 0.17994066810353143
+        },
+        "distance": 0.3042801562115317,
+        "id": "o03",
+        "quality": "UNVALIDATED",
+        "score": 69.57198437884684,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.0020575637140943376,
+          "intervals": 0.04204299307900765,
+          "periodicity": 0.0637310953130466,
+          "tempo": 0.22734720857588606
+        },
+        "distance": 0.3351788606820346,
+        "id": "u02",
+        "quality": "UNVALIDATED",
+        "score": 66.48211393179653,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.0021072485353706705,
+          "intervals": 0.05638751954865063,
+          "periodicity": 0.04725073291376684,
+          "tempo": 0.23985502347483514
+        },
+        "distance": 0.3456005244726233,
+        "id": "s02",
+        "quality": "UNVALIDATED",
+        "score": 65.43994755273768,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.007194380776610873,
+          "intervals": 0.11217069640218372,
+          "periodicity": 0.04254321360765799,
+          "tempo": 0.231068129684561
+        },
+        "distance": 0.39297642047101355,
+        "id": "o01",
+        "quality": "UNVALIDATED",
+        "score": 60.702357952898645,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.022687453976588084,
+          "intervals": 0.12708978468541854,
+          "periodicity": 0.07461009983970708,
+          "tempo": 0.20420535606959436
+        },
+        "distance": 0.42859269457130805,
+        "id": "o02",
+        "quality": "UNVALIDATED",
+        "score": 57.14073054286919,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.03187323740262918,
+          "intervals": 0.1250917083691536,
+          "periodicity": 0.0966269737958482,
+          "tempo": 0.24958609352629235
+        },
+        "distance": 0.5031780130939233,
+        "id": "s04",
+        "quality": "UNVALIDATED",
+        "score": 49.68219869060767,
+        "unknown_tempo": false
+      }
+    ],
+    "s04": [
+      {
+        "contributions": {
+          "density": 0.03176732652721656,
+          "intervals": 0.15369319363673342,
+          "periodicity": 0.09481815209939592,
+          "tempo": 0.125
+        },
+        "distance": 0.4052786722633459,
+        "id": "u01",
+        "quality": "UNVALIDATED",
+        "score": 59.47213277366541,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.03315559616258627,
+          "intervals": 0.13995872042599172,
+          "periodicity": 0.09658095008518885,
+          "tempo": 0.13990447391744001
+        },
+        "distance": 0.40959974059120685,
+        "id": "s01",
+        "quality": "UNVALIDATED",
+        "score": 59.04002594087932,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.024678856626018306,
+          "intervals": 0.15420450305030933,
+          "periodicity": 0.09849445602476745,
+          "tempo": 0.201012149940003
+        },
+        "distance": 0.4783899656410981,
+        "id": "o01",
+        "quality": "UNVALIDATED",
+        "score": 52.16100343589019,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.03398048593799985,
+          "intervals": 0.1524751408172295,
+          "periodicity": 0.0968164453448396,
+          "tempo": 0.19735849882627096
+        },
+        "distance": 0.4806305709263399,
+        "id": "s02",
+        "quality": "UNVALIDATED",
+        "score": 51.93694290736601,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.03187323740262918,
+          "intervals": 0.1250917083691536,
+          "periodicity": 0.0966269737958482,
+          "tempo": 0.24958609352629235
+        },
+        "distance": 0.5031780130939233,
+        "id": "s03",
+        "quality": "UNVALIDATED",
+        "score": 49.68219869060767,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.02433045158657471,
+          "intervals": 0.15522248736490354,
+          "periodicity": 0.09755595107871393,
+          "tempo": 0.22643984421205723
+        },
+        "distance": 0.5035487342422494,
+        "id": "o03",
+        "quality": "UNVALIDATED",
+        "score": 49.64512657577506,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.009185783426041094,
+          "intervals": 0.16688227030324962,
+          "periodicity": 0.11222433423134387,
+          "tempo": 0.22269107485254383
+        },
+        "distance": 0.5109834628131784,
+        "id": "o02",
+        "quality": "UNVALIDATED",
+        "score": 48.901653718682155,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.033930801116723516,
+          "intervals": 0.15149393490890525,
+          "periodicity": 0.10167963125966595,
+          "tempo": 0.23396618390468074
+        },
+        "distance": 0.5210705511899755,
+        "id": "u02",
+        "quality": "UNVALIDATED",
+        "score": 47.89294488100245,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.025757631734761713,
+          "intervals": 0.14556549545178973,
+          "periodicity": 0.10909117994198017,
+          "tempo": 0.24996880714872727
+        },
+        "distance": 0.5303831142772589,
+        "id": "o04",
+        "quality": "UNVALIDATED",
+        "score": 46.961688572274106,
+        "unknown_tempo": false
+      }
+    ],
+    "u01": [
+      {
+        "contributions": {
+          "density": 0.0022131594107832886,
+          "intervals": 0.022012471023367675,
+          "periodicity": 0.04237414893030936,
+          "tempo": 0.125
+        },
+        "distance": 0.19159977936446032,
+        "id": "s02",
+        "quality": "UNVALIDATED",
+        "score": 80.84002206355396,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.0007203403049462209,
+          "intervals": 0.05368887469666066,
+          "periodicity": 0.018497090848287785,
+          "tempo": 0.125
+        },
+        "distance": 0.19790630584989466,
+        "id": "s03",
+        "quality": "UNVALIDATED",
+        "score": 80.20936941501053,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.0013882696353697127,
+          "intervals": 0.04341418538327516,
+          "periodicity": 0.035517575013798236,
+          "tempo": 0.125
+        },
+        "distance": 0.20532003003244312,
+        "id": "s01",
+        "quality": "UNVALIDATED",
+        "score": 79.46799699675569,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.0021634745895069557,
+          "intervals": 0.025874981969665433,
+          "periodicity": 0.06032915730545112,
+          "tempo": 0.125
+        },
+        "distance": 0.2133676138646235,
+        "id": "u02",
+        "quality": "UNVALIDATED",
+        "score": 78.66323861353766,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.006009694792454848,
+          "intervals": 0.07007008440339346,
+          "periodicity": 0.06854590730611633,
+          "tempo": 0.125
+        },
+        "distance": 0.2696256865019646,
+        "id": "o04",
+        "quality": "UNVALIDATED",
+        "score": 73.03743134980354,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.007436874940641852,
+          "intervals": 0.11204659288727292,
+          "periodicity": 0.02514734889494678,
+          "tempo": 0.125
+        },
+        "distance": 0.26963081672286154,
+        "id": "o03",
+        "quality": "UNVALIDATED",
+        "score": 73.03691832771383,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.007088469901198255,
+          "intervals": 0.1304624400341856,
+          "periodicity": 0.03565490478946515,
+          "tempo": 0.125
+        },
+        "distance": 0.298205814724849,
+        "id": "o01",
+        "quality": "UNVALIDATED",
+        "score": 70.1794185275151,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.022581543101175466,
+          "intervals": 0.1241312024837571,
+          "periodicity": 0.07374431110121271,
+          "tempo": 0.125
+        },
+        "distance": 0.3454570566861453,
+        "id": "o02",
+        "quality": "UNVALIDATED",
+        "score": 65.45429433138548,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.03176732652721656,
+          "intervals": 0.15369319363673342,
+          "periodicity": 0.09481815209939592,
+          "tempo": 0.125
+        },
+        "distance": 0.4052786722633459,
+        "id": "s04",
+        "quality": "UNVALIDATED",
+        "score": 59.47213277366541,
+        "unknown_tempo": true
+      }
+    ],
+    "u02": [
+      {
+        "contributions": {
+          "density": 0.0021634745895069557,
+          "intervals": 0.025874981969665433,
+          "periodicity": 0.06032915730545112,
+          "tempo": 0.125
+        },
+        "distance": 0.2133676138646235,
+        "id": "u01",
+        "quality": "UNVALIDATED",
+        "score": 78.66323861353766,
+        "unknown_tempo": true
+      },
+      {
+        "contributions": {
+          "density": 0.00015606779999975673,
+          "intervals": 0.026184422955150617,
+          "periodicity": 0.06120891378661521,
+          "tempo": 0.1944912680987205
+        },
+        "distance": 0.2820406726404861,
+        "id": "s02",
+        "quality": "UNVALIDATED",
+        "score": 71.7959327359514,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.000775204954137243,
+          "intervals": 0.038956422846346414,
+          "periodicity": 0.06965354380976632,
+          "tempo": 0.21420143884541404
+        },
+        "distance": 0.323586610455664,
+        "id": "s01",
+        "quality": "UNVALIDATED",
+        "score": 67.6413389544336,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.008173169381961803,
+          "intervals": 0.05251280799239759,
+          "periodicity": 0.07645094603459655,
+          "tempo": 0.19429789107020323
+        },
+        "distance": 0.3314348144791592,
+        "id": "o04",
+        "quality": "UNVALIDATED",
+        "score": 66.85651855208408,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.0020575637140943376,
+          "intervals": 0.04204299307900765,
+          "periodicity": 0.0637310953130466,
+          "tempo": 0.22734720857588606
+        },
+        "distance": 0.3351788606820346,
+        "id": "s03",
+        "quality": "UNVALIDATED",
+        "score": 66.48211393179653,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.024745017690682422,
+          "intervals": 0.12279546389953754,
+          "periodicity": 0.1056669415067284,
+          "tempo": 0.1514236900610578
+        },
+        "distance": 0.40463111315800615,
+        "id": "o02",
+        "quality": "UNVALIDATED",
+        "score": 59.53688868419938,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.009600349530148808,
+          "intervals": 0.10711444072417649,
+          "periodicity": 0.07159571175167408,
+          "tempo": 0.2164725369424486
+        },
+        "distance": 0.40478303894844797,
+        "id": "o03",
+        "quality": "UNVALIDATED",
+        "score": 59.52169610515521,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.00925194449070521,
+          "intervals": 0.12496642304195166,
+          "periodicity": 0.07170610909773498,
+          "tempo": 0.20049775087377572
+        },
+        "distance": 0.40642222750416757,
+        "id": "o01",
+        "quality": "UNVALIDATED",
+        "score": 59.35777724958324,
+        "unknown_tempo": false
+      },
+      {
+        "contributions": {
+          "density": 0.033930801116723516,
+          "intervals": 0.15149393490890525,
+          "periodicity": 0.10167963125966595,
+          "tempo": 0.23396618390468074
+        },
+        "distance": 0.5210705511899755,
+        "id": "s04",
+        "quality": "UNVALIDATED",
+        "score": 47.89294488100245,
+        "unknown_tempo": false
+      }
+    ]
+  }
+}

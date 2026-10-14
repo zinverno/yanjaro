@@ -1,0 +1,32 @@
+{
+  "audio_and_evidence_hashes": "PASS before decoding",
+  "base_head": "d039093b09cf7a8f79d47238e855bbd911bb6068",
+  "code_sha256": {
+    "acoustic_similarity/rhythm_auto.py": "fba1fa59895b6574895d9e188c1f81399d95db750434345b96e8ccbd11e1060b",
+    "scripts/rhythm_auto_audit.py": "f07cb3f0128e83e95821b906b199478c3e59efb72a31b6d00effc2e71076880f"
+  },
+  "manifest_sha256": "24ce999d2b1175640ad4ae73e0d1c487a8fa80cc2ca5581819f391e0a29a0b1e",
+  "policy": {
+    "bpm_range": [
+      40,
+      260
+    ],
+    "edge_exclusion_seconds": 0.032,
+    "independent_phase_verification_required": true,
+    "maximum_internal_phase_drift_beats": 0.0625,
+    "meters_examined": [
+      2,
+      3,
+      4,
+      6
+    ],
+    "minimum_ac": 0.1,
+    "minimum_grid_support": 0.6,
+    "minimum_strong_events": 8,
+    "segment_bpm_relative_tolerance": 0.02,
+    "strong_relative_amplitude": 0.2
+  },
+  "schema": "yanjaro.rhythm-auto-applicability.v1",
+  "strict_v2": "VERIFIED only; no independent phase evidence supplied",
+  "threshold_selection": "Fixed before this real-data audit"
+}

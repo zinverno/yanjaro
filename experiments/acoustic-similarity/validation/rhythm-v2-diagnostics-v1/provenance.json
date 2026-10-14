@@ -1,0 +1,51 @@
+{
+  "measurement_source_commit": "f3fb459dfd9d096aaf0979fe9612b0fd5f9e6b30",
+  "base_head": "6f0973fd4313913a1ab1f3e292fd7066f410287c",
+  "code_sha256": {
+    "acoustic_similarity/rhythm_v2.py": "4220f21a8afc4b972050253742976297f0cbb9cf5034abc4e1f5637a91cc5585",
+    "scripts/rhythm_v2_audit.py": "8c373b72a663d57c0137666c901e109cde96150f8eb7a7b10d0463e901988188",
+    "tests/test_diagnostics.py": "808baf0e49339635ec27567aea2d0f3e6f03f12685cbcf24a7b588b2b9b6be38",
+    "tests/test_rhythm_v2.py": "ff10772933ba7849844acab66546c540d7d5c947c5dd4390b7cd9fb02776db27",
+    "tests/test_rhythm_v2_audit.py": "99a534949369adb04840a5081cc79decfa3539bbe09ff85a1b4cf9d3abb8016a"
+  },
+  "controls": {
+    "audio_published": false,
+    "held_out_evaluations": 0,
+    "historical_files_byte_identical": true,
+    "new_audio_download_bytes": 0,
+    "real_fit_calls": 0,
+    "training_jobs_disabled": true
+  },
+  "environment_threads": {
+    "NUMBA_NUM_THREADS": "2",
+    "OMP_NUM_THREADS": "2",
+    "OPENBLAS_NUM_THREADS": "2"
+  },
+  "limitations": [
+    "No GMD WAV locally; true re-extracted v2 train/validation comparison NOT RUN",
+    "No annotated phase or onsets in the 10 local diagnostic tracks",
+    "Fixed equal-block cache probe is not v2 extraction",
+    "No trained v2 model"
+  ],
+  "local_rights_manifest_sha256": "24ce999d2b1175640ad4ae73e0d1c487a8fa80cc2ca5581819f391e0a29a0b1e",
+  "platform": "Linux-6.12.108-1-MANJARO-x86_64-with-glibc2.44",
+  "python": "3.12.13",
+  "resource_scope": "Audit process only; not repository traffic, documentation reads, CI runtime/dependency downloads or the whole session",
+  "results_manifest_sha256": "cbb8c9b0f6d1aa9944f16872b328d325d5ba208bc77b22c9d205fc58417bc0d0",
+  "tests": {
+    "focused": 26,
+    "full_suite": "See exact-head GitHub Actions; not run locally without full optional runtime",
+    "modules": [
+      "test_rhythm_v2",
+      "test_rhythm_v2_audit",
+      "test_diagnostics"
+    ],
+    "result": "PASS"
+  },
+  "versions": {
+    "mido": "1.3.3",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "soundfile": "0.13.1"
+  }
+}

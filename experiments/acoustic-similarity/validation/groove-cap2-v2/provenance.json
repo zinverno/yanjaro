@@ -1,0 +1,346 @@
+{
+  "acquisition": {
+    "received_source_bytes": 40834108,
+    "requests": [
+      {
+        "received_bytes": 3260318,
+        "requested_bytes": 3260318,
+        "start": null,
+        "status": "PASS",
+        "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0-midionly.zip"
+      },
+      {
+        "received_bytes": 286439,
+        "requested_bytes": 286439,
+        "start": 5111313275,
+        "status": "PASS",
+        "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385"
+      },
+      {
+        "received_bytes": 30,
+        "requested_bytes": 30,
+        "start": 776667538,
+        "status": "PASS",
+        "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385"
+      },
+      {
+        "received_bytes": 47,
+        "requested_bytes": 47,
+        "start": 776667568,
+        "status": "PASS",
+        "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385"
+      },
+      {
+        "received_bytes": 13045110,
+        "requested_bytes": 13045110,
+        "start": 776667643,
+        "status": "PASS",
+        "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385"
+      },
+      {
+        "received_bytes": 30,
+        "requested_bytes": 30,
+        "start": 685042772,
+        "status": "PASS",
+        "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385"
+      },
+      {
+        "received_bytes": 47,
+        "requested_bytes": 47,
+        "start": 685042802,
+        "status": "PASS",
+        "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385"
+      },
+      {
+        "received_bytes": 14298975,
+        "requested_bytes": 14298975,
+        "start": 685042877,
+        "status": "PASS",
+        "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385"
+      },
+      {
+        "received_bytes": 30,
+        "requested_bytes": 30,
+        "start": 716970985,
+        "status": "PASS",
+        "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385"
+      },
+      {
+        "received_bytes": 47,
+        "requested_bytes": 47,
+        "start": 716971015,
+        "status": "PASS",
+        "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385"
+      },
+      {
+        "received_bytes": 9943035,
+        "requested_bytes": 9943035,
+        "start": 716971090,
+        "status": "PASS",
+        "url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385"
+      }
+    ],
+    "reserved_transport_output_bytes": 2097152,
+    "retries": 0,
+    "source_budget_bytes": 40834108,
+    "total_budget_bytes": 44040192,
+    "training_artifact_bytes_charged": 382152
+  },
+  "audio_hash_overlap": "PASS",
+  "authorization": "User explicitly authorized one cap2 run under 42 MiB, 10 minutes, CPU only",
+  "authorization_id": "cap2-2026-10-14-v2",
+  "midi_sources": [
+    {
+      "audio_member": "groove/drummer6/session2/3_rock_88_beat_4-4.wav",
+      "midi_bytes": 14704,
+      "midi_member": "drummer6/session2/3_rock_88_beat_4-4.mid",
+      "midi_sha256": "96fa725b99da619cef5972efb51d9ea6a3c415a95476385df6f15b700684e879",
+      "original_id": "drummer6/session2/3"
+    },
+    {
+      "audio_member": "groove/drummer6/session3/6_rock_88_beat_4-4.wav",
+      "midi_bytes": 12766,
+      "midi_member": "drummer6/session3/6_rock_88_beat_4-4.mid",
+      "midi_sha256": "6923f5ad9c2217f0e471381369cf40488182ad3d313cae2ee763220841237181",
+      "original_id": "drummer6/session3/6"
+    },
+    {
+      "audio_member": "groove/drummer6/session3/7_rock_88_beat_4-4.wav",
+      "midi_bytes": 7680,
+      "midi_member": "drummer6/session3/7_rock_88_beat_4-4.mid",
+      "midi_sha256": "16eb9913be1ad678602ddb089af8ed32eccc9ca97fe4a444f5aec55db013f889",
+      "original_id": "drummer6/session3/7"
+    }
+  ],
+  "new_originals": [
+    {
+      "audio_sha256": "7976dbb7c83dca3a429c2c420160b1f8e3ff2e87752eef63aae782a37cd972e1",
+      "crc32": 3595890602,
+      "original_id": "drummer6/session2/3",
+      "uncompressed_bytes": 17928866,
+      "wav_member": "groove/drummer6/session2/3_rock_88_beat_4-4.wav"
+    },
+    {
+      "audio_sha256": "6877f70a127d3daa44ddc36dcf8e04a0862791cc7bfcf9203d86be193f6c234a",
+      "crc32": 773260363,
+      "original_id": "drummer6/session3/6",
+      "uncompressed_bytes": 22596292,
+      "wav_member": "groove/drummer6/session3/6_rock_88_beat_4-4.wav"
+    },
+    {
+      "audio_sha256": "5fdf0025125d0cb021976e37ba1d495613d95c47b3c132796118efc82b09e745",
+      "crc32": 661412943,
+      "original_id": "drummer6/session3/7",
+      "uncompressed_bytes": 16467612,
+      "wav_member": "groove/drummer6/session3/7_rock_88_beat_4-4.wav"
+    }
+  ],
+  "old_test_used": false,
+  "original_artifact_integrity": {
+    "archive_sha256": "72a1f4505afcc095d3ffaddd3cdc354cc1718c08861313fd91bfb6788b7fc79e",
+    "dataset_canonical_sha256": "e84463d8cd7249a9f49eab2fd31b83a655d0e9764d0bef75040b6409981b0e0b",
+    "feature_values_sha256": "62cf6ab20b59e46c50b59a9855672d089a70f48dd1b9ba30dd3ebc3e0d93f442",
+    "full_audio_reextraction": "NOT RUN: originals not retained; hash binding is not re-extraction",
+    "members_sha256": {
+      "acquisition.json": "a319618ba9637439c1629cf0d590160599622ecb5505e0f2387ad0664cdbc2b6",
+      "dataset.json": "0e26ad9efa62540d97bdbee9dd4fd0f0a79245819289487ea0ed093c013a2372",
+      "energy-baseline.json": "64eaba554019119b2c0d45bed8b59e0099a5d4dd6aa2d764b2fb06a9df84b3df",
+      "metrics.json": "6ff07d1da3f908611bcb66131d75225da50ab0f243153579d847533081d0a69e",
+      "model.json": "9cfa22a9adc22b6990d3a01200a4d9d5fe2dcba469ea97fe45b5bfcff7a9b147",
+      "originals.json": "4895e7b4f12a404e50af85bd00187f7ba81fa1f4413035733e3d8d31dd0a7c1c",
+      "resources.json": "9d8c15ccd8bf2ffcf9ae2a7f8ee9f5a2fe4b7fdb30d42a903102b8e9446b065b",
+      "sources.json": "08aa6fdd123d3f87cac883c44075884e7527c9c3b8288bbc856751d69766d97c"
+    },
+    "old_test": "Only archive/hash/source identity checks; excluded before numeric diagnostics",
+    "status": "PASS",
+    "target_values_sha256": "b2867cc09d04f3ef1b5731c066473660bb8fda839b70e950f2689ee4d0d9f8dd",
+    "training_code_sha256": "a42f3884f46a515c3aa5e502f72a1648cbf4971431a1336c1b3229c405aafd7c",
+    "training_commit": "c9e37423b557fa4204edbf8167ce8620bc86536b",
+    "triplets_sha256": "7e20e946ecbebc2f57142bad13f3ae50b383b87b8d06c595a853cbad511abff9"
+  },
+  "output_binding": "runs/groove-cap2-v2",
+  "output_transport": "Single base64 ZIP in native workflow log; no artifact SDK or application retries",
+  "parent_commit": "0d8955f1788521f6458a64ceea3ba7db8e09b9ba",
+  "plan": {
+    "approval_required": true,
+    "budget": {
+      "audio_headers_and_names_bytes": 231,
+      "authorized_limit_if_approved_bytes": 44040192,
+      "cpu_seconds_limit": 600,
+      "gpu": false,
+      "manual_runs": 1,
+      "midi_and_directory_http_body_bytes": 3546757,
+      "new_audio_compressed_bytes": 37287120,
+      "new_audio_http_body_bytes": 37287351,
+      "no_full_archive_fallback": true,
+      "no_retries": true,
+      "notes": "Exact planned HTTP response bodies for CPython 3.12 ZipFile range reads (30-byte header, filename, compressed member; extras are seeked over). Reject changed sizes/ETag/ranges. No billing quote; dependencies and checkout excluded from corpus byte cap.",
+      "runner": "ubuntu-24.04 standard CPU",
+      "saved_training_artifact_transfer_bytes": 382152,
+      "threads": 2,
+      "total_source_http_body_bytes": 40834108,
+      "transport_and_output_reserve_bytes": 2097152,
+      "virtual_memory_bytes_limit": 4294967296,
+      "wall_minutes_limit": 10
+    },
+    "evaluation": {
+      "energy": "measurement baseline unchanged",
+      "failure": "If tie/worse, retain negative result and uniform baseline; no retry/tuning on test",
+      "fixed_tie_epsilon": 1e-12,
+      "nsynth": "NOT RUN",
+      "primary": "paired triplet accuracy learned vs unchanged uniform, report raw counts and original-component groups",
+      "song_similarity": "NOT VALIDATED",
+      "success": "Strictly higher held-out accuracy is only a cohort-level improvement; no population claim from one performer"
+    },
+    "new_test": {
+      "actual_eligible_triplets": "NOT RUN: do not use test labels to choose configuration",
+      "bpm": 88,
+      "duplicate_stop": "Reject any MIDI/audio hash overlap with all previous train/validation/test originals",
+      "limitations": "one drummer, two sessions, one connected original group, rock only, TD-11 only; does not establish population or song-level quality",
+      "maximum_triplets": 48,
+      "originals": 3,
+      "performers": 1,
+      "potential_bars": 12,
+      "preflight_stop": "After configuration lock, verify >=20 MIDI comparisons and all three originals BEFORE audio acquisition; otherwise NOT RUN with no substitutions",
+      "records": [
+        {
+          "audio_sha256": "NOT ACQUIRED; record after CRC-verified decoding",
+          "compressed_bytes": 13045110,
+          "crc32": 3595890602,
+          "header_offset": 776667538,
+          "local_header_read_bytes": 30,
+          "member_name_read_bytes": 47,
+          "metadata": {
+            "audio_filename": "drummer6/session2/3_rock_88_beat_4-4.wav",
+            "beat_type": "beat",
+            "bpm": "88",
+            "drummer": "drummer6",
+            "duration": "201.338014",
+            "id": "drummer6/session2/3",
+            "midi_filename": "drummer6/session2/3_rock_88_beat_4-4.mid",
+            "session": "drummer6/session2",
+            "split": "train",
+            "style": "rock",
+            "time_signature": "4-4"
+          },
+          "new_split": "test",
+          "uncompressed_bytes": 17928866,
+          "zip_member": "groove/drummer6/session2/3_rock_88_beat_4-4.wav"
+        },
+        {
+          "audio_sha256": "NOT ACQUIRED; record after CRC-verified decoding",
+          "compressed_bytes": 14298975,
+          "crc32": 773260363,
+          "header_offset": 685042772,
+          "local_header_read_bytes": 30,
+          "member_name_read_bytes": 47,
+          "metadata": {
+            "audio_filename": "drummer6/session3/6_rock_88_beat_4-4.wav",
+            "beat_type": "beat",
+            "bpm": "88",
+            "drummer": "drummer6",
+            "duration": "169.136319",
+            "id": "drummer6/session3/6",
+            "midi_filename": "drummer6/session3/6_rock_88_beat_4-4.mid",
+            "session": "drummer6/session3",
+            "split": "train",
+            "style": "rock",
+            "time_signature": "4-4"
+          },
+          "new_split": "test",
+          "uncompressed_bytes": 22596292,
+          "zip_member": "groove/drummer6/session3/6_rock_88_beat_4-4.wav"
+        },
+        {
+          "audio_sha256": "NOT ACQUIRED; record after CRC-verified decoding",
+          "compressed_bytes": 9943035,
+          "crc32": 661412943,
+          "header_offset": 716970985,
+          "local_header_read_bytes": 30,
+          "member_name_read_bytes": 47,
+          "metadata": {
+            "audio_filename": "drummer6/session3/7_rock_88_beat_4-4.wav",
+            "beat_type": "beat",
+            "bpm": "88",
+            "drummer": "drummer6",
+            "duration": "122.781217",
+            "id": "drummer6/session3/7",
+            "midi_filename": "drummer6/session3/7_rock_88_beat_4-4.mid",
+            "session": "drummer6/session3",
+            "split": "train",
+            "style": "rock",
+            "time_signature": "4-4"
+          },
+          "new_split": "test",
+          "uncompressed_bytes": 16467612,
+          "zip_member": "groove/drummer6/session3/7_rock_88_beat_4-4.wav"
+        }
+      ],
+      "selection": "Only remaining unused drummer with >=3 audio originals at one annotated BPM and 4/4; metadata only, no audio or target scoring",
+      "window_beats": [
+        4,
+        8,
+        12,
+        16
+      ]
+    },
+    "schema": "yanjaro.rhythm-next-run-proposal.v1",
+    "selection_rationale": {
+      "criterion": "highest performer/component macro among declared grid; check all five performer folds and validation",
+      "cv_performer_component_macro": 0.8215648148148148,
+      "quality_claim": "NOT ESTABLISHED; validation has one more error than uniform",
+      "uniform_cv_performer_component_macro": 0.7818518518518518,
+      "uniform_validation_accuracy": 0.9190283400809717,
+      "validation_accuracy": 0.9149797570850202
+    },
+    "selection_scope": "Exploratory fixed 10-config grid on train/validation; no old-test numerical analysis",
+    "sources": {
+      "attribution": "Google LLC; Jon Gillick, Adam Roberts, Jesse Engel, Douglas Eck, David Bamman (2019), Learning to Groove with Inverse Sequence Transformations. CC BY 4.0. Changes: selected recordings, resampling, bar segmentation and derived rhythm features/targets. No endorsement.",
+      "audio_bytes": 5111599714,
+      "audio_etag": "\"99db7e2a087761a913b2abfb19e86181\"",
+      "audio_url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0.zip?generation=1556582299849385",
+      "dataset": "Groove MIDI Dataset v1.0.0",
+      "directory_bytes": 286439,
+      "directory_offset": 5111313275,
+      "directory_sha256": "5e6d41b9bdef7b9c951412315330249afe0a39688e010a6740e4ec52f8b63a31",
+      "license": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "midi_bytes": 3260318,
+      "midi_sha256": "651cbc524ffb891be1a3e46d89dc82a1cecb09a57c748c7b45b844c4841dcc1e",
+      "midi_url": "https://storage.googleapis.com/magentadata/datasets/groove/groove-v1.0.0-midionly.zip",
+      "source_page": "https://magenta.tensorflow.org/datasets/groove"
+    },
+    "status": "PROPOSED - NOT AUTHORIZED - NOT RUN",
+    "training": {
+      "bars": 140,
+      "configuration": "cap2",
+      "epochs": 300,
+      "feature_reextraction": false,
+      "feature_schema": "audio-flux-4bands-16phase-ac64-beat-normalized.v1",
+      "initialization": "zero logits; deterministic full batch Adam",
+      "input_artifact_sha256": "72a1f4505afcc095d3ffaddd3cdc354cc1718c08861313fd91bfb6788b7fc79e",
+      "learning_rate": 0.1,
+      "logit_bound": 0.34657359027997264,
+      "margin": 0.05,
+      "max_weight_ratio": 2,
+      "model_version_if_run": "0.1.1-cap2-research",
+      "old_test": "drummer8 excluded; historical result remains unchanged",
+      "performers": [
+        "drummer1",
+        "drummer3",
+        "drummer5",
+        "drummer9",
+        "drummer10"
+      ],
+      "regularization": 0.01,
+      "split": "train",
+      "target_schema": "performed-midi-9drums-16phase-binary-jaccard.v1",
+      "temperature": 0.1,
+      "triplets": 332,
+      "validation": "drummer7; report fixed configuration, no early stopping or retuning"
+    }
+  },
+  "plan_sha256": "3b1167534a85af7b043b792db8b1b2160b2d3c48aad33803d518510ce3c2d346",
+  "training_source_commit": "7e541c2b52617b54135568c204246fbd44a27902",
+  "training_uses_only_original_332_triplets": true
+}

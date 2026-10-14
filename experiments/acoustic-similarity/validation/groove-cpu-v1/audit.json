@@ -1,0 +1,48 @@
+{
+  "artifact_bytes": 382152,
+  "artifact_sha256": "72a1f4505afcc095d3ffaddd3cdc354cc1718c08861313fd91bfb6788b7fc79e",
+  "artifact_transfer_bytes_including_connector_and_local_copy": 764304,
+  "checks": [
+    "archive digest matches GitHub",
+    "dataset and code hashes match weights",
+    "MIDI-only preflight labels unchanged",
+    "disjoint originals, performers and source hashes",
+    "128 finite positive nonuniform weights sum to 1",
+    "local known-source search excludes query original"
+  ],
+  "ci_tests": 48,
+  "ci_tests_seconds": 27.656,
+  "cohort_sha256": "aa8977f3d79f91a7e086db8f0869b4228ba65e76d80d1220560fce8474b5a905",
+  "dataset_and_artifact_transfers_total_bytes": 385267654,
+  "dataset_sha256": "e84463d8cd7249a9f49eab2fd31b83a655d0e9764d0bef75040b6409981b0e0b",
+  "gpu_used": false,
+  "known_source_search_top3": [
+    {
+      "original_id": "drummer10/session1/7",
+      "rhythm_distance": 0.036441906253468284
+    },
+    {
+      "original_id": "drummer3/session2/29",
+      "rhythm_distance": 0.045644121717268726
+    },
+    {
+      "original_id": "drummer8/session1/26",
+      "rhythm_distance": 0.049378467054908434
+    }
+  ],
+  "local_preflight_dataset_bytes": 4417503,
+  "model_file_sha256": "9cfa22a9adc22b6990d3a01200a4d9d5fe2dcba469ea97fe45b5bfcff7a9b147",
+  "posthoc_train_accuracy": {
+    "baseline": 0.7198795180722891,
+    "learned": 0.8554216867469879
+  },
+  "remote_dataset_bytes": 380085847,
+  "repeat_tests_job_wall_seconds": 59,
+  "run_attempt": 2,
+  "run_id": 38127275492,
+  "source_data_total_bytes": 384503350,
+  "status": "PASS",
+  "training_commit": "c9e37423b557fa4204edbf8167ce8620bc86536b",
+  "training_job_id": 114434534982,
+  "training_job_wall_seconds": 82
+}

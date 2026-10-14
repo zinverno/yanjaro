@@ -1,0 +1,33 @@
+{
+  "schema": "yanjaro.acoustic-similarity.validation.v0.1",
+  "checked_on": "2026-10-11",
+  "python": "3.12.13",
+  "code_sha256": "ab09994b5d40a8e63219191d107f01ce37aa2e633006e3e6d332d7f8facef143",
+  "unit_tests": {
+    "status": "PASS",
+    "count": 33,
+    "seconds": 4.019,
+    "skipped": 0,
+    "log_sha256": "649d11eebc2b746faf3e833fcd003b5bbc6b57b5b51aa257478c727aaf94cad4"
+  },
+  "package_install": "PASS - isolated venv, checked wheel hashes, editable CLI",
+  "dependency_check": "PASS - 27 installed packages",
+  "cli_help": "PASS",
+  "lab_extractor_byte_identity": "PASS - PR6 6b5f05b4",
+  "synthetic_optimizer": "PASS - fixed encoder fixture, deterministic fit and held-out evaluation; no retained weights",
+  "controlled_audio_probes": "PASS - rhythm vs genre metadata; same tempo/different timbre; gain/energy",
+  "real_training": "NOT RUN - 10 diagnostic recordings, no reviewed labels, no GPU",
+  "real_pretrained_forward": "NOT RUN",
+  "perceptual_metrics": {
+    "rhythm": "NOT RUN",
+    "timbre": "NOT RUN",
+    "energy": "NOT RUN"
+  },
+  "gpu_compatibility_and_cost": "NOT RUN",
+  "new_audio_downloads": 0,
+  "model_weight_downloads": 0,
+  "paid_resources": 0,
+  "render": "NOT RUN",
+  "production_desktop_tests": "NOT RUN - untouched production tree",
+  "source_commit": "18783421b1c4ef43c2d8eca3fc0bc8eeca07585c"
+}

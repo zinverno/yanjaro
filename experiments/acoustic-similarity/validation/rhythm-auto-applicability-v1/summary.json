@@ -1,0 +1,20 @@
+{
+  "audio_published": false,
+  "new_audio_download_bytes": 0,
+  "real_training": "NOT RUN",
+  "reason_counts": {
+    "NO_INDEPENDENT_PHASE_EVIDENCE": 10,
+    "SEGMENT_PHASE_DISAGREEMENT": 7,
+    "SEGMENT_TEMPO_DISAGREEMENT": 7,
+    "UNRESOLVED_METER_AND_DOWNBEAT": 10
+  },
+  "records": 10,
+  "stable_automatic_hypotheses": 2,
+  "statuses": {
+    "ABSTAIN": 8,
+    "AUTO_CANDIDATE": 2
+  },
+  "strict_gate_abstentions": 10,
+  "strict_v2_extractions": 0,
+  "verified": 0
+}

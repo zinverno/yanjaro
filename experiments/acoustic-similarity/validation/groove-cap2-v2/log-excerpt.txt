@@ -1,0 +1,43 @@
+2026-10-14T08:27:40.4494629Z Version 3.12.13 was not found in the local cache
+2026-10-14T08:27:41.2201715Z Version 3.12.13 is available for downloading
+2026-10-14T08:27:41.2202808Z Download from "https://github.com/actions/python-versions/releases/download/3.12.13-27650778726/python-3.12.13-linux-24.04-x64.tar.gz"
+2026-10-14T08:27:44.7920268Z Downloading pip-26.2.1-py3-none-any.whl.metadata (4.6 kB)
+2026-10-14T08:27:44.8098022Z Downloading pip-26.2.1-py3-none-any.whl (1.8 MB)
+2026-10-14T08:27:45.5203293Z Successfully installed pip-26.2.1
+2026-10-14T08:27:45.5632931Z Successfully set up CPython (3.12.13)
+2026-10-14T08:27:46.0761455Z   Downloading audioread-3.0.1-py3-none-any.whl (23 kB)
+2026-10-14T08:27:46.1241849Z   Downloading certifi-2025.4.26-py3-none-any.whl (159 kB)
+2026-10-14T08:27:46.2476526Z   Downloading cffi-1.17.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (479 kB)
+2026-10-14T08:27:46.3726780Z   Downloading charset_normalizer-3.4.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (148 kB)
+2026-10-14T08:27:46.4042108Z   Downloading decorator-5.2.1-py3-none-any.whl (9.2 kB)
+2026-10-14T08:27:46.4337840Z   Downloading idna-3.10-py3-none-any.whl (70 kB)
+2026-10-14T08:27:46.4662949Z   Downloading joblib-1.4.2-py3-none-any.whl (301 kB)
+2026-10-14T08:27:46.4976508Z   Downloading lazy_loader-0.4-py3-none-any.whl (12 kB)
+2026-10-14T08:27:46.5290463Z   Downloading librosa-0.11.0-py3-none-any.whl (260 kB)
+2026-10-14T08:27:46.5823075Z   Downloading llvmlite-0.44.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (42.4 MB)
+2026-10-14T08:27:46.9991868Z   Downloading msgpack-1.1.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (401 kB)
+2026-10-14T08:27:47.0324679Z   Downloading mido-1.3.3-py3-none-any.whl (54 kB)
+2026-10-14T08:27:47.1193392Z   Downloading numba-0.61.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (3.9 MB)
+2026-10-14T08:27:47.2697968Z   Downloading numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.5 MB)
+2026-10-14T08:27:47.4182080Z   Downloading packaging-25.0-py3-none-any.whl (66 kB)
+2026-10-14T08:27:47.4502491Z   Downloading platformdirs-4.3.8-py3-none-any.whl (18 kB)
+2026-10-14T08:27:47.4822505Z   Downloading pooch-1.8.2-py3-none-any.whl (64 kB)
+2026-10-14T08:27:47.5117506Z   Downloading pycparser-2.22-py3-none-any.whl (117 kB)
+2026-10-14T08:27:47.5446269Z   Downloading requests-2.32.4-py3-none-any.whl (64 kB)
+2026-10-14T08:27:47.6069556Z   Downloading scikit_learn-1.6.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.1 MB)
+2026-10-14T08:27:47.8088052Z   Downloading scipy-1.15.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (37.3 MB)
+2026-10-14T08:27:48.1240064Z   Downloading setuptools-80.9.0-py3-none-any.whl (1.2 MB)
+2026-10-14T08:27:48.1619975Z   Downloading soundfile-0.13.1-py2.py3-none-manylinux_2_28_x86_64.whl (1.3 MB)
+2026-10-14T08:27:48.2159053Z   Downloading soxr-0.5.0.post1-cp312-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (248 kB)
+2026-10-14T08:27:48.2459640Z   Downloading threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+2026-10-14T08:27:48.2765964Z   Downloading typing_extensions-4.13.2-py3-none-any.whl (45 kB)
+2026-10-14T08:27:48.3087760Z   Downloading urllib3-2.5.0-py3-none-any.whl (129 kB)
+2026-10-14T08:27:56.0753402Z Successfully installed audioread-3.0.1 certifi-2025.4.26 cffi-1.17.1 charset-normalizer-3.4.2 decorator-5.2.1 idna-3.10 joblib-1.4.2 lazy-loader-0.4 librosa-0.11.0 llvmlite-0.44.0 mido-1.3.3 msgpack-1.1.0 numba-0.61.2 numpy-2.2.6 packaging-25.0 platformdirs-4.3.8 pooch-1.8.2 pycparser-2.22 requests-2.32.4 scikit-learn-1.6.1 scipy-1.15.3 setuptools-80.9.0 soundfile-0.13.1 soxr-0.5.0.post1 threadpoolctl-3.6.0 typing-extensions-4.13.2 urllib3-2.5.0
+2026-10-14T08:27:56.8810249Z No broken requirements found.
+2026-10-14T08:27:56.8992191Z ##[group]Run ulimit -v 4194304
+2026-10-14T08:27:56.8992409Z ulimit -v 4194304
+2026-10-14T08:27:56.8992544Z ulimit -t 600
+2026-10-14T08:27:56.8992746Z timeout --kill-after=10s 540s python3 -m acoustic_similarity.cap2 run
+2026-10-14T08:28:01.2685132Z CAP2_RESULT_START sha256=6136f79024a45f0fb7e58034fda70ba8da1b1964b8c1d2cfb825749e77f30048 bytes=39177 encoded_bytes=52236
+2026-10-14T08:28:01.2975995Z CAP2_RESULT_END
+2026-10-14T08:28:01.2976311Z {"artifact_sha256": "6136f79024a45f0fb7e58034fda70ba8da1b1964b8c1d2cfb825749e77f30048", "artifact_bytes": 39177, "encoded_result_bytes": 52236}

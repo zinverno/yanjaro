@@ -1,0 +1,117 @@
+{
+  "authorization_id": "cap2-2026-10-14-v2",
+  "authorization_status": "CONSUMED - NO RERUN",
+  "run_id": 38535139426,
+  "run_number": 9,
+  "run_attempt": 1,
+  "run_url": "https://github.com/zinverno/yanjaro/actions/runs/38535139426",
+  "job_id": 115756440243,
+  "source_commit": "7e541c2b52617b54135568c204246fbd44a27902",
+  "disabled_commit": "564330d762819f44a6ac5252eaac8ea7da19ec4d",
+  "runner": "ubuntu-24.04 standard CPU",
+  "job_started_at": "2026-10-14T08:27:38Z",
+  "job_completed_at": "2026-10-14T08:28:03Z",
+  "job_wall_seconds": 25.0,
+  "job_conclusion": "success",
+  "steps": [
+    {
+      "name": "Set up job",
+      "conclusion": "success",
+      "started_at": "2026-10-14T08:27:39Z",
+      "completed_at": "2026-10-14T08:27:39Z"
+    },
+    {
+      "name": "Fetch authorized public source once, without checkout action retries",
+      "conclusion": "success",
+      "started_at": "2026-10-14T08:27:39Z",
+      "completed_at": "2026-10-14T08:27:40Z"
+    },
+    {
+      "name": "Set up Python in this job (runtime traffic, outside research budget)",
+      "conclusion": "success",
+      "started_at": "2026-10-14T08:27:40Z",
+      "completed_at": "2026-10-14T08:27:45Z"
+    },
+    {
+      "name": "Verify exact runtime before dependencies",
+      "conclusion": "success",
+      "started_at": "2026-10-14T08:27:45Z",
+      "completed_at": "2026-10-14T08:27:45Z"
+    },
+    {
+      "name": "Install locked dependencies without retries",
+      "conclusion": "success",
+      "started_at": "2026-10-14T08:27:45Z",
+      "completed_at": "2026-10-14T08:27:56Z"
+    },
+    {
+      "name": "One cap2 fit and held-out evaluation, at most 42 MiB research transfers",
+      "conclusion": "success",
+      "started_at": "2026-10-14T08:27:56Z",
+      "completed_at": "2026-10-14T08:28:01Z"
+    },
+    {
+      "name": "Post Set up Python in this job (runtime traffic, outside research budget)",
+      "conclusion": "success",
+      "started_at": "2026-10-14T08:28:01Z",
+      "completed_at": "2026-10-14T08:28:01Z"
+    },
+    {
+      "name": "Complete job",
+      "conclusion": "success",
+      "started_at": "2026-10-14T08:28:01Z",
+      "completed_at": "2026-10-14T08:28:01Z"
+    }
+  ],
+  "training_calls": 1,
+  "test_evaluations": 1,
+  "new_model_sha256": "4709a87f6662d180e8ebf623f803074453c5fed98c921ddf872e2a96e2452be0",
+  "artifact_sha256": "6136f79024a45f0fb7e58034fda70ba8da1b1964b8c1d2cfb825749e77f30048",
+  "artifact_bytes": 39177,
+  "encoded_result_bytes": 52236,
+  "saved_job_log_bytes": 75502,
+  "saved_job_log_sha256": "3f61d0aa6ea807b9dbe7c9942661ac101e52faa46d5e01f8f262084b66b826e4",
+  "log_retrieval": {
+    "requests": 2,
+    "first": "gh downloaded the completed job log but rejected terminal escape sequences before rendering. No experiment or source request was repeated.",
+    "first_response_bytes": null,
+    "successful_response_bytes": 75502,
+    "first_response_budget_allowance_bytes": 262144,
+    "note": "Allowance uses the validated <=256 KiB bound of the same completed job log; it is not a measured first-response byte count."
+  },
+  "research_transfer": {
+    "source_http_body_bytes": 40834108,
+    "input_artifact_bytes_charged": 382152,
+    "base64_result_output_bytes": 52236,
+    "successful_log_download_bytes": 75502,
+    "observed_payload_bytes_in_frozen_scope": 41343998,
+    "accounted_including_failed_log_allowance_bytes": 41606142,
+    "frozen_source_input_plus_full_transport_reserve_bytes": 43313412,
+    "limit_bytes": 44040192,
+    "wire_bytes": null,
+    "note": "Frozen scope: research source HTTP bodies, one saved training ZIP, and transport/output reserve. HTTP/TLS and Git transport overhead are not separately measured. Result persistence and the extra log retrieval draw on the 2 MiB reserve; full wire traffic is not claimed as measured."
+  },
+  "infrastructure": {
+    "python_archive_downloaded": true,
+    "python_version": "3.12.13",
+    "bootstrap_pip_wheel_downloaded": true,
+    "pip_version": "26.2.1",
+    "locked_wheels_downloaded": true,
+    "wire_bytes": null,
+    "local_verification_wheel_bytes": 55868778,
+    "note": "Nonzero runtime, package, Actions and checkout infrastructure traffic; outside frozen research budget. Local verification used seven hash-verified pinned wheels. No paid service or GPU."
+  },
+  "validation": {
+    "input_and_frozen_configuration": "PASS",
+    "new_midi_preflight": "PASS: 3 originals / 12 bars / 29 triplets before WAV",
+    "source_ranges_metadata_hashes_crc_and_disjointness": "PASS",
+    "one_fit_and_model_saved_before_evaluation": "PASS",
+    "quality": "FAIL: cap2 worse than uniform",
+    "artifact_hashes_and_stored_margin_counts": "PASS",
+    "historical_artifacts_model_feature_code_lockfile_unchanged": "PASS",
+    "local_focused_tests": "PASS: 27 before launch; 15 after disabling",
+    "launch_ci": "PASS: tests and runtime-smoke",
+    "old_test_drummer8": "NOT RUN",
+    "song_similarity": "NOT VALIDATED"
+  }
+}

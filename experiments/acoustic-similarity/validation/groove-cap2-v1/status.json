@@ -1,0 +1,30 @@
+{
+  "audio_acquisition": "NOT RUN",
+  "exit_code": 1,
+  "failure_step": "Use pinned preinstalled Python, with no runtime download fallback",
+  "github_run_attempt": 1,
+  "github_run_id": 38135097182,
+  "github_run_number": 5,
+  "initial_head": "15e911d829a6f3683129de2bfcac37e47f55e995",
+  "job_id": 114457384889,
+  "local_preflight": "PASS",
+  "new_model_sha256": null,
+  "new_test_evaluation": "NOT RUN",
+  "reason": "The executable check for the assumed preinstalled Python 3.12.13 path exited 1. This was an unverified workflow assumption, not a data/model failure.",
+  "remote_preflight": "NOT RUN",
+  "retries": 0,
+  "run_url": "https://github.com/zinverno/yanjaro/actions/runs/38135097182",
+  "source_commit": "a442631cd004a304d766eb090d1b54ab25571157",
+  "status": "FAIL: runner preparation",
+  "test_evaluations": 0,
+  "tests_job": {
+    "id": 114457237358,
+    "status": "PASS",
+    "tests": 72,
+    "wall_seconds": 49
+  },
+  "training": "NOT RUN",
+  "training_calls": 0,
+  "training_job_disabled_after_attempt": true,
+  "validation_evaluation": "NOT RUN"
+}

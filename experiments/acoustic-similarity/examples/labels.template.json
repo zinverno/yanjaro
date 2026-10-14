@@ -1,0 +1,7 @@
+{
+  "schema": "yanjaro.acoustic-similarity.v0.1",
+  "kind": "real",
+  "purpose": "acoustic_similarity",
+  "dataset_sha256": null,
+  "triplets": []
+}

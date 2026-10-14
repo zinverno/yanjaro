@@ -1,0 +1,20 @@
+{
+  "compute_threads": 2,
+  "cpu_seconds_including_imports": 27.53065,
+  "gpu": false,
+  "hard_cpu_limit_seconds": 540,
+  "hard_virtual_limit_mib": 1024,
+  "infrastructure": "Separate new environment installed from unchanged requirements.lock; nonzero package traffic",
+  "network_in_study_bytes": 0,
+  "new_audio_download_bytes": 0,
+  "peak_rss_mib": 438.87109375,
+  "python": "3.12.13",
+  "versions": {
+    "librosa": "0.11.0",
+    "numba": "0.61.2",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "soundfile": "0.13.1"
+  },
+  "wall_seconds_after_imports": 24.82807300699642
+}

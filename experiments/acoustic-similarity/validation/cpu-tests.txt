@@ -1,0 +1,53 @@
+test_budget_fails_before_request (test_rhythm.AcquisitionTests.test_budget_fails_before_request) ... ok
+test_ignored_range_rejected_before_body_read (test_rhythm.AcquisitionTests.test_ignored_range_rejected_before_body_read) ... ok
+test_random_access_zip_fetches_only_member_ranges (test_rhythm.AcquisitionTests.test_random_access_zip_fetches_only_member_ranges) ... ok
+test_independent_instruments_and_matched_pitch_velocity (test_rhythm.NSynthTests.test_independent_instruments_and_matched_pitch_velocity) ... ok
+test_bpm_mismatch_removes_comparison (test_rhythm.RhythmTests.test_bpm_mismatch_removes_comparison) ... ok
+test_cohort_is_pinned_and_budgeted (test_rhythm.RhythmTests.test_cohort_is_pinned_and_budgeted) ... ok
+test_external_triplet_or_faked_target_source_rejected (test_rhythm.RhythmTests.test_external_triplet_or_faked_target_source_rejected) ... ok
+test_feature_gain_invariance_and_tempo_normalization (test_rhythm.RhythmTests.test_feature_gain_invariance_and_tempo_normalization) ... ok
+test_holdout_features_never_enter_training_arrays (test_rhythm.RhythmTests.test_holdout_features_never_enter_training_arrays) ... ok
+test_midi_structure_uses_performed_events_and_checks_tempo (test_rhythm.RhythmTests.test_midi_structure_uses_performed_events_and_checks_tempo) ... ok
+test_no_positive_from_a_derivative_of_same_recording (test_rhythm.RhythmTests.test_no_positive_from_a_derivative_of_same_recording) ... ok
+test_real_training_cannot_run_locally (test_rhythm.RhythmTests.test_real_training_cannot_run_locally) ... ok
+test_source_and_performer_leakage_rejected (test_rhythm.RhythmTests.test_source_and_performer_leakage_rejected) ... ok
+test_target_distance_known (test_rhythm.RhythmTests.test_target_distance_known) ... ok
+test_triplets_cannot_depend_on_audio_scores_or_genre (test_rhythm.RhythmTests.test_triplets_cannot_depend_on_audio_scores_or_genre) ... ok
+test_artist_and_collaboration_leakage (test_similarity.Contracts.test_artist_and_collaboration_leakage) ... ok
+test_cluster_bootstrap_and_no_unsupported_confidence (test_similarity.Contracts.test_cluster_bootstrap_and_no_unsupported_confidence) ... ok
+test_collaborators_form_one_independent_cluster (test_similarity.Contracts.test_collaborators_form_one_independent_cluster) ... ok
+test_demo_model_rejected_by_default (test_similarity.Contracts.test_demo_model_rejected_by_default) ... ok
+test_duplicate_audio (test_similarity.Contracts.test_duplicate_audio) ... ok
+test_duplicate_contradictory_labels (test_similarity.Contracts.test_duplicate_contradictory_labels) ... ok
+test_embeddings_are_hash_bound_and_frozen (test_similarity.Contracts.test_embeddings_are_hash_bound_and_frozen) ... ok
+test_equal_models_cannot_establish_improvement (test_similarity.Contracts.test_equal_models_cannot_establish_improvement) ... ok
+test_evaluation_empty_is_not_run_and_demo_never_improvement (test_similarity.Contracts.test_evaluation_empty_is_not_run_and_demo_never_improvement) ... ok
+test_evaluation_rejects_changed_labels (test_similarity.Contracts.test_evaluation_rejects_changed_labels) ... ok
+test_fixture_contracts (test_similarity.Contracts.test_fixture_contracts) ... ok
+test_genre_metadata_never_changes_distances (test_similarity.Contracts.test_genre_metadata_never_changes_distances) ... ok
+test_independent_aspect_inputs (test_similarity.Contracts.test_independent_aspect_inputs) ... ok
+test_index_corruption (test_similarity.Contracts.test_index_corruption) ... ok
+test_labels_cannot_cross_split_or_dataset (test_similarity.Contracts.test_labels_cannot_cross_split_or_dataset) ... ok
+test_no_preference_or_genre_labels (test_similarity.Contracts.test_no_preference_or_genre_labels) ... ok
+test_optimizer_learns_known_ordering (test_similarity.Contracts.test_optimizer_learns_known_ordering) ... ok
+test_real_training_insufficient_data_is_rejected (test_similarity.Contracts.test_real_training_insufficient_data_is_rejected) ... ok
+test_rights_fail_before_decode (test_similarity.Contracts.test_rights_fail_before_decode) ... ok
+test_shared_candidates_reduce_independent_sample_count (test_similarity.Contracts.test_shared_candidates_reduce_independent_sample_count) ... ok
+test_tempo_is_explicit_symmetric_and_unknown_not_equal (test_similarity.Contracts.test_tempo_is_explicit_symmetric_and_unknown_not_equal) ... ok
+test_test_features_never_change_fit (test_similarity.Contracts.test_test_features_never_change_fit) ... ok
+test_train_reproducible_and_encoder_untouched (test_similarity.Contracts.test_train_reproducible_and_encoder_untouched) ... ok
+test_atomic_create_only_private_and_finite (test_similarity.LocalAudio.test_atomic_create_only_private_and_finite) ... ok
+test_cli_success_error_and_roundtrip (test_similarity.LocalAudio.test_cli_success_error_and_roundtrip) ... ok
+test_controlled_rhythm_timbre_energy_probes (test_similarity.LocalAudio.test_controlled_rhythm_timbre_energy_probes) ... ok
+test_file_change_and_evidence_change_are_rejected (test_similarity.LocalAudio.test_file_change_and_evidence_change_are_rejected) ... ok
+test_local_search_no_self_and_deterministic (test_similarity.LocalAudio.test_local_search_no_self_and_deterministic) ... ok
+test_remote_never_falls_back_or_fetches (test_similarity.LocalAudio.test_remote_never_falls_back_or_fetches) ... ok
+test_shapes_repeatability_and_real_signal_timbre (test_similarity.LocalAudio.test_shapes_repeatability_and_real_signal_timbre) ... ok
+test_silence_and_short_decode_fail (test_similarity.LocalAudio.test_silence_and_short_decode_fail) ... ok
+test_snapshot_hash_and_unlisted_code (test_similarity.LocalAudio.test_snapshot_hash_and_unlisted_code) ... ok
+test_unknown_query_needs_reviewed_rights (test_similarity.LocalAudio.test_unknown_query_needs_reviewed_rights) ... ok
+
+----------------------------------------------------------------------
+Ran 48 tests in 4.160s
+
+OK

@@ -1,0 +1,75 @@
+{
+  "base_head": "277f26d56cc71bcca02a61d88414062f13f3ac6c",
+  "code_head": "e7e59a2b020780f6aeae5d047c2c64ea46e1b846",
+  "code_sha256": {
+    "ACOUSTIC_RETRIEVAL_SPEC.md": "44b0262aae9a58733dc6549f8c59c34b912b0acd2d4ec231d64400966aa5c06d",
+    "acoustic_similarity/acoustic_retrieval.py": "4e0e991c1a7b863172a563658eef92d3344c356fd0326c4a476132f74ac67512",
+    "acoustic_similarity/features.py": "c0fb2c34a00e9986ea328870546fbeb0b26c294c8093e37353469879d1cf8583",
+    "acoustic_similarity/lab_audio.py": "a5efdb715a4001c9156677695ce021d46691d96bf0317a7b8d0d79baf980392c",
+    "acoustic_similarity/rhythm_auto.py": "fba1fa59895b6574895d9e188c1f81399d95db750434345b96e8ccbd11e1060b",
+    "acoustic_similarity/rhythm_pi.py": "f4b320b48f3f7de1db06aa4cd617582f752aea92013ac793d81f65a889cf46ae",
+    "acoustic_similarity/rhythm_v2.py": "4220f21a8afc4b972050253742976297f0cbb9cf5034abc4e1f5637a91cc5585",
+    "requirements.lock": "ae514d65c8c8239b5f4374be95d1d54581f88d2821cf8cc5b5bcfe13df4ec19f",
+    "scripts/acoustic_retrieval_study.py": "13407706f0bc9c2e5a15394b7a924df335123af3b7c2d681d45954562fcf4029",
+    "scripts/rhythm_pi_study.py": "b76ef1d0b54e1c323b45ca019faf895f8235b18fc057733a632e4c2f2a8498cb",
+    "tests/test_acoustic_retrieval.py": "857cd0f29fbe03cb685d04e1f5b000d9cba33d3141fbd78932f3b63d09fb2539"
+  },
+  "distance_schema": "hellinger-rms-equal-aspects.acoustic-v1",
+  "dsp_index_sha256": "9055df4ac720fa5c3ca83ff69c363bd7e33e1962cab40cb64cd642aa6ef1152f",
+  "feature_schema": "pi610-lab-timbre85-energy10.acoustic-v1",
+  "input_preflight": "PASS",
+  "manifest_sha256": "24ce999d2b1175640ad4ae73e0d1c487a8fa80cc2ca5581819f391e0a29a0b1e",
+  "order": "Frozen before decoding and before corrected PI/general real rankings",
+  "pi_index_sha256": "e5b4bc2d890b8d6dbea7353b8a9de87292ec761219aacf6f04f315b261b8ae87",
+  "policy": {
+    "mask_order": [
+      "periodicity_0",
+      "periodicity_1",
+      "periodicity_2",
+      "periodicity_3",
+      "intervals",
+      "density",
+      "tempo",
+      "timbre",
+      "energy"
+    ],
+    "missing_policy": "common-mask-coverage-first.v1",
+    "near_tie_distance": 0.005,
+    "normalization": "PI unit-mass histograms; DSP fixed scales / 3; no fitted statistics",
+    "order": "descending common weight, fixed availability mask, common distance, ID",
+    "perturbation": {
+      "coordinate_delta": 0.005,
+      "histogram_replacement_mass": 0.01,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "profiles": {
+      "acoustic": {
+        "density": 4,
+        "energy": 12,
+        "intervals": 4,
+        "periodicity_0": 1,
+        "periodicity_1": 1,
+        "periodicity_2": 1,
+        "periodicity_3": 1,
+        "tempo": 12,
+        "timbre": 12
+      },
+      "pi_coverage_v2": {
+        "density": 4,
+        "intervals": 4,
+        "periodicity_0": 1,
+        "periodicity_1": 1,
+        "periodicity_2": 1,
+        "periodicity_3": 1,
+        "tempo": 4
+      }
+    },
+    "quality": "UNVALIDATED; coverage is availability, not correctness"
+  }
+}

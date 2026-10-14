@@ -1,0 +1,36 @@
+{
+  "verified_on": "2026-10-11",
+  "groove": {
+    "page": "https://magenta.tensorflow.org/datasets/groove",
+    "license": "CC-BY-4.0",
+    "license_page_snapshot_sha256": "74714eee417f51ea6c4e6198050d6e46c76f20a7ae3e91104e2dc348cac648b1",
+    "midi_archive_bytes": 3260318,
+    "audio_archive_bytes": 5111599714,
+    "range_probe": {
+      "http_status": 206,
+      "content_range": "bytes 5111534178-5111599713/5111599714",
+      "received_bytes": 65536
+    }
+  },
+  "nsynth": {
+    "page": "https://magenta.tensorflow.org/datasets/nsynth",
+    "license": "CC-BY-4.0",
+    "license_page_snapshot_sha256": "2eb0183be936e9672f07d4b8abc903ce9fba68bafdda5d6b0d9c89cfdd7d33de",
+    "downloaded_audio_bytes": 0,
+    "official_download_host_https": "certificate hostname mismatch; verification was not disabled",
+    "test_https_bucket_url": "https://storage.googleapis.com/download.magenta.tensorflow.org/datasets/nsynth/nsynth-test.jsonwav.tar.gz",
+    "test_https_etag": "5e6f8719bf7e16ad0a00d518b78af77d",
+    "test_https_generation": "1491603911045000",
+    "jsonwav_bytes": {
+      "train": 23815298079,
+      "valid": 1068767009,
+      "test": 349501546
+    },
+    "tfrecord_bytes_from_tfds_checksums": {
+      "train": 74159943680,
+      "valid": 3250995200,
+      "test": 1050327040
+    },
+    "tfds_checksum_source": "https://github.com/tensorflow/datasets/blob/master/tensorflow_datasets/datasets/nsynth/checksums.tsv"
+  }
+}
