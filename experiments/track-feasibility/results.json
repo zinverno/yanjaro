@@ -1,0 +1,3608 @@
+{
+  "schema": "yanjaro.track-feasibility.results.v1",
+  "sample_sha256": "7499bd512e07694e841054f70b7cb58d6bc9d6c1c43489884b8ff656ca3a29d5",
+  "observed_date": "2026-10-15",
+  "summary": {
+    "sample_size": 30,
+    "public_id_attestations": 30,
+    "primary_yandex_partial_metadata": 13,
+    "full_yandex_metadata": 0,
+    "canonical_region_pages": 6,
+    "canonical_tool_errors": 24,
+    "external_candidate_rows": 19,
+    "release_crosswalk_rows": 1,
+    "exact_recording_matches": 0,
+    "permitted_acoustic_sources_verified": 0,
+    "acoustic_vectors": 0,
+    "without_end_to_end_solution": 30,
+    "status_counts": {
+      "BLOCKED": 17,
+      "METADATA_ONLY": 13
+    }
+  },
+  "tracks": [
+    {
+      "sample_no": 1,
+      "yandex_track_id": "38633760",
+      "yandex_album_id": "10373",
+      "discovery_claim": {
+        "artist": "Кино",
+        "title": "Кукушка"
+      },
+      "stratum": {
+        "market": "ru",
+        "popularity_intent": "well_known",
+        "recording_intent": "album"
+      },
+      "discovery_url": "https://t.me/s/zola_of_renovation?before=16103",
+      "discovery_evidence_type": "linked_title_only",
+      "yandex_url": "https://music.yandex.ru/album/10373/track/38633760",
+      "discovery": {
+        "source_url": "https://t.me/s/zola_of_renovation?before=16103",
+        "evidence_type": "linked_title_only",
+        "cache_age": "5 months ago",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/album/10373/track/38633760",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": "last month",
+        "http_status": null,
+        "outcome": "REGION_UNAVAILABLE",
+        "detail": "Regional availability page"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": "10373",
+          "basis": "public_link_path_only",
+          "source_url": "https://t.me/s/zola_of_renovation?before=16103",
+          "reason": "Numeric album URL does not establish release name or master."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Кино\" \"Кукушка\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_release",
+          "id": "6b7237eb-4def-40e0-a049-e1c20d97d0b6",
+          "identity": "CANDIDATE_ONLY",
+          "release": "Кино",
+          "source_url": "https://musicbrainz.org/release/6b7237eb-4def-40e0-a049-e1c20d97d0b6",
+          "note": "Album candidate only; no Yandex duration or ISRC. Other releases/remasters exist."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 2,
+      "yandex_track_id": "48464196",
+      "yandex_album_id": null,
+      "discovery_claim": {
+        "artist": "StaFFорд63",
+        "title": "Просто так"
+      },
+      "stratum": {
+        "market": "ru",
+        "popularity_intent": "well_known",
+        "recording_intent": "unspecified"
+      },
+      "discovery_url": "https://yandex.ru/support2/guide-alice-answer/ru/muzyka",
+      "discovery_evidence_type": "yandex_help",
+      "yandex_url": "https://music.yandex.ru/track/48464196",
+      "discovery": {
+        "source_url": "https://yandex.ru/support2/guide-alice-answer/ru/muzyka",
+        "evidence_type": "yandex_help",
+        "cache_age": "today",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/track/48464196",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "URL https://music.yandex.ru/track/48464196 is not accessible via this tool."
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": "StaFFорд63",
+          "basis": "yandex_public_page",
+          "source_url": "https://yandex.ru/support2/guide-alice-answer/ru/muzyka"
+        },
+        "title": {
+          "value": "Просто так",
+          "basis": "yandex_public_page",
+          "source_url": "https://yandex.ru/support2/guide-alice-answer/ru/muzyka"
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"StaFFорд63\" \"Просто так\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "NO_RELEVANT_SEARCH_RESULT",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "METADATA_ONLY",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 3,
+      "yandex_track_id": "135390629",
+      "yandex_album_id": "35071026",
+      "discovery_claim": {
+        "artist": "Дайте танк (!)",
+        "title": "Логика"
+      },
+      "stratum": {
+        "market": "ru",
+        "popularity_intent": "indie",
+        "recording_intent": "single"
+      },
+      "discovery_url": "https://dtf.ru/music/3428398-daite-tank-vernulis-vyshel-singl-logika",
+      "discovery_evidence_type": "secondary",
+      "yandex_url": "https://music.yandex.ru/album/35071026/track/135390629",
+      "discovery": {
+        "source_url": "https://dtf.ru/music/3428398-daite-tank-vernulis-vyshel-singl-logika",
+        "evidence_type": "secondary",
+        "cache_age": null,
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/album/35071026/track/135390629",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "URL https://music.yandex.ru/album/35071026/track/135390629 is not accessible via this tool."
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": "35071026",
+          "basis": "public_link_path_only",
+          "source_url": "https://dtf.ru/music/3428398-daite-tank-vernulis-vyshel-singl-logika",
+          "reason": "Numeric album URL does not establish release name or master."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Дайте танк (!)\" \"Логика\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_artist",
+          "id": "1768e417-3deb-47df-907a-1f457562cbd9",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Логика",
+          "duration_ms": 179000,
+          "release_candidates": [
+            "Логика",
+            "Хрупко"
+          ],
+          "source_url": "https://musicbrainz.org/artist/1768e417-3deb-47df-907a-1f457562cbd9/recordings",
+          "note": "Artist recordings page; no specific recording crosswalk."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 4,
+      "yandex_track_id": "136723104",
+      "yandex_album_id": "35656375",
+      "discovery_claim": {
+        "artist": "Дайте танк (!)",
+        "title": "Фамилия"
+      },
+      "stratum": {
+        "market": "ru",
+        "popularity_intent": "indie",
+        "recording_intent": "album"
+      },
+      "discovery_url": "https://amdm.ru/akkordi/dayte_tank/210849/familiya/",
+      "discovery_evidence_type": "secondary",
+      "yandex_url": "https://music.yandex.ru/album/35656375/track/136723104",
+      "discovery": {
+        "source_url": "https://amdm.ru/akkordi/dayte_tank/210849/familiya/",
+        "evidence_type": "secondary",
+        "cache_age": null,
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/album/35656375/track/136723104",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "URL https://music.yandex.ru/album/35656375/track/136723104 is not accessible via this tool."
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": "35656375",
+          "basis": "public_link_path_only",
+          "source_url": "https://amdm.ru/akkordi/dayte_tank/210849/familiya/",
+          "reason": "Numeric album URL does not establish release name or master."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Дайте танк (!)\" \"Фамилия\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "NO_RELEVANT_SEARCH_RESULT",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 5,
+      "yandex_track_id": "136723102",
+      "yandex_album_id": "35656375",
+      "discovery_claim": {
+        "artist": "Дайте танк (!)",
+        "title": "Конец"
+      },
+      "stratum": {
+        "market": "ru",
+        "popularity_intent": "indie",
+        "recording_intent": "album"
+      },
+      "discovery_url": "https://www.amdm.ru/akkordi/dayte_tank/210845/konets/",
+      "discovery_evidence_type": "secondary",
+      "yandex_url": "https://music.yandex.ru/album/35656375/track/136723102",
+      "discovery": {
+        "source_url": "https://www.amdm.ru/akkordi/dayte_tank/210845/konets/",
+        "evidence_type": "secondary",
+        "cache_age": null,
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/album/35656375/track/136723102",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": "last month",
+        "http_status": null,
+        "outcome": "REGION_UNAVAILABLE",
+        "detail": "Regional availability page"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": "35656375",
+          "basis": "public_link_path_only",
+          "source_url": "https://www.amdm.ru/akkordi/dayte_tank/210845/konets/",
+          "reason": "Numeric album URL does not establish release name or master."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Дайте танк\" \"Конец\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_artist",
+          "id": "1768e417-3deb-47df-907a-1f457562cbd9",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Конец",
+          "duration_ms": 206000,
+          "release": "Хрупко",
+          "source_url": "https://musicbrainz.org/artist/1768e417-3deb-47df-907a-1f457562cbd9/recordings",
+          "note": "No Yandex-side recording identifiers."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 6,
+      "yandex_track_id": "34942045",
+      "yandex_album_id": "12348427",
+      "discovery_claim": {
+        "artist": "Дайте танк (!)",
+        "title": "Утро"
+      },
+      "stratum": {
+        "market": "ru",
+        "popularity_intent": "well_known",
+        "recording_intent": "album"
+      },
+      "discovery_url": "https://podcasts.apple.com/dk/podcast/алексея-иванова-земля-сортировочная-глава-7/id1521745654?i=1000668182392&l=da",
+      "discovery_evidence_type": "secondary",
+      "yandex_url": "https://music.yandex.ru/album/12348427/track/34942045",
+      "discovery": {
+        "source_url": "https://podcasts.apple.com/dk/podcast/алексея-иванова-земля-сортировочная-глава-7/id1521745654?i=1000668182392&l=da",
+        "evidence_type": "secondary",
+        "cache_age": null,
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/album/12348427/track/34942045",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": "2 days ago",
+        "http_status": null,
+        "outcome": "REGION_UNAVAILABLE",
+        "detail": "Regional availability page"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": "12348427",
+          "basis": "public_link_path_only",
+          "source_url": "https://podcasts.apple.com/dk/podcast/алексея-иванова-земля-сортировочная-глава-7/id1521745654?i=1000668182392&l=da",
+          "reason": "Numeric album URL does not establish release name or master."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Дайте танк\" \"Утро\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "NO_RELEVANT_SEARCH_RESULT",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 7,
+      "yandex_track_id": "149359136",
+      "yandex_album_id": "41194184",
+      "discovery_claim": {
+        "artist": "Дайте танк (!)",
+        "title": "Команда"
+      },
+      "stratum": {
+        "market": "ru",
+        "popularity_intent": "indie",
+        "recording_intent": "album"
+      },
+      "discovery_url": "https://daite-tank.fandom.com/ru/wiki/Команда",
+      "discovery_evidence_type": "secondary",
+      "yandex_url": "https://music.yandex.ru/album/41194184/track/149359136",
+      "discovery": {
+        "source_url": "https://daite-tank.fandom.com/ru/wiki/Команда",
+        "evidence_type": "secondary",
+        "cache_age": null,
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/album/41194184/track/149359136",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "URL https://music.yandex.ru/album/41194184/track/149359136 is not accessible via this tool."
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": "41194184",
+          "basis": "public_link_path_only",
+          "source_url": "https://daite-tank.fandom.com/ru/wiki/Команда",
+          "reason": "Numeric album URL does not establish release name or master."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Дайте танк\" \"Команда\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_release",
+          "id": "6b3724b8-7133-4602-8614-96ad5529cf67",
+          "identity": "RELEASE_LINK_SUPPORTED",
+          "release": "Радио Пепел",
+          "title": "Команда",
+          "track_position": 7,
+          "duration_ms": 174000,
+          "barcode": "3618029124569",
+          "yandex_album_id": "41194184",
+          "release_date": "2026-03-27",
+          "source_url": "https://musicbrainz.org/release/6b3724b8-7133-4602-8614-96ad5529cf67",
+          "note": "MusicBrainz explicitly links the same Yandex album. Release identity only; not the audio master."
+        },
+        {
+          "namespace": "musicbrainz_recording",
+          "id": "9764cc8e-f566-4c7a-bb04-8d6d405237ba",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Команда",
+          "duration_ms": 174000,
+          "isrc": "FR59R2630848",
+          "isrc_source_url": "https://musicbrainz.org/artist/1768e417-3deb-47df-907a-1f457562cbd9/recordings",
+          "source_url": "https://musicbrainz.org/recording/9764cc8e-f566-4c7a-bb04-8d6d405237ba",
+          "note": "Recording ID obtained from release track link; recording page cache miss. ISRC is external only."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "ATTEMPTED_TOOL_ERROR",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": true,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 8,
+      "yandex_track_id": "128848555",
+      "yandex_album_id": "32381297",
+      "discovery_claim": {
+        "artist": "АРИНА",
+        "title": "Жить"
+      },
+      "stratum": {
+        "market": "ru",
+        "popularity_intent": "lesser_known",
+        "recording_intent": "single"
+      },
+      "discovery_url": "https://leadbook.ru/users/arina",
+      "discovery_evidence_type": "artist_profile",
+      "yandex_url": "https://music.yandex.ru/album/32381297/track/128848555",
+      "discovery": {
+        "source_url": "https://leadbook.ru/users/arina",
+        "evidence_type": "artist_profile",
+        "cache_age": "6 days ago",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/album/32381297/track/128848555",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "URL https://music.yandex.ru/album/32381297/track/128848555 is not accessible via this tool."
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": "32381297",
+          "basis": "public_link_path_only",
+          "source_url": "https://leadbook.ru/users/arina",
+          "reason": "Numeric album URL does not establish release name or master."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"АРИНА\" \"Жить\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "NO_RELEVANT_SEARCH_RESULT",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 9,
+      "yandex_track_id": "109087243",
+      "yandex_album_id": "24147330",
+      "discovery_claim": {
+        "artist": "Ляпота",
+        "title": "Куда летит земля"
+      },
+      "stratum": {
+        "market": "ru",
+        "popularity_intent": "lesser_known",
+        "recording_intent": "album"
+      },
+      "discovery_url": "https://tenchat.ru/media/906152-zachem-ya-pishu-pesni",
+      "discovery_evidence_type": "artist_post",
+      "yandex_url": "https://music.yandex.ru/album/24147330/track/109087243",
+      "discovery": {
+        "source_url": "https://tenchat.ru/media/906152-zachem-ya-pishu-pesni",
+        "evidence_type": "artist_post",
+        "cache_age": "4 weeks ago",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/album/24147330/track/109087243",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "URL https://music.yandex.ru/album/24147330/track/109087243 is not accessible via this tool."
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": "24147330",
+          "basis": "public_link_path_only",
+          "source_url": "https://tenchat.ru/media/906152-zachem-ya-pishu-pesni",
+          "reason": "Numeric album URL does not establish release name or master."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Ляпота\" \"Куда летит земля\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "NO_RELEVANT_SEARCH_RESULT",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 10,
+      "yandex_track_id": "18307527",
+      "yandex_album_id": "2032899",
+      "discovery_claim": {
+        "artist": "Земфира",
+        "title": "Выкинуть тебя из головы"
+      },
+      "stratum": {
+        "market": "ru",
+        "popularity_intent": "well_known",
+        "recording_intent": "album"
+      },
+      "discovery_url": "https://db.chgk.info/contact/question/okmar16.7/2?destination=%2Ftour%2Fokmar16",
+      "discovery_evidence_type": "secondary",
+      "yandex_url": "https://music.yandex.ru/album/2032899/track/18307527",
+      "discovery": {
+        "source_url": "https://db.chgk.info/contact/question/okmar16.7/2?destination=%2Ftour%2Fokmar16",
+        "evidence_type": "secondary",
+        "cache_age": null,
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/album/2032899/track/18307527",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "URL https://music.yandex.ru/album/2032899/track/18307527 is not accessible via this tool."
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": "2032899",
+          "basis": "public_link_path_only",
+          "source_url": "https://db.chgk.info/contact/question/okmar16.7/2?destination=%2Ftour%2Fokmar16",
+          "reason": "Numeric album URL does not establish release name or master."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Земфира\" \"Выкинуть тебя из головы\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "NO_RELEVANT_SEARCH_RESULT",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 11,
+      "yandex_track_id": "34084454",
+      "yandex_album_id": "4181557",
+      "discovery_claim": {
+        "artist": "Сплин",
+        "title": "Феллини"
+      },
+      "stratum": {
+        "market": "ru",
+        "popularity_intent": "well_known",
+        "recording_intent": "album"
+      },
+      "discovery_url": "https://www.db.chgk.info/tour/bryans17",
+      "discovery_evidence_type": "secondary",
+      "yandex_url": "https://music.yandex.ru/album/4181557/track/34084454",
+      "discovery": {
+        "source_url": "https://www.db.chgk.info/tour/bryans17",
+        "evidence_type": "secondary",
+        "cache_age": "3 weeks ago",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/album/4181557/track/34084454",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": "3 weeks ago",
+        "http_status": null,
+        "outcome": "REGION_UNAVAILABLE",
+        "detail": "Regional availability page"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": "4181557",
+          "basis": "public_link_path_only",
+          "source_url": "https://www.db.chgk.info/tour/bryans17",
+          "reason": "Numeric album URL does not establish release name or master."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Сплин\" \"Феллини\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_release",
+          "id": "66031603-d986-49ae-9e92-60431eb3e18a",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Феллини",
+          "artist": "Сплин и Би-2",
+          "duration_ms": 277000,
+          "release": "Нашествие. Шаг 7",
+          "source_url": "https://musicbrainz.org/release/66031603-d986-49ae-9e92-60431eb3e18a",
+          "note": "Other studio and live recordings exist; Yandex version unknown."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 12,
+      "yandex_track_id": "70768342",
+      "yandex_album_id": "11990005",
+      "discovery_claim": {
+        "artist": "Русский Размер",
+        "title": "Ангел дня"
+      },
+      "stratum": {
+        "market": "ru",
+        "popularity_intent": "lesser_known",
+        "recording_intent": "live_candidate"
+      },
+      "discovery_url": "https://club734130.orgs.biz/",
+      "discovery_evidence_type": "mirrored_artist_post_version_unverified",
+      "yandex_url": "https://music.yandex.ru/album/11990005/track/70768342",
+      "discovery": {
+        "source_url": "https://club734130.orgs.biz/",
+        "evidence_type": "mirrored_artist_post_version_unverified",
+        "cache_age": null,
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/album/11990005/track/70768342",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": "3 months ago",
+        "http_status": null,
+        "outcome": "REGION_UNAVAILABLE",
+        "detail": "Regional availability page"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": "11990005",
+          "basis": "public_link_path_only",
+          "source_url": "https://club734130.orgs.biz/",
+          "reason": "Numeric album URL does not establish release name or master."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Русский Размер\" \"Ангел дня\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_release",
+          "id": "6f3293af-6e07-4de3-a528-1185a1c21a6b",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Ангел дня",
+          "duration_ms": 288000,
+          "release": "650",
+          "source_url": "https://musicbrainz.org/release/6f3293af-6e07-4de3-a528-1185a1c21a6b",
+          "note": "The live video discovery post does not establish that its catalog URL is live."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk",
+        "Live stratum unverified; video label is insufficient"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 13,
+      "yandex_track_id": "74257871",
+      "yandex_album_id": "12969386",
+      "discovery_claim": {
+        "artist": "Русский Размер",
+        "title": "Весь этот мир"
+      },
+      "stratum": {
+        "market": "ru",
+        "popularity_intent": "lesser_known",
+        "recording_intent": "live_candidate"
+      },
+      "discovery_url": "https://club734130.orgs.biz/",
+      "discovery_evidence_type": "mirrored_artist_post_version_unverified",
+      "yandex_url": "https://music.yandex.ru/album/12969386/track/74257871",
+      "discovery": {
+        "source_url": "https://club734130.orgs.biz/",
+        "evidence_type": "mirrored_artist_post_version_unverified",
+        "cache_age": null,
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/album/12969386/track/74257871",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "Failed to fetch https://music.yandex.ru/album/12969386/track/74257871: Cache miss"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": "12969386",
+          "basis": "public_link_path_only",
+          "source_url": "https://club734130.orgs.biz/",
+          "reason": "Numeric album URL does not establish release name or master."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Русский Размер\" \"Весь этот мир\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "NO_RELEVANT_SEARCH_RESULT",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk",
+        "Live stratum unverified; video label is insufficient"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 14,
+      "yandex_track_id": "30219036",
+      "yandex_album_id": null,
+      "discovery_claim": {
+        "artist": "Complex Numbers",
+        "title": "Пути цивилизаций [2002 Version]"
+      },
+      "stratum": {
+        "market": "ru",
+        "popularity_intent": "lesser_known",
+        "recording_intent": "versioned"
+      },
+      "discovery_url": "https://www.wikidata.org/wiki/Property:P13289",
+      "discovery_evidence_type": "wikidata_example_artist_unverified",
+      "yandex_url": "https://music.yandex.ru/track/30219036",
+      "discovery": {
+        "source_url": "https://www.wikidata.org/wiki/Property:P13289",
+        "evidence_type": "wikidata_example_artist_unverified",
+        "cache_age": null,
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/track/30219036",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "URL https://music.yandex.ru/track/30219036 is not accessible via this tool."
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        }
+      },
+      "external_search": {
+        "query": "site:wikidata.org \"Paths of Civilizations\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "wikidata_item",
+          "id": "Q123003087",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Пути цивилизаций [2002 Version]",
+          "amazon_track_candidate": "B01JKKN052",
+          "promodj_candidate": "complexnumbers:7595429",
+          "source_url": "https://www.wikidata.org/wiki/Property:P13289",
+          "note": "Shared Wikidata item/examples are catalog pointers, not audio/master proof."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 15,
+      "yandex_track_id": "60050452",
+      "yandex_album_id": null,
+      "discovery_claim": {
+        "artist": null,
+        "title": "Black coal"
+      },
+      "stratum": {
+        "market": "ru",
+        "popularity_intent": "lesser_known",
+        "recording_intent": "unspecified"
+      },
+      "discovery_url": "https://www.wikidata.org/wiki/Property:P13289",
+      "discovery_evidence_type": "wikidata_example_artist_unverified",
+      "yandex_url": "https://music.yandex.ru/track/60050452",
+      "discovery": {
+        "source_url": "https://www.wikidata.org/wiki/Property:P13289",
+        "evidence_type": "wikidata_example_artist_unverified",
+        "cache_age": null,
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/track/60050452",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "URL https://music.yandex.ru/track/60050452 is not accessible via this tool."
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        }
+      },
+      "external_search": {
+        "query": "site:wikidata.org \"Black coal\" \"Yandex\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "wikidata_item",
+          "id": "Q116789893",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Black coal",
+          "artist_candidate": "Meanna",
+          "release_candidate": "Не приходя в сознание",
+          "album_item": "Q116778712",
+          "source_url": "https://www.wikidata.org/wiki/Property:P13289",
+          "note": "Track-ID example exists; artist/release from album item, not verified Yandex metadata."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 16,
+      "yandex_track_id": "2278985",
+      "yandex_album_id": null,
+      "discovery_claim": {
+        "artist": "Adele",
+        "title": "Rolling In The Deep"
+      },
+      "stratum": {
+        "market": "international",
+        "popularity_intent": "well_known",
+        "recording_intent": "unspecified"
+      },
+      "discovery_url": "https://music.yandex.ru/translate/track/2278985",
+      "discovery_evidence_type": "yandex_translation",
+      "yandex_url": "https://music.yandex.ru/track/2278985",
+      "discovery": {
+        "source_url": "https://music.yandex.ru/translate/track/2278985",
+        "evidence_type": "yandex_translation",
+        "cache_age": "4 weeks ago",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/track/2278985",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "Failed to fetch https://music.yandex.ru/track/2278985: Error fetching https://music.yandex.ru/track/2278985"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": "Adele",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/2278985"
+        },
+        "title": {
+          "value": "Rolling In The Deep",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/2278985"
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org/recording/ \"Adele\" \"Rolling In The Deep\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_release",
+          "id": "cdd4879d-8727-4648-ba59-966a0eab46de",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Rolling in the Deep",
+          "source_url": "https://musicbrainz.org/release/cdd4879d-8727-4648-ba59-966a0eab46de",
+          "note": "Multiple single/album/remix editions; target version unknown."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "METADATA_ONLY",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 17,
+      "yandex_track_id": "9053074",
+      "yandex_album_id": null,
+      "discovery_claim": {
+        "artist": "Adele",
+        "title": "Skyfall"
+      },
+      "stratum": {
+        "market": "international",
+        "popularity_intent": "well_known",
+        "recording_intent": "single_candidate"
+      },
+      "discovery_url": "https://music.yandex.ru/translate/track/9053074",
+      "discovery_evidence_type": "yandex_translation",
+      "yandex_url": "https://music.yandex.ru/track/9053074",
+      "discovery": {
+        "source_url": "https://music.yandex.ru/translate/track/9053074",
+        "evidence_type": "yandex_translation",
+        "cache_age": "3 weeks ago",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/track/9053074",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "URL https://music.yandex.ru/track/9053074 is not accessible via this tool."
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": "Adele",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/9053074"
+        },
+        "title": {
+          "value": "Skyfall",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/9053074"
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org/recording/ \"Adele\" \"Skyfall\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_release",
+          "id": "04793a87-6013-4fa6-82e3-e79f6b66ec10",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Skyfall",
+          "duration_ms": 286000,
+          "barcode": "886443673632",
+          "release_type": "Single + Soundtrack",
+          "source_url": "https://musicbrainz.org/release/04793a87-6013-4fa6-82e3-e79f6b66ec10",
+          "note": "Cached search result available; direct page fetch returned 429. Not an exact recording match."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "METADATA_ONLY",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 18,
+      "yandex_track_id": "4684878",
+      "yandex_album_id": null,
+      "discovery_claim": {
+        "artist": "Adele",
+        "title": "He Won't Go"
+      },
+      "stratum": {
+        "market": "international",
+        "popularity_intent": "album_cut",
+        "recording_intent": "album_candidate"
+      },
+      "discovery_url": "https://music.yandex.ru/translate/track/4684878",
+      "discovery_evidence_type": "yandex_translation",
+      "yandex_url": "https://music.yandex.ru/track/4684878",
+      "discovery": {
+        "source_url": "https://music.yandex.ru/translate/track/4684878",
+        "evidence_type": "yandex_translation",
+        "cache_age": "2 weeks ago",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/track/4684878",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "URL https://music.yandex.ru/track/4684878 is not accessible via this tool."
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": "Adele",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/4684878"
+        },
+        "title": {
+          "value": "He Won't Go",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/4684878"
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org/recording/ \"Adele\" \"He Won't Go\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_release",
+          "id": "6da6b980-91da-4802-ab31-d07ea13b18e0",
+          "identity": "REJECTED_VARIANT",
+          "title": "He Won't Go",
+          "release": "21 (Bonus Tracks Edition)",
+          "release_status": "Unofficial",
+          "source_url": "https://musicbrainz.org/release/6da6b980-91da-4802-ab31-d07ea13b18e0",
+          "note": "Search hit explicitly marked unofficial; not accepted as the Yandex release."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "METADATA_ONLY",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 19,
+      "yandex_track_id": "6687686",
+      "yandex_album_id": null,
+      "discovery_claim": {
+        "artist": "Adele",
+        "title": "Someone Like You"
+      },
+      "stratum": {
+        "market": "international",
+        "popularity_intent": "well_known",
+        "recording_intent": "unspecified"
+      },
+      "discovery_url": "https://music.yandex.ru/translate/track/6687686",
+      "discovery_evidence_type": "yandex_translation",
+      "yandex_url": "https://music.yandex.ru/track/6687686",
+      "discovery": {
+        "source_url": "https://music.yandex.ru/translate/track/6687686",
+        "evidence_type": "yandex_translation",
+        "cache_age": "2 weeks ago",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/track/6687686",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "Failed to fetch https://music.yandex.ru/track/6687686: Cache miss"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": "Adele",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/6687686"
+        },
+        "title": {
+          "value": "Someone Like You",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/6687686"
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org/recording/ \"Adele\" \"Someone Like You\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_release",
+          "id": "ccc919d2-5a02-47d3-9480-be00c57fcb52",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Someone Like You",
+          "release_type": "Single",
+          "source_url": "https://musicbrainz.org/release/ccc919d2-5a02-47d3-9480-be00c57fcb52",
+          "note": "Search result only; direct fetch 429. Live alternative prevents title-based choice."
+        },
+        {
+          "namespace": "musicbrainz_release",
+          "id": "504b36e7-6f29-45c0-9ac4-ecf37976e4c4",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Someone Like You",
+          "duration_ms": 317000,
+          "version": "live, The Current Studios, 2010-10-21",
+          "source_url": "https://musicbrainz.org/release/504b36e7-6f29-45c0-9ac4-ecf37976e4c4",
+          "note": "Alternative recording, not assigned to Yandex ID."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "METADATA_ONLY",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 20,
+      "yandex_track_id": "5169145",
+      "yandex_album_id": null,
+      "discovery_claim": {
+        "artist": "Rihanna",
+        "title": "Cockiness (Love It) Remix"
+      },
+      "stratum": {
+        "market": "international",
+        "popularity_intent": "well_known",
+        "recording_intent": "remix"
+      },
+      "discovery_url": "https://music.yandex.ru/translate/track/5169145",
+      "discovery_evidence_type": "yandex_translation",
+      "yandex_url": "https://music.yandex.ru/track/5169145",
+      "discovery": {
+        "source_url": "https://music.yandex.ru/translate/track/5169145",
+        "evidence_type": "yandex_translation",
+        "cache_age": "3 weeks ago",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/track/5169145",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "Failed to fetch https://music.yandex.ru/track/5169145: Cache miss"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": "Rihanna",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/5169145"
+        },
+        "title": {
+          "value": "Cockiness (Love It) Remix",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/5169145"
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": "remix (remixer/edition unspecified)",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/5169145"
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Rihanna\" \"Cockiness (Love It) Remix\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_release",
+          "id": "d57dc480-94c7-442d-84b1-0bc57c5b357c",
+          "identity": "REJECTED_VARIANT",
+          "release": "Talk That Talk",
+          "title": "Cockiness (Love It)",
+          "source_url": "https://musicbrainz.org/release/d57dc480-94c7-442d-84b1-0bc57c5b357c",
+          "note": "Original album search hit is not proof of the explicitly requested remix."
+        },
+        {
+          "namespace": "musicbrainz_artist",
+          "id": "25b7b584-d952-4662-a8b9-dd8cdfbfeb64",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Cockiness (Love It) (remix)",
+          "artist": "Rihanna feat. A$AP Rocky",
+          "source_url": "https://musicbrainz.org/artist/25b7b584-d952-4662-a8b9-dd8cdfbfeb64",
+          "note": "Artist discography mentions remix; no recording ID/crosswalk."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "METADATA_ONLY",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 21,
+      "yandex_track_id": "2202296",
+      "yandex_album_id": null,
+      "discovery_claim": {
+        "artist": "Rihanna",
+        "title": "S&M Remix"
+      },
+      "stratum": {
+        "market": "international",
+        "popularity_intent": "well_known",
+        "recording_intent": "remix"
+      },
+      "discovery_url": "https://music.yandex.ru/translate/track/2202296",
+      "discovery_evidence_type": "yandex_translation",
+      "yandex_url": "https://music.yandex.ru/track/2202296",
+      "discovery": {
+        "source_url": "https://music.yandex.ru/translate/track/2202296",
+        "evidence_type": "yandex_translation",
+        "cache_age": "last month",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/track/2202296",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "Failed to fetch https://music.yandex.ru/track/2202296: Cache miss"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": "Rihanna",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/2202296"
+        },
+        "title": {
+          "value": "S&M Remix",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/2202296"
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": "remix (remixer/edition unspecified)",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/2202296"
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Rihanna\" \"S&M Remix\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_release",
+          "id": "a15999eb-72e5-40d3-9040-32929d1e4551",
+          "identity": "CANDIDATE_ONLY",
+          "title": "S&M",
+          "artist": "Rihanna feat. Britney Spears",
+          "version": "remix",
+          "source_url": "https://musicbrainz.org/release/a15999eb-72e5-40d3-9040-32929d1e4551/details",
+          "note": "Remix candidate; Yandex heading does not identify featured artist or duration."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "METADATA_ONLY",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 22,
+      "yandex_track_id": "16545286",
+      "yandex_album_id": null,
+      "discovery_claim": {
+        "artist": "A$AP Ferg",
+        "title": "Shabba REMIX"
+      },
+      "stratum": {
+        "market": "international",
+        "popularity_intent": "well_known",
+        "recording_intent": "remix"
+      },
+      "discovery_url": "https://music.yandex.ru/translate/track/16545286",
+      "discovery_evidence_type": "yandex_translation",
+      "yandex_url": "https://music.yandex.ru/track/16545286",
+      "discovery": {
+        "source_url": "https://music.yandex.ru/translate/track/16545286",
+        "evidence_type": "yandex_translation",
+        "cache_age": "last month",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/track/16545286",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "Failed to fetch https://music.yandex.ru/track/16545286: Cache miss"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": "A$AP Ferg",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/16545286"
+        },
+        "title": {
+          "value": "Shabba REMIX",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/16545286"
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": "remix (remixer/edition unspecified)",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/16545286"
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"A$AP Ferg\" \"Shabba REMIX\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_artist",
+          "id": "8ab5d936-49d1-415e-92c8-151e0e7dd912",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Shabba (remix)",
+          "featured_artists": [
+            "Shabba Ranks",
+            "Migos",
+            "Busta Rhymes"
+          ],
+          "source_url": "https://musicbrainz.org/artist/8ab5d936-49d1-415e-92c8-151e0e7dd912",
+          "note": "Artist discography candidate only."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "METADATA_ONLY",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 23,
+      "yandex_track_id": "30896438",
+      "yandex_album_id": null,
+      "discovery_claim": {
+        "artist": "Ayo Jay",
+        "title": "Your Number REMIX"
+      },
+      "stratum": {
+        "market": "international",
+        "popularity_intent": "lesser_known",
+        "recording_intent": "remix"
+      },
+      "discovery_url": "https://music.yandex.ru/translate/track/30896438",
+      "discovery_evidence_type": "yandex_translation",
+      "yandex_url": "https://music.yandex.ru/track/30896438",
+      "discovery": {
+        "source_url": "https://music.yandex.ru/translate/track/30896438",
+        "evidence_type": "yandex_translation",
+        "cache_age": "last month",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/track/30896438",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "Failed to fetch https://music.yandex.ru/track/30896438: Cache miss"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": "Ayo Jay",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/30896438"
+        },
+        "title": {
+          "value": "Your Number REMIX",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/30896438"
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": "remix (remixer/edition unspecified)",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/30896438"
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Ayo Jay\" \"Your Number REMIX\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "NO_RELEVANT_SEARCH_RESULT",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "METADATA_ONLY",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 24,
+      "yandex_track_id": "60292250",
+      "yandex_album_id": "10203027",
+      "discovery_claim": {
+        "artist": "The Weeknd",
+        "title": "Blinding Lights"
+      },
+      "stratum": {
+        "market": "international",
+        "popularity_intent": "well_known",
+        "recording_intent": "album_candidate"
+      },
+      "discovery_url": "https://wild_artist.artstation.com/projects/Vg8N3Z",
+      "discovery_evidence_type": "secondary",
+      "yandex_url": "https://music.yandex.ru/album/10203027/track/60292250",
+      "discovery": {
+        "source_url": "https://wild_artist.artstation.com/projects/Vg8N3Z",
+        "evidence_type": "secondary",
+        "cache_age": "3 months ago",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/album/10203027/track/60292250",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "URL https://music.yandex.ru/album/10203027/track/60292250 is not accessible via this tool."
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": "10203027",
+          "basis": "public_link_path_only",
+          "source_url": "https://wild_artist.artstation.com/projects/Vg8N3Z",
+          "reason": "Numeric album URL does not establish release name or master."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"The Weeknd\" \"Blinding Lights\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_work",
+          "id": "04ccb6fa-84ed-49fe-94ae-15050bb86b91",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Blinding Lights",
+          "duration_candidates_ms": [
+            200000,
+            262000
+          ],
+          "source_url": "https://musicbrainz.org/work/04ccb6fa-84ed-49fe-94ae-15050bb86b91",
+          "note": "Work entity is not a recording; original and video versions differ."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 25,
+      "yandex_track_id": "286210",
+      "yandex_album_id": "29000",
+      "discovery_claim": {
+        "artist": "Korn",
+        "title": "Blind"
+      },
+      "stratum": {
+        "market": "international",
+        "popularity_intent": "well_known",
+        "recording_intent": "live_candidate"
+      },
+      "discovery_url": "https://pikabu.ru/story/yandeks_muzyika_zamenyaet_treki_9924137",
+      "discovery_evidence_type": "secondary_version_claim",
+      "yandex_url": "https://music.yandex.ru/album/29000/track/286210",
+      "discovery": {
+        "source_url": "https://pikabu.ru/story/yandeks_muzyika_zamenyaet_treki_9924137",
+        "evidence_type": "secondary_version_claim",
+        "cache_age": null,
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/album/29000/track/286210",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": "last month",
+        "http_status": null,
+        "outcome": "REGION_UNAVAILABLE",
+        "detail": "Regional availability page"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": "29000",
+          "basis": "public_link_path_only",
+          "source_url": "https://pikabu.ru/story/yandeks_muzyika_zamenyaet_treki_9924137",
+          "reason": "Numeric album URL does not establish release name or master."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Korn\" \"Blind\" \"Unplugged\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_release",
+          "id": "96433203-1e58-415e-b34e-ea6afec2b2ad",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Blind",
+          "release": "MTV Unplugged",
+          "duration_ms": 210000,
+          "version": "live",
+          "barcode": "094638602729",
+          "source_url": "https://musicbrainz.org/release/96433203-1e58-415e-b34e-ea6afec2b2ad",
+          "note": "Confirmed live external candidate, but no primary evidence that Yandex album 29000 is this release."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk",
+        "Live stratum unverified; video label is insufficient"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 4
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 26,
+      "yandex_track_id": "34431250",
+      "yandex_album_id": "4241683",
+      "discovery_claim": {
+        "artist": "Lambert",
+        "title": "In The Woods"
+      },
+      "stratum": {
+        "market": "international",
+        "popularity_intent": "lesser_known",
+        "recording_intent": "album"
+      },
+      "discovery_url": "https://yandex.ru/q/profile/cugw29f87u1ttj110g04crrrac/",
+      "discovery_evidence_type": "secondary",
+      "yandex_url": "https://music.yandex.ru/album/4241683/track/34431250",
+      "discovery": {
+        "source_url": "https://yandex.ru/q/profile/cugw29f87u1ttj110g04crrrac/",
+        "evidence_type": "secondary",
+        "cache_age": "last month",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/album/4241683/track/34431250",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "Failed to fetch https://music.yandex.ru/album/4241683/track/34431250: Cache miss"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "title": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": "4241683",
+          "basis": "public_link_path_only",
+          "source_url": "https://yandex.ru/q/profile/cugw29f87u1ttj110g04crrrac/",
+          "reason": "Numeric album URL does not establish release name or master."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Lambert\" \"In The Woods\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "IRRELEVANT_RESULTS_ONLY",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "BLOCKED",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 1
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 27,
+      "yandex_track_id": "30190577",
+      "yandex_album_id": null,
+      "discovery_claim": {
+        "artist": "Prefab Sprout",
+        "title": "Bonny"
+      },
+      "stratum": {
+        "market": "international",
+        "popularity_intent": "album_cut",
+        "recording_intent": "album_candidate"
+      },
+      "discovery_url": "https://music.yandex.ru/translate/track/30190577",
+      "discovery_evidence_type": "yandex_translation",
+      "yandex_url": "https://music.yandex.ru/track/30190577",
+      "discovery": {
+        "source_url": "https://music.yandex.ru/translate/track/30190577",
+        "evidence_type": "yandex_translation",
+        "cache_age": "3 months ago",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/track/30190577",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "URL https://music.yandex.ru/track/30190577 is not accessible via this tool."
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": "Prefab Sprout",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/30190577"
+        },
+        "title": {
+          "value": "Bonny",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/30190577"
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Prefab Sprout\" \"Bonny\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_release",
+          "id": "6af59b09-2f3c-46d3-b076-45ecfec17904",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Bonny",
+          "release": "Steve McQueen",
+          "duration_ms": 227000,
+          "source_url": "https://musicbrainz.org/release/6af59b09-2f3c-46d3-b076-45ecfec17904",
+          "note": "Two-CD edition includes alternate material; no Yandex release metadata."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "METADATA_ONLY",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 28,
+      "yandex_track_id": "392240",
+      "yandex_album_id": null,
+      "discovery_claim": {
+        "artist": "Stone Sour",
+        "title": "Orchids"
+      },
+      "stratum": {
+        "market": "international",
+        "popularity_intent": "album_cut",
+        "recording_intent": "album_candidate"
+      },
+      "discovery_url": "https://music.yandex.ru/translate/track/392240",
+      "discovery_evidence_type": "yandex_translation",
+      "yandex_url": "https://music.yandex.ru/track/392240",
+      "discovery": {
+        "source_url": "https://music.yandex.ru/translate/track/392240",
+        "evidence_type": "yandex_translation",
+        "cache_age": "2 months ago",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/track/392240",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "URL https://music.yandex.ru/track/392240 is not accessible via this tool."
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": "Stone Sour",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/392240"
+        },
+        "title": {
+          "value": "Orchids",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/392240"
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Stone Sour\" \"Orchids\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_release",
+          "id": "30a9e17b-dda1-3bc2-81ba-16d64114106e",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Orchids",
+          "release": "Stone Sour",
+          "duration_ms": 264000,
+          "source_url": "https://musicbrainz.org/release/30a9e17b-dda1-3bc2-81ba-16d64114106e",
+          "note": "Multiple editions; no master-level crosswalk."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "METADATA_ONLY",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 29,
+      "yandex_track_id": "70541",
+      "yandex_album_id": null,
+      "discovery_claim": {
+        "artist": "Puddle Of Mudd",
+        "title": "Blurry"
+      },
+      "stratum": {
+        "market": "international",
+        "popularity_intent": "well_known",
+        "recording_intent": "unspecified"
+      },
+      "discovery_url": "https://music.yandex.ru/translate/track/70541",
+      "discovery_evidence_type": "yandex_translation",
+      "yandex_url": "https://music.yandex.ru/track/70541",
+      "discovery": {
+        "source_url": "https://music.yandex.ru/translate/track/70541",
+        "evidence_type": "yandex_translation",
+        "cache_age": "last week",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/track/70541",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "Failed to fetch https://music.yandex.ru/track/70541: Cache miss"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": "Puddle Of Mudd",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/70541"
+        },
+        "title": {
+          "value": "Blurry",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/70541"
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Puddle Of Mudd\" \"Blurry\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "CANDIDATES_REVIEWED",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [
+        {
+          "namespace": "musicbrainz_work",
+          "id": "71bf0918-5c79-4015-aa08-e24d14d46463",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Blurry",
+          "duration_candidates_ms": [
+            305000,
+            298000,
+            304000,
+            260000,
+            258000
+          ],
+          "iswc": "T-071.387.399-4",
+          "source_url": "https://musicbrainz.org/work/71bf0918-5c79-4015-aa08-e24d14d46463?direction=2&link_type_id=278",
+          "note": "Work ID/ISWC identifies composition; radio edit and album recordings differ."
+        },
+        {
+          "namespace": "musicbrainz_recording",
+          "id": "ec1fc730-72a4-4086-bebf-d957a372382f",
+          "identity": "CANDIDATE_ONLY",
+          "title": "Blurry",
+          "artist": "Puddle of Mudd",
+          "version": "album version",
+          "duration_ms": 304000,
+          "isrc": "USIR10110581",
+          "spotify_track_id": "0FLBNqc5oAiTt4J2e3fe3y",
+          "source_url": "https://musicbrainz.org/recording/ec1fc730-72a4-4086-bebf-d957a372382f",
+          "note": "Recording page inspected. No Yandex-side ISRC/duration/version; candidate only."
+        }
+      ],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "ATTEMPTED_TOOL_ERROR",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "METADATA_ONLY",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    },
+    {
+      "sample_no": 30,
+      "yandex_track_id": "9829829",
+      "yandex_album_id": null,
+      "discovery_claim": {
+        "artist": "Alistair Griffin",
+        "title": "Blinding Lights"
+      },
+      "stratum": {
+        "market": "international",
+        "popularity_intent": "lesser_known",
+        "recording_intent": "unspecified"
+      },
+      "discovery_url": "https://music.yandex.ru/translate/track/9829829",
+      "discovery_evidence_type": "yandex_translation",
+      "yandex_url": "https://music.yandex.ru/track/9829829",
+      "discovery": {
+        "source_url": "https://music.yandex.ru/translate/track/9829829",
+        "evidence_type": "yandex_translation",
+        "cache_age": "2 weeks ago",
+        "current_catalog_existence_verified": false,
+        "note": "Public ID attestation; dated/cached evidence does not establish current playback availability."
+      },
+      "canonical_probe": {
+        "url": "https://music.yandex.ru/track/9829829",
+        "transport": "web_tool (may return indexed/cache content)",
+        "cache_age": null,
+        "http_status": null,
+        "outcome": "TOOL_ERROR",
+        "detail": "Failed to fetch https://music.yandex.ru/track/9829829: Cache miss"
+      },
+      "yandex_metadata": {
+        "artist": {
+          "value": "Alistair Griffin",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/9829829"
+        },
+        "title": {
+          "value": "Blinding Lights",
+          "basis": "yandex_public_page",
+          "source_url": "https://music.yandex.ru/translate/track/9829829"
+        },
+        "duration_ms": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "version": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "release": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "isrc": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        },
+        "album_id": {
+          "value": null,
+          "basis": "unavailable",
+          "source_url": null,
+          "reason": "No recording metadata obtained from canonical Yandex page."
+        }
+      },
+      "external_search": {
+        "query": "site:musicbrainz.org \"Alistair Griffin\" \"Blinding Lights\"",
+        "method": "public web index search; not exhaustive MusicBrainz API search",
+        "outcome": "NO_RELEVANT_SEARCH_RESULT",
+        "limitation": "No search hit does not establish catalog absence."
+      },
+      "external_candidates": [],
+      "source_checks": {
+        "musicbrainz": "external_candidates",
+        "jamendo": "jamendo-scan.json",
+        "yambda": "BLOCKED_ANONYMOUS_NAMESPACE",
+        "fma": "NOT_QUERIED_NO_RECORDING_CROSSWALK",
+        "acousticbrainz": "NOT_QUERIED_NO_RECORDING_MBID",
+        "mert": "NOT_RUN_AUDIO_UNAUTHORIZED_AND_NC_WEIGHTS",
+        "spotify": "NOT_QUERIED_ACCESS_AND_TERMS_BLOCKED"
+      },
+      "acoustic_vector": null,
+      "blockers": [
+        "Yandex duration/ISRC/master version unavailable",
+        "No verified recording-level external crosswalk"
+      ],
+      "status": "METADATA_ONLY",
+      "identity_checks": {
+        "yandex_isrc_available": false,
+        "yandex_duration_available": false,
+        "recording_crosswalk_verified": false,
+        "release_crosswalk_supported": false,
+        "reason": "Artist/title, release links, external ISRCs and numeric-ID equality cannot establish the same master alone."
+      },
+      "jamendo": {
+        "artist_title_candidates": [],
+        "title_only_count": 0
+      },
+      "exact_recording_match": false,
+      "permitted_acoustic_source_verified": false
+    }
+  ]
+}
