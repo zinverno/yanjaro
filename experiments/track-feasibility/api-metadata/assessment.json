@@ -1,0 +1,138 @@
+{
+  "schema": "yanjaro.api-metadata-assessment.v1",
+  "evidence_file": "owner-results.json",
+  "evidence_sha256": "3e93ca615e458fd64ee6fdcd0cfa8f8b811b886d83ff92cf4447420a98d1b943",
+  "sample_sha256": "7499bd512e07694e841054f70b7cb58d6bc9d6c1c43489884b8ff656ca3a29d5",
+  "history_sha256": "1e93cf9995398d384cc0e5685b391cb019d5da4f4c6f4066de05a110dd46bfe9",
+  "summary": {
+    "metadata_resolved": 30,
+    "with_duration": 30,
+    "with_named_track_version": 4,
+    "with_named_album_version": 6,
+    "with_named_track_or_album_version": 7,
+    "with_album_and_release_date": 30,
+    "available_true": 30,
+    "real_id_equal_returned_id": 29,
+    "real_id_different_returned_id": 1,
+    "with_matched_track_id": 0,
+    "with_substituted_track_id": 1,
+    "with_nonempty_allowed_meta_data": 0,
+    "with_isrc": 0,
+    "supported_release_track_links": 1,
+    "verified_recording_master_matches": 0,
+    "acoustic_feature_sources_verified": 0,
+    "old_blocked_to_metadata_only": 17,
+    "old_metadata_only_to_metadata_only": 13
+  },
+  "scope": "Fixed nonrandom 30-ID sample, one owner session; no population coverage estimate.",
+  "attempts": [
+    {
+      "file": "agent-preflight.json",
+      "metadata_http_calls": 0,
+      "finding": "Agent D-Bus EPERM; not evidence of absent owner credentials."
+    },
+    {
+      "file": "owner-attempt-1.json",
+      "metadata_http_calls": 1,
+      "http_status": 200,
+      "measurement_valid": false,
+      "finding": "Instrument projection rejected every correlated SDK object. NON_CATALOG_RESPONSE does not establish source or catalog absence. Which source/user_info condition triggered is unknown because raw responses were not retained."
+    },
+    {
+      "file": "owner-results.json",
+      "metadata_http_calls": 1,
+      "http_status": 200,
+      "measurement_valid": true,
+      "finding": "Separately launched by owner after projection fix; all 30 IDs resolved. No agent-run Yandex HTTP."
+    }
+  ],
+  "crosswalk_reviews": [
+    {
+      "requested_id": "149359136",
+      "status": "RELEASE_TRACK_LINK_SUPPORTED",
+      "musicbrainz_release_id": "6b3724b8-7133-4602-8614-96ad5529cf67",
+      "musicbrainz_recording_candidate_id": "9764cc8e-f566-4c7a-bb04-8d6d405237ba",
+      "source_url": "https://musicbrainz.org/release/6b3724b8-7133-4602-8614-96ad5529cf67",
+      "source_check": "Public MusicBrainz release page rechecked in this follow-up",
+      "evidence": {
+        "explicit_yandex_album_link": "41194184",
+        "artist_equal": true,
+        "title_equal": true,
+        "release_title_equal": true,
+        "release_date_equal": true,
+        "track_position_equal": true,
+        "api_duration_ms": 173660,
+        "musicbrainz_display_duration_ms": 174000,
+        "duration_delta_ms": -340
+      },
+      "recording_master_match": false,
+      "note": "Multiple catalog facts support this release track. Millisecond delta uses whole-second MusicBrainz display; audio/master identity and external ISRC are not independently verified."
+    },
+    {
+      "requested_id": "286210",
+      "status": "CANDIDATE_STRENGTHENED",
+      "musicbrainz_release_id": "96433203-1e58-415e-b34e-ea6afec2b2ad",
+      "evidence": "API explicitly returns Korn / Blind / Live / MTV Unplugged, 209620 ms; frozen MB candidate 210000 ms. Exact edition/master remains unverified.",
+      "recording_master_match": false
+    },
+    {
+      "requested_id": "70541",
+      "status": "CANDIDATE_STRENGTHENED",
+      "musicbrainz_recording_candidate_id": "ec1fc730-72a4-4086-bebf-d957a372382f",
+      "evidence": "API Puddle Of Mudd / Blurry / Come Clean, 304000 ms; matches frozen album-version candidate duration. track.version null, Yandex ISRC unavailable.",
+      "source_check": "Compared against frozen PR12 candidate; current direct MB recording page access failed, historical provenance retained.",
+      "recording_master_match": false
+    },
+    {
+      "requested_id": "4684878",
+      "status": "HISTORICAL_ARTIST_CANDIDATE_CONTRADICTED",
+      "evidence": "API artist Jenette Fox and explicit karaoke version contradict the historical Adele attribution. No replacement ID.",
+      "recording_master_match": false
+    },
+    {
+      "requested_id": "30190577",
+      "status": "HISTORICAL_ARTIST_CANDIDATE_CONTRADICTED",
+      "evidence": "API artist GENTS and single Bonny contradict the historical Prefab Sprout / Steve McQueen candidate. No replacement ID.",
+      "recording_master_match": false
+    },
+    {
+      "requested_id": "9053074",
+      "status": "SUBSTITUTION_AMBIGUITY",
+      "evidence": "Returned ID 9053074, real_id 156409914, substituted_track_id 9053074; album Glastonbury 2016 (HQ 2026 Remastered), 262290 ms, differs from frozen Skyfall single candidate 286000 ms. Nested metadata not followed; original/master equivalence unproven.",
+      "recording_master_match": false
+    },
+    {
+      "requested_id": "38633760",
+      "status": "DISCOVERY_RELEASE_DIFFERS",
+      "evidence": "API album 5307396 / Легенда, 398650 ms; discovery URL used album 10373. Do not treat the URL album or earlier Кино release candidate as confirmed by this response.",
+      "recording_master_match": false
+    },
+    {
+      "requested_id": "70768342",
+      "status": "LIVE_INTENT_NOT_CONFIRMED",
+      "evidence": "API album 650, track.version null; 287860 ms supports historical album candidate at 288000 ms but does not verify live audio.",
+      "recording_master_match": false
+    },
+    {
+      "requested_id": "74257871",
+      "status": "LIVE_INTENT_NOT_CONFIRMED",
+      "evidence": "API Я придумала сама (Весь этот мир), album Бумz-бумz, track.version null. No live recording assertion.",
+      "recording_master_match": false
+    }
+  ],
+  "technical_limits": [
+    "Track.isrc absent in SDK 3.2.0; no raw-field workaround or upgrade.",
+    "26 track.version values absent; album/title clues are separate.",
+    "All allowed meta_data values absent; matched_track IDs absent.",
+    "Agent cannot access desktop D-Bus; owner local session worked.",
+    "One substituted response prevents treating a requested ID as immutable master identity."
+  ],
+  "rights": {
+    "metadata_access": "TECHNICALLY_VERIFIED_FOR_THIS_OWNER_RUN",
+    "catalog_copying": "NOT_CLEARED",
+    "audio_processing": "NOT_AUTHORIZED",
+    "commercial_derived_features": "NOT_CLEARED",
+    "source": "https://yandex.ru/legal/music_termsofuse/ru/"
+  },
+  "acoustic_conclusion": "Unchanged: no practical rights-cleared path to acoustic features established. Metadata/release crosswalk improved; no audio or embeddings accessed."
+}

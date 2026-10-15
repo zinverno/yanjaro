@@ -1,0 +1,121 @@
+{
+  "reviewed_date": "2026-10-15",
+  "scope": "Evidence-based permission triage, not a legal opinion or granted authorization. Research access is not commercial clearance.",
+  "sources": [
+    {
+      "id": "yandex",
+      "urls": [
+        "https://yandex.ru/legal/music_termsofuse/ru/",
+        "https://yandex.ru/support/music/ru/listening/listening-offline"
+      ],
+      "license": "Service terms, not an open catalog/audio license",
+      "commercial": "NOT_CLEARED",
+      "audio_processing": "No permission established; terms 2.6/2.7 protect database/content and limit personal noncommercial use. No stream access.",
+      "derived_storage": "No blanket permission for processing or commercial derivative database established.",
+      "observed": "Public pages/links only. Canonical metadata access blocked; cached translation headings are partial evidence.",
+      "required": "Authorized metadata export/partner agreement; separate recording rights for any audio processing."
+    },
+    {
+      "id": "musicbrainz",
+      "urls": [
+        "https://musicbrainz.org/doc/About/Data_License",
+        "https://musicbrainz.org/doc/MusicBrainz_API/Rate_Limiting"
+      ],
+      "license": "Core CC0; supplementary CC-BY-NC-SA 3.0; replication feed separate terms",
+      "commercial": "CORE_METADATA_ONLY",
+      "audio_processing": "No audio rights conveyed.",
+      "derived_storage": "Core factual metadata reusable. Do not silently include NC supplementary data or commercial live feed.",
+      "observed": "Real candidate releases/work/artist IDs; one explicit Yandex album cross-link. Some 429 responses.",
+      "required": "Recording-level crosswalk and licensed feature source. 1 request/s ordinary API limit; bulk core dumps preferable at scale."
+    },
+    {
+      "id": "acousticbrainz",
+      "urls": [
+        "https://acousticbrainz.org/",
+        "https://acousticbrainz.org/data",
+        "https://acousticbrainz.readthedocs.io/api.html"
+      ],
+      "license": "Published data CC0",
+      "commercial": "PUBLISHED_FEATURE_DATA_PERMITTED",
+      "audio_processing": "Reuse precomputed data requires no audio acquisition; data license does not license source audio or new extractor/model.",
+      "derived_storage": "CC0 permits reuse/storage of published descriptors; record MBID, submission offset, extractor version and provenance.",
+      "observed": "Documentation and example descriptor JSON readable; selected candidate API returned tool error with no payload. Collection stopped in 2022; example JSON is not a sample match.",
+      "required": "Verified Yandex recording crosswalk, actual nonempty payload and variant/submission checks. Existing descriptors are not MERT embeddings."
+    },
+    {
+      "id": "yambda",
+      "urls": [
+        "https://huggingface.co/datasets/yandex/yambda",
+        "https://arxiv.org/html/2505.22238v2"
+      ],
+      "license": "Dataset card Apache-2.0 badge alongside research-only purpose wording",
+      "commercial": "CLARIFICATION_REQUIRED",
+      "audio_processing": "No source audio distributed or licensed for processing by the metadata badge.",
+      "derived_storage": "Existing embeddings published, but commercial terms ambiguous. No authorized public-ID crosswalk found.",
+      "observed": "Schema item_id/embed/normalized_embed and paper anonymization reviewed; no parquet download. Equal integers across namespaces are not a match.",
+      "required": "Publisher-provided lawful public Track ID mapping and explicit commercial/derivative-use clarification; do not deanonymize."
+    },
+    {
+      "id": "mtg_jamendo",
+      "urls": [
+        "https://github.com/MTG/mtg-jamendo-dataset/tree/cafd8e20c265ed84f1e61f1c875327971f43a62f"
+      ],
+      "license": "Code Apache-2.0; metadata CC-BY-NC-SA 4.0; audio per-track CC; dataset NC research/academic use",
+      "commercial": "WRITTEN_JAMENDO_AUTHORIZATION_REQUIRED",
+      "audio_processing": "Per-recording license must be checked; no audio acquired.",
+      "derived_storage": "Precomputed Essentia statistics and melspectrograms offered, but dataset NC restriction is not a blanket commercial grant.",
+      "observed": "Actual pinned raw.meta.tsv scanned; see jamendo-scan.json. No feature/audio archives downloaded.",
+      "required": "Correct recording candidate, per-track rights plus dataset permission for intended commercial use."
+    },
+    {
+      "id": "fma",
+      "urls": [
+        "https://github.com/mdeff/fma"
+      ],
+      "license": "Code MIT; metadata CC-BY 4.0; audio licenses selected per track",
+      "commercial": "PER_TRACK_AND_FEATURE_SCOPE_REVIEW_REQUIRED",
+      "audio_processing": "Only if the specific audio license/rights permit intended processing; metadata CC-BY does not grant audio rights.",
+      "derived_storage": "Precomputed features exist; determine license scope and per-track conditions before commercial vector reuse.",
+      "observed": "README/schema reviewed; repository data directory contains no catalog. Full metadata archive and per-track matching NOT RUN.",
+      "required": "Obtain metadata-only archive, establish recording crosswalk, verify feature/audio license. No FMA absence or coverage claim."
+    },
+    {
+      "id": "mert",
+      "urls": [
+        "https://huggingface.co/m-a-p/MERT-v1-95M"
+      ],
+      "license": "Weights CC-BY-NC 4.0",
+      "commercial": "NOT_CLEARED",
+      "audio_processing": "Separately authorized input audio required; model weights permit only NC use under this license.",
+      "derived_storage": "Do not treat saved vectors as automatically bypassing model's NC restriction; obtain permission for the intended commercial workflow.",
+      "observed": "Model card inspected; no weights download, inference or model change. Model is not a track catalog or precomputed corpus.",
+      "required": "Separate commercial model permission or separately evaluated permissible extractor, plus input rights and exact recording mapping."
+    },
+    {
+      "id": "essentia",
+      "urls": [
+        "https://essentia.upf.edu/licensing_information.html",
+        "https://essentia.upf.edu/models.html"
+      ],
+      "license": "Library AGPL/commercial; model pages describe different NC license variants",
+      "commercial": "CHECKPOINT_SPECIFIC_PERMISSION_REQUIRED",
+      "audio_processing": "AGPL is not itself a noncommercial ban; obligations/proprietary licensing depend on integration. Audio rights still separate.",
+      "derived_storage": "NC model terms cannot be assumed permissive from library/code license. Existing AcousticBrainz CC0 data has its own grant.",
+      "observed": "Licensing pages disagree NC-ND vs NC-SA for models; no checkpoint selected or run.",
+      "required": "Pin exact extractor/model/license and lawful source audio before processing."
+    },
+    {
+      "id": "spotify",
+      "urls": [
+        "https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api",
+        "https://developer.spotify.com/terms"
+      ],
+      "license": "Developer Terms v10 (2025-05-15), restricted platform license",
+      "commercial": "NOT_CLEARED_FOR_THIS_PIPELINE",
+      "audio_processing": "IV.2.1 restricts training or otherwise ingesting Spotify content into ML/AI; no stream ripping.",
+      "derived_storage": "IV.3 restricts indefinite storage/compilation and caching. No independent permanent feature-store permission assumed.",
+      "observed": "2024-11-27 notice removes Audio Features/Analysis from new uses; no API credentials requested or endpoint called.",
+      "required": "Authorized eligible access and explicit compatible rights; not an anonymous free feature source."
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "source_url": "https://github.com/MTG/mtg-jamendo-dataset/blob/cafd8e20c265ed84f1e61f1c875327971f43a62f/data/raw.meta.tsv",
+  "sha256": "bb1efa2876536cbe1a8b67db5dda15249ca144f0cff69e481b638803cbdc9aca",
+  "bytes": 7848074,
+  "rows_scanned": 56637,
+  "rejected_rows": [
+    {
+      "line": 29540,
+      "track_id": "track_1081574",
+      "reason": "column_count"
+    },
+    {
+      "line": 29543,
+      "track_id": "track_1081578",
+      "reason": "column_count"
+    }
+  ],
+  "algorithm": "NFKC + casefold + whitespace; exact artist and title; no identity inference",
+  "seconds": 0.261998,
+  "python": "3.14.7",
+  "scope": "valid rows of supplied metadata table; rejected rows and aliases remain unchecked; not entire Jamendo catalog",
+  "matches": {
+    "38633760": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "48464196": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "135390629": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "136723104": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "136723102": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "34942045": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "149359136": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "128848555": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "109087243": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "18307527": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "34084454": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "70768342": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "74257871": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "30219036": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "60050452": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "2278985": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "9053074": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "4684878": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "6687686": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "5169145": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "2202296": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "16545286": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "30896438": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "60292250": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "286210": {
+      "artist_title_candidates": [],
+      "title_only_count": 4
+    },
+    "34431250": {
+      "artist_title_candidates": [],
+      "title_only_count": 1
+    },
+    "30190577": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "392240": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "70541": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    },
+    "9829829": {
+      "artist_title_candidates": [],
+      "title_only_count": 0
+    }
+  }
+}

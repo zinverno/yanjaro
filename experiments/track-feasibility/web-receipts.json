@@ -1,0 +1,1160 @@
+{
+  "observed_date": "2026-10-15",
+  "canonical_probes": [
+    {
+      "yandex_track_id": "38633760",
+      "url": "https://music.yandex.ru/album/10373/track/38633760",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": "last month",
+      "http_status": null,
+      "outcome": "REGION_UNAVAILABLE",
+      "detail": "Regional availability page"
+    },
+    {
+      "yandex_track_id": "48464196",
+      "url": "https://music.yandex.ru/track/48464196",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "URL https://music.yandex.ru/track/48464196 is not accessible via this tool."
+    },
+    {
+      "yandex_track_id": "135390629",
+      "url": "https://music.yandex.ru/album/35071026/track/135390629",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "URL https://music.yandex.ru/album/35071026/track/135390629 is not accessible via this tool."
+    },
+    {
+      "yandex_track_id": "136723104",
+      "url": "https://music.yandex.ru/album/35656375/track/136723104",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "URL https://music.yandex.ru/album/35656375/track/136723104 is not accessible via this tool."
+    },
+    {
+      "yandex_track_id": "136723102",
+      "url": "https://music.yandex.ru/album/35656375/track/136723102",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": "last month",
+      "http_status": null,
+      "outcome": "REGION_UNAVAILABLE",
+      "detail": "Regional availability page"
+    },
+    {
+      "yandex_track_id": "34942045",
+      "url": "https://music.yandex.ru/album/12348427/track/34942045",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": "2 days ago",
+      "http_status": null,
+      "outcome": "REGION_UNAVAILABLE",
+      "detail": "Regional availability page"
+    },
+    {
+      "yandex_track_id": "149359136",
+      "url": "https://music.yandex.ru/album/41194184/track/149359136",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "URL https://music.yandex.ru/album/41194184/track/149359136 is not accessible via this tool."
+    },
+    {
+      "yandex_track_id": "128848555",
+      "url": "https://music.yandex.ru/album/32381297/track/128848555",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "URL https://music.yandex.ru/album/32381297/track/128848555 is not accessible via this tool."
+    },
+    {
+      "yandex_track_id": "109087243",
+      "url": "https://music.yandex.ru/album/24147330/track/109087243",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "URL https://music.yandex.ru/album/24147330/track/109087243 is not accessible via this tool."
+    },
+    {
+      "yandex_track_id": "18307527",
+      "url": "https://music.yandex.ru/album/2032899/track/18307527",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "URL https://music.yandex.ru/album/2032899/track/18307527 is not accessible via this tool."
+    },
+    {
+      "yandex_track_id": "34084454",
+      "url": "https://music.yandex.ru/album/4181557/track/34084454",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": "3 weeks ago",
+      "http_status": null,
+      "outcome": "REGION_UNAVAILABLE",
+      "detail": "Regional availability page"
+    },
+    {
+      "yandex_track_id": "70768342",
+      "url": "https://music.yandex.ru/album/11990005/track/70768342",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": "3 months ago",
+      "http_status": null,
+      "outcome": "REGION_UNAVAILABLE",
+      "detail": "Regional availability page"
+    },
+    {
+      "yandex_track_id": "74257871",
+      "url": "https://music.yandex.ru/album/12969386/track/74257871",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "Failed to fetch https://music.yandex.ru/album/12969386/track/74257871: Cache miss"
+    },
+    {
+      "yandex_track_id": "30219036",
+      "url": "https://music.yandex.ru/track/30219036",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "URL https://music.yandex.ru/track/30219036 is not accessible via this tool."
+    },
+    {
+      "yandex_track_id": "60050452",
+      "url": "https://music.yandex.ru/track/60050452",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "URL https://music.yandex.ru/track/60050452 is not accessible via this tool."
+    },
+    {
+      "yandex_track_id": "2278985",
+      "url": "https://music.yandex.ru/track/2278985",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "Failed to fetch https://music.yandex.ru/track/2278985: Error fetching https://music.yandex.ru/track/2278985"
+    },
+    {
+      "yandex_track_id": "9053074",
+      "url": "https://music.yandex.ru/track/9053074",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "URL https://music.yandex.ru/track/9053074 is not accessible via this tool."
+    },
+    {
+      "yandex_track_id": "4684878",
+      "url": "https://music.yandex.ru/track/4684878",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "URL https://music.yandex.ru/track/4684878 is not accessible via this tool."
+    },
+    {
+      "yandex_track_id": "6687686",
+      "url": "https://music.yandex.ru/track/6687686",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "Failed to fetch https://music.yandex.ru/track/6687686: Cache miss"
+    },
+    {
+      "yandex_track_id": "5169145",
+      "url": "https://music.yandex.ru/track/5169145",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "Failed to fetch https://music.yandex.ru/track/5169145: Cache miss"
+    },
+    {
+      "yandex_track_id": "2202296",
+      "url": "https://music.yandex.ru/track/2202296",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "Failed to fetch https://music.yandex.ru/track/2202296: Cache miss"
+    },
+    {
+      "yandex_track_id": "16545286",
+      "url": "https://music.yandex.ru/track/16545286",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "Failed to fetch https://music.yandex.ru/track/16545286: Cache miss"
+    },
+    {
+      "yandex_track_id": "30896438",
+      "url": "https://music.yandex.ru/track/30896438",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "Failed to fetch https://music.yandex.ru/track/30896438: Cache miss"
+    },
+    {
+      "yandex_track_id": "60292250",
+      "url": "https://music.yandex.ru/album/10203027/track/60292250",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "URL https://music.yandex.ru/album/10203027/track/60292250 is not accessible via this tool."
+    },
+    {
+      "yandex_track_id": "286210",
+      "url": "https://music.yandex.ru/album/29000/track/286210",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": "last month",
+      "http_status": null,
+      "outcome": "REGION_UNAVAILABLE",
+      "detail": "Regional availability page"
+    },
+    {
+      "yandex_track_id": "34431250",
+      "url": "https://music.yandex.ru/album/4241683/track/34431250",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "Failed to fetch https://music.yandex.ru/album/4241683/track/34431250: Cache miss"
+    },
+    {
+      "yandex_track_id": "30190577",
+      "url": "https://music.yandex.ru/track/30190577",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "URL https://music.yandex.ru/track/30190577 is not accessible via this tool."
+    },
+    {
+      "yandex_track_id": "392240",
+      "url": "https://music.yandex.ru/track/392240",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "URL https://music.yandex.ru/track/392240 is not accessible via this tool."
+    },
+    {
+      "yandex_track_id": "70541",
+      "url": "https://music.yandex.ru/track/70541",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "Failed to fetch https://music.yandex.ru/track/70541: Cache miss"
+    },
+    {
+      "yandex_track_id": "9829829",
+      "url": "https://music.yandex.ru/track/9829829",
+      "transport": "web_tool (may return indexed/cache content)",
+      "cache_age": null,
+      "http_status": null,
+      "outcome": "TOOL_ERROR",
+      "detail": "Failed to fetch https://music.yandex.ru/track/9829829: Cache miss"
+    }
+  ],
+  "external_searches": [
+    {
+      "yandex_track_id": "38633760",
+      "query": "site:musicbrainz.org \"Кино\" \"Кукушка\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/release/6b7237eb-4def-40e0-a049-e1c20d97d0b6",
+          "title": "Release “Кино” by Кино - MusicBrainz",
+          "cache_age": "4 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/52a85800-a5bd-447d-8e86-ae721d572c95",
+          "title": "Release “Чёрный альбом” by Кино - MusicBrainz",
+          "cache_age": "4 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/2659e505-6d5d-4657-844f-06216c5554dc",
+          "title": "Release “55” by Виктор Цой - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/f7efd33c-3306-47f6-a83c-21954613f851",
+          "title": "Release “Чёрный альбом” by Кино - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/acc1cfe5-f3b7-46f8-af08-fd4f1af67c0b",
+          "title": "Release “Лучшие песни 88-90” by Кино - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/5b50d2f0-def3-4d62-83f3-dc70c5b8c486",
+          "title": "Release “Последние записи” by Кино - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/067d4e72-783c-322c-96f2-c2842550a5bc",
+          "title": "Release “Чёрный альбом” by Кино - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/63b91ef4-8fa0-46fb-8d17-abae4f16bb36",
+          "title": "Release “Чёрный альбом” by Кино - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/1768e417-3deb-47df-907a-1f457562cbd9/recordings",
+          "title": "Дайте танк (!) - Recordings - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/cdtoc/9ydx6BTccptLBK0eXiTe4zTmVSw-",
+          "title": "Disc ID “9ydx6BTccptLBK0eXiTe4zTmVSw-” - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/52cc9965-e4d8-41cc-8e41-6330e18865b3",
+          "title": "Release “КИНОпробы 2: Tribute Виктор Цой” by Various Artists - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/1768e417-3deb-47df-907a-1f457562cbd9",
+          "title": "Дайте танк (!) - MusicBrainz",
+          "cache_age": "2 days ago"
+        }
+      ],
+      "query_provenance": "Reconstructed replay query; discovery was batched."
+    },
+    {
+      "yandex_track_id": "48464196",
+      "query": "site:musicbrainz.org \"StaFFорд63\" \"Просто так\"",
+      "results": []
+    },
+    {
+      "yandex_track_id": "135390629",
+      "query": "site:musicbrainz.org \"Дайте танк (!)\" \"Логика\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/artist/1768e417-3deb-47df-907a-1f457562cbd9",
+          "title": "Дайте танк (!) - MusicBrainz",
+          "cache_age": "2 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/1768e417-3deb-47df-907a-1f457562cbd9/recordings",
+          "title": "Дайте танк (!) - Recordings - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "136723104",
+      "query": "site:musicbrainz.org \"Дайте танк (!)\" \"Фамилия\"",
+      "results": []
+    },
+    {
+      "yandex_track_id": "136723102",
+      "query": "site:musicbrainz.org \"Дайте танк\" \"Конец\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/artist/1768e417-3deb-47df-907a-1f457562cbd9/recordings",
+          "title": "Дайте танк (!) - Recordings - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "34942045",
+      "query": "site:musicbrainz.org \"Дайте танк\" \"Утро\"",
+      "results": []
+    },
+    {
+      "yandex_track_id": "149359136",
+      "query": "site:musicbrainz.org \"Дайте танк\" \"Команда\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/release/6b3724b8-7133-4602-8614-96ad5529cf67",
+          "title": "Release “Радио Пепел” by Дайте танк (!) - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/1768e417-3deb-47df-907a-1f457562cbd9/recordings",
+          "title": "Дайте танк (!) - Recordings - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "128848555",
+      "query": "site:musicbrainz.org \"АРИНА\" \"Жить\"",
+      "results": [],
+      "query_provenance": "Reconstructed replay query; discovery was batched.",
+      "outcome": "Empty batched search result; unrelated endpoint probes excluded."
+    },
+    {
+      "yandex_track_id": "109087243",
+      "query": "site:musicbrainz.org \"Ляпота\" \"Куда летит земля\"",
+      "results": [],
+      "query_provenance": "Reconstructed replay query; discovery was batched.",
+      "outcome": "Empty batched search result; unrelated endpoint probes excluded."
+    },
+    {
+      "yandex_track_id": "18307527",
+      "query": "site:musicbrainz.org \"Земфира\" \"Выкинуть тебя из головы\"",
+      "results": []
+    },
+    {
+      "yandex_track_id": "34084454",
+      "query": "site:musicbrainz.org \"Сплин\" \"Феллини\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/release/66031603-d986-49ae-9e92-60431eb3e18a",
+          "title": "Release “Нашествие, шаг 7” by Various Artists - MusicBrainz",
+          "cache_age": "last week"
+        },
+        {
+          "url": "https://musicbrainz.org/release/66031603-d986-49ae-9e92-60431eb3e18a/disc/1",
+          "title": "Release “Нашествие, шаг 7” by Various Artists - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/0783b768-6719-450b-a7e1-7e891da17af3",
+          "title": "Сплин - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/5ca35ace-4006-4d4a-af04-5cd91dafab14",
+          "title": "Би-2 - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/d5fb7566-7e9e-40bf-9d00-4fb705be1af2",
+          "title": "Release “Лучшее” by Би-2 - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/0783b768-6719-450b-a7e1-7e891da17af3/recordings?page=4",
+          "title": "Сплин - Recordings - MusicBrainz",
+          "cache_age": "last week"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "70768342",
+      "query": "site:musicbrainz.org \"Русский Размер\" \"Ангел дня\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/release/6c391d3b-cb04-4b1b-93b2-df25d26c3969",
+          "title": "Release “Горячая 20: Лето ’99” by Various Artists - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/6f3293af-6e07-4de3-a528-1185a1c21a6b",
+          "title": "Release “650” by Русский размер - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/d9da9d80-11b0-460f-b0c7-eb2e89e3fa6c",
+          "title": "Release “650.2” by Русский размер - MusicBrainz",
+          "cache_age": "last month"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "74257871",
+      "query": "site:musicbrainz.org \"Русский Размер\" \"Весь этот мир\"",
+      "results": []
+    },
+    {
+      "yandex_track_id": "30219036",
+      "query": "site:wikidata.org \"Paths of Civilizations\"",
+      "results": [
+        {
+          "url": "https://www.wikidata.org/wiki/Property_talk%3AP13289",
+          "title": "Property talk:P13289 - Wikidata",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://www.wikidata.org/wiki/Property_talk%3AP13398",
+          "title": "Property talk:P13398 - Wikidata",
+          "cache_age": "yesterday"
+        },
+        {
+          "url": "https://www.wikidata.org/wiki/Property%3AP13289",
+          "title": "Yandex Music track ID - Wikidata",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://www.wikidata.org/wiki/Q106247051",
+          "title": "Earth's Attraction - Wikidata",
+          "cache_age": "2 months ago"
+        },
+        {
+          "url": "https://www.wikidata.org/wiki/Property%3AP13524",
+          "title": "PromoDJ track ID - Wikidata",
+          "cache_age": "2 months ago"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "60050452",
+      "query": "site:wikidata.org \"Black coal\" \"Yandex\"",
+      "results": [
+        {
+          "url": "https://www.wikidata.org/wiki/Property_talk%3AP13289",
+          "title": "Property talk:P13289 - Wikidata",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://www.wikidata.org/wiki/Property%3AP13289",
+          "title": "Yandex Music track ID - Wikidata",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://www.wikidata.org/wiki/Q116778712",
+          "title": "Do not regain consciousness - Wikidata",
+          "cache_age": "5 months ago"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "2278985",
+      "query": "site:musicbrainz.org/recording/ \"Adele\" \"Rolling In The Deep\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/release/cdd4879d-8727-4648-ba59-966a0eab46de",
+          "title": "Release “Rolling in the Deep” by Adele - MusicBrainz",
+          "cache_age": "6 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/f258e05d-cf8a-49d1-8f36-9d80c44100ac",
+          "title": "Release “Rolling in the Deep” by Adele - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/release-group/b5801cd8-c309-48fa-a449-02167a047a17",
+          "title": "Release group “Rolling in the Deep” by Adele - MusicBrainz",
+          "cache_age": "6 months ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/79ef6f41-51a3-3ee5-8b2f-7347de023e30",
+          "title": "Release “Rolling in the Deep” by Adele - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/release/fefa0250-a796-4618-ac62-d0e388662c30",
+          "title": "Release “Rolling in the Deep” by Adele - MusicBrainz",
+          "cache_age": "3 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/e05bcc80-deb7-43a1-b2e8-78d9e137b24f",
+          "title": "Release “Rolling in the Deep (The Remixes)” by Adele - MusicBrainz",
+          "cache_age": "6 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/73f137db-fbff-434e-ae1a-af54727a3167",
+          "title": "Release “Rolling in the Deep” by Vicci Martinez - MusicBrainz",
+          "cache_age": "last week"
+        },
+        {
+          "url": "https://musicbrainz.org/release/382fd749-87a0-432b-8953-f2655181c02a",
+          "title": "Release “iTunes Festival: London 2011” by Adele - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/e3b416a1-bbd3-4b88-b781-fdd2b4f55d90",
+          "title": "Release “21” by Adele - MusicBrainz",
+          "cache_age": "last week"
+        },
+        {
+          "url": "https://musicbrainz.org/release/c3662da7-dd97-481e-bc61-3d046cccc51b",
+          "title": "Release “The Piano Guys” by The Piano Guys - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/6da6b980-91da-4802-ab31-d07ea13b18e0",
+          "title": "Release “21” by Adele - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/f11bfd80-9567-4900-bb80-5d9bb5f0f3f2",
+          "title": "Release “XX, Volume 2” by Various Artists - MusicBrainz",
+          "cache_age": "last month"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "9053074",
+      "query": "site:musicbrainz.org/recording/ \"Adele\" \"Skyfall\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/release/04793a87-6013-4fa6-82e3-e79f6b66ec10",
+          "title": "Release “Skyfall” by Adele - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/04793a87-6013-4fa6-82e3-e79f6b66ec10/disc/1",
+          "title": "Release “Skyfall” by Adele - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/release/0ac01fb3-7dd2-4490-af07-b0dd9ff27444",
+          "title": "Release “Skyfall” by Adele - MusicBrainz",
+          "cache_age": "last week"
+        },
+        {
+          "url": "https://musicbrainz.org/release/576be948-9a6c-4d19-a71b-b40ca0b0e147",
+          "title": "Release “Skyfall” by Adele - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/24bde677-3434-4b04-87be-d6ae056f20b1",
+          "title": "Release “Skyfall” by Adele - MusicBrainz",
+          "cache_age": "last week"
+        },
+        {
+          "url": "https://musicbrainz.org/release/2e773dee-23c7-49b0-bee9-72f671fcc149",
+          "title": "Release “Skyfall” by Adele - MusicBrainz",
+          "cache_age": "last week"
+        },
+        {
+          "url": "https://musicbrainz.org/release/ba695325-1fee-4d8e-81ed-a1649e2b3362",
+          "title": "Release “Skyfall” by Adele - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/27acf782-f602-49e3-9ed6-19810d8252e0",
+          "title": "Release “Mastermix Classic Cuts, Volume 140: Modern Ballads” by Various Artists - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/efe8ba7d-3c37-421b-8398-b76a61bb1c08",
+          "title": "Release “Music Sounds Better Fundamentals” by Adele - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/release/12ccfa74-80d0-4e02-a692-05aac30a3610",
+          "title": "Release “Skyfall (remixes)” by Adele - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/9b9e80fd-1912-4b2b-8315-a9f0e70f1b07",
+          "title": "Release “CINEMATIC” by Josh Groban - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/fd1723bc-2a32-442e-b56d-c30fe7411ce7",
+          "title": "Release “The Best of Bond… James Bond” by Various Artists - MusicBrainz",
+          "cache_age": "4 weeks ago"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "4684878",
+      "query": "site:musicbrainz.org/recording/ \"Adele\" \"He Won't Go\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/release/6da6b980-91da-4802-ab31-d07ea13b18e0",
+          "title": "Release “21” by Adele - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/57440dfc-191c-32bd-ada0-14ac366c2a12",
+          "title": "Release “21” by Adele - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/cdtoc/cYnS9RwRO.zZgngCfUi4D3yjMZo-",
+          "title": "Disc ID “cYnS9RwRO.zZgngCfUi4D3yjMZo-” - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "6687686",
+      "query": "site:musicbrainz.org/recording/ \"Adele\" \"Someone Like You\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/work/09f420e3-0110-4886-b284-e3c7f13ddfc3",
+          "title": "Song “Someone Like You” - MusicBrainz",
+          "cache_age": "last week"
+        },
+        {
+          "url": "https://musicbrainz.org/release/0c1f2a18-b048-44b6-ba90-df12c4f187c3",
+          "title": "Release “Someone Like You” by Adele - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/ccc919d2-5a02-47d3-9480-be00c57fcb52",
+          "title": "Release “Someone Like You” by Adele - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/504b36e7-6f29-45c0-9ac4-ecf37976e4c4",
+          "title": "Release “2010-10-21: The Current Studios, St. Paul, MN, USA” by Adele - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/5f1f0c7c-dd48-40db-a2e6-f068f94db80b",
+          "title": "Release “Mastermix Classic Cuts, Volume 106: Ballads / End of Nighters” by Various Artists - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/series/6102cfa9-39b4-4f54-bc71-c1b4e4778dbf",
+          "title": "Grammy Award: Best Pop Solo Performance nominees - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/release/ef145838-f92a-4aed-a5a9-4e0ec593b531",
+          "title": "Release “The No.1 DJ Collection: 2010s, Volume 3” by Various Artists - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/c6b3f29d-15cd-3f67-8228-0580fa01b194",
+          "title": "Release “21” by Adele - MusicBrainz",
+          "cache_age": "last week"
+        },
+        {
+          "url": "https://musicbrainz.org/release/d6371705-ad6b-4c4d-9459-79e55647250e",
+          "title": "Release “The No.1 DJ Collection: 2010s (Digital Collection)” by Various Artists - MusicBrainz",
+          "cache_age": "4 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/52d73bb5-4346-432e-9b31-5dd779ec87e1",
+          "title": "Release “21” by Adele - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/release/efe8ba7d-3c37-421b-8398-b76a61bb1c08",
+          "title": "Release “Music Sounds Better Fundamentals” by Adele - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/release/6da6b980-91da-4802-ab31-d07ea13b18e0",
+          "title": "Release “21” by Adele - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "5169145",
+      "query": "site:musicbrainz.org \"Rihanna\" \"Cockiness (Love It) Remix\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/release/d57dc480-94c7-442d-84b1-0bc57c5b357c",
+          "title": "Release “Talk That Talk” by Rihanna - MusicBrainz",
+          "cache_age": "last week"
+        },
+        {
+          "url": "https://musicbrainz.org/release/49523ea7-8e2e-4315-9eeb-29e56758ba31",
+          "title": "Release “Talk That Talk” by Rihanna - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/25b7b584-d952-4662-a8b9-dd8cdfbfeb64",
+          "title": "A$AP Rocky - MusicBrainz",
+          "cache_age": "5 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/4592e9f6-a9ae-43e6-8a2a-7bba970b294e",
+          "title": "Release “Talk That Talk” by Rihanna - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release-group/15818ec5-bf34-47de-a4e5-260f98828d64",
+          "title": "Release group “Talk That Talk” by Rihanna - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/2938b971-8331-4540-bff0-34a0f297ac83",
+          "title": "Release “Talk That Talk” by Rihanna - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/2c2c07ee-c324-45b1-bad4-d90e2f3e9298",
+          "title": "Release “Talk That Talk” by Rihanna - MusicBrainz",
+          "cache_age": "last month"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "2202296",
+      "query": "site:musicbrainz.org \"Rihanna\" \"S&M Remix\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/release/a15999eb-72e5-40d3-9040-32929d1e4551/details",
+          "title": "Release “S&M (remix)” by Rihanna feat. Britney Spears - Details - MusicBrainz",
+          "cache_age": "4 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/work/dd206794-2382-3e2f-8968-16d605f55b86",
+          "title": "Song “S&M” - MusicBrainz",
+          "cache_age": "2 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/label/5664c7ca-002a-458b-943e-abbcd7993f22",
+          "title": "SRP Records - MusicBrainz",
+          "cache_age": "2 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/artist-credit/898711",
+          "title": "Artist credit “Rihanna feat. Britney Spears” - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/b0b70395-daa3-43df-83d6-c10e3ecde44d",
+          "title": "Release “Sasha Martinengo vs. DJ Decks” by Sasha Martinengo vs. DJ Decks - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/33ac4f65-a73f-4e28-8383-f6ea8adca02e",
+          "title": "Release “S&M” by Rihanna - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/45a663b5-b1cb-4a91-bff6-2bef7bbfdd76",
+          "title": "Britney Spears - MusicBrainz",
+          "cache_age": "2 days ago"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "16545286",
+      "query": "site:musicbrainz.org \"A$AP Ferg\" \"Shabba REMIX\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/artist/8ab5d936-49d1-415e-92c8-151e0e7dd912",
+          "title": "FERG - MusicBrainz",
+          "cache_age": "2 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/0221734a-35a8-40f7-b5c5-2f61a200bc7c",
+          "title": "Migos - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/c0336f2a-610f-4b38-bc13-eb07393425a7",
+          "title": "Shabba Ranks - MusicBrainz",
+          "cache_age": "5 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/c0336f2a-610f-4b38-bc13-eb07393425a7?KYggba=Y4JIXvQ",
+          "title": "Shabba Ranks - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/0221734a-35a8-40f7-b5c5-2f61a200bc7c/recordings%3Fpage%3D3",
+          "title": "Migos - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release-group/2830e346-c134-4113-a4de-a2374254539c",
+          "title": "Release group “Trap Lord” by A$AP Ferg - MusicBrainz",
+          "cache_age": "last week"
+        },
+        {
+          "url": "https://musicbrainz.org/series/cb47f889-9db3-4381-b97c-0d688faee7bc",
+          "title": "TheNeedleDrop: Top 100 Songs of the 2010s - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/25b7b584-d952-4662-a8b9-dd8cdfbfeb64",
+          "title": "A$AP Rocky - MusicBrainz",
+          "cache_age": "5 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/10a9ff92-9637-4498-afea-7044b2ab0dc0/aliases",
+          "title": "Busta Rhymes - Aliases - MusicBrainz",
+          "cache_age": "yesterday"
+        },
+        {
+          "url": "https://musicbrainz.org/release/8acffd10-ae32-427c-ae10-33a00168cb51",
+          "title": "Release “2024-01-06: BBC Radio 1 Essential Mix” by O’Flynn - MusicBrainz",
+          "cache_age": "last week"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "30896438",
+      "query": "site:musicbrainz.org \"Ayo Jay\" \"Your Number REMIX\"",
+      "results": []
+    },
+    {
+      "yandex_track_id": "60292250",
+      "query": "site:musicbrainz.org \"The Weeknd\" \"Blinding Lights\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/work/04ccb6fa-84ed-49fe-94ae-15050bb86b91",
+          "title": "Song “Blinding Lights” - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/3171b363-fa42-4267-909f-05732b651ea5",
+          "title": "Release “Blinding Lights” by The Weeknd - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/release/c400ecc6-74a5-47ba-a96a-0f0cdf454642",
+          "title": "Release “Blinding Lights” by The Weeknd - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/release/25167e55-be78-44d1-8aeb-db27a07175f3",
+          "title": "Release “Blinding Lights” by The Weeknd - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/6e560572-8fc0-4f53-bde3-75d844cce6f5",
+          "title": "Release “Blinding Lights” by The Weeknd - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/series/3e1e2dfa-cd31-450f-ad37-d43f987bf8ae",
+          "title": "Billboard Year-End Hot 100 singles of 2021 - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/d80c36f7-089f-43c0-885a-1cdbb6326e1a",
+          "title": "Release “Blinding Lights” by The Weeknd - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/24f4415e-2684-42ed-b002-807066381839",
+          "title": "Release “Blinding Lights” by The Weeknd - MusicBrainz",
+          "cache_age": "3 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/e8ec54c8-8e3c-4ea4-9ee1-06ea87405333/disc/1",
+          "title": "Release “Blinding Lights” by The Weeknd - MusicBrainz",
+          "cache_age": "5 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/f03788c4-8308-40cc-bd51-1e57ac396a87",
+          "title": "Release “After Hours” by The Weeknd - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/series/ad513598-0335-43ff-b2c1-b3e796fe9986",
+          "title": "MTV Video Music Award for Video of the Year Nominees - MusicBrainz",
+          "cache_age": "4 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/5c166d42-f573-44d8-83d8-07fdffb6dcaf",
+          "title": "Release “After Hours” by The Weeknd - MusicBrainz",
+          "cache_age": "4 days ago"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "286210",
+      "query": "site:musicbrainz.org \"Korn\" \"Blind\" \"Unplugged\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/release/96433203-1e58-415e-b34e-ea6afec2b2ad",
+          "title": "Release “MTV Unplugged” by Korn - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/ac865b2e-bba8-4f5a-8756-dd40d5e39f46/recordings?page=5",
+          "title": "Korn - Recordings - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/32ad7683-0eb5-4428-acc2-4b2127601161/relationships",
+          "title": "Brendan O’Brien - Relationships - MusicBrainz",
+          "cache_age": "last week"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "34431250",
+      "query": "site:musicbrainz.org \"Lambert\" \"In The Woods\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/release/ade09664-0bfe-4658-bee4-c3b1f14b7f5d",
+          "title": "Release “Triple J: Hottest 100, Volume 14” by Various Artists - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/90621bfb-b0c0-48f1-a396-65e98e409b06/works",
+          "title": "Barbara Rektenwald - Works - MusicBrainz",
+          "cache_age": "6 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/19645a27-a051-4688-9993-aa9f83aa7ba9/works",
+          "title": "Anthony Goldstone - Works - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/1da36284-0aff-48e0-a87d-626d7f65bdfc/works?page=2",
+          "title": "San Francisco Gay Men’s Chorus - Works - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/1f490ea8-bc11-45bb-b118-7c92e4673f6c",
+          "title": "Release “Plug It In! Turn It Up! Electric Blues: The Definitive Collection! Part 1: 1939–1954” by Various Artists - MusicBrainz",
+          "cache_age": "last month"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "30190577",
+      "query": "site:musicbrainz.org \"Prefab Sprout\" \"Bonny\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/release/6af59b09-2f3c-46d3-b076-45ecfec17904",
+          "title": "Release “Steve McQueen” by Prefab Sprout - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/a4f2d077-6232-43f7-bf17-cd38a5af56cd",
+          "title": "Release “Steve McQueen” by Prefab Sprout - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/9f799ffc-19bf-407b-9c64-0d1dfb12cfa0",
+          "title": "Release “Stereoplay Highlights CD 23” by Various Artists - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "392240",
+      "query": "site:musicbrainz.org \"Stone Sour\" \"Orchids\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/release/f5fe8472-8886-4fd1-b167-034df98aa1f9",
+          "title": "Release “Stone Sour” by Stone Sour - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/0871083d-36a6-4d06-a20a-4fa564b22a64",
+          "title": "Release “Stone Sour” by Stone Sour - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/30a9e17b-dda1-3bc2-81ba-16d64114106e",
+          "title": "Release “Stone Sour” by Stone Sour - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/f42bb421-256b-4def-a128-eefb7570ebce",
+          "title": "Release “Live in Moscow” by Stone Sour - MusicBrainz",
+          "cache_age": "2 months ago"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "70541",
+      "query": "site:musicbrainz.org \"Puddle Of Mudd\" \"Blurry\"",
+      "results": [
+        {
+          "url": "https://musicbrainz.org/work/71bf0918-5c79-4015-aa08-e24d14d46463?direction=2&link_type_id=278",
+          "title": "Song “Blurry” - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/artist/ff460a70-fdf4-4aa2-b021-8a04da76d88e",
+          "title": "Puddle of Mudd - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/series/9b4ab3ce-f70b-44d1-8794-2e468bdefa64",
+          "title": "Billboard Year-End Hot 100 singles of 2002 - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/release/c79e4b45-3557-474a-9883-067d5d5cbca8",
+          "title": "Release “Come Clean” by Puddle of Mudd - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/003a1206-2aa8-4736-ac5b-a7a6f97078d3",
+          "title": "Release “Come Clean” by Puddle of Mudd - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/c75db700-c6ae-4e93-a862-686e98ca751e",
+          "title": "Release “Skate Punk Anthems” by Various Artists - MusicBrainz",
+          "cache_age": "2 days ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/af4f3859-4d53-4ccc-95e1-b1b00c0b24cf",
+          "title": "Release “Come Clean” by Puddle of Mudd - MusicBrainz",
+          "cache_age": "4 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/instrument/17f9f065-2312-4a24-8309-6f6dd63e2e33/recordings?page=161",
+          "title": "String instrument “bass guitar” - Recordings - MusicBrainz",
+          "cache_age": "6 months ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/b0f090a6-e333-4620-98d9-f57d959dcb79",
+          "title": "Release “Ace Combat 5: The Unsung War Original Soundtrack” by 小林啓樹, 中西哲一, 中鶴潤一 & 大久保博 - MusicBrainz",
+          "cache_age": "today"
+        },
+        {
+          "url": "https://musicbrainz.org/release/c4a9c9aa-c69d-37ed-ae3d-f248aa68b442",
+          "title": "Release “Come Clean” by Puddle of Mudd - MusicBrainz",
+          "cache_age": "last month"
+        },
+        {
+          "url": "https://musicbrainz.org/release/4d1e9626-2ac5-4e25-abd6-6f322df28bfd",
+          "title": "Release “The Biggest BBQ Album 6” by Various Artists - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        },
+        {
+          "url": "https://musicbrainz.org/release/b10f867e-52c7-411a-a019-d396372e81cf",
+          "title": "Release “Kerrang! The Album, Volume 4” by Various Artists - MusicBrainz",
+          "cache_age": "2 weeks ago"
+        }
+      ]
+    },
+    {
+      "yandex_track_id": "9829829",
+      "query": "site:musicbrainz.org \"Alistair Griffin\" \"Blinding Lights\"",
+      "results": []
+    }
+  ],
+  "network_notes": [
+    "Shell HEAD probes to music.yandex.ru and musicbrainz.org failed DNS resolution (curl exit 6).",
+    "Some MusicBrainz page fetches returned tool-reported HTTP 429; indexed search views were used as labeled.",
+    "GitHub contents download failed connection; a metadata/code-only git clone of MTG succeeded. No archive/audio download scripts ran."
+  ],
+  "feature_probes": [
+    {
+      "candidate_yandex_track_id": "149359136",
+      "recording_mbid": "9764cc8e-f566-4c7a-bb04-8d6d405237ba",
+      "url": "https://acousticbrainz.org/api/v1/9764cc8e-f566-4c7a-bb04-8d6d405237ba/low-level",
+      "transport": "web_tool",
+      "outcome": "TOOL_ERROR",
+      "http_status": null,
+      "feature_payload_received": false,
+      "limitation": "Not a confirmed absence response. Candidate is not a verified Yandex recording match."
+    },
+    {
+      "candidate_yandex_track_id": "70541",
+      "recording_mbid": "ec1fc730-72a4-4086-bebf-d957a372382f",
+      "url": "https://acousticbrainz.org/api/v1/ec1fc730-72a4-4086-bebf-d957a372382f/low-level",
+      "transport": "web_tool",
+      "outcome": "TOOL_ERROR",
+      "http_status": null,
+      "feature_payload_received": false,
+      "limitation": "Tool returned Internal Error without status/body. Not evidence the database lacks the recording."
+    }
+  ]
+}
