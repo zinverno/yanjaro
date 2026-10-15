@@ -39,8 +39,16 @@ class ProbeTests(unittest.TestCase):
         self.assertIs(result["available"], False)
         self.assertEqual(result["duration_ms"], 123000)
 
-    def test_private_upload_and_unknown_values(self):
-        self.assertIsNone(probe.project(self.model(trackSource="OWN")))
+    def test_source_flags_do_not_discard_allowlisted_metadata(self):
+        for flag in ("OWN", "OWN_REPLACED_TO_UGC", None):
+            source = self.model(trackSource=flag)
+            source.user_info = SimpleNamespace(uid="PRIVATE_SENTINEL", name="PRIVATE_SENTINEL")
+            result = probe.report(self.sample, self.history, {}, {}, [source])
+            self.assertEqual(result["summary"]["api_resolved"], 1)
+            self.assertEqual(result["summary"]["uniquely_correlated_ids"], 1)
+            self.assertNotIn("PRIVATE_SENTINEL", json.dumps(result))
+
+    def test_unknown_values_remain_unknown(self):
         result = probe.project(self.model(durationMs=None, available=None, version=None))
         self.assertIsNone(result["duration_ms"])
         self.assertIsNone(result["available"])
@@ -56,6 +64,7 @@ class ProbeTests(unittest.TestCase):
         self.assertIsNone(result["tracks"][2]["metadata"])
         self.assertEqual(result["tracks"][2]["reason"], "REQUESTED_ID_NOT_RETURNED")
         self.assertEqual(result["uncorrelated_responses"][0]["returned_id"], "999")
+        self.assertEqual(set(result["uncorrelated_responses"][0]), {"returned_id"})
         self.assertTrue(all(not r["recording_master_match"] for r in result["tracks"]))
 
     def test_duplicate_ids_and_no_request_do_not_create_success(self):
@@ -173,6 +182,43 @@ class ProbeTests(unittest.TestCase):
             self.assertEqual(output.stat().st_mode & 0o777, 0o600)
             with self.assertRaises(FileExistsError):
                 probe.save(output, {}, reserve=True)
+
+    def test_saved_owner_evidence_is_bounded_and_consistent(self):
+        result_path = probe.ROOT / "owner-results.json"
+        result = json.loads(result_path.read_text())
+        assessment = json.loads((probe.ROOT / "assessment.json").read_text())
+        self.assertEqual(probe.digest(result_path), assessment["evidence_sha256"])
+        self.assertEqual(result["probe_sha256"], probe.digest(Path(probe.__file__)))
+        self.assertEqual([r["requested_id"] for r in result["tracks"]], self.ids)
+        self.assertEqual(result["request_audit"]["attempts"], 1)
+        self.assertEqual(result["request_audit"]["http_status"], 200)
+        self.assertFalse(result["uncorrelated_responses"])
+        metadata_keys = {"returned_id", "title", "artists", "duration_ms", "version", "albums", "available",
+                         "real_id", "matched_track_id", "substituted_track_id", "meta_data", "isrc",
+                         "remote_error_present", "missing_reasons"}
+        for row in result["tracks"]:
+            m = row["metadata"]
+            self.assertEqual(set(m), metadata_keys)
+            self.assertEqual(row["requested_id"], m["returned_id"])
+            self.assertEqual(row["status"], "METADATA_ONLY")
+            self.assertFalse(row["recording_master_match"])
+            self.assertIsNone(row["acoustic_features"])
+            self.assertIsNone(m["isrc"])
+            for artist in m["artists"]:
+                self.assertEqual(set(artist), {"id", "name"})
+            for album in m["albums"]:
+                self.assertEqual(set(album), {"id", "title", "version", "year", "release_date", "type", "position"})
+                self.assertEqual(set(album["position"]), {"volume", "index"})
+            self.assertEqual(set(m["meta_data"]), {"album", "version", "year", "volume", "number"})
+        metas = [r["metadata"] for r in result["tracks"]]
+        self.assertEqual(sum(m["duration_ms"] > 0 for m in metas), result["summary"]["with_duration"])
+        self.assertEqual(sum(bool(m["version"]) for m in metas), result["summary"]["with_named_track_version"])
+        self.assertEqual(result["summary"]["api_resolved"], 30)
+        self.assertEqual(result["summary"]["with_named_track_version"], 4)
+        self.assertEqual(sum(m["real_id"] != m["returned_id"] for m in metas), 1)
+        komanda = next(r["metadata"] for r in result["tracks"] if r["requested_id"] == "149359136")
+        self.assertEqual((komanda["albums"][0]["id"], komanda["albums"][0]["position"]["index"]), ("41194184", 7))
+        self.assertEqual(komanda["duration_ms"] - 174000, assessment["crosswalk_reviews"][0]["evidence"]["duration_delta_ms"])
 
 
 if __name__ == "__main__":

@@ -133,8 +133,7 @@ def boolean(value):
 
 def project(track):
     """Allowlist SDK fields only. No model repr/to_dict, URLs, lyrics, uploader or raw error."""
-    if getattr(track, "user_info", None) is not None or getattr(track, "track_source", None) in ("OWN", "OWN_REPLACED_TO_UGC"):
-        return None
+    # Source flags are not a privacy classifier; never export user_info or other private fields.
     albums = []
     for album in track.albums or []:
         position = getattr(album, "track_position", None)
@@ -208,19 +207,18 @@ def report(sample, history, preflight, audit, returned=None, reason="OWNER_RUN_R
     groups = {}
     unassigned = []
     for model in returned or []:
-        metadata = project(model)
         key = identifier(model.id)
         if key not in ids:
-            unassigned.append(metadata)
+            unassigned.append({"returned_id": key})
         else:
-            groups.setdefault(key, []).append(metadata)
+            groups.setdefault(key, []).append(project(model))
     rows = []
     for frozen, old in zip(sample, history):
         matches = groups.get(frozen["yandex_track_id"], [])
         metadata = matches[0] if len(matches) == 1 else None
         row_reason = reason
         if returned is not None:
-            row_reason = "REQUESTED_ID_NOT_RETURNED" if not matches else "DUPLICATE_RETURNED_ID" if len(matches) > 1 else "NON_CATALOG_RESPONSE"
+            row_reason = "REQUESTED_ID_NOT_RETURNED" if not matches else "DUPLICATE_RETURNED_ID" if len(matches) > 1 else None
         if metadata:
             row_reason = "REMOTE_TRACK_ERROR" if metadata["remote_error_present"] else None
         resolved = bool(metadata and not row_reason and metadata["title"] and
@@ -240,10 +238,13 @@ def report(sample, history, preflight, audit, returned=None, reason="OWNER_RUN_R
     valid = [r["metadata"] for r in rows if r["metadata_resolved"]]
     return {
         "schema": "yanjaro.api-metadata.v1", "observed_at": datetime.now(timezone.utc).isoformat(),
+        "probe_sha256": digest(Path(__file__)),
         "historical_head": PINNED_HEAD, "sample_sha256": SAMPLE_HASH, "history_sha256": HISTORY_HASH,
         "session_preflight": preflight, "request_audit": audit,
         "summary": {
             "sample_size": 30, "api_resolved": len(valid),
+            "returned_sdk_objects": len(returned) if returned is not None else 0,
+            "uniquely_correlated_ids": sum(len(matches) == 1 for matches in groups.values()),
             "with_duration": sum(m["duration_ms"] is not None and m["duration_ms"] > 0 for m in valid),
             "with_named_track_version": sum(m["version"] is not None for m in valid),
             "with_duration_and_named_track_version": sum(bool(m["duration_ms"] and m["version"]) for m in valid),
@@ -251,7 +252,8 @@ def report(sample, history, preflight, audit, returned=None, reason="OWNER_RUN_R
             "verified_acoustic_feature_sources": 0,
             "previous_status_counts": dict(Counter(r["status"] for r in history)),
             "api_status_counts": dict(Counter(r["status"] for r in rows)),
-            "interpretation": "Zero measured resolutions with zero requests means NOT RUN, not API/catalog absence.",
+            "interpretation": "One bounded metadata observation; no recording/master or acoustic rights inferred."
+            if returned is not None else "No SDK response measured; not evidence of API/catalog absence.",
         },
         "rights": {"metadata_access": "Technical response only; no new permission inferred",
                    "catalog_copying": "NOT_CLEARED", "audio_processing": "NOT_AUTHORIZED",
