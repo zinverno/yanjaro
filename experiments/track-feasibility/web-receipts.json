@@ -337,7 +337,8 @@
           "title": "Дайте танк (!) - MusicBrainz",
           "cache_age": "2 days ago"
         }
-      ]
+      ],
+      "query_provenance": "Reconstructed replay query; discovery was batched."
     },
     {
       "yandex_track_id": "48464196",
@@ -400,44 +401,16 @@
     {
       "yandex_track_id": "128848555",
       "query": "site:musicbrainz.org \"АРИНА\" \"Жить\"",
-      "results": [
-        {
-          "url": "https://musicbrainz.org/artist/1768e417-3deb-47df-907a-1f457562cbd9/recordings",
-          "title": "Internal Error ()",
-          "cache_age": null
-        },
-        {
-          "url": "https://www.wikidata.org/wiki/Special:EntityData/Q123003087.json",
-          "title": "Internal Error ()",
-          "cache_age": null
-        },
-        {
-          "url": "https://www.wikidata.org/wiki/Special:EntityData/Q116789893.json",
-          "title": "Internal Error ()",
-          "cache_age": null
-        }
-      ]
+      "results": [],
+      "query_provenance": "Reconstructed replay query; discovery was batched.",
+      "outcome": "Empty batched search result; unrelated endpoint probes excluded."
     },
     {
       "yandex_track_id": "109087243",
       "query": "site:musicbrainz.org \"Ляпота\" \"Куда летит земля\"",
-      "results": [
-        {
-          "url": "https://musicbrainz.org/artist/1768e417-3deb-47df-907a-1f457562cbd9/recordings",
-          "title": "Internal Error ()",
-          "cache_age": null
-        },
-        {
-          "url": "https://www.wikidata.org/wiki/Special:EntityData/Q123003087.json",
-          "title": "Internal Error ()",
-          "cache_age": null
-        },
-        {
-          "url": "https://www.wikidata.org/wiki/Special:EntityData/Q116789893.json",
-          "title": "Internal Error ()",
-          "cache_age": null
-        }
-      ]
+      "results": [],
+      "query_provenance": "Reconstructed replay query; discovery was batched.",
+      "outcome": "Empty batched search result; unrelated endpoint probes excluded."
     },
     {
       "yandex_track_id": "18307527",

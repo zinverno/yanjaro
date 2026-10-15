@@ -69,7 +69,8 @@
         "query": "site:musicbrainz.org \"Кино\" \"Кукушка\"",
         "method": "public web index search; not exhaustive MusicBrainz API search",
         "outcome": "CANDIDATES_REVIEWED",
-        "limitation": "No search hit does not establish catalog absence."
+        "limitation": "No search hit does not establish catalog absence.",
+        "query_provenance": "Replay query reconstructed from frozen artist/title; original batch query wording not preserved."
       },
       "external_candidates": [
         {
@@ -708,7 +709,8 @@
         "query": "site:musicbrainz.org \"АРИНА\" \"Жить\"",
         "method": "public web index search; not exhaustive MusicBrainz API search",
         "outcome": "NO_RELEVANT_SEARCH_RESULT",
-        "limitation": "No search hit does not establish catalog absence."
+        "limitation": "No search hit does not establish catalog absence.",
+        "query_provenance": "Replay query reconstructed from frozen artist/title; original batch query wording not preserved."
       },
       "external_candidates": [],
       "source_checks": {
@@ -791,7 +793,8 @@
         "query": "site:musicbrainz.org \"Ляпота\" \"Куда летит земля\"",
         "method": "public web index search; not exhaustive MusicBrainz API search",
         "outcome": "NO_RELEVANT_SEARCH_RESULT",
-        "limitation": "No search hit does not establish catalog absence."
+        "limitation": "No search hit does not establish catalog absence.",
+        "query_provenance": "Replay query reconstructed from frozen artist/title; original batch query wording not preserved."
       },
       "external_candidates": [],
       "source_checks": {
