@@ -25,9 +25,13 @@ def load_window(track, sr=16000):
 
 
 def extract(track):
+    return {"id": track["id"], "sha256": track["sha256"], **extract_pcm(load_window(track))}
+
+
+def extract_pcm(y):
+    """The same fixed DSP calculation on caller-owned mono PCM at 16 kHz."""
     import librosa
     from scipy.signal import correlate
-    y = load_window(track)
     sr, hop = lab_audio.SAMPLE_RATE, lab_audio.HOP
     f = lab_audio.extract_signal(y, sr)
     power = np.abs(librosa.stft(y, n_fft=lab_audio.FFT, hop_length=hop))**2
@@ -56,7 +60,7 @@ def extract(track):
                zip(ASPECTS, (rhythm, timbre, energy))}
     for k in ASPECTS:
         require(len(vectors[k]) == DIMENSIONS[k] and np.isfinite(vectors[k]).all(), "Invalid features")
-    return {"id": track["id"], "sha256": track["sha256"], "bpm": f["bpm"] or None,
+    return {"bpm": f["bpm"] or None,
             "bpm_alternatives": [f["bpm"] / 2, f["bpm"], f["bpm"] * 2] if f["bpm"] else [],
             "bpm_status": "estimated_unverified" if f["bpm"] else "unknown",
             "lab27": f, "vectors": vectors}

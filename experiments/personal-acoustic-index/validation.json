@@ -1,0 +1,47 @@
+{
+  "schema": "yanjaro.personal-cc0-check.v1",
+  "base_head": "35aecde3311fa302e0ac1548d9c53f336ed9c928",
+  "submitted": 10,
+  "indexed": 7,
+  "rejected": 3,
+  "dimensions": 705,
+  "query_count": 7,
+  "source_audio_copied": false,
+  "audio_saved": false,
+  "vectors_public": false,
+  "max_frozen_block_error": 1.9868214962137642e-08,
+  "repeat_equal": true,
+  "elapsed_seconds": 15.535,
+  "peak_rss_kib": 466152,
+  "affinity_cpus": 2,
+  "numerical_threads": 1,
+  "live_capture": "NOT_RUN_OWNER_LOCAL_TEST_REQUIRED",
+  "independent_music_accuracy": "NOT_RUN",
+  "private_report_sha256": "055a1c4fb290028ed17706b817be19ec7df7540d569c47def0efe4466468641f",
+  "rejected_reason_counts": {
+    "CLIPPING": 3
+  },
+  "preflight": {
+    "status": "REJECTED",
+    "reason": "DBUS_PERMISSION_DENIED",
+    "pcm_streams_opened": 0
+  },
+  "source_originals_changed": false,
+  "tests": {
+    "personal": 14,
+    "existing_pi_v1": 9,
+    "status": "PASS"
+  },
+  "runtime": {
+    "python": "3.12.13",
+    "machine": "x86_64",
+    "packages": {
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "librosa": "0.11.0",
+      "soundfile": "0.13.1",
+      "jeepney": "0.9.0",
+      "numba": "0.61.2"
+    }
+  }
+}

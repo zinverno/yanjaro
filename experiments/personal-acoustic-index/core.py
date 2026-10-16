@@ -1,0 +1,405 @@
+"""Bounded in-memory extraction and private local storage; no network acquisition."""
+from contextlib import contextmanager
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import sqlite3
+import stat
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "acoustic-similarity"))
+import numpy as np
+from acoustic_similarity import acoustic_retrieval as retrieval, features, rhythm_pi
+
+SCHEMA = "yanjaro.personal-acoustic-index.v1"
+STREAM_SCHEMA = "yanjaro.personal-acoustic-index.v2"
+QUALITY_SCHEMA = "yanjaro.personal-acoustic-index.v3"
+QUALITY_POLICY = "observed-pcm-v2"
+MAX_SAMPLE_PEAK = 10 ** (3 / 20)  # Experimental +3 dB sample-peak bound, not a clipping diagnosis.
+LEGACY_QUALITY_FIELDS = {"peak", "clipped_fraction", "rms", "native_rate", "channels", "seconds",
+                         "dsp_rate", "resampling", "energy_scope"}
+QUALITY_METRICS = {"outside_unit_samples", "flat_top_runs", "flat_top_samples", "flat_top_max_samples",
+                   "flat_top_fraction", "long_flat_top", "min_block_rms"}
+BASE_HEAD = "35aecde3311fa302e0ac1548d9c53f336ed9c928"
+MAX_RECORDS = 1000
+
+
+class Rejected(Exception):
+    """Fixed safe reason code, never a raw system/library exception."""
+
+
+def require(ok, reason):
+    if not ok:
+        raise Rejected(reason)
+
+
+def safe_text(value):
+    require(isinstance(value, str) and len(value) <= 256 and
+            all(ord(c) >= 32 for c in value) and
+            not re.search(r"://|(?i:bearer |oauth|token=)", value), "UNSAFE_METADATA")
+    return value
+
+
+def entry_id(value):
+    require(isinstance(value, str) and re.fullmatch(r"[a-zA-Z0-9_-]{1,64}", value), "INVALID_ENTRY_ID")
+    return value
+
+
+def inside_git(path):
+    # Workspace sandboxes may expose empty .git directories; only real repos count.
+    return any((p / ".git").is_file() or (p / ".git/HEAD").is_file()
+               for p in (Path(path).resolve(), *Path(path).resolve().parents))
+
+
+def track_id(value):
+    require(isinstance(value, str) and re.fullmatch(r"[1-9][0-9]{0,19}", value), "INVALID_TRACK_ID")
+    return value
+
+
+def identity(requested=None, mpris_path=None):
+    if requested is not None:
+        track_id(requested)
+    if mpris_path is not None:
+        require(requested is not None and mpris_path ==
+                "/org/mpris/MediaPlayer2/track_" + hashlib.sha256(requested.encode()).hexdigest(),
+                "MPRIS_ID_MISMATCH")
+    return dict(requested_id=requested, observed_id=None, real_id=None,
+                observed_id_reason="MPRIS_HASH_ONLY" if mpris_path else "LOCAL_FILE_NO_YANDEX_CONTEXT",
+                real_id_reason="NOT_EXPOSED_NO_API_CALL",
+                mpris_hash_matches=mpris_path is not None, master_match=False)
+
+
+def stream_identity(requested, observed):
+    require(track_id(requested) == track_id(observed), "STREAM_TRACK_ID_MISMATCH")
+    return dict(requested_id=requested, observed_id=observed, real_id=None,
+                observed_id_reason="AUTHORIZED_API_TRACK_ID", real_id_reason="ORIGINAL_MASTER_NOT_VERIFIED",
+                mpris_hash_matches=False, master_match=False)
+
+
+def quality_decision(q):
+    """Observed-sample heuristics; neither acceptance nor flags certify a master."""
+    conditions = []
+    if q["peak"] <= 1e-5:
+        conditions.append(("NO_SOUND", "peak <= 1e-5"))
+    if q["peak"] > MAX_SAMPLE_PEAK:
+        conditions.append(("AMPLITUDE_OUT_OF_POLICY", "peak > 10**(3/20)"))
+    if q["long_flat_top"]:
+        conditions.append(("FLAT_TOP_CLIPPING_SUSPECTED", "flat_top_max_samples >= ceil(native_rate * 0.001)"))
+    if q["flat_top_runs"] >= 3 and q["flat_top_fraction"] >= .001:
+        conditions.append(("FLAT_TOP_CLIPPING_SUSPECTED", "flat_top_runs >= 3 and flat_top_fraction >= 0.001"))
+    if q["min_block_rms"] <= 1e-5:
+        conditions.append(("SILENCE_OR_DROPOUT", "min_block_rms <= 1e-5"))
+    flags = []
+    if q["outside_unit_samples"]:
+        flags.append("SAMPLE_OVERSHOOT")
+    if q["clipped_fraction"] > .001:
+        flags.append("HIGH_FULL_SCALE_OCCUPANCY")
+    if q["flat_top_runs"]:
+        flags.append("FLAT_EXTREMA")
+    return conditions, flags
+
+
+def signal_quality(pcm, sr):
+    require(type(sr) is int and 8000 <= sr <= 96000 and pcm.ndim == 2 and
+            pcm.shape[1] in (1, 2) and 10 * sr <= len(pcm) <= 15 * sr,
+            "WINDOW_MUST_BE_10_TO_15_SECONDS")
+    require(np.isfinite(pcm).all(), "NONFINITE_PCM")
+    peak = float(np.max(np.abs(pcm)))
+    clipped = float(np.mean(np.abs(pcm) >= .999))
+    flat_runs = flat_samples = longest = 0
+    for channel in pcm.T:
+        # shortcut: only observed extrema; lossy coding can hide earlier clipping. Not a forensic detector.
+        for extreme, sign in ((float(channel.min()), -1), (float(channel.max()), 1)):
+            if extreme * sign <= 1e-5:
+                continue
+            near = np.abs(channel - extreme) <= 1e-7
+            edges = np.flatnonzero(np.diff(np.r_[False, near, False]))
+            lengths = edges[1::2] - edges[::2]
+            lengths = lengths[lengths >= 3]
+            longest = max(longest, int(lengths.max(initial=0)))
+            # >=0.25 ms avoids calling ordinary 16-bit quantized bass peaks flat tops.
+            qualifying = lengths[lengths >= max(3, int(np.ceil(sr * .00025)))]
+            flat_runs += len(qualifying)
+            flat_samples += int(qualifying.sum())
+    # Scale this temporary square only to avoid overflow; DSP receives unchanged PCM.
+    squared = np.array(pcm, dtype=np.float64)
+    try:
+        np.divide(squared, peak or 1, out=squared)
+        np.square(squared, out=squared)
+        blocks = squared[:len(pcm) // (sr // 10) * (sr // 10)].reshape(-1, sr // 10, pcm.shape[1])
+        rms = float(np.sqrt(np.mean(squared)) * peak)
+        min_rms = float(np.min(np.sqrt(np.mean(blocks, axis=(1, 2)))) * peak)
+    finally:
+        squared.fill(0)
+    q = dict(peak=peak, clipped_fraction=clipped, rms=rms, min_block_rms=min_rms,
+             outside_unit_samples=int(np.count_nonzero(np.abs(pcm) > 1)),
+             flat_top_runs=flat_runs, flat_top_samples=flat_samples, flat_top_max_samples=longest,
+             flat_top_fraction=flat_samples / pcm.size, long_flat_top=longest >= int(np.ceil(sr * .001)),
+             native_rate=sr, channels=pcm.shape[1], seconds=len(pcm) / sr,
+             dsp_rate=16000, resampling="librosa/soxr_hq to 16000 for DSP; PI uses input rate",
+             energy_scope="OBSERVED_PCM_NOT_ORIGINAL_MASTER", policy=QUALITY_POLICY)
+    conditions, q["flags"] = quality_decision(q)
+    q["status"] = "REJECTED" if conditions else "ACCEPTED_WITH_CAUTION" if q["flags"] else "ACCEPTED"
+    if conditions or q["flags"]:
+        print(json.dumps(dict(event="SIGNAL_QUALITY", **q, violated_conditions=[c[1] for c in conditions]),
+                         allow_nan=False), file=sys.stderr, flush=True)
+    require(not conditions, conditions[0][0] if conditions else "")
+    return q
+
+
+def quality_notice(record):
+    q = record["quality"]
+    return {k: q[k] for k in ("policy", "status", "flags")} if record["schema"] == QUALITY_SCHEMA else dict(
+        policy="legacy-strict-v1", status="LEGACY_ACCEPTED", flags=["NOT_ASSESSED_BY_CURRENT_POLICY"])
+
+
+def extract(pcm, sr, key, binding, source, title="", artists=(), capture=None):
+    """Consumes/zeroes the supplied writable PCM array even on rejection."""
+    mono = dsp_pcm = None
+    try:
+        observed_at = capture["started_at"] if capture else datetime.now(timezone.utc).isoformat()
+        entry_id(key)
+        require(source in ("file", "live", "yandex_stream"), "INVALID_SOURCE")
+        safe_text(title)
+        require(len(artists) <= 10, "INVALID_ARTISTS")
+        artists = [safe_text(a) for a in artists]
+        quality = signal_quality(pcm, sr)
+        pcm_hash = hashlib.sha256(memoryview(np.ascontiguousarray(pcm)).cast("B")).hexdigest()
+        mono = pcm.mean(axis=1, dtype=np.float64)
+        pi = rhythm_pi.extract(mono, sr)
+        pi.update(id=key, audio_sha256=pcm_hash, recording_group=key, title=title,
+                  evidence_sha256=None, sample_rate=sr, start_sample=0, end_sample_exclusive=len(pcm))
+        import librosa
+        dsp_pcm = librosa.resample(pcm.astype(np.float32).mean(axis=1), orig_sr=sr, target_sr=16000)
+        dsp = dict(id=key, sha256=pcm_hash, **features.extract_pcm(dsp_pcm))
+        profile = retrieval.combine(pi, dsp)
+        record = dict(schema=QUALITY_SCHEMA, observed_at=observed_at,
+                      identity=binding, source=source, artists=artists, quality=quality,
+                      capture=capture, profile=profile)
+        validate_record(record)
+        return record
+    finally:
+        pcm.fill(0)
+        if mono is not None:
+            mono.fill(0)
+        if dsp_pcm is not None:
+            dsp_pcm.fill(0)
+
+
+def validate_record(record):
+    require(set(record) == {"schema", "observed_at", "identity", "source", "artists", "quality", "capture", "profile"}
+            and record["schema"] in (QUALITY_SCHEMA, STREAM_SCHEMA if record["source"] == "yandex_stream" else SCHEMA),
+            "INVALID_RECORD_SCHEMA")
+    p = record["profile"]
+    require(record["source"] in ("file", "live", "yandex_stream") and len(record["observed_at"]) <= 40 and
+            datetime.fromisoformat(record["observed_at"]).tzinfo is not None, "INVALID_OBSERVATION")
+    require(set(p) == {"id", "audio_sha256", "recording_group", "title", "evidence_sha256", "sample_rate",
+                       "start_sample", "end_sample_exclusive", "feature_schema", "blocks", "missing_reasons",
+                       "tempo_hypotheses", "downbeat"}, "UNEXPECTED_PROFILE_FIELDS")
+    entry_id(p["id"])
+    require(p["recording_group"] == p["id"] and p["evidence_sha256"] is None and
+            p["downbeat"] == "UNKNOWN; unused", "INVALID_PROFILE_PROVENANCE")
+    safe_text(p["title"])
+    require(len(record["artists"]) <= 10, "INVALID_ARTISTS")
+    for a in record["artists"]:
+        safe_text(a)
+    if record["source"] == "yandex_stream":
+        validate_stream(record)
+    else:
+        require(record["identity"] == identity(record["identity"]["requested_id"],
+            "/org/mpris/MediaPlayer2/track_" + hashlib.sha256(record["identity"]["requested_id"].encode()).hexdigest()
+            if record["identity"]["mpris_hash_matches"] else None), "INVALID_IDENTITY")
+    if record["source"] == "live":
+        require(record["identity"]["mpris_hash_matches"] and record["capture"] is not None and
+                p["id"] == "yandex-" + record["identity"]["requested_id"] and p["sample_rate"] == 48000,
+                "LIVE_IDENTITY_OR_RATE_MISMATCH")
+    elif record["source"] == "file":
+        require(record["identity"] == identity() and record["capture"] is None, "FILE_CANNOT_CLAIM_LIVE_IDENTITY")
+    require(record["source"] == "yandex_stream" or record["capture"] is None or set(record["capture"]) ==
+            {"method", "sample_rate", "player_volume", "sink_input_volume", "sink_volume", "position_start_us",
+             "started_at", "stopped_at"},
+            "INVALID_CAPTURE_FIELDS")
+    quality_fields = LEGACY_QUALITY_FIELDS
+    if record["schema"] == QUALITY_SCHEMA:
+        quality_fields = quality_fields | QUALITY_METRICS | {"policy", "status", "flags"}
+    require(set(record["quality"]) == quality_fields, "INVALID_QUALITY_FIELDS")
+    q = record["quality"]
+    require(all(type(q[k]) in (int, float) and np.isfinite(q[k]) for k in
+                ("peak", "clipped_fraction", "rms", "native_rate", "channels", "seconds", "dsp_rate")) and
+            10 <= q["seconds"] <= 15 and q["dsp_rate"] == 16000 and
+            q["energy_scope"] == "OBSERVED_PCM_NOT_ORIGINAL_MASTER" and
+            q["resampling"] == "librosa/soxr_hq to 16000 for DSP; PI uses input rate", "INVALID_QUALITY_VALUES")
+    if record["schema"] == QUALITY_SCHEMA:
+        validate_quality(q, p)
+    for candidate in p["tempo_hypotheses"]:
+        require(set(candidate) == {"bpm", "ac_score"} and all(type(v) in (int, float) and np.isfinite(v)
+                for v in candidate.values()), "INVALID_TEMPO_HYPOTHESES")
+    require(set(p["missing_reasons"]) <= set(retrieval.NAMES) and all(v in
+            ("PI_ABSTAIN", "NO_QUALIFYING_TEMPO_PEAK", "NO_HISTOGRAM_MASS") for v in p["missing_reasons"].values()),
+            "INVALID_MISSING_REASONS")
+    if record["source"] == "live":
+        c = record["capture"]
+        require(record["source"] == "live" and c["method"] == "libpulse-single-sink-input" and c["sample_rate"] == 48000
+                and type(c["position_start_us"]) is int and type(c["player_volume"]) in (int, float)
+                and 0 < c["player_volume"] <= 1 and all(type(v) is int and 0 < v <= 131072
+                    for v in c["sink_input_volume"] + c["sink_volume"]), "INVALID_CAPTURE_VALUES")
+        require(c["started_at"] == record["observed_at"] and len(c["stopped_at"]) <= 40 and
+                datetime.fromisoformat(c["stopped_at"]) >= datetime.fromisoformat(c["started_at"]), "INVALID_CAPTURE_TIME")
+    retrieval.validate(p)
+    require(len(json.dumps(record, allow_nan=False)) < 60000, "RECORD_TOO_LARGE")
+
+
+def validate_quality(q, p):
+    require(type(q["native_rate"]) is int and 8000 <= q["native_rate"] <= 96000 and
+            type(q["channels"]) is int and q["channels"] in (1, 2) and
+            q["native_rate"] == p["sample_rate"] and p["start_sample"] == 0 and
+            p["end_sample_exclusive"] == round(q["seconds"] * q["native_rate"]), "INVALID_QUALITY_WINDOW")
+    count = p["end_sample_exclusive"] * q["channels"]
+    require(all(type(q[k]) is int and 0 <= q[k] <= count for k in
+                ("outside_unit_samples", "flat_top_runs", "flat_top_samples", "flat_top_max_samples")) and
+            all(type(q[k]) in (int, float) and np.isfinite(q[k]) for k in ("flat_top_fraction", "min_block_rms")) and
+            0 <= q["clipped_fraction"] <= 1 and 0 <= q["flat_top_fraction"] <= 1 and
+            0 <= q["min_block_rms"] <= q["peak"] and 0 < q["rms"] <= q["peak"] and
+            q["outside_unit_samples"] / count <= q["clipped_fraction"] and
+            (q["outside_unit_samples"] > 0) == (q["peak"] > 1) and
+            q["flat_top_fraction"] == q["flat_top_samples"] / count and
+            q["flat_top_runs"] * max(3, int(np.ceil(q["native_rate"] * .00025))) <= q["flat_top_samples"] and
+            q["flat_top_samples"] <= q["flat_top_runs"] * q["flat_top_max_samples"] and
+            q["flat_top_max_samples"] <= p["end_sample_exclusive"] and
+            type(q["long_flat_top"]) is bool and
+            q["long_flat_top"] == (q["flat_top_max_samples"] >= int(np.ceil(q["native_rate"] * .001))),
+            "INVALID_QUALITY_METRICS")
+    conditions, flags = quality_decision(q)
+    require(q["policy"] == QUALITY_POLICY and not conditions and q["flags"] == flags and
+            q["status"] == ("ACCEPTED_WITH_CAUTION" if flags else "ACCEPTED"), "INVALID_QUALITY_DECISION")
+
+
+def validate_stream(record):
+    binding, c, p = record["identity"], record["capture"], record["profile"]
+    require(binding == stream_identity(binding["requested_id"], binding["observed_id"]) and
+            p["id"] == "yandex-stream-" + binding["requested_id"], "INVALID_STREAM_IDENTITY")
+    require(isinstance(c, dict) and set(c) == {"method", "sample_rate", "codec", "bitrate_kbps", "start_seconds",
+            "seconds", "received_bytes", "metadata", "extractor_schema", "started_at", "stopped_at"},
+            "INVALID_STREAM_CAPTURE_FIELDS")
+    require(c["method"] == "authorized-yandex-stream-ffmpeg" and c["codec"] in ("mp3", "aac") and
+            c["sample_rate"] == p["sample_rate"] == record["quality"]["native_rate"] == 48000 and
+            c["extractor_schema"] == p["feature_schema"] == retrieval.FEATURE_SCHEMA and
+            type(c["bitrate_kbps"]) is int and 0 < c["bitrate_kbps"] <= 512 and
+            type(c["received_bytes"]) is int and 0 < c["received_bytes"] <= 8 * 1024**2,
+            "INVALID_STREAM_CAPTURE_VALUES")
+    require(all(type(c[k]) in (int, float) and np.isfinite(c[k]) for k in ("start_seconds", "seconds")) and
+            0 <= c["start_seconds"] <= 60 and 10 <= c["seconds"] <= 15 and
+            c["seconds"] == record["quality"]["seconds"] and p["start_sample"] == 0 and
+            p["end_sample_exclusive"] == round(c["seconds"] * c["sample_rate"]), "INVALID_STREAM_WINDOW")
+    m = c["metadata"]
+    require(isinstance(m, dict) and set(m) == {"id", "title", "artists", "duration_seconds", "album_id", "album_title"},
+            "INVALID_STREAM_METADATA_FIELDS")
+    require(m["id"] == binding["observed_id"] and m["title"] == p["title"] and m["artists"] == record["artists"] and
+            type(m["duration_seconds"]) in (int, float) and np.isfinite(m["duration_seconds"]) and
+            c["start_seconds"] + c["seconds"] <= m["duration_seconds"] <= 86400, "INVALID_STREAM_METADATA")
+    if m["album_id"] is not None:
+        track_id(m["album_id"])
+    safe_text(m["album_title"])
+    require(c["started_at"] == record["observed_at"] and len(c["stopped_at"]) <= 40 and
+            datetime.fromisoformat(c["stopped_at"]) >= datetime.fromisoformat(c["started_at"]), "INVALID_STREAM_TIME")
+
+
+def read_file(path, start, seconds):
+    import soundfile as sf
+    path = Path(path).resolve(strict=True)
+    require(path.is_file() and 0 <= start and 10 <= seconds <= 15, "INVALID_LOCAL_WINDOW")
+    with sf.SoundFile(path) as audio:
+        require(8000 <= audio.samplerate <= 96000 and audio.channels in (1, 2), "UNSUPPORTED_LOCAL_AUDIO")
+        sr = audio.samplerate
+        audio.seek(round(start * sr))
+        pcm = audio.read(round(seconds * sr), dtype="float64", always_2d=True)
+    if len(pcm) != round(seconds * sr):
+        pcm.fill(0)
+        raise Rejected("SHORT_LOCAL_FILE")
+    return pcm, sr
+
+
+class Index:
+    def __init__(self, root):
+        root = Path(root).absolute()
+        require(not inside_git(root), "INDEX_MUST_BE_OUTSIDE_GIT")
+        root.mkdir(mode=0o700, parents=True, exist_ok=True)
+        st = root.lstat()
+        require(stat.S_ISDIR(st.st_mode) and st.st_uid == os.getuid() and stat.S_IMODE(st.st_mode) == 0o700,
+                "INDEX_DIRECTORY_MUST_BE_PRIVATE_0700")
+        self.path = root / "index.sqlite3"
+        fd = os.open(self.path, os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
+        try:
+            st = os.fstat(fd)
+            require(stat.S_ISREG(st.st_mode) and st.st_uid == os.getuid() and st.st_nlink == 1 and
+                    stat.S_IMODE(st.st_mode) == 0o600, "INDEX_FILE_MUST_BE_PRIVATE_0600")
+        finally:
+            os.close(fd)
+        with self.connection() as db:
+            version = db.execute("PRAGMA user_version").fetchone()[0]
+            require(version in (0, 1, 2, 3), "INCOMPATIBLE_INDEX_VERSION")
+            tables = db.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall()
+            require(tables in ([], [("records",)]), "FOREIGN_DATABASE")
+            db.execute("CREATE TABLE IF NOT EXISTS records (id TEXT PRIMARY KEY, payload TEXT NOT NULL)")
+            if version == 0:
+                db.execute("PRAGMA user_version=1")
+
+    @contextmanager
+    def connection(self):
+        db = sqlite3.connect(self.path)
+        try:
+            db.execute("PRAGMA secure_delete=ON")
+            db.execute("PRAGMA journal_mode=DELETE")
+            with db:
+                yield db
+        finally:
+            db.close()
+
+    def put(self, record, replace=False):
+        validate_record(record)
+        key = record["profile"]["id"]
+        with self.connection() as db:
+            db.execute("BEGIN IMMEDIATE")
+            old = db.execute("SELECT payload FROM records WHERE id=?", (key,)).fetchone()
+            if old:
+                if json.loads(old[0])["profile"] == record["profile"]:
+                    return "UNCHANGED"
+                require(replace, "REMEASUREMENT_REQUIRES_REPLACE")
+            require(old or db.execute("SELECT count(*) FROM records").fetchone()[0] < MAX_RECORDS, "INDEX_LIMIT_1000")
+            version = 3 if record["schema"] == QUALITY_SCHEMA else 2 if record["source"] == "yandex_stream" else 1
+            if db.execute("PRAGMA user_version").fetchone()[0] < version:
+                db.execute(f"PRAGMA user_version={version}")
+            db.execute("INSERT OR REPLACE INTO records VALUES (?,?)", (key, json.dumps(record, ensure_ascii=False, allow_nan=False)))
+        return "REPLACED" if old else "INSERTED"
+
+    def records(self):
+        with self.connection() as db:
+            rows = db.execute("SELECT payload FROM records ORDER BY id LIMIT 1001").fetchall()
+        require(len(rows) <= MAX_RECORDS, "INDEX_LIMIT_1000")
+        result = [json.loads(r[0]) for r in rows]
+        for r in result:
+            validate_record(r)
+        return result
+
+    def delete(self, key=None):
+        with self.connection() as db:
+            if key is None:
+                count = db.execute("DELETE FROM records").rowcount
+            else:
+                count = db.execute("DELETE FROM records WHERE id=?", (entry_id(key),)).rowcount
+        with self.connection() as db:
+            db.execute("VACUUM")
+        return count
+
+    def search(self, key, top=3):
+        rows = self.records()
+        require(len(rows) >= 3, "AT_LEAST_THREE_RECORDS_REQUIRED")
+        result = retrieval.search(key, [r["profile"] for r in rows], top=top, profile="acoustic")
+        notices = {r["profile"]["id"]: quality_notice(r) for r in rows}
+        result["query_signal_quality"] = notices[key]
+        for candidate in result["results"]:
+            candidate["signal_quality"] = notices[candidate["id"]]
+        return result

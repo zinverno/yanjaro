@@ -1,0 +1,6 @@
+__pycache__/
+*.sqlite3*
+*.wav
+*.mp3
+*.ogg
+*.flac
