@@ -15,7 +15,7 @@ import tempfile
 import threading
 import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 from urllib.parse import urlsplit
 import unittest
 
@@ -53,7 +53,7 @@ def encoded(codec, seconds=90, level=1):
 
 
 @contextmanager
-def fixture(audio, codec="mp3", mode="ok"):
+def fixture(audio, codec="mp3", mode="ok", redirect=None):
     calls = []
     track = dict(id="123", title="Synthetic signal", artists=[dict(id=7, name="Fixture artist")],
                  albums=[dict(id=9, title="Fixture album")], durationMs=90000, available=True)
@@ -69,6 +69,14 @@ def fixture(audio, codec="mp3", mode="ok"):
             path = urlsplit(self.path).path
             auth = self.headers.get("Authorization")
             calls.append((path, auth))
+            if redirect and path.startswith(redirect[0]) and sum(p.startswith(redirect[0]) for p, _ in calls) == redirect[1]:
+                self.send_response(redirect[2])
+                if redirect[3] is not None:
+                    self.send_header("Location", redirect[3])
+                self.send_header("Set-Cookie", "private=" + SECRET)
+                self.send_header("Content-Length", "0")
+                self.end_headers()
+                return
             status = 200
             if path == "/account/status":
                 result = dict(account=dict(uid=1))
@@ -129,6 +137,95 @@ def fixture(audio, codec="mp3", mode="ok"):
         server.shutdown()
         server.server_close()
         thread.join(timeout=2)
+
+
+class RedirectDiagnosticsTests(unittest.TestCase):
+    def test_stage_comes_from_sdk_operation_without_automatic_redirect_or_body_read(self):
+        for operation, stage, method in (("tracks", "metadata_api", "POST"),
+                                         ("download", "tracks_download_info", "GET"),
+                                         ("xml", "download_info_xml", "GET")):
+            with self.subTest(operation=operation), patch("yandex_stream.session") as factory, \
+                    patch("sys.stderr", new_callable=io.StringIO) as output:
+                request = stream.BoundedRequest()
+                request.set_authorization(SECRET)
+                client = stream.ObservedClient(request=request)
+                http = factory.return_value.__enter__.return_value
+                response = http.request.return_value.__enter__.return_value
+                response.status_code = 307
+                response.headers = {"Location": "https://" + HOST + "/private?signature=" + SECRET}
+                with self.assertRaisesRegex(core.Rejected, "^STREAM_REDIRECT_REJECTED$"):
+                    if operation == "tracks":
+                        client.tracks(["123"])
+                    elif operation == "download":
+                        client.tracks_download_info("123")
+                    else:
+                        # The operation, not the hostname/path, determines the XML stage.
+                        request.retrieve("https://api.music.yandex.net/unusual-xml-path")
+                event = json.loads(output.getvalue())
+                self.assertEqual((event["stage"], event["method"]), (stage, method))
+                http.request.assert_called_once()
+                self.assertFalse(http.request.call_args.kwargs["allow_redirects"])
+                self.assertNotIn("_stage", http.request.call_args.kwargs)
+                self.assertEqual(request.calls, 1)
+                response.iter_content.assert_not_called()
+                http.request.return_value.__exit__.assert_called_once()
+                factory.return_value.__exit__.assert_called_once()
+                self.assertNotIn(SECRET, output.getvalue())
+
+    def test_classification_never_emits_private_url_components(self):
+        source = "https://" + HOST + "/private-path?signature=" + SECRET
+        cases = [
+            (None, None, "MISSING_LOCATION"), ("", None, "MISSING_LOCATION"),
+            ("/new-private-path?signature=" + SECRET, HOST, "SAME_ORIGIN"),
+            ("https://" + HOST + ":443/new?signature=" + SECRET, HOST, "SAME_ORIGIN"),
+            ("//another.storage.yandex.net/private?signature=" + SECRET, "another.storage.yandex.net", "CROSS_ORIGIN_WITHIN_ALLOWLIST"),
+            (source, HOST, "SELF_REDIRECT"),
+            ("https://external.invalid/private?signature=" + SECRET, "external.invalid", "HOST_NOT_ALLOWLISTED"),
+            ("https://yandex.net.external.invalid/private", "yandex.net.external.invalid", "HOST_NOT_ALLOWLISTED"),
+            ("http://" + HOST + "/private", HOST, "HTTPS_DOWNGRADE"),
+            ("file:///private-path", None, "UNSUPPORTED_SCHEME"),
+            ("data:text/plain," + SECRET, None, "UNSUPPORTED_SCHEME"),
+            ("https://user:" + SECRET + "@" + HOST + "/private", HOST, "USERINFO_REJECTED"),
+            ("https://@" + HOST + "/private", HOST, "USERINFO_REJECTED"),
+            ("https://" + HOST + ":444/private", HOST, "PORT_REJECTED"),
+            ("https://" + HOST + ":bad/private", HOST, "INVALID_LOCATION"),
+            ("https://" + HOST + ":65536/private", HOST, "INVALID_LOCATION"),
+            ("/private#" + SECRET, HOST, "FRAGMENT_REJECTED"),
+            ("/private#", HOST, "FRAGMENT_REJECTED"),
+            ("https://[invalid/private", None, "INVALID_LOCATION"),
+            ("https://bad%20host.yandex.net/private", None, "INVALID_LOCATION"),
+            ("https://" + "a" * 64 + ".yandex.net/private", None, "INVALID_LOCATION"),
+            ("https://" + HOST + "/private\r\n" + SECRET, None, "INVALID_LOCATION"),
+            (" https://" + HOST + "/private", None, "INVALID_LOCATION"),
+            ("https://" + HOST + "\\private", None, "INVALID_LOCATION"),
+            ("/" + "x" * 8192, None, "INVALID_LOCATION"),
+        ]
+        for status in (302, 307):
+            for location, host, classification in cases:
+                with self.subTest(status=status, classification=classification), patch("sys.stderr", new_callable=io.StringIO) as output:
+                    response = Mock(status_code=status, headers={} if location is None else {"Location": location})
+                    with self.assertRaisesRegex(core.Rejected, "^STREAM_REDIRECT_REJECTED$"):
+                        stream.response_check(response, stage="media_get", url=source, method="GET")
+                    self.assertEqual(json.loads(output.getvalue()), dict(event="STREAM_REDIRECT", stage="media_get", method="GET",
+                                     http_status=status, source_hostname=HOST, target_hostname=host,
+                                     classification=classification, followed=False))
+                    for private in (SECRET, "private-path", "signature", "Authorization", "Cookie", "https://"):
+                        self.assertNotIn(private, output.getvalue())
+
+    def test_diagnostic_output_failure_still_rejects_and_success_is_quiet(self):
+        response = Mock(status_code=302, headers={"Location": "https://" + HOST + "/private"})
+        with patch("sys.stderr.write", side_effect=OSError(SECRET)):
+            with self.assertRaisesRegex(core.Rejected, "^STREAM_REDIRECT_REJECTED$"):
+                stream.response_check(response, stage="media_get", url="https://" + HOST + "/old", method="GET")
+        with patch("sys.stderr", new_callable=io.StringIO) as output:
+            for status, reason in ((200, None), (410, "STREAM_LINK_EXPIRED"), (403, "STREAM_ACCESS_DENIED_OR_EXPIRED")):
+                response.status_code = status
+                if reason:
+                    with self.assertRaisesRegex(core.Rejected, reason):
+                        stream.response_check(response, stage="media_get", url="https://" + HOST + "/old", method="GET")
+                else:
+                    stream.response_check(response, stage="media_get", url="https://" + HOST + "/old", method="GET")
+            self.assertEqual(output.getvalue(), "")
 
 
 class YandexStreamTests(unittest.TestCase):
@@ -229,6 +326,53 @@ class YandexStreamTests(unittest.TestCase):
                         stream.decode("https://" + HOST + "/get-mp3/fixture", "mp3", 30, 12)
                 self.assertTrue((allocated == 0).all())
                 self.assertEqual(len(calls), 1)
+
+    def test_real_http_redirect_at_every_stage_stops_before_index_and_followup(self):
+        stages = [("/account/status", 1, "metadata_api", "GET", 1),
+                  ("/tracks", 1, "metadata_api", "POST", 2),
+                  ("/tracks", 2, "metadata_api", "POST", 3),
+                  ("/tracks/123/download-info", 1, "tracks_download_info", "GET", 4),
+                  ("/info", 1, "download_info_xml", "GET", 5),
+                  ("/get-mp3/", 1, "media_get", "GET", 6)]
+        for status in (302, 307):
+            for path, occurrence, stage, method, count in stages:
+                location = "https://external.invalid/private-path?signature=" + SECRET
+                with self.subTest(status=status, stage=stage, count=count), \
+                        fixture(self.mp3, redirect=(path, occurrence, status, location)) as calls, \
+                        tempfile.TemporaryDirectory(dir="/tmp") as tmp, \
+                        patch("sys.stdin.isatty", return_value=True), \
+                        patch("sys.stdout", new_callable=io.StringIO) as output, \
+                        patch("sys.stdout.isatty", return_value=True), \
+                        patch("sys.stderr", new_callable=io.StringIO) as diagnostic, \
+                        patch("yandex_stream.SecretStore") as store, patch("builtins.input", return_value="START 123"), \
+                        patch("yandex_stream.subprocess.Popen") as decoder, patch("personal_index.Index") as index:
+                    store.return_value.read.return_value = SECRET
+                    directory = Path(tmp) / "private"
+                    argv = ["personal_index", "--yandex-stream", "--track-id", "123", "--start", "30", "--seconds", "12",
+                            "--index-dir", str(directory)]
+                    with patch.object(sys, "argv", argv), self.assertRaisesRegex(core.Rejected, "^STREAM_REDIRECT_REJECTED$"):
+                        personal_index.main()
+                    self.assertEqual(json.loads(diagnostic.getvalue()), dict(event="STREAM_REDIRECT", stage=stage, method=method,
+                                     http_status=status, source_hostname="api.music.yandex.net" if count <= 4 else HOST,
+                                     target_hostname="external.invalid", classification="HOST_NOT_ALLOWLISTED", followed=False))
+                    self.assertEqual(len(calls), count)
+                    self.assertTrue(all(auth is None for p, auth in calls if p == "/info" or p.startswith("/get-mp3/")))
+                    decoder.assert_not_called()
+                    index.assert_not_called()
+                    self.assertFalse(directory.exists())
+                    for private in (SECRET, "private-path", "signature", "Authorization", "Cookie", "https://"):
+                        self.assertNotIn(private, output.getvalue() + diagnostic.getvalue())
+
+    def test_partial_decode_cli_does_not_open_index(self):
+        with fixture(self.mp3, mode="partial"), patch("sys.stdin.isatty", return_value=True), \
+                patch("sys.stdout.isatty", return_value=True), patch("builtins.print"), \
+                patch("yandex_stream.SecretStore") as store, patch("builtins.input", return_value="START 123"), \
+                patch("personal_index.Index") as index, \
+                patch.object(sys, "argv", ["personal_index", "--yandex-stream", "--track-id", "123", "--start", "30", "--seconds", "12"]):
+            store.return_value.read.return_value = SECRET
+            with self.assertRaises(core.Rejected):
+                personal_index.main()
+            index.assert_not_called()
 
     def test_untrusted_url_and_bad_windows_never_start_transport(self):
         for url in ("http://" + HOST + "/a", "https://127.0.0.1/a", "https://yandex.net.evil.test/a",

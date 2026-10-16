@@ -1,16 +1,18 @@
 """Explicit single-track acquisition. Secrets/URLs stay in RAM; FFmpeg sees only pipes."""
 from datetime import datetime, timezone
 from contextlib import contextmanager
+import json
 import math
 import os
 from pathlib import Path
+import re
 import resource
 import select
 import signal
 import subprocess
 import sys
 import time
-from urllib.parse import urlsplit
+from urllib.parse import urljoin, urlsplit
 
 import numpy as np
 import requests
@@ -69,12 +71,63 @@ def session():
     return result
 
 
-def response_check(response):
+def diagnostic_hostname(url):
+    try:
+        host = urlsplit(url).hostname
+        if host and len(host) <= 253 and all(re.fullmatch(r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?", label)
+                                           for label in host.split(".")):
+            return host
+    except (TypeError, ValueError):
+        pass
+    return None
+
+
+def redirect_details(url, location):
+    """Classify only; never return a URL or authorize a follow-up request."""
+    if location is None or location == "":
+        return None, "MISSING_LOCATION"
+    if not isinstance(location, str) or len(location) > 8192 or "\\" in location or \
+            not all(32 < ord(c) < 127 for c in location):
+        return None, "INVALID_LOCATION"
+    host = None
+    try:
+        target = urljoin(url, location)
+        parsed = urlsplit(target)
+        host = diagnostic_hostname(target)
+        if parsed.scheme != "https":
+            return host, "HTTPS_DOWNGRADE" if parsed.scheme == "http" else "UNSUPPORTED_SCHEME"
+        if parsed.username is not None or parsed.password is not None:
+            return host, "USERINFO_REJECTED"
+        if "#" in location:
+            return host, "FRAGMENT_REJECTED"
+        if parsed.port not in (None, 443):
+            return host, "PORT_REJECTED"
+        if not host:
+            return None, "INVALID_LOCATION"
+        if not host.endswith((".yandex.net", ".yandex.ru")):
+            return host, "HOST_NOT_ALLOWLISTED"
+        if target == url:
+            return host, "SELF_REDIRECT"
+        return host, "SAME_ORIGIN" if host == diagnostic_hostname(url) else "CROSS_ORIGIN_WITHIN_ALLOWLIST"
+    except (TypeError, ValueError):
+        return host, "INVALID_LOCATION"
+
+
+def response_check(response, *, stage, url, method):
     if response.status_code == 410:
         raise Rejected("STREAM_LINK_EXPIRED")
     if response.status_code in (401, 403):
         raise Rejected("STREAM_ACCESS_DENIED_OR_EXPIRED")
-    require(not 300 <= response.status_code < 400, "STREAM_REDIRECT_REJECTED")
+    if 300 <= response.status_code < 400:
+        target, classification = redirect_details(url, response.headers.get("Location"))
+        try:
+            print(json.dumps(dict(event="STREAM_REDIRECT", stage=stage, method=method,
+                                  http_status=response.status_code, source_hostname=diagnostic_hostname(url),
+                                  target_hostname=target, classification=classification, followed=False)),
+                  file=sys.stderr, flush=True)
+        except OSError:
+            pass  # Diagnostic output failure must not permit the redirect.
+        raise Rejected("STREAM_REDIRECT_REJECTED")
     require(response.status_code == 200, "STREAM_HTTP_FAILED")
     require(response.headers.get("Content-Encoding", "identity").lower() == "identity", "STREAM_ENCODING_REJECTED")
 
@@ -88,6 +141,7 @@ class BoundedRequest(AccountRequest):
 
     def _request_wrapper(self, method, url, **kwargs):
         host = validate_url(url)
+        stage = kwargs.pop("_stage", "metadata_api")
         require(method in ("GET", "POST") and self.calls < 8, "STREAM_REQUEST_LIMIT")
         require(time.monotonic() < self.deadline, "STREAM_METADATA_TIMEOUT")
         kwargs = self._prepare_kwargs(kwargs)
@@ -100,7 +154,7 @@ class BoundedRequest(AccountRequest):
         try:
             with timeout(self.deadline - time.monotonic(), "STREAM_METADATA_TIMEOUT"), session() as http, \
                     http.request(method, url, stream=True, allow_redirects=False, **kwargs) as response:
-                response_check(response)
+                response_check(response, stage=stage, url=url, method=method)
                 body = bytearray()
                 for part in response.iter_content(CHUNK):
                     require(time.monotonic() < self.deadline, "STREAM_METADATA_TIMEOUT")
@@ -110,11 +164,14 @@ class BoundedRequest(AccountRequest):
         except requests.RequestException:
             raise Rejected("STREAM_METADATA_NETWORK_ERROR") from None
 
+    def retrieve(self, *args, **kwargs):
+        return super().retrieve(*args, **kwargs, _stage="download_info_xml")
+
 
 class ObservedClient(Client):
     # MusicApi.stream selects the variant; retain only its SDK objects until that call returns.
     def tracks_download_info(self, *args, **kwargs):
-        self.variants = super().tracks_download_info(*args, **kwargs)
+        self.variants = super().tracks_download_info(*args, **kwargs, _stage="tracks_download_info")
         return self.variants
 
 
@@ -148,7 +205,7 @@ def decode(url, codec, start, seconds):
     try:
         with timeout(60, "STREAM_DECODE_TIMEOUT"), session() as http, \
                 http.get(url, stream=True, allow_redirects=False, timeout=(3, 3)) as response:
-            response_check(response)
+            response_check(response, stage="media_get", url=url, method="GET")
             process = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
                                        bufsize=0, preexec_fn=decoder_limits, close_fds=True,
                                        env={"PATH": os.defpath, "LANG": "C", "LC_ALL": "C",
@@ -211,7 +268,6 @@ def metadata(track, requested):
 
 def acquire(requested, start, seconds):
     """Called only by the explicit owner CLI. Never writes or deletes credentials."""
-    import json
     from yanjaro.api import track_model
     from core import retrieval
     window(start, seconds)
