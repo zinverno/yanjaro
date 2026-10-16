@@ -55,10 +55,12 @@ def validate_url(url):
     try:
         parsed = urlsplit(url)
         require(isinstance(url, str) and len(url) <= 8192 and all(32 < ord(c) < 127 for c in url) and
+                "\\" not in url and "#" not in url and not re.search(r"%(?![0-9a-fA-F]{2})", url) and
                 parsed.scheme == "https" and parsed.hostname and
+                diagnostic_hostname(url) is not None and
                 parsed.hostname.endswith((".yandex.net", ".yandex.ru")) and
-                not parsed.username and not parsed.password and not parsed.fragment and
-                parsed.port in (None, 443), "STREAM_URL_REJECTED")
+                parsed.username is None and parsed.password is None and
+                parsed.port in (None, 443) and not parsed.netloc.endswith(":"), "STREAM_URL_REJECTED")
         return parsed.hostname
     except (ValueError, TypeError):
         raise Rejected("STREAM_URL_REJECTED") from None
@@ -119,23 +121,72 @@ def redirect_details(url, location):
         return host, "INVALID_LOCATION"
 
 
+def redirect_diagnostic(response, *, stage, url, method, followed=False):
+    target, classification = redirect_details(url, response.headers.get("Location"))
+    try:
+        print(json.dumps(dict(event="STREAM_REDIRECT", stage=stage, method=method,
+                              http_status=response.status_code, source_hostname=diagnostic_hostname(url),
+                              target_hostname=target, classification=classification, followed=followed)),
+              file=sys.stderr, flush=True)
+    except OSError:
+        pass
+
+
 def response_check(response, *, stage, url, method):
     if response.status_code == 410:
         raise Rejected("STREAM_LINK_EXPIRED")
     if response.status_code in (401, 403):
         raise Rejected("STREAM_ACCESS_DENIED_OR_EXPIRED")
     if 300 <= response.status_code < 400:
-        target, classification = redirect_details(url, response.headers.get("Location"))
-        try:
-            print(json.dumps(dict(event="STREAM_REDIRECT", stage=stage, method=method,
-                                  http_status=response.status_code, source_hostname=diagnostic_hostname(url),
-                                  target_hostname=target, classification=classification, followed=False)),
-                  file=sys.stderr, flush=True)
-        except OSError:
-            pass  # Diagnostic output failure must not permit the redirect.
+        redirect_diagnostic(response, stage=stage, url=url, method=method)
         raise Rejected("STREAM_REDIRECT_REJECTED")
     require(response.status_code == 200, "STREAM_HTTP_FAILED")
     require(response.headers.get("Content-Encoding", "identity").lower() == "identity", "STREAM_ENCODING_REJECTED")
+
+
+def redirect_target(url, location):
+    require(isinstance(location, str) and 0 < len(location) <= 8192 and
+            all(32 < ord(c) < 127 for c in location) and "\\" not in location and "#" not in location and
+            not re.search(r"%(?![0-9a-fA-F]{2})", location), "STREAM_REDIRECT_REJECTED")
+    try:
+        parsed = urlsplit(location)
+        # Validate an explicit authority before urljoin can repair malformed absolute references.
+        if parsed.scheme or location.startswith("//"):
+            validate_url("https:" + location if location.startswith("//") else location)
+        target = urljoin(url, location)
+        validate_url(target)
+        return target
+    except (ValueError, TypeError, Rejected):
+        raise Rejected("STREAM_REDIRECT_REJECTED") from None
+
+
+def media_url_key(url):
+    # Compare the URL Requests will send, including normalized escapes, host and default port.
+    parsed = urlsplit(requests.Request("GET", url).prepare().url)
+    return parsed.hostname, parsed.port or 443, parsed.path or "/", parsed.query
+
+
+@contextmanager
+def media_response(url):
+    visited = set()
+    for redirects in range(3):
+        validate_url(url)
+        visited.add(media_url_key(url))
+        # A new session per GET prevents cookies/auth/proxy state crossing origins or hops.
+        with session() as http, http.get(url, stream=True, allow_redirects=False, timeout=(3, 3)) as response:
+            if response.status_code != 308:
+                response_check(response, stage="media_get", url=url, method="GET")
+                yield response
+                return
+            try:
+                target = redirect_target(url, response.headers.get("Location"))
+                require(media_url_key(target) not in visited, "STREAM_REDIRECT_LOOP")
+                require(redirects < 2, "STREAM_REDIRECT_LIMIT")
+            except Rejected:
+                redirect_diagnostic(response, stage="media_get", url=url, method="GET")
+                raise
+        redirect_diagnostic(response, stage="media_get", url=url, method="GET", followed=True)
+        url = target
 
 
 class BoundedRequest(AccountRequest):
@@ -209,9 +260,7 @@ def decode(url, codec, start, seconds):
     received = written = 0
     pending = b""
     try:
-        with timeout(60, "STREAM_DECODE_TIMEOUT"), session() as http, \
-                http.get(url, stream=True, allow_redirects=False, timeout=(3, 3)) as response:
-            response_check(response, stage="media_get", url=url, method="GET")
+        with timeout(60, "STREAM_DECODE_TIMEOUT"), media_response(url) as response:
             process = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
                                        bufsize=0, preexec_fn=decoder_limits, close_fds=True,
                                        env={"PATH": os.defpath, "LANG": "C", "LC_ALL": "C",

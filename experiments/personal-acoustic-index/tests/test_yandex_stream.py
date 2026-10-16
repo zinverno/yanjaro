@@ -27,6 +27,8 @@ import yandex_stream as stream
 
 SECRET = "synthetic-authorization-only"
 HOST = "fixture.storage.yandex.net"
+CDN = "strm-fixture-1.strm.yandex.net"
+CDN2 = "strm-fixture-2.strm.yandex.net"
 
 
 def local_network_only(event, args):
@@ -53,8 +55,9 @@ def encoded(codec, seconds=90, level=1):
 
 
 @contextmanager
-def fixture(audio, codec="mp3", mode="ok", redirect=None):
+def fixture(audio, codec="mp3", mode="ok", redirect=None, media_steps=None, media_calls=None):
     calls = []
+    media_calls = media_calls if media_calls is not None else []
     track = dict(id="123", title="Synthetic signal", artists=[dict(id=7, name="Fixture artist")],
                  albums=[dict(id=9, title="Fixture album")], durationMs=90000, available=True)
     class Handler(BaseHTTPRequestHandler):
@@ -78,6 +81,7 @@ def fixture(audio, codec="mp3", mode="ok", redirect=None):
                 self.end_headers()
                 return
             status = 200
+            location = None
             if path == "/account/status":
                 result = dict(account=dict(uid=1))
             elif path == "/tracks":
@@ -88,7 +92,8 @@ def fixture(audio, codec="mp3", mode="ok", redirect=None):
                                downloadInfoUrl="https://" + HOST + "/info", direct=False)]
             elif path == "/info":
                 result = None
-                body = (f'<download-info><host>{HOST}</host><path>/fixture.{codec}</path>'
+                origin = HOST if media_steps is None else "api.music.yandex.net"
+                body = (f'<download-info><host>{origin}</host><path>/fixture.{codec}</path>'
                         '<ts>1</ts><s>synthetic</s></download-info>').encode()
             else:
                 result = None
@@ -98,6 +103,13 @@ def fixture(audio, codec="mp3", mode="ok", redirect=None):
                     body = b""
                 elif mode in ("partial", "broken"):
                     body = audio[:10000]
+                if media_steps is not None:
+                    media_calls.append((self.headers.get("Host"), self.path, auth, self.headers.get("Cookie"),
+                                        self.headers.get("Proxy-Authorization")))
+                    if len(media_calls) <= len(media_steps):
+                        status, location = media_steps[len(media_calls) - 1]
+                        if status != 200:
+                            body = b""
             if result is not None:
                 if auth != "OAuth " + SECRET:
                     status = 401
@@ -105,6 +117,10 @@ def fixture(audio, codec="mp3", mode="ok", redirect=None):
             self.send_response(status)
             if mode == "redirect" and path.startswith("/get-mp3"):
                 self.send_header("Location", "http://127.0.0.1/private")
+            if location is not None:
+                self.send_header("Location", location)
+            if status == 308:
+                self.send_header("Set-Cookie", "private=" + SECRET + "; Domain=.yandex.net; Path=/")
             self.send_header("Content-Length", str(len(audio) if mode == "broken" and path.startswith("/get-mp3") else len(body)))
             self.end_headers()
             try:
@@ -124,7 +140,8 @@ def fixture(audio, codec="mp3", mode="ok", redirect=None):
         call = http.request
         def local(method, url, **kwargs):
             parsed = urlsplit(url)
-            assert parsed.hostname in (HOST, "api.music.yandex.net")
+            assert parsed.hostname in (HOST, CDN, CDN2, "api.music.yandex.net")
+            kwargs["headers"] = {**kwargs.get("headers", {}), "Host": parsed.netloc}
             return call(method, f"http://127.0.0.1:{server.server_port}" + parsed.path +
                         ("?" + parsed.query if parsed.query else ""), **kwargs)
         http.request = local
@@ -140,7 +157,7 @@ def fixture(audio, codec="mp3", mode="ok", redirect=None):
 
 class RedirectDiagnosticsTests(unittest.TestCase):
     def test_requests_does_not_buffer_redirect_body_or_prepare_next_request(self):
-        for status in (302, 307):
+        for status in (302, 307, 308):
             with self.subTest(status=status), stream.session() as http:
                 response = requests.Response()
                 response.status_code = status
@@ -173,7 +190,7 @@ class RedirectDiagnosticsTests(unittest.TestCase):
                 client = stream.ObservedClient(request=request)
                 http = factory.return_value.__enter__.return_value
                 response = http.request.return_value.__enter__.return_value
-                response.status_code = 307
+                response.status_code = 308
                 response.headers = {"Location": "https://" + HOST + "/private?signature=" + SECRET}
                 with self.assertRaisesRegex(core.Rejected, "^STREAM_REDIRECT_REJECTED$"):
                     if operation == "tracks":
@@ -250,6 +267,136 @@ class RedirectDiagnosticsTests(unittest.TestCase):
             self.assertEqual(output.getvalue(), "")
 
 
+class MediaRedirectTests(unittest.TestCase):
+    @contextmanager
+    def transport(self, replies):
+        original = stream.session
+        calls, responses = [], []
+        def session():
+            http = original()
+            self.assertFalse(http.trust_env)
+            adapter = Mock()
+            def send(request, **kwargs):
+                if responses:
+                    responses[-1].raw.close.assert_called_once()
+                self.assertEqual(kwargs["proxies"], {})
+                self.assertTrue(kwargs["verify"])
+                self.assertTrue(kwargs["stream"])
+                self.assertEqual(request.method, "GET")
+                for header in ("Authorization", "Cookie", "Proxy-Authorization", "Referer"):
+                    self.assertNotIn(header, request.headers)
+                item = replies[len(calls)]
+                calls.append(request.url)
+                if isinstance(item, BaseException):
+                    raise item
+                if callable(item):
+                    item = item()
+                response = requests.Response()
+                response.status_code, location = item
+                response.url = request.url
+                if location is not None:
+                    response.headers["Location"] = location
+                response.raw = Mock(_original_response=None)
+                response.raw.stream.side_effect = AssertionError("No implicit body buffering")
+                response.raw.read.side_effect = AssertionError("No body read before decoder")
+                responses.append(response)
+                return response
+            adapter.send.side_effect = send
+            http.get_adapter = lambda url: adapter
+            return http
+        with patch("yandex_stream.session", side_effect=session), \
+                patch("requests.sessions.get_netrc_auth", side_effect=AssertionError("No netrc")), \
+                patch("requests.sessions.get_environ_proxies", side_effect=AssertionError("No environment proxy")):
+            try:
+                yield calls
+            finally:
+                for response in responses:
+                    response.raw.close.assert_called_once()
+                    response.raw.read.assert_not_called()
+                    response.raw.stream.assert_not_called()
+
+    def test_strict_raw_and_resolved_location_validation(self):
+        source = "https://api.music.yandex.net/private/start?old=signature"
+        for location, expected in (("../audio?signature=" + SECRET, "https://api.music.yandex.net/audio?signature=" + SECRET),
+                                   ("//" + CDN + "/audio?x=%2F", "https://" + CDN + "/audio?x=%2F"),
+                                   ("https://" + CDN2 + ":443/audio?x=1&x=2", "https://" + CDN2 + ":443/audio?x=1&x=2")):
+            self.assertEqual(stream.redirect_target(source, location), expected)
+        for location in (None, "", "https:///" + CDN + "/a", "///" + CDN + "/a", "https:audio", "http://" + CDN + "/a",
+                         "ftp://" + CDN + "/a", "data:text/plain,private", "file:///private", "https://outside.invalid/a",
+                         "https://yandex.net.evil.invalid/a", "https://" + CDN + ":444/a", "https://" + CDN + ":/a",
+                         "https://" + CDN + ":bad/a", "https://" + CDN + ":65536/a", "https://@" + CDN + "/a",
+                         "https://user:private@" + CDN + "/a", "/audio#", "/audio#private", "/audio\\private",
+                         " /audio", "/audio\nprivate", "https://[bad/a", "/audio?x=%zz", "/audio?x=%", "/" + "x" * 8192,
+                         "https://" + "a" * 64 + ".yandex.net/a"):
+            with self.subTest(location=location), self.assertRaisesRegex(core.Rejected, "STREAM_REDIRECT_REJECTED"):
+                stream.redirect_target(source, location)
+        with self.assertRaisesRegex(core.Rejected, "STREAM_REDIRECT_REJECTED"):
+            stream.redirect_target("https://" + CDN + "/" + "a/" * 4000 + "a", "b" * 500)
+
+    def test_two_manual_hops_close_before_next_get_and_preserve_private_query(self):
+        source = "https://api.music.yandex.net/start"
+        target = "https://" + CDN + "/private?signature=" + SECRET
+        last = "https://" + CDN2 + "/final?signature=" + SECRET
+        with self.transport([(308, target), (308, last), (200, None)]) as calls, \
+                patch("sys.stderr", new_callable=io.StringIO) as output:
+            with stream.media_response(source) as response:
+                self.assertEqual(response.status_code, 200)
+            self.assertEqual(calls, [source, target, last])
+            events = [json.loads(line) for line in output.getvalue().splitlines()]
+            self.assertEqual(len(events), 2)
+            self.assertTrue(all(e["followed"] and e["http_status"] == 308 and e["stage"] == "media_get" for e in events))
+            for private in (SECRET, "signature", "/private", "/final", "https://"):
+                self.assertNotIn(private, output.getvalue())
+
+    def test_loops_and_third_redirect_never_make_extra_request(self):
+        source = "https://api.music.yandex.net/start"
+        target = "https://" + CDN + "/next"
+        for replies, reason, count in (([(308, source)], "STREAM_REDIRECT_LOOP", 1),
+                                       ([(308, "https://API.MUSIC.YANDEX.NET:443/%73tart")], "STREAM_REDIRECT_LOOP", 1),
+                                       ([(308, target), (308, source)], "STREAM_REDIRECT_LOOP", 2),
+                                       ([(308, target), (308, "/second"), (308, "/third")], "STREAM_REDIRECT_LIMIT", 3)):
+            with self.subTest(reason=reason, count=count), self.transport(replies) as calls, \
+                    patch("sys.stderr", new_callable=io.StringIO) as output:
+                with self.assertRaisesRegex(core.Rejected, reason), stream.media_response(source):
+                    self.fail("No final response permitted")
+                self.assertEqual(len(calls), count)
+                self.assertFalse(json.loads(output.getvalue().splitlines()[-1])["followed"])
+
+    def test_invalid_location_and_other_3xx_stop_without_next_get(self):
+        for status, location in ((308, None), (308, "http://" + CDN + "/private"), (308, "https://external.invalid/private"),
+                                 (308, "https:///" + CDN + "/private"), (302, "https://" + CDN + "/private"),
+                                 (307, "https://" + CDN + "/private")):
+            with self.subTest(status=status, location=location), self.transport([(status, location)]) as calls, \
+                    patch("sys.stderr", new_callable=io.StringIO):
+                with self.assertRaisesRegex(core.Rejected, "STREAM_REDIRECT_REJECTED"), \
+                        stream.media_response("https://api.music.yandex.net/start"):
+                    self.fail("No final response permitted")
+                self.assertEqual(len(calls), 1)
+
+    def test_tls_access_cancel_and_chain_deadline_wipe_pcm(self):
+        real_timeout = stream.timeout
+        def delayed():
+            time.sleep(.1)
+            return 200, None
+        cases = [(requests.exceptions.SSLError(SECRET), core.Rejected, "STREAM_TRANSPORT_OR_DECODER_FAILED"),
+                 (KeyboardInterrupt(), KeyboardInterrupt, ""), ((401, None), core.Rejected, "STREAM_ACCESS_DENIED_OR_EXPIRED"),
+                 ((403, None), core.Rejected, "STREAM_ACCESS_DENIED_OR_EXPIRED"),
+                 ((410, None), core.Rejected, "STREAM_LINK_EXPIRED"), (delayed, core.Rejected, "STREAM_DECODE_TIMEOUT")]
+        for reply, error, reason in cases:
+            allocated = np.ones((12 * 48000 + 1, 2), dtype="<f4")
+            with self.subTest(reason=reason), self.transport([(308, "https://" + CDN + "/next"), reply]) as calls, \
+                    patch("yandex_stream.np.zeros", return_value=allocated), patch("yandex_stream.subprocess.Popen") as decoder, \
+                    patch("sys.stderr", new_callable=io.StringIO) as output, \
+                    patch("yandex_stream.timeout", side_effect=lambda _, reason: real_timeout(.03 if reply is delayed else 60, reason)) as timer:
+                with self.assertRaisesRegex(error, reason):
+                    stream.decode("https://api.music.yandex.net/start", "mp3", 30, 12)
+                self.assertTrue((allocated == 0).all())
+                self.assertEqual(len(calls), 2)
+                timer.assert_called_once_with(60, "STREAM_DECODE_TIMEOUT")
+                decoder.assert_not_called()
+                self.assertNotIn(SECRET, output.getvalue())
+
+
 class YandexStreamTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -272,6 +419,71 @@ class YandexStreamTests(unittest.TestCase):
                     second.fill(0)
                 self.assertEqual(len(calls), 2)
                 self.assertTrue(all(auth is None for _, auth in calls))
+
+    def test_real_http_308_cli_mp3_to_profile_and_index_without_credentials(self):
+        first = "https://" + CDN + "/private-audio?signature=" + SECRET + "&part=1"
+        second = "https://" + CDN2 + "/private-audio?signature=" + SECRET + "&part=2"
+        profiles = []
+        for hops in (1, 2):
+            access = []
+            with self.subTest(hops=hops), fixture(self.mp3, media_steps=[(308, first), (308, second)][:hops], media_calls=access) as calls, \
+                    tempfile.TemporaryDirectory(dir="/tmp") as tmp, patch("sys.stdin.isatty", return_value=True), \
+                    patch("sys.stdout", new_callable=io.StringIO) as output, patch("sys.stdout.isatty", return_value=True), \
+                    patch("sys.stderr", new_callable=io.StringIO) as diagnostic, \
+                    patch("yandex_stream.SecretStore") as store, patch("builtins.input", return_value="START 123"):
+                directory = Path(tmp) / "private"
+                store.return_value.read.return_value = SECRET
+                argv = ["personal_index", "--yandex-stream", "--track-id", "123", "--start", "30", "--seconds", "12",
+                        "--index-dir", str(directory)]
+                with patch.object(sys, "argv", argv):
+                    personal_index.main()
+                row, = core.Index(directory).records()
+                profiles.append(row["profile"])
+                self.assertEqual(row["source"], "yandex_stream")
+                self.assertEqual(row["identity"], core.stream_identity("123", "123"))
+                self.assertEqual(row["capture"]["seconds"], 12)
+                self.assertLess(row["capture"]["received_bytes"], len(self.mp3) * .7)
+                self.assertIn('"status": "INSERTED"', output.getvalue())
+                self.assertIn('"dimensions": 705', output.getvalue())
+                self.assertEqual(len(calls), 6 + hops)
+                self.assertEqual([c[0] for c in access], ["api.music.yandex.net", CDN, CDN2][:hops + 1])
+                self.assertEqual([c[1] for c in access[1:]], ["/private-audio?signature=" + SECRET + "&part=" + str(i)
+                                                            for i in range(1, hops + 1)])
+                self.assertTrue(all(auth is cookie is proxy is None for _, _, auth, cookie, proxy in access))
+                self.assertTrue(all(json.loads(line)["followed"] for line in diagnostic.getvalue().splitlines()))
+                self.assertEqual([p.relative_to(tmp).as_posix() for p in Path(tmp).rglob("*") if p.is_file()], ["private/index.sqlite3"])
+                for forbidden in (SECRET, "signature", "/private-audio", "https://", "Authorization", "Cookie"):
+                    self.assertNotIn(forbidden, output.getvalue() + diagnostic.getvalue())
+                    self.assertNotIn(forbidden.encode(), (directory / "index.sqlite3").read_bytes())
+                for forbidden in (b"ID3", b"RIFF", CDN.encode(), CDN2.encode()):
+                    self.assertNotIn(forbidden, (directory / "index.sqlite3").read_bytes())
+                store.return_value.write.assert_not_called()
+                store.return_value.delete.assert_not_called()
+        self.assertEqual(len(profiles), 2)
+        self.assertEqual(profiles[0], profiles[1])
+
+    def test_real_http_308_failure_partial_and_byte_limit_never_open_index(self):
+        first = "https://" + CDN + "/one?signature=" + SECRET
+        cases = [([(308, first), (308, first)], "ok", "STREAM_REDIRECT_LOOP", 2, stream.MAX_BYTES),
+                 ([(308, first), (308, "/two"), (308, "/three")], "ok", "STREAM_REDIRECT_LIMIT", 3, stream.MAX_BYTES),
+                 ([(308, first), (403, None)], "ok", "STREAM_ACCESS_DENIED_OR_EXPIRED", 2, stream.MAX_BYTES),
+                 ([(308, first), (410, None)], "ok", "STREAM_LINK_EXPIRED", 2, stream.MAX_BYTES),
+                 ([(308, first)], "partial", "STREAM_(PARTIAL_PCM|DECODE_FAILED)", 2, stream.MAX_BYTES),
+                 ([(308, first)], "ok", "STREAM_BYTE_LIMIT", 2, 100)]
+        for steps, mode, reason, count, limit in cases:
+            access = []
+            with self.subTest(reason=reason), fixture(self.mp3, mode=mode, media_steps=steps, media_calls=access), \
+                    patch("sys.stdin.isatty", return_value=True), patch("sys.stdout.isatty", return_value=True), \
+                    patch("builtins.print"), patch("yandex_stream.SecretStore") as store, \
+                    patch("builtins.input", return_value="START 123"), patch("personal_index.Index") as index, \
+                    patch("yandex_stream.MAX_BYTES", limit), \
+                    patch.object(sys, "argv", ["personal_index", "--yandex-stream", "--track-id", "123", "--start", "30", "--seconds", "12"]):
+                store.return_value.read.return_value = SECRET
+                with self.assertRaisesRegex(core.Rejected, reason):
+                    personal_index.main()
+                self.assertEqual(len(access), count)
+                self.assertTrue(all(auth is cookie is proxy is None for _, _, auth, cookie, proxy in access))
+                index.assert_not_called()
 
     def test_complete_cli_sdk_synthetic_auth_index_and_legacy_migration(self):
         with fixture(self.mp3) as calls, tempfile.TemporaryDirectory(dir="/tmp") as tmp:
