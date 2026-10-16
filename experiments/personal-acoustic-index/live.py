@@ -10,7 +10,7 @@ import sys
 import time
 
 from core import Rejected, identity, require, safe_text
-from pulse import Capture, RATE, SERVER
+from pulse import Capture, RATE, SERVER, object_id
 
 SERVICE = "org.mpris.MediaPlayer2.yanjaro"
 PATH = "/org/mpris/MediaPlayer2"
@@ -31,10 +31,14 @@ def volume(item):
 
 
 def select_audio(pid, inputs, sinks, clients):
+    clients = [dict(c, index=object_id(c.get("index"))) for c in clients]
+    sinks = [dict(s, index=object_id(s.get("index"))) for s in sinks]
     candidates = []
     for stream in inputs:
+        stream = dict(stream, index=object_id(stream.get("index")), sink=object_id(stream.get("sink")),
+                      client=object_id(stream["client"]) if stream.get("client") is not None else None)
         direct_pid = stream.get("properties", {}).get("application.process.id")
-        linked = [c for c in clients if type(stream.get("client")) is int and c.get("index") == stream["client"]]
+        linked = [c for c in clients if c["index"] == stream["client"]]
         client_pid = linked[0].get("properties", {}).get("application.process.id") if len(linked) == 1 else None
         if str(pid) not in (direct_pid, client_pid):
             continue
@@ -51,8 +55,7 @@ def select_audio(pid, inputs, sinks, clients):
     require(not stream.get("mute", True) and not stream.get("corked", True) and not sink.get("mute", True),
             "AUDIO_MUTED_OR_PAUSED")
     require(isinstance(sink.get("monitor_source"), str) and
-            re.fullmatch(r"[a-zA-Z0-9_.:-]{1,256}", sink["monitor_source"]) and
-            type(stream.get("index")) is int, "NO_SINK_INPUT_MONITOR")
+            re.fullmatch(r"[a-zA-Z0-9_.:-]{1,256}", sink["monitor_source"]), "NO_SINK_INPUT_MONITOR")
     return dict(index=stream["index"], sink=stream["sink"], monitor=sink["monitor_source"],
                 client=stream["client"], direct_pid=direct_pid, client_pid=client_pid,
                 stream_volume=volume(stream), sink_volume=volume(sink))

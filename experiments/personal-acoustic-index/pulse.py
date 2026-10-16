@@ -5,12 +5,24 @@ No default/system monitor fallback, routing changes or audio files.
 """
 import ctypes as C
 import os
+import re
 import time
 import numpy as np
 from core import Rejected, require
 
 SERVER = f"unix:/run/user/{os.getuid()}/pulse/native"
 RATE = 48000
+
+
+def object_id(value):
+    if type(value) is str:
+        require(re.fullmatch(r"[0-9]+", value) is not None, "INVALID_PULSE_OBJECT_ID")
+        digits = value.lstrip("0") or "0"
+        require(len(digits) <= 10, "INVALID_PULSE_OBJECT_ID")
+        value = int(digits)
+    # UINT32_MAX is PA_INVALID_INDEX, never a concrete object or monitor target.
+    require(type(value) is int and 0 <= value < 0xffffffff, "INVALID_PULSE_OBJECT_ID")
+    return value
 
 
 class SampleSpec(C.Structure):
@@ -23,6 +35,7 @@ class BufferAttr(C.Structure):
 
 class Capture:
     def __init__(self, sink_input, monitor_source):
+        sink_input = object_id(sink_input)
         self.lib = C.CDLL("libpulse.so.0")
         self.loop = self.context = self.stream = None
         self.error = None

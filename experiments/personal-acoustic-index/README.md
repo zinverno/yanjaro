@@ -57,8 +57,13 @@ cd /tmp/yanjaro-personal-index
 
 Прототип получает ожидаемый Unix PID через `GetConnectionUnixProcessID` владельца Yanjaro MPRIS. Read-only команды `pactl -f json list sink-inputs`, `list sinks` и `list clients` выполняются на локальном Pulse server. Поле `sink-input.client` связывается с `client.index`: если у самого sink-input нет `application.process.id`, используется PID связанного клиента. Если оба PID опубликованы, они должны совпадать. Выбирается **ровно один** поток ожидаемого процесса; имена `mpv`, `python` или приложения не являются доказательством принадлежности. PID и индексы сеанса не зафиксированы в коде.
 
+`pulse.object_id()` строго нормализует `sink-input.index`, `sink-input.client`, `sink-input.sink`, `client.index` и `sink.index` в Python `int`. Принимаются неотрицательные `int` и непустые строки только из ASCII-цифр `[0-9]` (ведущие нули допустимы). Допустимые object IDs: `0…4294967294`; `4294967295` зарезервирован как [`PA_INVALID_INDEX`](https://github.com/pulseaudio/pulseaudio/blob/master/src/pulse/def.h). `bool`, float, отрицательные значения, пробелы/знаки, Unicode-цифры, пустые/произвольные строки и выход за uint32 отклоняются до открытия PCM. Ошибка ID в прочитанных metadata приводит к отказу всей проверки; ID не угадываются и не исправляются. Отсутствующий/`null` client означает отсутствие связи и не превращается в числовой ID.
+
+Например, `client="247"` связывается с `client.index=247` или `"247"`, а `sink="57"` — с `sink.index=57`. В снимке маршрута и в `pa_stream_set_monitor_stream` используется числовой input index; результат `pa_stream_get_monitor_stream` сверяется с тем же числом. На границе `Capture` действует та же проверка ID до вызова libpulse. Чередование строк/чисел для одного ID после START, во время захвата или после STOP не считается сменой маршрута; другая числовая привязка или PID по-прежнему отклоняются. Нормализация object IDs не изменяет проверки принадлежности процесса.
+
 | Код отказа | Причина |
 |---|---|
+| `INVALID_PULSE_OBJECT_ID` | Некорректный тип/формат/диапазон ID либо служебный `PA_INVALID_INDEX` |
 | `YANJARO_AUDIO_STREAM_NOT_FOUND` | Ни одного потока с подтверждённым ожидаемым PID; в том числе недоступен PID клиента при отсутствии прямого PID |
 | `YANJARO_AUDIO_STREAM_NOT_UNIQUE` | Подходят несколько sink-input, выбор неоднозначен |
 | `AUDIO_PROCESS_ID_CONFLICT` | Один из PID указывает на Yanjaro, но прямой PID и PID клиента противоречат друг другу |
@@ -135,9 +140,11 @@ PYTHONPATH=experiments/personal-acoustic-index .venv/bin/python -c \
   'import runtime; runtime.configure(); import core, unittest; unittest.main(module=None, argv=["unittest", "discover", "-s", "experiments/acoustic-similarity/tests", "-p", "test_rhythm_pi.py", "-v"])'
 ```
 
-После исправления привязки Pulse client прошли **31 тест: прежние 23 (14 прототипа + 9 PI-v1) и 8 новых регрессионных**. Прежние тесты проверяют 705-dimensional schema, повтор/обнуление PCM, hash/ID mismatch, pause/switch/seek/gain, потерю сигналов/данных и переполнение, ручной START/cancel, исключение других процессов, minimum-three search, вклад аспектов/missing tempo, replace/delete/delete-all, права filesystem, отсутствие аудио/секретов в сохранённом результате и ресурсные лимиты.
+После исправления нормализации Pulse IDs прошли **38 тестов: прежний 31 и 7 новых (14 прототипа + 15 Pulse-binding + 9 PI-v1)**. Прежние тесты проверяют 705-dimensional schema, повтор/обнуление PCM, hash/ID mismatch, pause/switch/seek/gain, потерю сигналов/данных и переполнение, ручной START/cancel, исключение других процессов, minimum-three search, вклад аспектов/missing tempo, replace/delete/delete-all, права filesystem, отсутствие аудио/секретов в сохранённом результате и ресурсные лимиты.
 
 Новые тесты используют синтетические metadata с произвольными PID/индексами: прямой PID, fallback через client, чужой PID, конфликт, несколько кандидатов, неизвестный/отсутствующий/неоднозначный client, смена каждого звена до/во время/после захвата. Проверено закрытие mock capture, обнуление буфера и отсутствие вектора при отказе; отдельный CLI-тест проверяет read-only команды и отсутствие PCM/индекса/извлечения в `--probe`. Это не измерения реального desktop PCM. Исторический CC0 [validation.json](validation.json) не перезаписан. Hardware acceptance остаётся отдельным локальным тестом владельца.
+
+Регрессии нормализации покрывают смешанные строковые/числовые ID, все пять полей, границы uint32 и `PA_INVALID_INDEX`, отсутствие клиента, конфликт PID, неоднозначность, неизменность маршрута при смене представления ID и отказ при реальной смене привязки. В тесте с подставленной libpulse проверены числовой аргумент и отказ при несовпадении возвращённого monitor target. `--probe` проверен на строковых ID; ошибка metadata-запроса не запускает повтор, PCM или индекс. Автоматических повторов нет.
 
 ## Правовые границы
 
