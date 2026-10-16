@@ -91,6 +91,7 @@ class BoundedRequest(AccountRequest):
         require(method in ("GET", "POST") and self.calls < 8, "STREAM_REQUEST_LIMIT")
         require(time.monotonic() < self.deadline, "STREAM_METADATA_TIMEOUT")
         kwargs = self._prepare_kwargs(kwargs)
+        kwargs["headers"] = {**kwargs["headers"], "Accept-Encoding": "identity"}
         require(host == "api.music.yandex.net" or not any(k.lower() == "authorization" for k in kwargs["headers"]),
                 "STREAM_AUTH_DESTINATION_REJECTED")
         kwargs.pop("proxies", None)

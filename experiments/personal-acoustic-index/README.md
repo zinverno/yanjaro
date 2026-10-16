@@ -77,7 +77,7 @@ HTTP-клиент передаёт сжатые порции в stdin FFmpeg, а
 
 ```sh
 ~/.venvs/yanjaro-stream/bin/python -m unittest discover \
-  -s experiments/personal-acoustic-index/tests -v
+  -s experiments/personal-acoustic-index/tests -p test_yandex_stream.py -v
 ```
 
 HTTP fixture генерирует MP3/AAC в RAM, требует синтетическую авторизацию для API metadata и использует реальный localhost HTTP → FFmpeg → DSP → SQLite. Python audit hook запрещает внешние соединения/DNS, Secret Service подставлен, численный extractor настоящий. CI `Personal acoustic index synthetic HTTP` выполняет эти тесты в PR #13 без secrets и без загрузки audio/index artifacts. В sandbox агента loopback sockets запрещены; локальный прогон с HTTP не считается PASS. Итог CI и owner E2E учитываются отдельно.
@@ -162,7 +162,7 @@ HTTP fixture генерирует MP3/AAC в RAM, требует синтети�
 
 Отдельные ручные отрицательные проверки: смена input/sink gain, mute, маршрута или песни должна отклонять окно без новой/изменённой записи; Ctrl-C также отменяет. Изменение **другого** sink должно дать `PULSE_UNRELATED_OBJECT`/`IGNORE`, если выбранный тракт не изменился. Сверяйте `--list` до/после в одном приватном каталоге, не публикуйте его содержимое. Один успешный live-тест не устанавливает изоляцию от чужого звука, точность latency или качество similarity.
 
-## Идентичность и целостность
+## Идентичность и целостность Pulse-режима
 
 В `yanjaro/mpris.py` путь имеет вид `/org/mpris/MediaPlayer2/track_<sha256(currentId)>`. Числовой ID не опубликован. Прототип сверяет вручную введённый ID с этим алгоритмом, показывает title/artists владельцу и требует его подтверждения. Он не перебирает хеши и не читает память, конфигурацию, credentials или stream URLs Yanjaro.
 
@@ -226,7 +226,7 @@ HTTP fixture генерирует MP3/AAC в RAM, требует синтети�
 
 Повторный идентичный профиль даёт `UNCHANGED`. Другое наблюдение того же ID требует явного `--replace`; оно атомарно заменяет предыдущий профиль, не накапливая скрытую историю. Удаление использует `secure_delete` и `VACUUM`; `--delete-all` очищает все строки и оставляет пустую схему. Копии в backup/snapshots пользователя это не удаляет.
 
-PCM остаётся в RAM: libsndfile/file read либо libpulse callback → ограниченный numpy-буфер → DSP → обнуление собственных PCM-буферов и завершение процесса. Сырой PCM не сериализуется. Внутренние временные массивы библиотек освобождаются; гарантии forensic zeroization всех копий RAM/OS swap не заявляются. Core dumps отключены.
+PCM остаётся в RAM: libsndfile/file read, libpulse callback либо FFmpeg stdout → ограниченный numpy-буфер → DSP → обнуление собственных PCM-буферов и завершение процесса. Сырой PCM не сериализуется. Внутренние временные массивы библиотек освобождаются; гарантии forensic zeroization всех копий RAM/OS swap не заявляются. Core dumps отключены.
 
 CPU affinity ограничена двумя доступными CPU, численные библиотеки — **одним потоком**. `RLIMIT_AS` ограничивает всё адресное пространство процесса 1 GiB, то есть строже лимита RSS; исчерпание лимита завершает операцию без нового вектора. Никаких GPU, paid APIs или фонового daemon. Прототип ограничен **1000 записями** и линейным поиском; массовая индексация не реализована.
 
@@ -262,8 +262,9 @@ CLIPPING — технический порог: peak > 1.001 либо доля `
 Тесты без desktop capture, audio files и credentials:
 
 ```sh
-.venv/bin/python -m unittest discover -s experiments/personal-acoustic-index/tests -v
-PYTHONPATH=experiments/personal-acoustic-index .venv/bin/python -c \
+PYTHONPATH=experiments/personal-acoustic-index/tests ~/.venvs/yanjaro-stream/bin/python \
+  -m unittest test_personal test_audio_binding test_pulse_events -v
+PYTHONPATH=experiments/personal-acoustic-index ~/.venvs/yanjaro-stream/bin/python -c \
   'import runtime; runtime.configure(); import core, unittest; unittest.main(module=None, argv=["unittest", "discover", "-s", "experiments/acoustic-similarity/tests", "-p", "test_rhythm_pi.py", "-v"])'
 ```
 

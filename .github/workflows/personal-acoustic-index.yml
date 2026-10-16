@@ -35,8 +35,14 @@ jobs:
           sudo apt-get install -y --no-install-recommends ffmpeg
           python -m pip install --retries 0 --timeout 30 --require-hashes --only-binary=:all: -r experiments/personal-acoustic-index/requirements-yandex.lock
           python -m pip check
+      - name: Existing file, identity and Pulse regressions
+        env:
+          PYTHONPATH: experiments/personal-acoustic-index/tests
+        run: python -m unittest test_personal test_audio_binding test_pulse_events -v
       - name: Synthetic local HTTP, SDK, FFmpeg, DSP and private index (no Yandex or account)
-        run: python -m unittest discover -s experiments/personal-acoustic-index/tests -v
+        # A fresh owner CLI has no previous suites' FFT caches or mock/HTTP thread arenas.
+        # Keep the same 1 GiB limit; do not relax it for the integration fixture.
+        run: python -m unittest discover -s experiments/personal-acoustic-index/tests -p test_yandex_stream.py -v
       - name: Offline acoustic regressions (no acquisition or training)
         working-directory: experiments/acoustic-similarity
         env:

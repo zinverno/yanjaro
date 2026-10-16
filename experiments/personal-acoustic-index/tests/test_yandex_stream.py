@@ -13,8 +13,8 @@ import subprocess
 import tempfile
 import threading
 import time
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from unittest.mock import patch, MagicMock
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from unittest.mock import patch
 from urllib.parse import urlsplit
 import unittest
 
@@ -72,7 +72,8 @@ def fixture(audio, codec="mp3", mode="ok"):
             if path == "/account/status":
                 result = dict(account=dict(uid=1))
             elif path == "/tracks":
-                result = [dict(track, id="456") if mode == "id_mismatch" else track]
+                mismatch = mode == "id_mismatch" or mode == "changed_id" and sum(p == "/tracks" for p, _ in calls) == 2
+                result = [dict(track, id="456") if mismatch else track]
             elif path == "/tracks/123/download-info":
                 result = [dict(codec=codec, bitrateInKbps=192, gain=False, preview=mode == "preview",
                                downloadInfoUrl="https://" + HOST + "/info", direct=False)]
@@ -101,9 +102,11 @@ def fixture(audio, codec="mp3", mode="ok"):
                 for offset in range(0, len(body), 4096):
                     self.wfile.write(body[offset:offset + 4096])
                     self.wfile.flush()
+                    if mode == "slow":
+                        time.sleep(.02)
             except (BrokenPipeError, ConnectionResetError):
                 pass
-    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    server = HTTPServer(("127.0.0.1", 0), Handler)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
     original = requests.Session
@@ -230,6 +233,7 @@ class YandexStreamTests(unittest.TestCase):
     def test_manual_cancel_identity_mismatch_and_preview_no_audio_or_index(self):
         for mode, answer, reason, count in (("ok", "cancel", "OWNER_CANCELLED", 2),
                                            ("id_mismatch", "START 123", "STREAM_TRACK_ID_MISMATCH", 2),
+                                           ("changed_id", "START 123", "STREAM_TRACK_ID_MISMATCH", 5),
                                            ("preview", "START 123", "Полного аудио нет", 4)):
             with self.subTest(mode=mode), fixture(self.mp3, mode=mode) as calls, \
                     patch("sys.stdin.isatty", return_value=True), patch("sys.stdout.isatty", return_value=True), \
@@ -293,6 +297,22 @@ class YandexStreamTests(unittest.TestCase):
                 core.extract(pcm, stream.RATE, "yandex-stream-123", core.stream_identity("123", "123"),
                              "yandex_stream", capture["metadata"]["title"], capture["metadata"]["artists"], capture)
             self.assertTrue((pcm == 0).all())
+
+    def test_slow_http_deadline_and_missing_owner_login(self):
+        real_timeout = stream.timeout
+        with fixture(self.mp3, mode="slow"), patch("yandex_stream.timeout", side_effect=lambda _, reason: real_timeout(.1, reason)):
+            with self.assertRaisesRegex(core.Rejected, "STREAM_DECODE_TIMEOUT"):
+                stream.decode("https://" + HOST + "/get-mp3/fixture", "mp3", 30, 12)
+        with patch("sys.stdin.isatty", return_value=False), patch("yandex_stream.SecretStore") as store:
+            with self.assertRaisesRegex(core.Rejected, "OWNER_TERMINAL_REQUIRED"):
+                stream.acquire("123", 30, 12)
+            store.assert_not_called()
+        with patch("sys.stdin.isatty", return_value=True), patch("sys.stdout.isatty", return_value=True), \
+                patch("yandex_stream.SecretStore") as store, patch("yandex_stream.session") as http:
+            store.return_value.read.return_value = None
+            with self.assertRaisesRegex(core.Rejected, "YANJARO_SAVED_LOGIN_REQUIRED"):
+                stream.acquire("123", 30, 12)
+            http.assert_not_called()
 
 
 if __name__ == "__main__":
