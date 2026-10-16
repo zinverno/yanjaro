@@ -15,6 +15,7 @@ import numpy as np
 from acoustic_similarity import acoustic_retrieval as retrieval, features, rhythm_pi
 
 SCHEMA = "yanjaro.personal-acoustic-index.v1"
+STREAM_SCHEMA = "yanjaro.personal-acoustic-index.v2"
 BASE_HEAD = "35aecde3311fa302e0ac1548d9c53f336ed9c928"
 MAX_RECORDS = 1000
 
@@ -64,6 +65,13 @@ def identity(requested=None, mpris_path=None):
                 mpris_hash_matches=mpris_path is not None, master_match=False)
 
 
+def stream_identity(requested, observed):
+    require(track_id(requested) == track_id(observed), "STREAM_TRACK_ID_MISMATCH")
+    return dict(requested_id=requested, observed_id=observed, real_id=None,
+                observed_id_reason="AUTHORIZED_API_TRACK_ID", real_id_reason="ORIGINAL_MASTER_NOT_VERIFIED",
+                mpris_hash_matches=False, master_match=False)
+
+
 def signal_quality(pcm, sr):
     require(type(sr) is int and 8000 <= sr <= 96000 and pcm.ndim == 2 and
             pcm.shape[1] in (1, 2) and 10 * sr <= len(pcm) <= 15 * sr,
@@ -88,7 +96,7 @@ def extract(pcm, sr, key, binding, source, title="", artists=(), capture=None):
     try:
         observed_at = capture["started_at"] if capture else datetime.now(timezone.utc).isoformat()
         entry_id(key)
-        require(source in ("file", "live"), "INVALID_SOURCE")
+        require(source in ("file", "live", "yandex_stream"), "INVALID_SOURCE")
         safe_text(title)
         require(len(artists) <= 10, "INVALID_ARTISTS")
         artists = [safe_text(a) for a in artists]
@@ -102,7 +110,7 @@ def extract(pcm, sr, key, binding, source, title="", artists=(), capture=None):
         dsp_pcm = librosa.resample(pcm.astype(np.float32).mean(axis=1), orig_sr=sr, target_sr=16000)
         dsp = dict(id=key, sha256=pcm_hash, **features.extract_pcm(dsp_pcm))
         profile = retrieval.combine(pi, dsp)
-        record = dict(schema=SCHEMA, observed_at=observed_at,
+        record = dict(schema=STREAM_SCHEMA if source == "yandex_stream" else SCHEMA, observed_at=observed_at,
                       identity=binding, source=source, artists=artists, quality=quality,
                       capture=capture, profile=profile)
         validate_record(record)
@@ -117,9 +125,9 @@ def extract(pcm, sr, key, binding, source, title="", artists=(), capture=None):
 
 def validate_record(record):
     require(set(record) == {"schema", "observed_at", "identity", "source", "artists", "quality", "capture", "profile"}
-            and record["schema"] == SCHEMA, "INVALID_RECORD_SCHEMA")
+            and record["schema"] == (STREAM_SCHEMA if record["source"] == "yandex_stream" else SCHEMA), "INVALID_RECORD_SCHEMA")
     p = record["profile"]
-    require(record["source"] in ("file", "live") and len(record["observed_at"]) <= 40 and
+    require(record["source"] in ("file", "live", "yandex_stream") and len(record["observed_at"]) <= 40 and
             datetime.fromisoformat(record["observed_at"]).tzinfo is not None, "INVALID_OBSERVATION")
     require(set(p) == {"id", "audio_sha256", "recording_group", "title", "evidence_sha256", "sample_rate",
                        "start_sample", "end_sample_exclusive", "feature_schema", "blocks", "missing_reasons",
@@ -131,16 +139,19 @@ def validate_record(record):
     require(len(record["artists"]) <= 10, "INVALID_ARTISTS")
     for a in record["artists"]:
         safe_text(a)
-    require(record["identity"] == identity(record["identity"]["requested_id"],
+    if record["source"] == "yandex_stream":
+        validate_stream(record)
+    else:
+        require(record["identity"] == identity(record["identity"]["requested_id"],
             "/org/mpris/MediaPlayer2/track_" + hashlib.sha256(record["identity"]["requested_id"].encode()).hexdigest()
             if record["identity"]["mpris_hash_matches"] else None), "INVALID_IDENTITY")
     if record["source"] == "live":
         require(record["identity"]["mpris_hash_matches"] and record["capture"] is not None and
                 p["id"] == "yandex-" + record["identity"]["requested_id"] and p["sample_rate"] == 48000,
                 "LIVE_IDENTITY_OR_RATE_MISMATCH")
-    else:
+    elif record["source"] == "file":
         require(record["identity"] == identity() and record["capture"] is None, "FILE_CANNOT_CLAIM_LIVE_IDENTITY")
-    require(record["capture"] is None or set(record["capture"]) ==
+    require(record["source"] == "yandex_stream" or record["capture"] is None or set(record["capture"]) ==
             {"method", "sample_rate", "player_volume", "sink_input_volume", "sink_volume", "position_start_us",
              "started_at", "stopped_at"},
             "INVALID_CAPTURE_FIELDS")
@@ -158,7 +169,7 @@ def validate_record(record):
     require(set(p["missing_reasons"]) <= set(retrieval.NAMES) and all(v in
             ("PI_ABSTAIN", "NO_QUALIFYING_TEMPO_PEAK", "NO_HISTOGRAM_MASS") for v in p["missing_reasons"].values()),
             "INVALID_MISSING_REASONS")
-    if record["capture"] is not None:
+    if record["source"] == "live":
         c = record["capture"]
         require(record["source"] == "live" and c["method"] == "libpulse-single-sink-input" and c["sample_rate"] == 48000
                 and type(c["position_start_us"]) is int and type(c["player_volume"]) in (int, float)
@@ -168,6 +179,36 @@ def validate_record(record):
                 datetime.fromisoformat(c["stopped_at"]) >= datetime.fromisoformat(c["started_at"]), "INVALID_CAPTURE_TIME")
     retrieval.validate(p)
     require(len(json.dumps(record, allow_nan=False)) < 60000, "RECORD_TOO_LARGE")
+
+
+def validate_stream(record):
+    binding, c, p = record["identity"], record["capture"], record["profile"]
+    require(binding == stream_identity(binding["requested_id"], binding["observed_id"]) and
+            p["id"] == "yandex-stream-" + binding["requested_id"], "INVALID_STREAM_IDENTITY")
+    require(isinstance(c, dict) and set(c) == {"method", "sample_rate", "codec", "bitrate_kbps", "start_seconds",
+            "seconds", "received_bytes", "metadata", "extractor_schema", "started_at", "stopped_at"},
+            "INVALID_STREAM_CAPTURE_FIELDS")
+    require(c["method"] == "authorized-yandex-stream-ffmpeg" and c["codec"] in ("mp3", "aac") and
+            c["sample_rate"] == p["sample_rate"] == record["quality"]["native_rate"] == 48000 and
+            c["extractor_schema"] == p["feature_schema"] == retrieval.FEATURE_SCHEMA and
+            type(c["bitrate_kbps"]) is int and 0 < c["bitrate_kbps"] <= 512 and
+            type(c["received_bytes"]) is int and 0 < c["received_bytes"] <= 8 * 1024**2,
+            "INVALID_STREAM_CAPTURE_VALUES")
+    require(all(type(c[k]) in (int, float) and np.isfinite(c[k]) for k in ("start_seconds", "seconds")) and
+            0 <= c["start_seconds"] <= 60 and 10 <= c["seconds"] <= 15 and
+            c["seconds"] == record["quality"]["seconds"] and p["start_sample"] == 0 and
+            p["end_sample_exclusive"] == round(c["seconds"] * c["sample_rate"]), "INVALID_STREAM_WINDOW")
+    m = c["metadata"]
+    require(isinstance(m, dict) and set(m) == {"id", "title", "artists", "duration_seconds", "album_id", "album_title"},
+            "INVALID_STREAM_METADATA_FIELDS")
+    require(m["id"] == binding["observed_id"] and m["title"] == p["title"] and m["artists"] == record["artists"] and
+            type(m["duration_seconds"]) in (int, float) and np.isfinite(m["duration_seconds"]) and
+            c["start_seconds"] + c["seconds"] <= m["duration_seconds"] <= 86400, "INVALID_STREAM_METADATA")
+    if m["album_id"] is not None:
+        track_id(m["album_id"])
+    safe_text(m["album_title"])
+    require(c["started_at"] == record["observed_at"] and len(c["stopped_at"]) <= 40 and
+            datetime.fromisoformat(c["stopped_at"]) >= datetime.fromisoformat(c["started_at"]), "INVALID_STREAM_TIME")
 
 
 def read_file(path, start, seconds):
@@ -203,11 +244,12 @@ class Index:
             os.close(fd)
         with self.connection() as db:
             version = db.execute("PRAGMA user_version").fetchone()[0]
-            require(version in (0, 1), "INCOMPATIBLE_INDEX_VERSION")
+            require(version in (0, 1, 2), "INCOMPATIBLE_INDEX_VERSION")
             tables = db.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall()
             require(tables in ([], [("records",)]), "FOREIGN_DATABASE")
             db.execute("CREATE TABLE IF NOT EXISTS records (id TEXT PRIMARY KEY, payload TEXT NOT NULL)")
-            db.execute("PRAGMA user_version=1")
+            if version == 0:
+                db.execute("PRAGMA user_version=1")
 
     @contextmanager
     def connection(self):
@@ -231,6 +273,8 @@ class Index:
                     return "UNCHANGED"
                 require(replace, "REMEASUREMENT_REQUIRES_REPLACE")
             require(old or db.execute("SELECT count(*) FROM records").fetchone()[0] < MAX_RECORDS, "INDEX_LIMIT_1000")
+            if record["source"] == "yandex_stream":
+                db.execute("PRAGMA user_version=2")
             db.execute("INSERT OR REPLACE INTO records VALUES (?,?)", (key, json.dumps(record, ensure_ascii=False, allow_nan=False)))
         return "REPLACED" if old else "INSERTED"
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local experimental acoustic index. No automatic capture, audio export or network API."""
+"""Local experimental acoustic index. Explicit single-track streams; no automatic collection or audio export."""
 import argparse
 import json
 import logging
@@ -12,7 +12,7 @@ from runtime import configure
 configure()
 logging.disable(logging.CRITICAL)
 
-from core import Index, Rejected, extract, identity, read_file, require, track_id
+from core import Index, Rejected, extract, identity, stream_identity, read_file, require, track_id
 
 
 def main():
@@ -20,6 +20,7 @@ def main():
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--file", type=Path)
     mode.add_argument("--live", action="store_true")
+    mode.add_argument("--yandex-stream", action="store_true", help="One owner-confirmed authorized stream; no system playback")
     mode.add_argument("--probe", action="store_true", help="Local metadata preflight; never opens a PCM stream")
     mode.add_argument("--diagnose-pulse", action="store_true", help="One owner-started monitor diagnostic; discard PCM, no index or DSP")
     mode.add_argument("--query", metavar="ENTRY_ID")
@@ -35,7 +36,20 @@ def main():
     parser.add_argument("--top", type=int, default=3)
     parser.add_argument("--replace", action="store_true", help="Explicitly replace an existing observation of this ID")
     args = parser.parse_args()
-    if args.diagnose_pulse:
+    if args.yandex_stream:
+        require(args.track_id is not None and args.entry_id is None, "STREAM_TRACK_ID_REQUIRED")
+        track_id(args.track_id)
+        from yandex_stream import acquire, RATE
+        pcm, capture = acquire(args.track_id, args.start, args.seconds)
+        try:
+            meta = capture["metadata"]
+            record = extract(pcm, RATE, "yandex-stream-" + args.track_id,
+                             stream_identity(args.track_id, meta["id"]), "yandex_stream", meta["title"], meta["artists"], capture)
+        finally:
+            pcm.fill(0)
+        result = {"status": Index(args.index_dir).put(record, args.replace), "entry_id": record["profile"]["id"],
+                  "source": "yandex_stream", "dimensions": 705}
+    elif args.diagnose_pulse:
         require(args.track_id is not None and args.entry_id is None and not args.replace, "DIAGNOSTIC_TRACK_ID_REQUIRED")
         track_id(args.track_id)
         from live import capture_owner

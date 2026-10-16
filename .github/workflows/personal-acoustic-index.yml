@@ -1,0 +1,44 @@
+name: Personal acoustic index synthetic HTTP
+
+on:
+  pull_request:
+    branches: [experiment/acoustic-similarity-v01]
+    paths:
+      - 'experiments/personal-acoustic-index/**'
+      - '.github/workflows/personal-acoustic-index.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      NUMBA_NUM_THREADS: '1'
+      NUMBA_CACHE_DIR: /tmp/personal-acoustic-numba
+      PYTHONDONTWRITEBYTECODE: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12.13'
+      - name: Install local decoder and locked Python dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          python -m pip install --retries 0 --timeout 30 --require-hashes --only-binary=:all: -r experiments/personal-acoustic-index/requirements-yandex.lock
+          python -m pip check
+      - name: Synthetic local HTTP, SDK, FFmpeg, DSP and private index (no Yandex or account)
+        run: python -m unittest discover -s experiments/personal-acoustic-index/tests -v
+      - name: Offline acoustic regressions (no acquisition or training)
+        working-directory: experiments/acoustic-similarity
+        env:
+          PYTHONPATH: .
+        run: python scripts/runtime_smoke.py
