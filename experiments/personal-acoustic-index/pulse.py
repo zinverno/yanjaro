@@ -37,25 +37,31 @@ class BufferAttr(C.Structure):
 
 
 class Capture:
-    def __init__(self, sink_input, sink, monitor_source):
+    def __init__(self, sink_input, sink, monitor_source, *, diagnostic=False, verify=None):
         self.sink_input = sink_input = object_id(sink_input)
         self.sink = object_id(sink)
+        require(not diagnostic or callable(verify), "DIAGNOSTIC_GUARD_REQUIRED")
+        self.diagnostic = diagnostic
+        self.origin = self.stage_started = time.monotonic()
         self.phase = "initialization"
+        self.stage = "context_connection"
         self.lib = C.CDLL("libpulse.so.0")
         self.loop = self.context = self.stream = None
         self.error = None
         self.frames = 0
         self.first_data = self.last_data = None
-        self.pcm = np.zeros((15 * RATE, 2), dtype=np.float32)
+        self.pcm = None if diagnostic else np.zeros((15 * RATE, 2), dtype=np.float32)
         self.callbacks = []
         self.bind()
         try:
+            self.set_stage("context_connection")
             self.loop = self.lib.pa_mainloop_new()
             require(bool(self.loop), "PULSE_MAINLOOP_FAILED")
             self.context = self.lib.pa_context_new(self.lib.pa_mainloop_get_api(self.loop), b"Yanjaro personal acoustic observation")
             require(bool(self.context), "PULSE_CONTEXT_FAILED")
             require(self.lib.pa_context_connect(self.context, SERVER.encode(), 0, None) == 0, "PULSE_LOCAL_CONNECT_FAILED")
             self.wait_ready(self.lib.pa_context_get_state, self.context, 4, 5)
+            self.set_stage("subscription")
             self.subscribed = False
             subscription = C.CFUNCTYPE(None, C.c_void_p, C.c_int, C.c_uint32, C.c_void_p)(self.changed)
             def accepted(context, success, userdata):
@@ -74,9 +80,22 @@ class Capture:
                 self.iterate()
                 time.sleep(.005)
             require(self.error is None, self.error)
+            if diagnostic:
+                self.set_stage("subscription_baseline")
+                deadline = time.monotonic() + 2
+                next_check = 0
+                while time.monotonic() < deadline:
+                    self.iterate()
+                    if time.monotonic() >= next_check:
+                        verify()
+                        next_check = time.monotonic() + .2
+                    time.sleep(.005)
+                verify()
+            self.set_stage("stream_creation")
             spec = SampleSpec(5, RATE, 2)  # PA_SAMPLE_FLOAT32LE
             self.stream = self.lib.pa_stream_new(self.context, b"explicit single-input PCM", C.byref(spec), None)
             require(bool(self.stream), "PULSE_STREAM_FAILED")
+            self.set_stage("monitor_binding")
             require(self.lib.pa_stream_set_monitor_stream(self.stream, sink_input) == 0, "SINGLE_INPUT_MONITOR_UNSUPPORTED")
             read = C.CFUNCTYPE(None, C.c_void_p, C.c_size_t, C.c_void_p)(self.read)
             self.callbacks.append(read)
@@ -87,12 +106,20 @@ class Capture:
                 self.callbacks.append(callback)
                 getattr(self.lib, "pa_stream_set_" + name + "_callback")(self.stream, callback, None)
             attr = BufferAttr(RATE * 8, 0xffffffff, 0xffffffff, 0xffffffff, RATE * 8 // 20)
+            self.set_stage("record_connection")
             require(self.lib.pa_stream_connect_record(self.stream, str(monitor_source).encode(), C.byref(attr), 0x0200) == 0,
                     "PULSE_RECORD_CONNECT_FAILED")  # PA_STREAM_DONT_MOVE
             self.wait_ready(self.lib.pa_stream_get_state, self.stream, 2, 3)
+            self.set_stage("ready")
             require(self.lib.pa_stream_get_monitor_stream(self.stream) == sink_input, "MONITOR_TARGET_NOT_CONFIRMED")
             self.iterate()
-            self.phase = "active_capture"
+            if diagnostic:
+                self.set_stage("route_revalidation")
+                verify()
+                self.iterate()
+            self.observation_started = time.monotonic()
+            self.phase = "diagnostic" if diagnostic else "active_capture"
+            self.set_stage("diagnostic_observation" if diagnostic else "active_capture")
         except BaseException:
             self.close()
             raise
@@ -128,6 +155,24 @@ class Capture:
     def fail(self, code):
         self.error = self.error or code
 
+    def emit(self, event, **fields):
+        try:
+            now = time.monotonic()
+            print(json.dumps(dict(event=event, phase=self.phase, stage=self.stage,
+                                  observed_ms=round((now - self.origin) * 1000, 3),
+                                  stage_ms=round((now - self.stage_started) * 1000, 3), **fields)),
+                  file=sys.stderr, flush=True)
+        except BaseException:
+            self.fail("PULSE_EVENT_CALLBACK_FAILED")
+
+    def set_stage(self, stage):
+        self.stage = stage
+        self.stage_started = time.monotonic()
+        if self.diagnostic:
+            require(self.stage_started - self.origin < 12, "PULSE_DIAGNOSTIC_TIMEOUT")
+        self.emit("PULSE_STAGE")
+        require(self.error is None, self.error)
+
     def changed(self, context, event, index, userdata):
         try:
             facility = {0: "SINK", 2: "SINK_INPUT"}.get(event & 0x0f, "UNKNOWN")
@@ -141,11 +186,12 @@ class Capture:
                 # CHANGE has no field/cause: unchanged metadata cannot exclude change-and-revert.
                 reason = "PULSE_SELECTED_" + facility + "_" + kind
             reject = reason != "PULSE_UNRELATED_OBJECT"
-            if reject:
+            observe = (self.diagnostic and self.phase == "initialization" and selected and
+                       kind == "CHANGE" and reason != "PULSE_UNEXPECTED_EVENT")
+            if reject and not observe:
                 self.fail(reason)
-            print(json.dumps(dict(event="PULSE_EVENT", facility=facility, type=kind, index=index,
-                                  phase=self.phase, decision="REJECT" if reject else "IGNORE", reason=reason)),
-                  file=sys.stderr, flush=True)
+            self.emit("PULSE_EVENT", facility=facility, type=kind, index=index,
+                      decision="OBSERVE_ONLY" if observe else "REJECT" if reject else "IGNORE", reason=reason)
         except BaseException:
             self.fail("PULSE_EVENT_CALLBACK_FAILED")
 
@@ -157,10 +203,14 @@ class Capture:
             time.sleep(.005)
 
     def iterate(self):
+        # shortcut: IPC can delay deadline checks; add cancellation if a hard wall limit is required.
+        if self.diagnostic:
+            require(time.monotonic() - self.origin < 12, "PULSE_DIAGNOSTIC_TIMEOUT")
         require(self.lib.pa_mainloop_iterate(self.loop, 0, None) >= 0, "PULSE_CONNECTION_LOST")
         require(self.error is None, self.error)
 
     def append(self, data):
+        require(not self.diagnostic, "DIAGNOSTIC_PCM_STORAGE_FORBIDDEN")
         require(data.ndim == 2 and data.shape[1] == 2, "PCM_FRAME_ALIGNMENT")
         require(self.frames + len(data) < len(self.pcm), "OWNER_STOP_REQUIRED_BEFORE_15_SECONDS")
         self.pcm[self.frames:self.frames + len(data)] = data
@@ -176,9 +226,18 @@ class Capture:
                 return
             try:
                 require(bool(pointer.value), "PCM_HOLE")
-                require(count.value % 8 == 0 and count.value <= self.pcm.nbytes, "PCM_FRAME_ALIGNMENT")
-                array = np.ctypeslib.as_array((C.c_float * (count.value // 4)).from_address(pointer.value))
-                self.append(array.reshape(-1, 2))
+                require(count.value % 8 == 0 and count.value <= 15 * RATE * 8, "PCM_FRAME_ALIGNMENT")
+                if self.diagnostic:
+                    # Count delivery without dereferencing or copying the server's PCM.
+                    require(self.frames + count.value // 8 < 15 * RATE, "PULSE_DIAGNOSTIC_LIMIT")
+                    if not self.frames:
+                        self.emit("PULSE_PCM", disposition="DISCARDED_NO_COPY")
+                    self.frames += count.value // 8
+                    self.last_data = time.monotonic()
+                    self.first_data = self.first_data if self.first_data is not None else self.last_data
+                elif self.stage != "after_stop":
+                    array = np.ctypeslib.as_array((C.c_float * (count.value // 4)).from_address(pointer.value))
+                    self.append(array.reshape(-1, 2))
             finally:
                 require(self.lib.pa_stream_drop(stream) == 0, "PCM_DROP_FAILED")
         except Rejected as exc:
@@ -187,6 +246,8 @@ class Capture:
             self.fail("PCM_CALLBACK_FAILED")
 
     def check(self, started):
+        if self.diagnostic:
+            started = self.observation_started
         self.iterate()
         require(self.lib.pa_context_get_state(self.context) == 4 and
                 self.lib.pa_stream_get_state(self.stream) == 2, "PULSE_CONNECTION_LOST")
@@ -197,6 +258,7 @@ class Capture:
             require(abs(self.frames / RATE - (now - self.first_data)) < .4, "PCM_TIMING_LOSS")
 
     def close(self):
+        self.phase = self.stage = "cleanup"
         if self.stream:
             self.lib.pa_stream_disconnect(self.stream)
             self.lib.pa_stream_unref(self.stream)
@@ -208,4 +270,5 @@ class Capture:
         if self.loop:
             self.lib.pa_mainloop_free(self.loop)
             self.loop = None
-        self.pcm.fill(0)
+        if self.pcm is not None:
+            self.pcm.fill(0)

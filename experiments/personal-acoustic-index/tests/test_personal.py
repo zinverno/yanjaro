@@ -109,6 +109,8 @@ class PersonalTests(unittest.TestCase):
 
     def test_pcm_holes_bad_alignment_loss_and_overflow_abort(self):
         cap = Capture.__new__(Capture)
+        cap.diagnostic = False
+        cap.stage = "active_capture"
         cap.pcm = np.zeros((15 * RATE, 2), dtype=np.float32)
         cap.frames = 0
         cap.first_data = cap.last_data = None

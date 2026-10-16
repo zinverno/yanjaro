@@ -145,7 +145,7 @@ class Mpris:
         self.bus.close()
 
 
-def capture_owner(requested):
+def capture_owner(requested, *, diagnostic=False):
     require(sys.stdin.isatty() and sys.stdout.isatty(), "OWNER_TERMINAL_REQUIRED")
     observer = Mpris()
     cap = None
@@ -158,7 +158,10 @@ def capture_owner(requested):
         route = audio_route(observer.pid)
         print(json.dumps({"requested_id": requested, "title": initial["title"], "artists": initial["artists"]}, ensure_ascii=False))
         print("Личное использование не подтверждает разрешение сервиса на анализ.")
-        print("Проверьте ID и песню в Yanjaro. Только этот sink-input; 10–15 секунд, Enter для остановки, Ctrl-C для отмены.")
+        if diagnostic:
+            print("Проверьте ID и песню. Диагностика: 2 s до monitor, затем около 3 s доставки PCM без копирования, DSP или индекса. Enter: STOP, Ctrl-C: отмена.")
+        else:
+            print("Проверьте ID и песню в Yanjaro. Только этот sink-input; 10–15 секунд, Enter для остановки, Ctrl-C для отмены.")
         require(input("Для начала введите START " + requested + ": ") == "START " + requested, "OWNER_CANCELLED")
         observer.events(discard=True)
         latest = observer.snapshot()
@@ -171,7 +174,15 @@ def capture_owner(requested):
         require(audio_route(observer.pid) == route, "AUDIO_ROUTE_OR_GAIN_CHANGED")
         started = time.monotonic()
         started_at = datetime.now(timezone.utc).isoformat()
-        cap = Capture(route["index"], route["sink"], route["monitor"])
+        if diagnostic:
+            def verify():
+                observer.events()
+                check_snapshot(initial, observer.snapshot(), time.monotonic() - started)
+                require(audio_route(observer.pid) == route, "AUDIO_ROUTE_OR_GAIN_CHANGED")
+                observer.events()
+            cap = Capture(route["index"], route["sink"], route["monitor"], diagnostic=True, verify=verify)
+        else:
+            cap = Capture(route["index"], route["sink"], route["monitor"])
         next_check = started
         shown = -1
         while True:
@@ -187,12 +198,18 @@ def capture_owner(requested):
             elapsed = cap.frames / RATE
             if int(elapsed) != shown:
                 shown = int(elapsed)
-                print(f"PCM: {elapsed:.1f} s. " + ("Enter: STOP" if elapsed >= 10 else "Сбор..."), flush=True)
-            if select.select([sys.stdin], [], [], 0)[0]:
+                print(f"PCM: {elapsed:.1f} s. " + ("Диагностика: буферы освобождаются." if diagnostic else
+                                                 "Enter: STOP" if elapsed >= 10 else "Сбор..."), flush=True)
+            automatic_stop = diagnostic and elapsed >= 3
+            owner_stop = bool(select.select([sys.stdin], [], [], 0)[0])
+            if owner_stop:
                 sys.stdin.readline()
-                require(elapsed >= 10, "OWNER_STOP_BEFORE_10_SECONDS")
+            if automatic_stop or owner_stop:
+                require(diagnostic or elapsed >= 10, "OWNER_STOP_BEFORE_10_SECONDS")
                 frames = cap.frames
                 stopped_at = datetime.now(timezone.utc).isoformat()
+                cap.phase = "after_stop"
+                cap.set_stage("after_stop")
                 break
             time.sleep(.005)
         observer.events()
@@ -200,6 +217,11 @@ def capture_owner(requested):
         require(audio_route(observer.pid) == route, "AUDIO_ROUTE_OR_GAIN_CHANGED")
         observer.events()
         cap.iterate()
+        if diagnostic:
+            require(frames > 0, "DIAGNOSTIC_NO_PCM")
+            return dict(status="DIAGNOSTIC_ONLY", pcm_delivery="OBSERVED", frames_discarded=cap.frames,
+                        sample_rate=RATE, accepted_capture=False, vector_saved=False,
+                        stop="AUTOMATIC_LIMIT" if automatic_stop else "OWNER_STOP")
         pcm = cap.pcm[:frames].copy()
         capture = dict(method="libpulse-single-sink-input", sample_rate=RATE, player_volume=initial["volume"],
                        sink_input_volume=route["stream_volume"], sink_volume=route["sink_volume"],

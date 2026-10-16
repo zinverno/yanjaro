@@ -21,6 +21,7 @@ def main():
     mode.add_argument("--file", type=Path)
     mode.add_argument("--live", action="store_true")
     mode.add_argument("--probe", action="store_true", help="Local metadata preflight; never opens a PCM stream")
+    mode.add_argument("--diagnose-pulse", action="store_true", help="One owner-started monitor diagnostic; discard PCM, no index or DSP")
     mode.add_argument("--query", metavar="ENTRY_ID")
     mode.add_argument("--list", action="store_true")
     mode.add_argument("--delete", metavar="ENTRY_ID")
@@ -34,7 +35,12 @@ def main():
     parser.add_argument("--top", type=int, default=3)
     parser.add_argument("--replace", action="store_true", help="Explicitly replace an existing observation of this ID")
     args = parser.parse_args()
-    if args.probe:
+    if args.diagnose_pulse:
+        require(args.track_id is not None and args.entry_id is None and not args.replace, "DIAGNOSTIC_TRACK_ID_REQUIRED")
+        track_id(args.track_id)
+        from live import capture_owner
+        result = capture_owner(args.track_id, diagnostic=True)
+    elif args.probe:
         from live import Mpris, audio_route
         observer = Mpris()
         try:
