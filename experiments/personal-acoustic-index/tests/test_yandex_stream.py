@@ -118,10 +118,9 @@ def fixture(audio, codec="mp3", mode="ok", redirect=None):
     server = HTTPServer(("127.0.0.1", 0), Handler)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
-    original = requests.Session
+    original = stream.session
     def local_session():
         http = original()
-        http.trust_env = False
         call = http.request
         def local(method, url, **kwargs):
             parsed = urlsplit(url)
@@ -140,6 +139,29 @@ def fixture(audio, codec="mp3", mode="ok", redirect=None):
 
 
 class RedirectDiagnosticsTests(unittest.TestCase):
+    def test_requests_does_not_buffer_redirect_body_or_prepare_next_request(self):
+        for status in (302, 307):
+            with self.subTest(status=status), stream.session() as http:
+                response = requests.Response()
+                response.status_code = status
+                response.url = "https://api.music.yandex.net/tracks/123/download-info"
+                response.headers.update(Location="https://" + HOST + "/private?signature=" + SECRET,
+                                        **{"Content-Length": str(stream.MAX_BYTES * 2)})
+                response.raw = Mock(_original_response=None)
+                response.raw.stream.side_effect = AssertionError("Redirect body must not be buffered")
+                response.raw.read.side_effect = AssertionError("Redirect body must not be read")
+                adapter = Mock()
+                adapter.send.return_value = response
+                with patch.object(http, "get_adapter", return_value=adapter), \
+                        http.get(response.url, stream=True, allow_redirects=False,
+                                 headers={"Authorization": "OAuth " + SECRET}) as result:
+                    self.assertIs(result, response)
+                    self.assertIsNone(result.next)
+                    adapter.send.assert_called_once()
+                response.raw.stream.assert_not_called()
+                response.raw.read.assert_not_called()
+                response.raw.close.assert_called_once()
+
     def test_stage_comes_from_sdk_operation_without_automatic_redirect_or_body_read(self):
         for operation, stage, method in (("tracks", "metadata_api", "POST"),
                                          ("download", "tracks_download_info", "GET"),

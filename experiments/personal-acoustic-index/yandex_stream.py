@@ -64,8 +64,14 @@ def validate_url(url):
         raise Rejected("STREAM_URL_REJECTED") from None
 
 
+class NoRedirectSession(requests.Session):
+    def resolve_redirects(self, *_args, **_kwargs):
+        # Requests otherwise buffers the 3xx body to prepare .next, even with allow_redirects=False.
+        return iter(())
+
+
 def session():
-    result = requests.Session()
+    result = NoRedirectSession()
     result.trust_env = False  # No proxy/netrc credentials or inherited environment authorization.
     result.headers["Accept-Encoding"] = "identity"
     return result
