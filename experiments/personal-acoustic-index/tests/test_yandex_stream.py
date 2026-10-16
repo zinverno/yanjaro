@@ -189,6 +189,19 @@ class YandexStreamTests(unittest.TestCase):
             self.assertEqual([p.name for p in directory.iterdir()], ["index.sqlite3"])
             for forbidden in (SECRET.encode(), HOST.encode(), b"https://", b"Authorization", b"ID3", b"RIFF"):
                 self.assertNotIn(forbidden, index.path.read_bytes())
+            legacy = copy.deepcopy(row)
+            legacy.update(schema=core.SCHEMA, source="file", identity=core.identity(), capture=None)
+            legacy["profile"].update(id="legacy", recording_group="legacy")
+            migration = core.Index(Path(tmp) / "legacy-index")
+            migration.put(legacy)
+            with migration.connection() as db:
+                before = db.execute("SELECT payload FROM records WHERE id='legacy'").fetchone()[0]
+                self.assertEqual(db.execute("PRAGMA user_version").fetchone()[0], 1)
+            migration.put(row)
+            with migration.connection() as db:
+                self.assertEqual(db.execute("PRAGMA user_version").fetchone()[0], 2)
+                self.assertEqual(db.execute("SELECT payload FROM records WHERE id='legacy'").fetchone()[0], before)
+            self.assertEqual({r["source"] for r in migration.records()}, {"file", "yandex_stream"})
             self.assertEqual(len(calls), 12)
             self.assertEqual([auth for path, auth in calls if path in ("/account/status", "/tracks", "/tracks/123/download-info")],
                              ["OAuth " + SECRET] * 8)

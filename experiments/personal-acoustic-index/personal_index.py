@@ -29,7 +29,7 @@ def main():
     mode.add_argument("--delete-all", action="store_true")
     parser.add_argument("--index-dir", type=Path, default=Path.home() / ".local/share/yanjaro-personal-acoustic/v1")
     parser.add_argument("--entry-id", help="Local file label; no Yandex identity inferred")
-    parser.add_argument("--track-id", help="Manual numeric ID, verified against Yanjaro's MPRIS hash")
+    parser.add_argument("--track-id", help="Numeric ID: API identity for stream, MPRIS hash for live")
     parser.add_argument("--rights-confirmed", action="store_true", help="Owner confirms rights to analyze the local file")
     parser.add_argument("--start", type=float, default=0)
     parser.add_argument("--seconds", type=float, default=12)
