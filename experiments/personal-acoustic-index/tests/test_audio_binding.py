@@ -114,17 +114,18 @@ class AudioBindingTests(unittest.TestCase):
                 lib.pa_stream_set_monitor_stream.return_value = 0
                 lib.pa_stream_connect_record.return_value = 0
                 lib.pa_stream_get_monitor_stream.return_value = returned
+                lib.pa_mainloop_iterate.return_value = 0
                 lib.pa_context_subscribe.side_effect = lambda ctx, mask, cb, data: (cb(ctx, 1, data), 1)[1]
                 # Fake C function handles; no real library/server/PCM stream is opened.
                 lib.pa_mainloop_new.return_value = lib.pa_context_new.return_value = lib.pa_stream_new.return_value = 1
                 with patch("pulse.C.CDLL", return_value=lib), patch.object(pulse.Capture, "bind"), \
                         patch.object(pulse.Capture, "wait_ready"):
                     if returned == 41:
-                        cap = pulse.Capture(route["index"], route["monitor"])
+                        cap = pulse.Capture(route["index"], route["sink"], route["monitor"])
                         cap.close()
                     else:
                         with self.assertRaisesRegex(core.Rejected, "^MONITOR_TARGET_NOT_CONFIRMED$"):
-                            pulse.Capture(route["index"], route["monitor"])
+                            pulse.Capture(route["index"], route["sink"], route["monitor"])
                 lib.pa_stream_set_monitor_stream.assert_called_once_with(1, 41)
                 self.assertIs(type(lib.pa_stream_set_monitor_stream.call_args.args[1]), int)
                 lib.pa_stream_get_monitor_stream.assert_called_once_with(1)
@@ -132,7 +133,7 @@ class AudioBindingTests(unittest.TestCase):
         for value in (-1, True, 4294967295):
             with self.subTest(value=value), patch("pulse.C.CDLL") as library:
                 with self.assertRaisesRegex(core.Rejected, "^INVALID_PULSE_OBJECT_ID$"):
-                    pulse.Capture(value, "test_sink.monitor")
+                    pulse.Capture(value, 7, "test_sink.monitor")
                 library.assert_not_called()
 
     def test_id_representation_changes_do_not_abort_capture(self):
@@ -164,7 +165,7 @@ class AudioBindingTests(unittest.TestCase):
                 patch("sys.stdin.readline", return_value="\n"), patch("live.Capture", return_value=cap) as capture:
             pcm, *_ = live.capture_owner("123")
             self.assertEqual(reads, 4)
-            capture.assert_called_once_with(41, "test_sink.monitor")
+            capture.assert_called_once_with(41, 7, "test_sink.monitor")
             self.assertIs(type(capture.call_args.args[0]), int)
             cap.close.assert_called_once()
             self.assertTrue((cap.pcm == 0).all())
@@ -221,7 +222,8 @@ class AudioBindingTests(unittest.TestCase):
         initial = dict(path=path, title="Test", artists=["Test"], length=200000000,
                        status="Playing", position=30000000, volume=.6, rate=1.0)
         for phase in (2, 3, 4):  # Post-START preflight, periodic check, final check after STOP.
-            for change in ("client", "client_pid", "direct_pid", "index", "sink"):
+            for change in ("client", "client_pid", "direct_pid", "index", "sink", "monitor",
+                           "input_gain", "sink_gain", "input_mute", "sink_mute", "corked", "removed"):
                 with self.subTest(phase=phase, change=change), tempfile.TemporaryDirectory(dir="/tmp") as tmp:
                     metadata = {"sink-inputs": [copy.deepcopy(self.stream)],
                                 "clients": [copy.deepcopy(self.client)], "sinks": [copy.deepcopy(self.sink)]}
@@ -240,8 +242,20 @@ class AudioBindingTests(unittest.TestCase):
                                     stream["properties"]["application.process.id"] = str(self.pid)
                                 elif change == "index":
                                     stream["index"] = 42
-                                else:
+                                elif change == "sink":
                                     stream["sink"] = metadata["sinks"][0]["index"] = 8
+                                elif change == "monitor":
+                                    metadata["sinks"][0]["monitor_source"] = "changed.monitor"
+                                elif change in ("input_gain", "sink_gain"):
+                                    target = stream if change == "input_gain" else metadata["sinks"][0]
+                                    target["volume"]["front-left"]["value"] = 32768
+                                elif change in ("input_mute", "sink_mute"):
+                                    target = stream if change == "input_mute" else metadata["sinks"][0]
+                                    target["mute"] = True
+                                elif change == "corked":
+                                    stream["corked"] = True
+                                elif change == "removed":
+                                    metadata["sink-inputs"] = []
                                 # Real changes still reject when all object IDs arrive as strings.
                                 for item, keys in ((stream, ("index", "client", "sink")),
                                                    (client, ("index",)), (metadata["sinks"][0], ("index",))):
@@ -263,7 +277,11 @@ class AudioBindingTests(unittest.TestCase):
                             patch("live.select.select", return_value=([sys.stdin], [], [])), \
                             patch("sys.stdin.readline", return_value="\n"), patch("live.Capture", return_value=cap) as capture, \
                             patch("personal_index.extract") as extract:
-                        reason = "YANJARO_AUDIO_STREAM_NOT_FOUND" if change == "client_pid" else "AUDIO_ROUTE_OR_GAIN_CHANGED"
+                        reason = "AUDIO_ROUTE_OR_GAIN_CHANGED"
+                        if change in ("client_pid", "removed"):
+                            reason = "YANJARO_AUDIO_STREAM_NOT_FOUND"
+                        elif change in ("input_mute", "sink_mute", "corked"):
+                            reason = "AUDIO_MUTED_OR_PAUSED"
                         with self.assertRaisesRegex(core.Rejected, "^" + reason + "$"):
                             personal_index.main()
                         self.assertEqual(reads, phase)
@@ -271,7 +289,7 @@ class AudioBindingTests(unittest.TestCase):
                         if phase == 2:
                             capture.assert_not_called()
                         else:
-                            capture.assert_called_once_with(41, "test_sink.monitor")
+                            capture.assert_called_once_with(41, 7, "test_sink.monitor")
                             cap.close.assert_called_once()
                             self.assertTrue((cap.pcm == 0).all())
                     observer.close.assert_called_once()

@@ -171,7 +171,7 @@ def capture_owner(requested):
         require(audio_route(observer.pid) == route, "AUDIO_ROUTE_OR_GAIN_CHANGED")
         started = time.monotonic()
         started_at = datetime.now(timezone.utc).isoformat()
-        cap = Capture(route["index"], route["monitor"])
+        cap = Capture(route["index"], route["sink"], route["monitor"])
         next_check = started
         shown = -1
         while True:
@@ -191,6 +191,7 @@ def capture_owner(requested):
             if select.select([sys.stdin], [], [], 0)[0]:
                 sys.stdin.readline()
                 require(elapsed >= 10, "OWNER_STOP_BEFORE_10_SECONDS")
+                frames = cap.frames
                 stopped_at = datetime.now(timezone.utc).isoformat()
                 break
             time.sleep(.005)
@@ -198,7 +199,8 @@ def capture_owner(requested):
         check_snapshot(initial, observer.snapshot(), time.monotonic() - started)
         require(audio_route(observer.pid) == route, "AUDIO_ROUTE_OR_GAIN_CHANGED")
         observer.events()
-        pcm = cap.pcm[:cap.frames].copy()
+        cap.iterate()
+        pcm = cap.pcm[:frames].copy()
         capture = dict(method="libpulse-single-sink-input", sample_rate=RATE, player_volume=initial["volume"],
                        sink_input_volume=route["stream_volume"], sink_volume=route["sink_volume"],
                        position_start_us=initial["position"], started_at=started_at, stopped_at=stopped_at)

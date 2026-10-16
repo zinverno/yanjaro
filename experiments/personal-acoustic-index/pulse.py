@@ -4,14 +4,17 @@ Contracts: /usr/include/pulse/stream.h (set_monitor_stream, peek, overflow).
 No default/system monitor fallback, routing changes or audio files.
 """
 import ctypes as C
+import json
 import os
 import re
+import sys
 import time
 import numpy as np
 from core import Rejected, require
 
 SERVER = f"unix:/run/user/{os.getuid()}/pulse/native"
 RATE = 48000
+SUBSCRIPTION_MASK = 0x0001 | 0x0004  # PA_SUBSCRIPTION_MASK_SINK | SINK_INPUT
 
 
 def object_id(value):
@@ -34,8 +37,10 @@ class BufferAttr(C.Structure):
 
 
 class Capture:
-    def __init__(self, sink_input, monitor_source):
-        sink_input = object_id(sink_input)
+    def __init__(self, sink_input, sink, monitor_source):
+        self.sink_input = sink_input = object_id(sink_input)
+        self.sink = object_id(sink)
+        self.phase = "initialization"
         self.lib = C.CDLL("libpulse.so.0")
         self.loop = self.context = self.stream = None
         self.error = None
@@ -52,10 +57,7 @@ class Capture:
             require(self.lib.pa_context_connect(self.context, SERVER.encode(), 0, None) == 0, "PULSE_LOCAL_CONNECT_FAILED")
             self.wait_ready(self.lib.pa_context_get_state, self.context, 4, 5)
             self.subscribed = False
-            def changed(context, event, index, userdata):
-                if (event & 15) == 0 or ((event & 15) == 2 and index == sink_input):
-                    self.fail("PULSE_ROUTE_OR_GAIN_EVENT")
-            subscription = C.CFUNCTYPE(None, C.c_void_p, C.c_int, C.c_uint32, C.c_void_p)(changed)
+            subscription = C.CFUNCTYPE(None, C.c_void_p, C.c_int, C.c_uint32, C.c_void_p)(self.changed)
             def accepted(context, success, userdata):
                 self.subscribed = bool(success)
                 if not success:
@@ -63,7 +65,7 @@ class Capture:
             accepted_cb = C.CFUNCTYPE(None, C.c_void_p, C.c_int, C.c_void_p)(accepted)
             self.callbacks.extend((subscription, accepted_cb))
             self.lib.pa_context_set_subscribe_callback(self.context, subscription, None)
-            operation = self.lib.pa_context_subscribe(self.context, 5, accepted_cb, None)
+            operation = self.lib.pa_context_subscribe(self.context, SUBSCRIPTION_MASK, accepted_cb, None)
             require(bool(operation), "PULSE_SUBSCRIPTION_FAILED")
             self.lib.pa_operation_unref(operation)
             deadline = time.monotonic() + 2
@@ -71,6 +73,7 @@ class Capture:
                 require(time.monotonic() < deadline, "PULSE_SUBSCRIPTION_TIMEOUT")
                 self.iterate()
                 time.sleep(.005)
+            require(self.error is None, self.error)
             spec = SampleSpec(5, RATE, 2)  # PA_SAMPLE_FLOAT32LE
             self.stream = self.lib.pa_stream_new(self.context, b"explicit single-input PCM", C.byref(spec), None)
             require(bool(self.stream), "PULSE_STREAM_FAILED")
@@ -88,6 +91,8 @@ class Capture:
                     "PULSE_RECORD_CONNECT_FAILED")  # PA_STREAM_DONT_MOVE
             self.wait_ready(self.lib.pa_stream_get_state, self.stream, 2, 3)
             require(self.lib.pa_stream_get_monitor_stream(self.stream) == sink_input, "MONITOR_TARGET_NOT_CONFIRMED")
+            self.iterate()
+            self.phase = "active_capture"
         except BaseException:
             self.close()
             raise
@@ -122,6 +127,27 @@ class Capture:
 
     def fail(self, code):
         self.error = self.error or code
+
+    def changed(self, context, event, index, userdata):
+        try:
+            facility = {0: "SINK", 2: "SINK_INPUT"}.get(event & 0x0f, "UNKNOWN")
+            kind = {0: "NEW", 0x10: "CHANGE", 0x20: "REMOVE"}.get(event & 0x30, "UNKNOWN")
+            selected = ((event & 0x0f) == 0 and index == self.sink or
+                        (event & 0x0f) == 2 and index == self.sink_input)
+            reason = "PULSE_UNRELATED_OBJECT"
+            if facility == "UNKNOWN" or kind == "UNKNOWN" or event & ~0x3f or index == 0xffffffff:
+                reason = "PULSE_UNEXPECTED_EVENT"
+            elif selected:
+                # CHANGE has no field/cause: unchanged metadata cannot exclude change-and-revert.
+                reason = "PULSE_SELECTED_" + facility + "_" + kind
+            reject = reason != "PULSE_UNRELATED_OBJECT"
+            if reject:
+                self.fail(reason)
+            print(json.dumps(dict(event="PULSE_EVENT", facility=facility, type=kind, index=index,
+                                  phase=self.phase, decision="REJECT" if reject else "IGNORE", reason=reason)),
+                  file=sys.stderr, flush=True)
+        except BaseException:
+            self.fail("PULSE_EVENT_CALLBACK_FAILED")
 
     def wait_ready(self, getter, obj, ready, failed):
         deadline = time.monotonic() + 3
