@@ -12,7 +12,7 @@ from runtime import configure
 configure()
 logging.disable(logging.CRITICAL)
 
-from core import Index, Rejected, extract, identity, stream_identity, read_file, require, track_id
+from core import Index, Rejected, extract, identity, stream_identity, read_file, require, track_id, quality_notice
 
 
 def main():
@@ -48,7 +48,7 @@ def main():
         finally:
             pcm.fill(0)
         result = {"status": Index(args.index_dir).put(record, args.replace), "entry_id": record["profile"]["id"],
-                  "source": "yandex_stream", "dimensions": 705}
+                  "source": "yandex_stream", "dimensions": 705, "signal_quality": quality_notice(record)}
     elif args.diagnose_pulse:
         require(args.track_id is not None and args.entry_id is None and not args.replace, "DIAGNOSTIC_TRACK_ID_REQUIRED")
         track_id(args.track_id)
@@ -70,19 +70,22 @@ def main():
             require(args.rights_confirmed and args.entry_id and args.track_id is None, "LOCAL_RIGHTS_AND_ENTRY_ID_REQUIRED")
             pcm, sr = read_file(args.file, args.start, args.seconds)
             record = extract(pcm, sr, args.entry_id, identity(), "file")
-            result = {"status": index.put(record, args.replace), "entry_id": args.entry_id, "dimensions": 705}
+            result = {"status": index.put(record, args.replace), "entry_id": args.entry_id, "dimensions": 705,
+                      "signal_quality": quality_notice(record)}
         elif args.live:
             require(args.track_id is not None and args.entry_id is None, "LIVE_TRACK_ID_REQUIRED")
             track_id(args.track_id)
             from live import capture_owner
             pcm, sr, binding, title, artists, capture = capture_owner(args.track_id)
             record = extract(pcm, sr, "yandex-" + args.track_id, binding, "live", title, artists, capture)
-            result = {"status": index.put(record, args.replace), "entry_id": record["profile"]["id"], "dimensions": 705}
+            result = {"status": index.put(record, args.replace), "entry_id": record["profile"]["id"], "dimensions": 705,
+                      "signal_quality": quality_notice(record)}
         elif args.query:
             result = index.search(args.query, args.top)
         elif args.list:
             result = [{"entry_id": r["profile"]["id"], "title": r["profile"]["title"], "source": r["source"],
-                       "observed_at": r["observed_at"], "missing": list(r["profile"]["missing_reasons"])} for r in index.records()]
+                       "observed_at": r["observed_at"], "missing": list(r["profile"]["missing_reasons"]),
+                       "signal_quality": quality_notice(r)} for r in index.records()]
         else:
             result = {"deleted": index.delete(args.delete), "remaining": len(index.records())}
     print(json.dumps({"result": result, "peak_rss_kib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss},

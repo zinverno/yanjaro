@@ -33,12 +33,15 @@ def run(manifest_path, index_dir):
         except core.Rejected as exc:
             receipts.append(dict(id=key, status="REJECTED", reason=str(exc)))
             continue
-        maximum = 0.0
+        errors = {}
         for block, value in row["profile"]["blocks"].items():
             reference = old[key]["blocks"][block]
             core.require((value is None) == (reference is None), "CC0_MISSINGNESS_DRIFT")
             if value is not None:
-                maximum = max(maximum, float(core.np.max(core.np.abs(core.np.asarray(value) - reference))))
+                errors[block] = float(core.np.max(core.np.abs(core.np.asarray(value) - reference)))
+            else:
+                errors[block] = None
+        maximum = max(v for v in errors.values() if v is not None)
         core.require(maximum <= 1e-6, "FROZEN_COMPONENT_DRIFT")
         index.put(row)
         repeat_pcm, rate = core.read_file(track["path"], track["start"], track["seconds"])
@@ -47,16 +50,22 @@ def run(manifest_path, index_dir):
         core.require(file_hash(track["path"]) == track["sha256"] and (pcm == 0).all() and (repeat_pcm == 0).all(),
                      "SOURCE_OR_BUFFER_INTEGRITY_FAILED")
         receipts.append(dict(id=key, status="INDEXED", dimension=705, frozen_block_max_error=maximum,
+                             frozen_component_errors=errors, signal_quality=row["quality"],
+                             legacy_would_reject=row["quality"]["peak"] > 1.001 or row["quality"]["clipped_fraction"] > .001,
                              repeat_equal=True, buffers_zeroed=True, source_unchanged=True))
         print(json.dumps(receipts[-1]), flush=True)
     rows = index.records()
     core.require(len(rows) >= 3, "INSUFFICIENT_CC0_RECORDS_FOR_SEARCH")
     rankings = {r["profile"]["id"]: index.search(r["profile"]["id"], 3) for r in rows}
-    summary = dict(schema="yanjaro.personal-cc0-check.v1", base_head=core.BASE_HEAD,
+    summary = dict(schema="yanjaro.personal-cc0-check.v2", base_head=core.BASE_HEAD, quality_policy=core.QUALITY_POLICY,
                    submitted=len(tracks), indexed=len(rows), rejected=len(tracks) - len(rows),
                    dimensions=705, query_count=len(rankings),
                    source_audio_copied=False, audio_saved=False, vectors_public=False,
                    max_frozen_block_error=max(r.get("frozen_block_max_error", 0) for r in receipts),
+                   max_frozen_component_errors={k: max(r["frozen_component_errors"][k] or 0 for r in receipts
+                       if r["status"] == "INDEXED") for k in core.retrieval.NAMES},
+                   accepted_with_caution=sum(r.get("signal_quality", {}).get("status") == "ACCEPTED_WITH_CAUTION"
+                                             for r in receipts),
                    repeat_equal=all(r.get("repeat_equal", False) for r in receipts if r["status"] == "INDEXED"),
                    elapsed_seconds=round(time.monotonic() - started, 3),
                    peak_rss_kib=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,

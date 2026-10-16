@@ -16,6 +16,13 @@ from acoustic_similarity import acoustic_retrieval as retrieval, features, rhyth
 
 SCHEMA = "yanjaro.personal-acoustic-index.v1"
 STREAM_SCHEMA = "yanjaro.personal-acoustic-index.v2"
+QUALITY_SCHEMA = "yanjaro.personal-acoustic-index.v3"
+QUALITY_POLICY = "observed-pcm-v2"
+MAX_SAMPLE_PEAK = 10 ** (3 / 20)  # Experimental +3 dB sample-peak bound, not a clipping diagnosis.
+LEGACY_QUALITY_FIELDS = {"peak", "clipped_fraction", "rms", "native_rate", "channels", "seconds",
+                         "dsp_rate", "resampling", "energy_scope"}
+QUALITY_METRICS = {"outside_unit_samples", "flat_top_runs", "flat_top_samples", "flat_top_max_samples",
+                   "flat_top_fraction", "long_flat_top", "min_block_rms"}
 BASE_HEAD = "35aecde3311fa302e0ac1548d9c53f336ed9c928"
 MAX_RECORDS = 1000
 
@@ -72,22 +79,81 @@ def stream_identity(requested, observed):
                 mpris_hash_matches=False, master_match=False)
 
 
+def quality_decision(q):
+    """Observed-sample heuristics; neither acceptance nor flags certify a master."""
+    conditions = []
+    if q["peak"] <= 1e-5:
+        conditions.append(("NO_SOUND", "peak <= 1e-5"))
+    if q["peak"] > MAX_SAMPLE_PEAK:
+        conditions.append(("AMPLITUDE_OUT_OF_POLICY", "peak > 10**(3/20)"))
+    if q["long_flat_top"]:
+        conditions.append(("FLAT_TOP_CLIPPING_SUSPECTED", "flat_top_max_samples >= ceil(native_rate * 0.001)"))
+    if q["flat_top_runs"] >= 3 and q["flat_top_fraction"] >= .001:
+        conditions.append(("FLAT_TOP_CLIPPING_SUSPECTED", "flat_top_runs >= 3 and flat_top_fraction >= 0.001"))
+    if q["min_block_rms"] <= 1e-5:
+        conditions.append(("SILENCE_OR_DROPOUT", "min_block_rms <= 1e-5"))
+    flags = []
+    if q["outside_unit_samples"]:
+        flags.append("SAMPLE_OVERSHOOT")
+    if q["clipped_fraction"] > .001:
+        flags.append("HIGH_FULL_SCALE_OCCUPANCY")
+    if q["flat_top_runs"]:
+        flags.append("FLAT_EXTREMA")
+    return conditions, flags
+
+
 def signal_quality(pcm, sr):
     require(type(sr) is int and 8000 <= sr <= 96000 and pcm.ndim == 2 and
             pcm.shape[1] in (1, 2) and 10 * sr <= len(pcm) <= 15 * sr,
             "WINDOW_MUST_BE_10_TO_15_SECONDS")
     require(np.isfinite(pcm).all(), "NONFINITE_PCM")
     peak = float(np.max(np.abs(pcm)))
-    require(peak > 1e-5, "NO_SOUND")
     clipped = float(np.mean(np.abs(pcm) >= .999))
-    require(peak <= 1.001 and clipped <= .001, "CLIPPING")
-    # A conservative integrity gate: a quiet 100 ms block is not indexed as a song.
-    blocks = pcm[:len(pcm) // (sr // 10) * (sr // 10)].reshape(-1, sr // 10, pcm.shape[1])
-    require(np.min(np.sqrt(np.mean(blocks**2, axis=(1, 2)))) > 1e-5, "SILENCE_OR_DROPOUT")
-    return dict(peak=peak, clipped_fraction=clipped, rms=float(np.sqrt(np.mean(pcm**2))),
-                native_rate=sr, channels=pcm.shape[1], seconds=len(pcm) / sr,
-                dsp_rate=16000, resampling="librosa/soxr_hq to 16000 for DSP; PI uses input rate",
-                energy_scope="OBSERVED_PCM_NOT_ORIGINAL_MASTER")
+    flat_runs = flat_samples = longest = 0
+    for channel in pcm.T:
+        # shortcut: only observed extrema; lossy coding can hide earlier clipping. Not a forensic detector.
+        for extreme, sign in ((float(channel.min()), -1), (float(channel.max()), 1)):
+            if extreme * sign <= 1e-5:
+                continue
+            near = np.abs(channel - extreme) <= 1e-7
+            edges = np.flatnonzero(np.diff(np.r_[False, near, False]))
+            lengths = edges[1::2] - edges[::2]
+            lengths = lengths[lengths >= 3]
+            longest = max(longest, int(lengths.max(initial=0)))
+            # >=0.25 ms avoids calling ordinary 16-bit quantized bass peaks flat tops.
+            qualifying = lengths[lengths >= max(3, int(np.ceil(sr * .00025)))]
+            flat_runs += len(qualifying)
+            flat_samples += int(qualifying.sum())
+    # Scale this temporary square only to avoid overflow; DSP receives unchanged PCM.
+    squared = np.array(pcm, dtype=np.float64)
+    try:
+        np.divide(squared, peak or 1, out=squared)
+        np.square(squared, out=squared)
+        blocks = squared[:len(pcm) // (sr // 10) * (sr // 10)].reshape(-1, sr // 10, pcm.shape[1])
+        rms = float(np.sqrt(np.mean(squared)) * peak)
+        min_rms = float(np.min(np.sqrt(np.mean(blocks, axis=(1, 2)))) * peak)
+    finally:
+        squared.fill(0)
+    q = dict(peak=peak, clipped_fraction=clipped, rms=rms, min_block_rms=min_rms,
+             outside_unit_samples=int(np.count_nonzero(np.abs(pcm) > 1)),
+             flat_top_runs=flat_runs, flat_top_samples=flat_samples, flat_top_max_samples=longest,
+             flat_top_fraction=flat_samples / pcm.size, long_flat_top=longest >= int(np.ceil(sr * .001)),
+             native_rate=sr, channels=pcm.shape[1], seconds=len(pcm) / sr,
+             dsp_rate=16000, resampling="librosa/soxr_hq to 16000 for DSP; PI uses input rate",
+             energy_scope="OBSERVED_PCM_NOT_ORIGINAL_MASTER", policy=QUALITY_POLICY)
+    conditions, q["flags"] = quality_decision(q)
+    q["status"] = "REJECTED" if conditions else "ACCEPTED_WITH_CAUTION" if q["flags"] else "ACCEPTED"
+    if conditions or q["flags"]:
+        print(json.dumps(dict(event="SIGNAL_QUALITY", **q, violated_conditions=[c[1] for c in conditions]),
+                         allow_nan=False), file=sys.stderr, flush=True)
+    require(not conditions, conditions[0][0] if conditions else "")
+    return q
+
+
+def quality_notice(record):
+    q = record["quality"]
+    return {k: q[k] for k in ("policy", "status", "flags")} if record["schema"] == QUALITY_SCHEMA else dict(
+        policy="legacy-strict-v1", status="LEGACY_ACCEPTED", flags=["NOT_ASSESSED_BY_CURRENT_POLICY"])
 
 
 def extract(pcm, sr, key, binding, source, title="", artists=(), capture=None):
@@ -110,7 +176,7 @@ def extract(pcm, sr, key, binding, source, title="", artists=(), capture=None):
         dsp_pcm = librosa.resample(pcm.astype(np.float32).mean(axis=1), orig_sr=sr, target_sr=16000)
         dsp = dict(id=key, sha256=pcm_hash, **features.extract_pcm(dsp_pcm))
         profile = retrieval.combine(pi, dsp)
-        record = dict(schema=STREAM_SCHEMA if source == "yandex_stream" else SCHEMA, observed_at=observed_at,
+        record = dict(schema=QUALITY_SCHEMA, observed_at=observed_at,
                       identity=binding, source=source, artists=artists, quality=quality,
                       capture=capture, profile=profile)
         validate_record(record)
@@ -125,7 +191,8 @@ def extract(pcm, sr, key, binding, source, title="", artists=(), capture=None):
 
 def validate_record(record):
     require(set(record) == {"schema", "observed_at", "identity", "source", "artists", "quality", "capture", "profile"}
-            and record["schema"] == (STREAM_SCHEMA if record["source"] == "yandex_stream" else SCHEMA), "INVALID_RECORD_SCHEMA")
+            and record["schema"] in (QUALITY_SCHEMA, STREAM_SCHEMA if record["source"] == "yandex_stream" else SCHEMA),
+            "INVALID_RECORD_SCHEMA")
     p = record["profile"]
     require(record["source"] in ("file", "live", "yandex_stream") and len(record["observed_at"]) <= 40 and
             datetime.fromisoformat(record["observed_at"]).tzinfo is not None, "INVALID_OBSERVATION")
@@ -155,14 +222,18 @@ def validate_record(record):
             {"method", "sample_rate", "player_volume", "sink_input_volume", "sink_volume", "position_start_us",
              "started_at", "stopped_at"},
             "INVALID_CAPTURE_FIELDS")
-    require(set(record["quality"]) == {"peak", "clipped_fraction", "rms", "native_rate", "channels", "seconds",
-                                      "dsp_rate", "resampling", "energy_scope"}, "INVALID_QUALITY_FIELDS")
+    quality_fields = LEGACY_QUALITY_FIELDS
+    if record["schema"] == QUALITY_SCHEMA:
+        quality_fields = quality_fields | QUALITY_METRICS | {"policy", "status", "flags"}
+    require(set(record["quality"]) == quality_fields, "INVALID_QUALITY_FIELDS")
     q = record["quality"]
     require(all(type(q[k]) in (int, float) and np.isfinite(q[k]) for k in
                 ("peak", "clipped_fraction", "rms", "native_rate", "channels", "seconds", "dsp_rate")) and
             10 <= q["seconds"] <= 15 and q["dsp_rate"] == 16000 and
             q["energy_scope"] == "OBSERVED_PCM_NOT_ORIGINAL_MASTER" and
             q["resampling"] == "librosa/soxr_hq to 16000 for DSP; PI uses input rate", "INVALID_QUALITY_VALUES")
+    if record["schema"] == QUALITY_SCHEMA:
+        validate_quality(q, p)
     for candidate in p["tempo_hypotheses"]:
         require(set(candidate) == {"bpm", "ac_score"} and all(type(v) in (int, float) and np.isfinite(v)
                 for v in candidate.values()), "INVALID_TEMPO_HYPOTHESES")
@@ -179,6 +250,31 @@ def validate_record(record):
                 datetime.fromisoformat(c["stopped_at"]) >= datetime.fromisoformat(c["started_at"]), "INVALID_CAPTURE_TIME")
     retrieval.validate(p)
     require(len(json.dumps(record, allow_nan=False)) < 60000, "RECORD_TOO_LARGE")
+
+
+def validate_quality(q, p):
+    require(type(q["native_rate"]) is int and 8000 <= q["native_rate"] <= 96000 and
+            type(q["channels"]) is int and q["channels"] in (1, 2) and
+            q["native_rate"] == p["sample_rate"] and p["start_sample"] == 0 and
+            p["end_sample_exclusive"] == round(q["seconds"] * q["native_rate"]), "INVALID_QUALITY_WINDOW")
+    count = p["end_sample_exclusive"] * q["channels"]
+    require(all(type(q[k]) is int and 0 <= q[k] <= count for k in
+                ("outside_unit_samples", "flat_top_runs", "flat_top_samples", "flat_top_max_samples")) and
+            all(type(q[k]) in (int, float) and np.isfinite(q[k]) for k in ("flat_top_fraction", "min_block_rms")) and
+            0 <= q["clipped_fraction"] <= 1 and 0 <= q["flat_top_fraction"] <= 1 and
+            0 <= q["min_block_rms"] <= q["peak"] and 0 < q["rms"] <= q["peak"] and
+            q["outside_unit_samples"] / count <= q["clipped_fraction"] and
+            (q["outside_unit_samples"] > 0) == (q["peak"] > 1) and
+            q["flat_top_fraction"] == q["flat_top_samples"] / count and
+            q["flat_top_runs"] * max(3, int(np.ceil(q["native_rate"] * .00025))) <= q["flat_top_samples"] and
+            q["flat_top_samples"] <= q["flat_top_runs"] * q["flat_top_max_samples"] and
+            q["flat_top_max_samples"] <= p["end_sample_exclusive"] and
+            type(q["long_flat_top"]) is bool and
+            q["long_flat_top"] == (q["flat_top_max_samples"] >= int(np.ceil(q["native_rate"] * .001))),
+            "INVALID_QUALITY_METRICS")
+    conditions, flags = quality_decision(q)
+    require(q["policy"] == QUALITY_POLICY and not conditions and q["flags"] == flags and
+            q["status"] == ("ACCEPTED_WITH_CAUTION" if flags else "ACCEPTED"), "INVALID_QUALITY_DECISION")
 
 
 def validate_stream(record):
@@ -244,7 +340,7 @@ class Index:
             os.close(fd)
         with self.connection() as db:
             version = db.execute("PRAGMA user_version").fetchone()[0]
-            require(version in (0, 1, 2), "INCOMPATIBLE_INDEX_VERSION")
+            require(version in (0, 1, 2, 3), "INCOMPATIBLE_INDEX_VERSION")
             tables = db.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall()
             require(tables in ([], [("records",)]), "FOREIGN_DATABASE")
             db.execute("CREATE TABLE IF NOT EXISTS records (id TEXT PRIMARY KEY, payload TEXT NOT NULL)")
@@ -273,8 +369,9 @@ class Index:
                     return "UNCHANGED"
                 require(replace, "REMEASUREMENT_REQUIRES_REPLACE")
             require(old or db.execute("SELECT count(*) FROM records").fetchone()[0] < MAX_RECORDS, "INDEX_LIMIT_1000")
-            if record["source"] == "yandex_stream":
-                db.execute("PRAGMA user_version=2")
+            version = 3 if record["schema"] == QUALITY_SCHEMA else 2 if record["source"] == "yandex_stream" else 1
+            if db.execute("PRAGMA user_version").fetchone()[0] < version:
+                db.execute(f"PRAGMA user_version={version}")
             db.execute("INSERT OR REPLACE INTO records VALUES (?,?)", (key, json.dumps(record, ensure_ascii=False, allow_nan=False)))
         return "REPLACED" if old else "INSERTED"
 
@@ -300,4 +397,9 @@ class Index:
     def search(self, key, top=3):
         rows = self.records()
         require(len(rows) >= 3, "AT_LEAST_THREE_RECORDS_REQUIRED")
-        return retrieval.search(key, [r["profile"] for r in rows], top=top, profile="acoustic")
+        result = retrieval.search(key, [r["profile"] for r in rows], top=top, profile="acoustic")
+        notices = {r["profile"]["id"]: quality_notice(r) for r in rows}
+        result["query_signal_quality"] = notices[key]
+        for candidate in result["results"]:
+            candidate["signal_quality"] = notices[candidate["id"]]
+        return result

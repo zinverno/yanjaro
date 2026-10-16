@@ -43,6 +43,8 @@ jobs:
         # A fresh owner CLI has no previous suites' FFT caches or mock/HTTP thread arenas.
         # Keep the same 1 GiB limit; do not relax it for the integration fixture.
         run: python -m unittest discover -s experiments/personal-acoustic-index/tests -p test_yandex_stream.py -v
+      - name: Observed PCM quality policy and in-memory MP3 overshoot
+        run: python -m unittest discover -s experiments/personal-acoustic-index/tests -p test_signal_quality.py -v
       - name: Offline acoustic regressions (no acquisition or training)
         working-directory: experiments/acoustic-similarity
         env:

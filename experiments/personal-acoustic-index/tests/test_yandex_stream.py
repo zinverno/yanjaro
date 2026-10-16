@@ -517,12 +517,13 @@ class YandexStreamTests(unittest.TestCase):
             self.assertEqual(row["capture"]["extractor_schema"], row["profile"]["feature_schema"])
             self.assertEqual(sum(core.retrieval.SHAPES.values()), 705)
             with index.connection() as db:
-                self.assertEqual(db.execute("PRAGMA user_version").fetchone()[0], 2)
+                self.assertEqual(db.execute("PRAGMA user_version").fetchone()[0], 3)
             self.assertEqual([p.name for p in directory.iterdir()], ["index.sqlite3"])
             for forbidden in (SECRET.encode(), HOST.encode(), b"https://", b"Authorization", b"ID3", b"RIFF"):
                 self.assertNotIn(forbidden, index.path.read_bytes())
             legacy = copy.deepcopy(row)
             legacy.update(schema=core.SCHEMA, source="file", identity=core.identity(), capture=None)
+            legacy["quality"] = {k: legacy["quality"][k] for k in core.LEGACY_QUALITY_FIELDS}
             legacy["profile"].update(id="legacy", recording_group="legacy")
             migration = core.Index(Path(tmp) / "legacy-index")
             migration.put(legacy)
@@ -531,7 +532,7 @@ class YandexStreamTests(unittest.TestCase):
                 self.assertEqual(db.execute("PRAGMA user_version").fetchone()[0], 1)
             migration.put(row)
             with migration.connection() as db:
-                self.assertEqual(db.execute("PRAGMA user_version").fetchone()[0], 2)
+                self.assertEqual(db.execute("PRAGMA user_version").fetchone()[0], 3)
                 self.assertEqual(db.execute("SELECT payload FROM records WHERE id='legacy'").fetchone()[0], before)
             self.assertEqual({r["source"] for r in migration.records()}, {"file", "yandex_stream"})
             self.assertEqual(len(calls), 12)
@@ -680,19 +681,19 @@ class YandexStreamTests(unittest.TestCase):
             with stream.timeout(.02, "TEST_TIMEOUT"):
                 time.sleep(.1)
 
-    def test_metadata_body_limit_and_clipping_no_profile(self):
+    def test_metadata_body_limit_and_excessive_amplitude_no_profile(self):
         with fixture(self.mp3) as calls:
             request = stream.BoundedRequest()
             with self.assertRaisesRegex(core.Rejected, "STREAM_METADATA_LIMIT"):
                 request.retrieve("https://" + HOST + "/get-mp3/fixture")
             self.assertEqual(len(calls), 1)
-        with fixture(encoded("aac", 20, 6), "aac"), \
+        with fixture(encoded("aac", 20, 12), "aac"), \
                 patch("sys.stdin.isatty", return_value=True), patch("sys.stdout.isatty", return_value=True), \
                 patch("yandex_stream.SecretStore") as store, patch("builtins.input", return_value="START 123"), \
                 patch("builtins.print"):
             store.return_value.read.return_value = SECRET
             pcm, capture = stream.acquire("123", 0, 12)
-            with self.assertRaisesRegex(core.Rejected, "CLIPPING"):
+            with self.assertRaisesRegex(core.Rejected, "AMPLITUDE_OUT_OF_POLICY"):
                 core.extract(pcm, stream.RATE, "yandex-stream-123", core.stream_identity("123", "123"),
                              "yandex_stream", capture["metadata"]["title"], capture["metadata"]["artists"], capture)
             self.assertTrue((pcm == 0).all())
