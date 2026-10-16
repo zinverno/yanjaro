@@ -65,7 +65,7 @@ HTTP-клиент передаёт сжатые порции в stdin FFmpeg, а
 | PCM | Float32 stereo 48 kHz, максимум 15 s ≈ 5.76 MB; owned PCM обнуляется после DSP/отказа |
 | Процессы | Python: 1 GiB address space; FFmpeg: 768 MiB, 30 CPU s, запрет записи regular files/core dumps; не более двух CPU affinity |
 
-Зависимости нового lock повторяют численный стек акустического эксперимента и существующие SDK/auth/HTTP зависимости Yanjaro. Прежний lock и DSP не изменены. FFmpeg не получает environment владельца с возможными секретами/`FFREPORT`, stderr декодера не публикуется. Это не гарантия стирания внутренних immutable bytes библиотек или системного swap; исходный аудиофайл программой не создаётся.
+Зависимости нового lock повторяют численный стек акустического эксперимента и существующие SDK/auth/HTTP зависимости Yanjaro. Прежний lock и DSP не изменены. До импорта HTTP-библиотек удаляется process-local `SSLKEYLOGFILE`, чтобы не создавать TLS secrets log. FFmpeg не получает environment владельца с возможными секретами/`FFREPORT`, stderr декодера не публикуется. Это не гарантия стирания внутренних immutable bytes библиотек или системного swap; исходный аудиофайл программой не создаётся.
 
 При успехе выводится `INSERTED`/`UNCHANGED`, `source: yandex_stream`, `dimensions: 705`, ключ `yandex-stream-149359136`. Приватный каталог по умолчанию прежний: `~/.local/share/yanjaro-personal-acoustic/v1`; другой можно задать `--index-dir` вне Git. Для новой версии наблюдения нужен явный `--replace`. Ключ отличается от `yandex-149359136` системного live-режима, поэтому источники не подменяют друг друга.
 

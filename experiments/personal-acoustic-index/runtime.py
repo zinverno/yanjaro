@@ -7,6 +7,7 @@ import sys
 def configure():
     os.umask(0o077)
     sys.dont_write_bytecode = True
+    os.environ.pop("SSLKEYLOGFILE", None)  # Before HTTP imports can create a TLS secrets log.
     for name in ("OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS",
                  "NUMEXPR_NUM_THREADS", "NUMBA_NUM_THREADS", "VECLIB_MAXIMUM_THREADS"):
         os.environ[name] = "1"

@@ -9,6 +9,7 @@ import copy
 from contextlib import contextmanager
 import io
 import json
+import os
 import subprocess
 import tempfile
 import threading
@@ -280,6 +281,13 @@ class YandexStreamTests(unittest.TestCase):
         self.assertTrue(all(p.poll() is not None for p in processes))
 
     def test_metadata_budget_no_credentials_to_cdn_and_hard_timeout(self):
+        with tempfile.TemporaryDirectory(dir="/tmp") as tmp:
+            keylog = Path(tmp) / "tls-secrets.log"
+            result = subprocess.run([sys.executable, str(Path(personal_index.__file__)), "--help"],
+                                    env={**os.environ, "SSLKEYLOGFILE": str(keylog)},
+                                    stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, timeout=10)
+            self.assertEqual(result.returncode, 0)
+            self.assertFalse(keylog.exists())
         request = stream.BoundedRequest()
         with patch("yandex_stream.session") as http:
             request.calls = 8
