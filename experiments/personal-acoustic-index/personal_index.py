@@ -35,11 +35,11 @@ def main():
     parser.add_argument("--replace", action="store_true", help="Explicitly replace an existing observation of this ID")
     args = parser.parse_args()
     if args.probe:
-        from live import Mpris, pactl, select_audio
+        from live import Mpris, audio_route
         observer = Mpris()
         try:
             snapshot = observer.snapshot()
-            select_audio(observer.pid, pactl("sink-inputs"), pactl("sinks"))
+            audio_route(observer.pid)
             result = {"status": "LOCAL_METADATA_READY", "capture": "NOT_RUN", "pcm_streams_opened": 0,
                       "mpris": snapshot["status"], "identity": "MANUAL_ID_REQUIRED"}
         finally:

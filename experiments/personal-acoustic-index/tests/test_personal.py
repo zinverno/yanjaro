@@ -97,13 +97,15 @@ class PersonalTests(unittest.TestCase):
 
     def test_process_binding_does_not_select_other_apps_or_mix(self):
         volume = {"front-left": {"value": 65536}, "front-right": {"value": 65536}}
-        stream = dict(index=5, sink=2, properties={"application.process.id": "123"}, mute=False, corked=False, volume=volume)
+        stream = dict(index=5, sink=2, client=3, properties={"application.process.id": "123"}, mute=False, corked=False, volume=volume)
+        clients = [dict(index=3, properties={"application.process.id": "123"}),
+                   dict(index=4, properties={"application.process.id": "456"})]
         sink = dict(index=2, monitor_source="test_sink.monitor", mute=False, volume=volume)
-        other = dict(stream, index=6, properties={"application.process.id": "456"})
-        self.assertEqual(select_audio(123, [other, stream], [sink])["index"], 5)
+        other = dict(stream, index=6, client=4, properties={"application.process.id": "456"})
+        self.assertEqual(select_audio(123, [other, stream], [sink], clients)["index"], 5)
         for streams in ([other], [stream, dict(stream, index=7)], [dict(stream, corked=True)]):
             with self.assertRaises(core.Rejected):
-                select_audio(123, streams, [sink])
+                select_audio(123, streams, [sink], clients)
 
     def test_pcm_holes_bad_alignment_loss_and_overflow_abort(self):
         cap = Capture.__new__(Capture)

@@ -55,7 +55,19 @@ cd /tmp/yanjaro-personal-index
 
 В схеме сохраняются `requested_id`, `observed_id=null` с причиной `MPRIS_HASH_ONLY`, `real_id=null` с причиной `NOT_EXPOSED_NO_API_CALL`, `mpris_hash_matches`, `master_match=false`. Для CC0/локальных файлов все Yandex IDs отсутствуют. Подстановка фонограммы под прежним ID остаётся возможной, как показал PR #12: хеш MPRIS не доказывает оригинальный master. Время начала/остановки live-наблюдения фиксируется в UTC; `observed_at` указывает начало. Position — снимок до подключения monitor, с неизвестной задержкой аудиотракта, не sample-accurate master timestamp. Индексы samples внутри профиля относятся только к наблюдаемому окну.
 
-Прототип связывает владельца MPRIS с Unix PID через локальный D-Bus, затем выбирает **ровно один** sink-input с этим PID. Используется [`pa_stream_set_monitor_stream`](https://www.freedesktop.org/software/pulseaudio/doxygen/stream_8h.html), вызванный до `pa_stream_connect_record`; выбранный input подтверждается `pa_stream_get_monitor_stream`. Возврат/ошибка этой операции проверяются, fallback на общий monitor отсутствует. Поле `monitor_source` в JSON `pactl` — имя источника, как в [официальном исходнике pactl](https://github.com/pulseaudio/pulseaudio/blob/master/src/utils/pactl.c). Сам факт работы этой схемы на desktop владельца ещё не проверен.
+Прототип получает ожидаемый Unix PID через `GetConnectionUnixProcessID` владельца Yanjaro MPRIS. Read-only команды `pactl -f json list sink-inputs`, `list sinks` и `list clients` выполняются на локальном Pulse server. Поле `sink-input.client` связывается с `client.index`: если у самого sink-input нет `application.process.id`, используется PID связанного клиента. Если оба PID опубликованы, они должны совпадать. Выбирается **ровно один** поток ожидаемого процесса; имена `mpv`, `python` или приложения не являются доказательством принадлежности. PID и индексы сеанса не зафиксированы в коде.
+
+| Код отказа | Причина |
+|---|---|
+| `YANJARO_AUDIO_STREAM_NOT_FOUND` | Ни одного потока с подтверждённым ожидаемым PID; в том числе недоступен PID клиента при отсутствии прямого PID |
+| `YANJARO_AUDIO_STREAM_NOT_UNIQUE` | Подходят несколько sink-input, выбор неоднозначен |
+| `AUDIO_PROCESS_ID_CONFLICT` | Один из PID указывает на Yanjaro, но прямой PID и PID клиента противоречат друг другу |
+| `AUDIO_CLIENT_UNAVAILABLE` | Прямой PID подходит, но связанный client отсутствует, неизвестен или неоднозначен; полной цепочки нет |
+| `AUDIO_ROUTE_OR_GAIN_CHANGED` | Изменился выбранный sink-input, client, один из PID, sink/monitor или gain |
+
+Связанный client должен существовать даже при наличии прямого PID; его собственный PID в этом случае может отсутствовать. Снимок маршрута содержит оба PID и client index только в оперативной памяти. Та же цепочка повторно проверяется после START до открытия PCM, каждые примерно 200 ms во время захвата и после STOP до принятия фрагмента. При исчезновении/конфликте/неоднозначности действует соответствующий код отказа из таблицы. Чтения `pactl` не атомарны; исчезновение клиента между ними приводит к отказу. Краткие изменения client metadata между периодическими проверками могут остаться незамеченными.
+
+Используется [`pa_stream_set_monitor_stream`](https://www.freedesktop.org/software/pulseaudio/doxygen/stream_8h.html), вызванный до `pa_stream_connect_record`; выбранный input подтверждается `pa_stream_get_monitor_stream`. Возврат/ошибка этой операции проверяются, fallback на общий monitor отсутствует. Поле `monitor_source` в JSON `pactl` — имя источника, как в [официальном исходнике pactl](https://github.com/pulseaudio/pulseaudio/blob/master/src/utils/pactl.c). Сам факт работы этой схемы на desktop владельца ещё не проверен. `--probe` использует тот же выбор маршрута, но не открывает PCM, не извлекает признаки и не открывает индекс. `LOCAL_METADATA_READY` подтверждает только доступность metadata, а не live-capture PASS.
 
 Во время захвата отслеживаются MPRIS-сигналы Metadata/PlaybackStatus/Volume/Rate/Seeked, смена владельца D-Bus, прогресс Position, PID/маршрут, mute/cork, input/sink gain. Pulse subscription дополнительно отклоняет события изменения sink и выбранного sink-input; это консервативно и может отклонить окно из-за изменения постороннего sink. `peek` hole, overflow/underflow, перемещение stream, suspend, остановка поступления PCM, нарушение тайминга/целостности frames и переполнение очереди событий отклоняют весь фрагмент. При ошибке частичный вектор не сохраняется.
 
@@ -119,9 +131,13 @@ CLIPPING — технический порог: peak > 1.001 либо доля `
 
 ```sh
 .venv/bin/python -m unittest discover -s experiments/personal-acoustic-index/tests -v
+PYTHONPATH=experiments/personal-acoustic-index .venv/bin/python -c \
+  'import runtime; runtime.configure(); import core, unittest; unittest.main(module=None, argv=["unittest", "discover", "-s", "experiments/acoustic-similarity/tests", "-p", "test_rhythm_pi.py", "-v"])'
 ```
 
-Прошли 14 тестов прототипа. Проверены 705-dimensional schema, повтор/обнуление PCM, hash/ID mismatch, pause/switch/seek/gain, потеря сигналов/данных и переполнение, ручной START/cancel, исключение других процессов, minimum-three search, вклад аспектов/missing tempo, replace/delete/delete-all, права filesystem, отсутствие аудио/секретов в сохранённом результате и ресурсные лимиты. Дополнительно прошли 9 существующих PI-v1 тестов. Hardware acceptance остаётся отдельным локальным тестом владельца.
+После исправления привязки Pulse client прошли **31 тест: прежние 23 (14 прототипа + 9 PI-v1) и 8 новых регрессионных**. Прежние тесты проверяют 705-dimensional schema, повтор/обнуление PCM, hash/ID mismatch, pause/switch/seek/gain, потерю сигналов/данных и переполнение, ручной START/cancel, исключение других процессов, minimum-three search, вклад аспектов/missing tempo, replace/delete/delete-all, права filesystem, отсутствие аудио/секретов в сохранённом результате и ресурсные лимиты.
+
+Новые тесты используют синтетические metadata с произвольными PID/индексами: прямой PID, fallback через client, чужой PID, конфликт, несколько кандидатов, неизвестный/отсутствующий/неоднозначный client, смена каждого звена до/во время/после захвата. Проверено закрытие mock capture, обнуление буфера и отсутствие вектора при отказе; отдельный CLI-тест проверяет read-only команды и отсутствие PCM/индекса/извлечения в `--probe`. Это не измерения реального desktop PCM. Исторический CC0 [validation.json](validation.json) не перезаписан. Hardware acceptance остаётся отдельным локальным тестом владельца.
 
 ## Правовые границы
 

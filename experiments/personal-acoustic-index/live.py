@@ -30,10 +30,21 @@ def volume(item):
     return result
 
 
-def select_audio(pid, inputs, sinks):
-    candidates = [s for s in inputs if s.get("properties", {}).get("application.process.id") == str(pid)]
+def select_audio(pid, inputs, sinks, clients):
+    candidates = []
+    for stream in inputs:
+        direct_pid = stream.get("properties", {}).get("application.process.id")
+        linked = [c for c in clients if type(stream.get("client")) is int and c.get("index") == stream["client"]]
+        client_pid = linked[0].get("properties", {}).get("application.process.id") if len(linked) == 1 else None
+        if str(pid) not in (direct_pid, client_pid):
+            continue
+        # Keep a verifiable client link even when the stream publishes its own PID.
+        require(len(linked) == 1, "AUDIO_CLIENT_UNAVAILABLE")
+        require(direct_pid is None or client_pid is None or direct_pid == client_pid, "AUDIO_PROCESS_ID_CONFLICT")
+        candidates.append((stream, direct_pid, client_pid))
+    require(candidates, "YANJARO_AUDIO_STREAM_NOT_FOUND")
     require(len(candidates) == 1, "YANJARO_AUDIO_STREAM_NOT_UNIQUE")
-    stream = candidates[0]
+    stream, direct_pid, client_pid = candidates[0]
     matches = [s for s in sinks if s["index"] == stream["sink"]]
     require(len(matches) == 1, "AUDIO_SINK_UNAVAILABLE")
     sink = matches[0]
@@ -43,7 +54,12 @@ def select_audio(pid, inputs, sinks):
             re.fullmatch(r"[a-zA-Z0-9_.:-]{1,256}", sink["monitor_source"]) and
             type(stream.get("index")) is int, "NO_SINK_INPUT_MONITOR")
     return dict(index=stream["index"], sink=stream["sink"], monitor=sink["monitor_source"],
+                client=stream["client"], direct_pid=direct_pid, client_pid=client_pid,
                 stream_volume=volume(stream), sink_volume=volume(sink))
+
+
+def audio_route(pid):
+    return select_audio(pid, pactl("sink-inputs"), pactl("sinks"), pactl("clients"))
 
 
 def signal_ok(member, body):
@@ -136,7 +152,7 @@ def capture_owner(requested):
         initial = observer.snapshot()
         binding = identity(requested, initial["path"])
         require(initial["status"] == "Playing", "PLAYBACK_NOT_PLAYING")
-        route = select_audio(observer.pid, pactl("sink-inputs"), pactl("sinks"))
+        route = audio_route(observer.pid)
         print(json.dumps({"requested_id": requested, "title": initial["title"], "artists": initial["artists"]}, ensure_ascii=False))
         print("Личное использование не подтверждает разрешение сервиса на анализ.")
         print("Проверьте ID и песню в Yanjaro. Только этот sink-input; 10–15 секунд, Enter для остановки, Ctrl-C для отмены.")
@@ -149,6 +165,7 @@ def capture_owner(requested):
         require(initial["status"] == "Playing", "PLAYBACK_NOT_PLAYING")
         require(initial["length"] - initial["position"] > 16_000_000, "TRACK_END_TOO_CLOSE")
         observer.events()
+        require(audio_route(observer.pid) == route, "AUDIO_ROUTE_OR_GAIN_CHANGED")
         started = time.monotonic()
         started_at = datetime.now(timezone.utc).isoformat()
         cap = Capture(route["index"], route["monitor"])
@@ -161,8 +178,7 @@ def capture_owner(requested):
             require(now - started < 17, "OWNER_STOP_TIMEOUT")
             if now >= next_check:
                 check_snapshot(initial, observer.snapshot(), now - started)
-                require(select_audio(observer.pid, pactl("sink-inputs"), pactl("sinks")) == route,
-                        "AUDIO_ROUTE_OR_GAIN_CHANGED")
+                require(audio_route(observer.pid) == route, "AUDIO_ROUTE_OR_GAIN_CHANGED")
                 observer.events()
                 next_check = now + .2
             elapsed = cap.frames / RATE
@@ -177,6 +193,7 @@ def capture_owner(requested):
             time.sleep(.005)
         observer.events()
         check_snapshot(initial, observer.snapshot(), time.monotonic() - started)
+        require(audio_route(observer.pid) == route, "AUDIO_ROUTE_OR_GAIN_CHANGED")
         observer.events()
         pcm = cap.pcm[:cap.frames].copy()
         capture = dict(method="libpulse-single-sink-input", sample_rate=RATE, player_volume=initial["volume"],
