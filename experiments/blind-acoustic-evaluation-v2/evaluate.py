@@ -63,7 +63,7 @@ def preflight(plan, *, files=False):
             re.fullmatch(r'[a-zA-Z0-9_-]{1,80}', plan['study_id']), 'Invalid study ID')
     old = plan.get('previous_yandex_track_ids', [])
     require(len(old) == 4 and len(set(old)) == 4 and
-            all(isinstance(v, str) and re.fullmatch(r'[0-9]+', v) for v in old),
+            all(isinstance(v, str) and re.fullmatch(r'[1-9][0-9]*', v) for v in old),
             'List all four previously indexed Yandex IDs')
     groups = plan.get('excluded_recording_groups', [])
     require(isinstance(groups, list) and len(set(groups)) >= 4 and
@@ -81,10 +81,12 @@ def preflight(plan, *, files=False):
     yandex_ids = []
     for t in tracks.values():
         require(re.fullmatch(r'[a-zA-Z0-9_-]{1,64}', t['id']), 'Use opaque local track IDs')
+        require(t['id'] not in (*pilot.CHOICES, 'abstain', 'skipped'), 'Track ID conflicts with answer/prediction labels')
+        require(t['recording_group'].strip(), 'Empty recording group')
         require(t.get('novelty_reviewed') is True and t['recording_group'] not in old_groups and
                 t['sha256'] not in old_hashes, 'Previously exposed or unreviewed recording')
         yid = t.get('yandex_track_id')
-        require(yid is None or (isinstance(yid, str) and re.fullmatch(r'[0-9]+', yid) and yid not in old),
+        require(yid is None or (isinstance(yid, str) and re.fullmatch(r'[1-9][0-9]*', yid) and yid not in old),
                 'Invalid or previously indexed Yandex ID')
         if yid is not None: yandex_ids.append(yid)
         require(t['split'] == 'test' and t['seconds'] == 15, 'Evaluation-only fixed 15-second windows')

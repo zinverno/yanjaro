@@ -80,7 +80,9 @@ class EvaluationTests(unittest.TestCase):
 
     def test_prior_recordings_and_rights_are_excluded(self):
         historical = e.read_json(e.LAB / 'validation/acoustic-retrieval-v1/index.json')['tracks'][0]
-        changes = [dict(yandex_track_id='90001'), dict(recording_group='EXCLUDED_TEST_0'),
+        changes = [dict(yandex_track_id='90001'), dict(yandex_track_id='090001'),
+                   *[dict(id=v) for v in (*e.pilot.CHOICES, 'abstain', 'skipped')],
+                   dict(recording_group=' '), dict(recording_group='EXCLUDED_TEST_0'),
                    dict(sha256=historical['audio_sha256']), dict(recording_group=historical['recording_group']),
                    dict(novelty_reviewed=False), dict(split='train'), dict(seconds=30), dict(path='https://example/audio')]
         for change in changes:
