@@ -29,7 +29,8 @@ jobs:
         with:
           python-version: '3.12.13'
       - name: Install existing locked runtime (package traffic only)
-        run: python -m pip install --require-hashes --only-binary=:all: -r experiments/acoustic-similarity/requirements.lock
+        run: |
+          python -m pip install --require-hashes --only-binary=:all: -r experiments/acoustic-similarity/requirements.lock
       - run: python -m pip check
       - name: New synthetic contracts; no owner inputs or human evidence
         run: python -m unittest discover -s experiments/blind-acoustic-evaluation-v2 -p 'test_*.py' -v
