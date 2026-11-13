@@ -1,0 +1,31 @@
+{
+  "base_commit": "a9fe148cc9b81fcfb76d55ea11d18b701bbd0e84",
+  "base_pr": 11,
+  "files": {
+    "experiments/acoustic-listening-pilot/app.js": "2b3975fda2935b12e0cd04ed980c346d9c8432ab691acde0975e1205e869885b",
+    "experiments/acoustic-listening-pilot/frozen.json": "699915fd4635c1bf653b6de60a03e92afddf6d454f5ad4637045c8f08d2c4e3b",
+    "experiments/acoustic-listening-pilot/page.html": "54e6a4063e81f5a479273401a1f78492abb159c67412f2746bd285c7eafbc59b",
+    "experiments/acoustic-listening-pilot/pilot.py": "dd93921e7ea3aa661367f9ead6f3bc73dd1784386335971de3854e1550bf78e4",
+    "experiments/acoustic-similarity/acoustic_similarity/__init__.py": "3972be42f2dbc198a53848d5c5e5f559cb7d633b139feef250a33e154cdb4314",
+    "experiments/acoustic-similarity/acoustic_similarity/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "experiments/acoustic-similarity/acoustic_similarity/acoustic_retrieval.py": "4e0e991c1a7b863172a563658eef92d3344c356fd0326c4a476132f74ac67512",
+    "experiments/acoustic-similarity/acoustic_similarity/cap2.py": "d8eb8a31c1626d5dc54b026358c5b1b1e0eb907ed7ebc50543cfccb7e1936487",
+    "experiments/acoustic-similarity/acoustic_similarity/cli.py": "500c2666ce4d90daa2e30d5bc859973dd2dcf93369a85c6e2c9885b92240b58d",
+    "experiments/acoustic-similarity/acoustic_similarity/data.py": "826402b5acac17120b7090cdc17154bd1f1f03a1a13b5f241d98c4a070ccb3c7",
+    "experiments/acoustic-similarity/acoustic_similarity/diagnostics.py": "4b48f4912184d2cdb93c058dde39a0c0ed93e3e14e652f339494ad4cbe200d2a",
+    "experiments/acoustic-similarity/acoustic_similarity/evaluate.py": "5565ab8b4c86321b56c1585a691c7d3cc2daeb06a7b4268f2e81004c8ad0cf66",
+    "experiments/acoustic-similarity/acoustic_similarity/features.py": "c0fb2c34a00e9986ea328870546fbeb0b26c294c8093e37353469879d1cf8583",
+    "experiments/acoustic-similarity/acoustic_similarity/groove.py": "ede9977ecfff53885f1e5a576ad58686146f3632e94286d7c079547f37d351bf",
+    "experiments/acoustic-similarity/acoustic_similarity/lab_audio.py": "a5efdb715a4001c9156677695ce021d46691d96bf0317a7b8d0d79baf980392c",
+    "experiments/acoustic-similarity/acoustic_similarity/model.py": "69c4c5aa730ac2e6b07db5cb0a54acad2cc29adba5b2478f37efba48c3460128",
+    "experiments/acoustic-similarity/acoustic_similarity/nsynth.py": "fc196aaac046dc8670b814be54e43ae0ce09d62416f1e74e13fb7b4b17e08031",
+    "experiments/acoustic-similarity/acoustic_similarity/remote.py": "89b2e9326b0b349c86d80ed3f2db86f1189ea5f16932071e9681dde2b9365376",
+    "experiments/acoustic-similarity/acoustic_similarity/rhythm.py": "8fc74579ad65f798a87ecd1b6f2b3dd9de81142d4b273a3ad991c21e9c07464e",
+    "experiments/acoustic-similarity/acoustic_similarity/rhythm_auto.py": "fba1fa59895b6574895d9e188c1f81399d95db750434345b96e8ccbd11e1060b",
+    "experiments/acoustic-similarity/acoustic_similarity/rhythm_pi.py": "f4b320b48f3f7de1db06aa4cd617582f752aea92013ac793d81f65a889cf46ae",
+    "experiments/acoustic-similarity/acoustic_similarity/rhythm_v2.py": "4220f21a8afc4b972050253742976297f0cbb9cf5034abc4e1f5637a91cc5585",
+    "experiments/acoustic-similarity/requirements.lock": "ae514d65c8c8239b5f4374be95d1d54581f88d2821cf8cc5b5bcfe13df4ec19f",
+    "experiments/acoustic-similarity/validation/acoustic-retrieval-v1/index.json": "4c8c0c2f18e47b016a4521cc1eb0f8a7a11d3f3cbd9afb303a36ea2444086a61"
+  },
+  "ranker_commit": "35aecde3311fa302e0ac1548d9c53f336ed9c928"
+}
