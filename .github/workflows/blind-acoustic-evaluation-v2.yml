@@ -1,0 +1,43 @@
+name: Blind Acoustic Evaluation v2 (synthetic only)
+
+on:
+  pull_request:
+    branches: [experiment/acoustic-listening-pilot-v01]
+    paths:
+      - 'experiments/blind-acoustic-evaluation-v2/**'
+      - '.github/workflows/blind-acoustic-evaluation-v2.yml'
+
+permissions:
+  contents: read
+
+env:
+  OPENBLAS_NUM_THREADS: '2'
+  OMP_NUM_THREADS: '2'
+  NUMBA_NUM_THREADS: '2'
+  PYTHONHASHSEED: '0'
+
+jobs:
+  contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12.13'
+      - name: Install existing locked runtime (package traffic only)
+        run: python -m pip install --require-hashes --only-binary=:all: -r experiments/acoustic-similarity/requirements.lock
+      - run: python -m pip check
+      - name: New synthetic contracts; no owner inputs or human evidence
+        run: python -m unittest discover -s experiments/blind-acoustic-evaluation-v2 -p 'test_*.py' -v
+      - run: node experiments/blind-acoustic-evaluation-v2/test_ui.cjs
+      - name: Unchanged pilot and ranker contracts
+        run: |
+          python -m unittest discover -s experiments/acoustic-listening-pilot -p 'test_pilot.py' -v
+          PYTHONPATH=experiments/acoustic-similarity python -m unittest discover -s experiments/acoustic-similarity/tests -p 'test_acoustic_retrieval.py' -v
+          node experiments/acoustic-listening-pilot/test_contract.cjs
+          node experiments/acoustic-listening-pilot/test_ui.cjs
+      - run: git diff --exit-code
